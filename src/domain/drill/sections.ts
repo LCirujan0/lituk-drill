@@ -33,7 +33,7 @@ import {
   type ServedCounts,
 } from './rotation';
 
-export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'random';
+export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
 /** Facts served in a day through Due today. The daily obligation, and its ceiling. */
 export const DAILY_TARGET = 30;
@@ -289,6 +289,37 @@ export function randomQueue(ctx: SectionContext, limit = 40): DrillItem[] {
   return shuffle(all, ctx.rng).slice(0, limit);
 }
 
+/** Facts answered correctly on every one of their phrasings. */
+export function masteredFacts(ctx: SectionContext): string[] {
+  const out: string[] = [];
+  for (const fact of ctx.deck) {
+    const state = ctx.states.get(fact.id);
+    if (state && state.ok.length > 0 && state.ok.every((v) => v > 0)) out.push(fact.id);
+  }
+  return out;
+}
+
+/**
+ * Drill only what is already known every way.
+ *
+ * The point is not to learn anything — it is to find out whether "known" is still true. The
+ * headline counts a fact as mastered the moment every phrasing has been right once, and that
+ * claim decays silently: nothing on the home screen ever goes down on its own. This is the
+ * section that can take it down, which is what makes the number worth reading.
+ *
+ * It is a practice section (D-003), so a success here changes nothing and a miss lapses the
+ * fact and drops it out of the count. Exactly the asymmetry the decision asks for.
+ */
+export function masteredQueue(ctx: SectionContext, limit = 40): DrillItem[] {
+  const mastered = new Set(masteredFacts(ctx));
+  const all: DrillItem[] = [];
+  for (const fact of ctx.deck) {
+    if (!mastered.has(fact.id)) continue;
+    fact.forms.forEach((_, formIndex) => all.push({ factId: fact.id, formIndex }));
+  }
+  return shuffle(all, ctx.rng).slice(0, limit);
+}
+
 // ===========================================================================
 // Counts for the home screen
 // ===========================================================================
@@ -299,6 +330,8 @@ export interface SectionCounts {
   /** Phrasings never served, across the whole deck. */
   readonly newForms: number;
   readonly mistakes: number;
+  /** Facts right on every phrasing — the headline number, and what `mastered` drills. */
+  readonly mastered: number;
   readonly totalForms: number;
   readonly byChapter: ReadonlyMap<number, { total: number; proven: number }>;
 }
@@ -320,6 +353,7 @@ export function sectionCounts(ctx: SectionContext): SectionCounts {
     due: dueRemaining(ctx),
     newForms: unseenForms(ctx.deck, ctx.events).length,
     mistakes: mistakeStandings(ctx).length,
+    mastered: masteredFacts(ctx).length,
     totalForms,
     byChapter,
   };

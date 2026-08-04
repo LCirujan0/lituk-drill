@@ -28,12 +28,18 @@ beforeEach(() => {
 });
 
 
+/** Every button on a drill screen that is not one of the four answer options. */
+const CHROME = [
+  'Quiz', 'Recall', 'Show answer', 'Again', 'Hard', 'Good', 'Easy',
+  'Next ›', '‹', '✕', 'Got lucky', 'Drill', 'Progress', 'Timeline', '⟳', '⚠',
+];
+
 /** The correct and a wrong option for whatever card is currently on screen. */
 function currentOptions() {
   const heading = screen.getByRole('heading', { level: 1 }).textContent;
   const fact = DECK.find((f) => f.forms.some((x) => x.question === heading))!;
   const form = fact.forms.find((x) => x.question === heading)!;
-  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed']);
+  const chrome = new Set(CHROME);
   const shown = screen
     .getAllByRole('button')
     .map((b) => b.textContent ?? '')
@@ -47,31 +53,29 @@ describe('the card holds after answering — regression', () => {
   it('keeps the same question on screen once an option is chosen', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
 
     const question = (await screen.findByRole('heading', { level: 1 })).textContent;
     expect(question).toBeTruthy();
 
     // Answer whatever is first. The card must not move.
-    const before = screen.getAllByRole('button').filter((b) => b.textContent && b.textContent.length < 80);
-    await user.click(before[before.length - 1]);
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(question);
-    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Next ›' })).toBeTruthy();
   });
 
   it('advances only when Next is pressed', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
 
     const first = (await screen.findByRole('heading', { level: 1 })).textContent;
-    const options = screen.getAllByRole('button').filter((b) => (b.textContent ?? '').length < 80);
-    await user.click(options[options.length - 1]);
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
 
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
 
     await waitFor(() => {
       expect(screen.getByRole('heading', { level: 1 }).textContent).not.toBe(first);
@@ -81,7 +85,7 @@ describe('the card holds after answering — regression', () => {
   it('shows a verdict that says whether the answer was right', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -92,7 +96,7 @@ describe('the card holds after answering — regression', () => {
   it('says so when the answer was wrong', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -104,7 +108,7 @@ describe('the card holds after answering — regression', () => {
 describe('the options do not move under your finger — regression', () => {
   /** Every button that is one of the four answer options, in the order shown. */
   const optionTexts = () => {
-    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed']);
+    const chrome = new Set(CHROME);
     return screen
       .getAllByRole('button')
       .map((b) => b.textContent ?? '')
@@ -116,12 +120,12 @@ describe('the options do not move under your finger — regression', () => {
   // not. The first version of this test happened to pick a chapter and passed against
   // broken code — so the sections are enumerated rather than sampled.
   it.each([
-    ['Due today', /Not tried yet/], // seeded first so something is due
-    ['Not tried yet', /Not tried yet/],
+    ['Due today', /^New/], // seeded first so something is due
+    ['New', /^New/],
   ])('keeps the four options in the same order in %s', async (_label, opener) => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: opener }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -138,8 +142,8 @@ describe('the options do not move under your finger — regression', () => {
     // the new one, and the verdict was reported against a layout that no longer existed.
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     const before = optionTexts();
@@ -153,8 +157,8 @@ describe('the options do not move under your finger — regression', () => {
   it('reports the verdict against the option actually clicked', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     const heading = await screen.findByRole('heading', { level: 1 });
 
     // Find the fact on screen so we know its real answer independently of the UI.
@@ -172,8 +176,8 @@ describe('the options do not move under your finger — regression', () => {
   it('records the grade that matches the verdict shown', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     const heading = await screen.findByRole('heading', { level: 1 });
 
     const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
@@ -193,8 +197,8 @@ describe('got lucky — a guess is not knowledge', () => {
   it('offers the downgrade only after a CORRECT answer', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
@@ -205,8 +209,8 @@ describe('got lucky — a guess is not knowledge', () => {
   it('records a second event as a miss, so the fact lapses', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -224,8 +228,8 @@ describe('got lucky — a guess is not knowledge', () => {
   it('cannot be pressed twice', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -238,15 +242,15 @@ describe('got lucky — a guess is not knowledge', () => {
   it('puts the fact into the mistakes section', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     await user.click(screen.getByRole('button', { name: /Got lucky/ }));
-    await user.click(screen.getByRole('button', { name: 'Back' }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
 
-    const mistakes = await screen.findByRole('button', { name: /Your mistakes/ });
+    const mistakes = await screen.findByRole('button', { name: /^Mistakes/ });
     expect(within(mistakes).getByText('1')).toBeTruthy();
   });
 });
@@ -255,7 +259,7 @@ describe('explanations', () => {
   it('is hidden until the question is answered', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -266,7 +270,7 @@ describe('explanations', () => {
   it('appears once the question is answered', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -280,7 +284,7 @@ describe('recording a review', () => {
   it('writes exactly one event per answer', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -289,14 +293,14 @@ describe('recording a review', () => {
     expect(stored()).toHaveLength(1);
 
     // Pressing Next must not record a second review.
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
     expect(stored()).toHaveLength(1);
   });
 
   it('records a correct quiz answer as Good and a wrong one as Again', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -304,7 +308,7 @@ describe('recording a review', () => {
     expect(stored()[0].grade).toBe(4);
     expect(stored()[0].mode).toBe('scheduled'); // first contact is always scheduled
 
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(stored()).toHaveLength(2);
     expect(stored()[1].grade).toBe(0);
@@ -314,40 +318,39 @@ describe('recording a review', () => {
 describe('the home screen', () => {
   it('shows the deck size and a zeroed count on a fresh install', async () => {
     render(<App />);
-    expect(await screen.findByText(/528 facts/)).toBeTruthy();
     // The headline counts FACTS, not phrasings — questions are how the app checks you know
     // a fact, not the thing being learned (D-028).
-    expect(screen.getByText(/of 528/)).toBeTruthy();
-    expect(screen.getByRole('button', { name: /Not tried yet/ })).toBeTruthy();
+    expect(await screen.findByText(/\/528 known/)).toBeTruthy();
+    expect(screen.getByRole('button', { name: /^New/ })).toBeTruthy();
   });
 
   it('moves a missed fact into the mistakes section', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
-    await user.click(screen.getByRole('button', { name: 'Back' }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
 
-    const mistakes = await screen.findByRole('button', { name: /Your mistakes/ });
+    const mistakes = await screen.findByRole('button', { name: /^Mistakes/ });
     expect(within(mistakes).getByText('1')).toBeTruthy();
   });
 
   it('counts a proven phrasing after a correct answer', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
-    await user.click(screen.getByRole('button', { name: 'Back' }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
 
     // One phrasing answered is not a known fact — a fact counts only once every phrasing
     // has been proved, so the headline is still 0 and the phrasing count moved instead.
-    await waitFor(() => expect(screen.getByText(/of 528/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/\/528 known/)).toBeTruthy());
     expect(stored()).toHaveLength(1);
   });
 });
@@ -356,7 +359,7 @@ describe('recall mode', () => {
   it('hides the answer until it is revealed, then offers four grades', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -373,7 +376,7 @@ describe('recall mode', () => {
   it('holds the card after grading, same as quiz mode', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -383,44 +386,47 @@ describe('recall mode', () => {
     await user.click(screen.getByRole('button', { name: 'Good' }));
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(question);
-    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Next ›' })).toBeTruthy();
     expect(stored()).toHaveLength(1);
   });
 });
 
 describe('navigation', () => {
-  it('reaches progress and back', async () => {
+  it('moves between the three tabs without a back button', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
 
-    await user.click(screen.getByRole('button', { name: 'Progress' }));
+    await user.click(screen.getByRole('button', { name: /Progress/ }));
     expect(await screen.findByRole('heading', { name: 'Progress' })).toBeTruthy();
-    expect(screen.getByText(/facts known every way/)).toBeTruthy();
 
-    await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(await screen.findByText(/facts known every way/)).toBeTruthy();
-  });
-
-  it('reaches the chronology and back', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-    await screen.findByText(/facts known every way/);
-
-    await user.click(screen.getByRole('button', { name: 'Timeline' }));
+    await user.click(screen.getByRole('button', { name: /Timeline/ }));
     expect(await screen.findByRole('heading', { name: 'The spine' })).toBeTruthy();
     expect(screen.getByText(/Battle of Hastings/)).toBeTruthy();
 
-    await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(await screen.findByText(/facts known every way/)).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: /Drill/ }));
+    expect(await screen.findByRole('button', { name: /Due today/ })).toBeTruthy();
+  });
+
+  it('hides the tab bar while a card is on screen', async () => {
+    // A stray tap on the tab bar mid-question costs you your place, and the bottom of that
+    // screen belongs to the card's own actions.
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    expect(screen.getByRole('navigation', { name: 'Sections' })).toBeTruthy();
+
+    await user.click(screen.getByRole('button', { name: /^New/ }));
+    await screen.findByRole('heading', { level: 1 });
+    expect(screen.queryByRole('navigation', { name: 'Sections' })).toBeNull();
   });
 
   it('shows an empty state for a section with nothing in it', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
 
-    await user.click(screen.getByRole('button', { name: /Your mistakes/ }));
+    await user.click(screen.getByRole('button', { name: /^Mistakes/ }));
     expect(await screen.findByText(/Nothing outstanding/)).toBeTruthy();
   });
 });
@@ -433,7 +439,7 @@ describe('stepping back through the session — regression', () => {
    * thinking about the question.
    */
   const optionButtons = () => {
-    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed', 'Sync now', '‹ Previous', 'Next ›']);
+    const chrome = new Set(CHROME);
     return screen
       .getAllByRole('button')
       .map((b) => b.textContent ?? '')
@@ -446,14 +452,14 @@ describe('stepping back through the session — regression', () => {
     const options = optionButtons();
     const pressed = options[0];
     await user.click(screen.getByRole('button', { name: pressed }));
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
     return { question, pressed, options };
   }
 
   async function openDrill(user: ReturnType<typeof userEvent.setup>) {
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
   }
 
@@ -465,7 +471,7 @@ describe('stepping back through the session — regression', () => {
     // A second card is now on screen and the first is gone.
     expect(screen.getByRole('heading', { level: 1 }).textContent).not.toBe(first.question);
 
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(first.question);
     // The option pressed is still marked, and the explanation is on screen to be re-read.
@@ -479,7 +485,7 @@ describe('stepping back through the session — regression', () => {
     await openDrill(user);
 
     const first = await answerAndAdvance(user);
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
 
     // Reproduced from the card's own nonce, not re-shuffled. A different order would be a
     // record of something that never happened.
@@ -494,7 +500,7 @@ describe('stepping back through the session — regression', () => {
     const after = stored().length;
     expect(after).toBe(1);
 
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
     // Every option is inert. Pressing one must not grade anything a second time.
     await user.click(screen.getByRole('button', { name: optionButtons()[1] }));
 
@@ -510,7 +516,7 @@ describe('stepping back through the session — regression', () => {
     const liveQuestion = screen.getByRole('heading', { level: 1 }).textContent;
     const liveOptions = optionButtons();
 
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
     await user.click(screen.getByRole('button', { name: 'Next ›' }));
 
     // The same card, not another one drawn from the queue, and the same option order.
@@ -528,13 +534,13 @@ describe('stepping back through the session — regression', () => {
 
     await answerAndAdvance(user);
     await user.click(screen.getByRole('button', { name: optionButtons()[0] }));
-    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Next ›' })).toBeTruthy();
 
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
     await user.click(screen.getByRole('button', { name: 'Next ›' }));
 
     // Its verdict and its Next button survive the round trip; nothing was regraded.
-    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Next ›' })).toBeTruthy();
     expect(stored()).toHaveLength(2);
   });
 
@@ -542,16 +548,17 @@ describe('stepping back through the session — regression', () => {
     const user = userEvent.setup();
     await openDrill(user);
 
-    // One card only — nothing to page through yet.
-    expect(screen.queryByRole('button', { name: '‹ Previous' })).toBeNull();
+    // Previous exists from the first card, disabled — the action bar does not change shape
+    // under your thumb as the session grows.
+    expect((screen.getByRole('button', { name: 'Previous card' }) as HTMLButtonElement).disabled).toBe(true);
 
     await answerAndAdvance(user);
-    expect(screen.getByText('2 of 2')).toBeTruthy();
+    expect(screen.getByText('2/2')).toBeTruthy();
 
-    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
-    expect(screen.getByText('1 of 2')).toBeTruthy();
+    await user.click(screen.getByRole('button', { name: 'Previous card' }));
+    expect(screen.getByText('1/2')).toBeTruthy();
     // Nowhere further back to go.
-    expect((screen.getByRole('button', { name: '‹ Previous' }) as HTMLButtonElement).disabled).toBe(true);
+    expect((screen.getByRole('button', { name: 'Previous card' }) as HTMLButtonElement).disabled).toBe(true);
   });
 });
 
@@ -561,7 +568,7 @@ describe('a sync landing mid-card does not move it — R-11', () => {
    * screen mid-card. Sync makes the log change on its own schedule rather than only when
    * you answer, so the class of bug it names now has a second way in — the other device.
    */
-  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed', 'Sync now']);
+  const chrome = new Set(CHROME);
   const optionTexts = () =>
     screen
       .getAllByRole('button')
@@ -596,8 +603,8 @@ describe('a sync landing mid-card does not move it — R-11', () => {
     const remote = serverWith(6);
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     await screen.findByRole('heading', { level: 1 });
 
     const question = screen.getByRole('heading', { level: 1 }).textContent;
@@ -618,8 +625,8 @@ describe('a sync landing mid-card does not move it — R-11', () => {
     serverWith(6);
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^New/ }));
     const heading = await screen.findByRole('heading', { level: 1 });
 
     const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
@@ -637,7 +644,7 @@ describe('persistence', () => {
   it('restores answered reviews after a remount', async () => {
     const user = userEvent.setup();
     const { unmount } = render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -645,7 +652,7 @@ describe('persistence', () => {
 
     reloadFromStorage();
     render(<App />);
-    await screen.findByText(/facts known every way/);
+    await screen.findByRole('button', { name: /Due today/ });
 
     // The review survived, so the "not tried yet" count is one lower than the full deck.
     // Derived rather than hardcoded — the deck grows, and a literal here would need

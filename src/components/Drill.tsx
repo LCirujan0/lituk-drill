@@ -181,7 +181,10 @@ export function Drill({
   return (
     <div className={styles.wrap}>
       <header className={styles.bar}>
-        <button type="button" className={styles.back} onClick={onExit} aria-label="Back">‹</button>
+        {/* A cross, not a back arrow. `‹` now means "the previous card" in the action bar,
+            and one glyph cannot mean two things on the same screen. Leaving a drill is
+            closing it, which is what a cross says. */}
+        <button type="button" className={styles.back} onClick={onExit} aria-label="Close">✕</button>
         <div className={styles.barTitle}>
           {title}
           <span className={styles.remaining}>
@@ -301,39 +304,13 @@ export function Drill({
             );
           })}
           {chosen !== null && (
-            <>
-              <p className={chosen === presented.correctIndex ? styles.verdictRight : styles.verdictWrong}>
-                {downgraded
-                  ? 'Recorded as a miss.'
-                  : chosen === presented.correctIndex
-                    ? 'Correct.'
-                    : 'Not quite.'}
-              </p>
-
-              {/*
-                Guessing right is the one thing multiple choice cannot tell from knowing. One
-                in four is chance, and a fact you guessed will otherwise be treated as proved
-                and pushed out to a long interval — so the schedule quietly fills with things
-                you never knew. This is the only way the app can find out, and it has to come
-                from the reader.
-              */}
-              {!readOnly && chosen === presented.correctIndex && !downgraded && (
-                <button
-                  type="button"
-                  className={styles.lucky}
-                  onClick={() => {
-                    setDowngraded(true);
-                    commit(0, chosen, true);
-                  }}
-                >
-                  Got lucky — I guessed
-                </button>
-              )}
-
-              {!readOnly && (
-                <button type="button" className={styles.next} onClick={onNext}>Next</button>
-              )}
-            </>
+            <p className={chosen === presented.correctIndex ? styles.verdictRight : styles.verdictWrong}>
+              {downgraded
+                ? 'Recorded as a miss.'
+                : chosen === presented.correctIndex
+                  ? 'Correct.'
+                  : 'Not quite.'}
+            </p>
           )}
         </div>
       ) : !revealed ? (
@@ -358,56 +335,85 @@ export function Drill({
               </button>
             ))}
           </div>
-          {!readOnly && graded !== null && (
-            <button type="button" className={styles.next} onClick={onNext}>Next</button>
-          )}
-          {/* The interval preview is about a decision that has already been taken, and the
-              schedule has moved on since — showing it on a card being re-read would be a
-              prediction of something that already happened, and a wrong one. */}
-          {!readOnly && (
-            <>
-              <p className={styles.intervals}>
-                Again → later this session. Hard → {describe(previewInterval(state, formIndex, 3, CONFIG))}.
-                {' '}Good → {describe(previewInterval(state, formIndex, 4, CONFIG))}.
-                {' '}Easy → {describe(previewInterval(state, formIndex, 5, CONFIG))}.
-              </p>
-              <p className={styles.honesty}>
-                Good means you knew it. Marking Good when you nearly got there is the one way to break this.
-              </p>
-            </>
+          {/* The interval preview is a decision aid, so it belongs BEFORE the decision. It is
+              absent on a card being re-read: the schedule has moved on since, so showing it
+              would be a prediction of something that has already happened, and a wrong one. */}
+          {!readOnly && graded === null && (
+            <p className={styles.intervals}>
+              Hard {describe(previewInterval(state, formIndex, 3, CONFIG))}
+              {' · '}Good {describe(previewInterval(state, formIndex, 4, CONFIG))}
+              {' · '}Easy {describe(previewInterval(state, formIndex, 5, CONFIG))}
+            </p>
           )}
         </>
       )}
 
       {/*
-        Stepping back through the session. Read-only by construction: `commit` refuses while
-        `readOnly` is set, so there is no path from re-reading a card to a second review of
-        it. Forward is deliberately absent on the live card — going forward from there is
-        dealing a new card, which is what the Next button above already is.
+        The action bar, pinned to the bottom of the screen.
+
+        Everything you can do with a card is on one row, always in the same place, and always
+        reachable — so answering, going back and moving on never require scrolling past an
+        explanation to find a button. If you want to read the panel you scroll it; if you do
+        not, you never touch it. That is the whole point of bounding the panel rather than
+        shortening the content.
+
+        Read-only by construction: `commit` refuses while `readOnly` is set, so there is no
+        path from re-reading a card to recording a second review of it.
       */}
-      {position && (
-        <nav className={styles.pager} aria-label="Cards this session">
+      <div className={styles.actions}>
+        <button
+          type="button"
+          className={styles.act}
+          onClick={onPrevious}
+          disabled={!canPrevious}
+          aria-label="Previous card"
+        >
+          <span aria-hidden="true">‹</span>
+        </button>
+
+        {position && (
+          <span className={styles.position}>{position.index}/{position.total}</span>
+        )}
+
+        {/*
+          Guessing right is the one thing multiple choice cannot tell from knowing. One in
+          four is chance, and a fact you guessed is otherwise treated as proved and pushed out
+          to a long interval — so the schedule quietly fills with things you never knew. This
+          is the only way the app can find out, and it has to come from the reader.
+        */}
+        {!readOnly && mode === 'quiz' && chosen === presented.correctIndex && !downgraded && (
           <button
             type="button"
-            className={styles.page}
-            onClick={onPrevious}
-            disabled={!canPrevious}
+            className={styles.lucky}
+            onClick={() => {
+              setDowngraded(true);
+              commit(0, chosen, true);
+            }}
           >
-            ‹ Previous
+            Got lucky
           </button>
-          <span className={styles.pagePosition}>
-            {position.index} of {position.total}
-          </span>
+        )}
+
+        {readOnly ? (
           <button
             type="button"
-            className={styles.page}
+            className={styles.next}
             onClick={onForward}
             disabled={!canForward}
           >
             Next ›
           </button>
-        </nav>
-      )}
+        ) : (
+          <button
+            type="button"
+            className={styles.next}
+            onClick={onNext}
+            disabled={mode === 'quiz' ? chosen === null : graded === null}
+          >
+            Next ›
+          </button>
+        )}
+      </div>
     </div>
   );
 }

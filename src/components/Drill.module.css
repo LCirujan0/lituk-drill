@@ -1,7 +1,11 @@
+/* Fills the frame, so the action bar can pin to the bottom with `margin-block-start: auto`
+   and the explanation panel is the only thing that ever scrolls. */
 .wrap {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: var(--space-3);
+  min-height: 0;
 }
 
 /* ---- top bar ---------------------------------------------------------- */
@@ -81,40 +85,6 @@
   color: var(--c-text-soft);
   font-size: var(--text-xs);
   font-weight: 600;
-}
-
-/* ---- stepping back through the session -------------------------------- */
-.pager {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  margin-block-start: var(--space-3);
-}
-
-.page {
-  min-height: var(--target-min);
-  padding-inline: var(--space-3);
-  font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--c-accent);
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-}
-
-.page:disabled {
-  color: var(--c-text-muted);
-  opacity: 0.45;
-  cursor: default;
-}
-
-.pagePosition {
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-  font-variant-numeric: tabular-nums;
 }
 
 /* ---- the card --------------------------------------------------------- */
@@ -327,11 +297,51 @@
   color: var(--c-danger);
 }
 
-/* The card holds until this is pressed. Feedback you cannot read is not feedback. */
+/* ---- the action bar --------------------------------------------------- */
+
+/* Everything you can do with a card, on one row, pinned to the bottom. `margin-block-start:
+   auto` inside the flex column is what pins it: the card and its options take what they need
+   and this takes the rest, so it sits in the same place on every card regardless of how long
+   the question is. Reading the explanation is a scroll INSIDE the panel; acting never is. */
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: auto;
+  padding-block-start: var(--space-3);
+}
+
+.act {
+  flex: none;
+  width: var(--target-min);
+  height: var(--target-min);
+  font: inherit;
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--c-accent);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.act:disabled {
+  color: var(--c-text-muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.position {
+  color: var(--c-text-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
 .next {
+  flex: 1;
   min-height: var(--target-min);
-  margin-block-start: var(--space-3);
-  padding: var(--space-3);
+  padding-inline: var(--space-4);
   font: inherit;
   font-size: var(--text-base);
   font-weight: 600;
@@ -340,6 +350,13 @@
   border: 1px solid var(--c-accent);
   border-radius: var(--radius-md);
   cursor: pointer;
+}
+
+.next:disabled {
+  background: var(--c-fill);
+  border-color: var(--c-border);
+  color: var(--c-text-muted);
+  cursor: default;
 }
 
 .gradeChosen {
@@ -398,12 +415,11 @@
   border-color: color-mix(in srgb, var(--c-grade-easy) 40%, transparent);
 }
 
-.intervals,
-.honesty {
+.intervals {
   margin: 0;
   color: var(--c-text-muted);
-  font-size: var(--text-sm);
-  line-height: var(--leading-normal);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- empty state ------------------------------------------------------ */
@@ -444,14 +460,14 @@
   cursor: pointer;
 }
 
-/* Deliberately quieter than Next: it should be easy to reach and never the obvious button,
-   because most correct answers are not guesses. */
+/* Deliberately quieter than Next, and narrower: it should be easy to reach and never the
+   obvious button, because most correct answers are not guesses. */
 .lucky {
+  flex: none;
   min-height: var(--target-min);
-  margin-block-end: var(--space-2);
-  padding: var(--space-3);
+  padding-inline: var(--space-3);
   font: inherit;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--c-caution-text);
   background: var(--c-surface);

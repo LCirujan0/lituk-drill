@@ -36,7 +36,6 @@ export function Progress({
   return (
     <>
       <header className={styles.bar}>
-        <button type="button" className={styles.back} onClick={onExit} aria-label="Back">‹</button>
         <h1 className={styles.title}>Progress</h1>
       </header>
 

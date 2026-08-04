@@ -93,6 +93,11 @@
   /* The progress hairline on a chapter cell. Small enough to read as a rule rather than a
      bar, which is the point: it is a hint at the shape of your progress, not a gauge. */
   --bar-height: 4px;
+
+  /* A section tile on the drill tab. Bigger than the 44px minimum on purpose: these are the
+     five things reached most often, one-handed, and the extra height is free once the copy
+     that used to sit under each one is gone. */
+  --target-lg: 60px;
   --radius-md: 11px;
   --radius-lg: 14px;
 

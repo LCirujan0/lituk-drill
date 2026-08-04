@@ -12,11 +12,10 @@
 import { TIMELINE } from '@/data/timeline';
 import styles from './Timeline.module.css';
 
-export function Timeline({ onExit }: { readonly onExit: () => void }) {
+export function Timeline() {
   return (
     <>
       <header className={styles.bar}>
-        <button type="button" className={styles.back} onClick={onExit} aria-label="Back">‹</button>
         <h1 className={styles.title}>The spine</h1>
       </header>
 

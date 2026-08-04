@@ -7,7 +7,7 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | App usable end to end. Sync live (D-030); cards can be stepped back through |
+| Phase | Three tabs, a pinned card action bar, sync live (D-030) |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
 | Tests | **207 passing across 9 files** — 162 domain, 45 in jsdom (`app` 34, `store-sync` 11) |
 | Deck | **528 facts · 1,582 forms** · 5 chapters · every fact carries an explanation |
@@ -52,7 +52,7 @@ deck grew to 528; the shape holds, the absolute numbers are now optimistic.
 No readiness model (S4) and no mocks (D-017). **No docs-consistency test** — deferred, not
 skipped, and L-022 is what its absence costs. No end-to-end tests against a real browser:
 component tests run in jsdom, so anything depending on real layout, touch targets or Safari
-behaviour is unverified. The nav is still one screen with a Back button rather than tabs.
+behaviour is unverified. 
 
 ## Next, in order
 

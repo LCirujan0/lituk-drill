@@ -2,6 +2,45 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — tabs, a pinned action bar, and the copy cut back
+
+The owner's note: *"I'm the only user, so explanations are unnecessary most of the time."*
+Everything on the drill tab that explained what a section does has gone. Those captions were
+read once and then cost a line of screen for ever. A section title that needs a caption is a
+naming problem, not a case for a caption.
+
+**A tab bar, so Progress and the chronology stop being detours.** They were behind a Back
+button, which made every visit a round trip through the home screen and made the home screen
+carry two links it did not need. They are tabs now, and their Back buttons are gone with the
+journey they belonged to. The bar is **hidden while a card is on screen** — a stray tap there
+costs you your place mid-question, and the bottom of that screen belongs to the card.
+
+**One action bar, pinned to the bottom of the card.** Previous, Got lucky and Next sit on a
+single row in the same place on every card, so acting never means scrolling past an
+explanation to find a button. That is the point of bounding the panel rather than shortening
+it: read it if you want, ignore it if you do not, and the buttons are where they always were.
+
+Two small consequences worth naming. The exit is a **cross** rather than a back arrow, because
+the left chevron now means "the previous card" and one glyph cannot mean two things on one
+screen. And the interval preview moved to *before* grading — it is a decision aid, so showing
+it after the decision was backwards.
+
+**Mastered is a new section, and it is the only one that can take the headline down.**
+Everything else on that screen only ever rises. "Known every way" is a claim that decays
+silently, and nothing was ever retesting it. Mastered drills exactly those facts, as practice
+(D-003), so a success changes nothing and a miss lapses the fact and drops it out of the
+count. That is what makes the number worth reading.
+
+**Progress and the chronology now scroll inside the frame.** They hold 1,100px and 5,000px of
+content and there is no honest way to fit those in 852px — but they were being *clipped*
+rather than scrolled, which is worse, because clipped content is simply unreachable. The page
+itself still never moves.
+
+Measured at 393x852: zero page overflow anywhere, zero frame clipping on any screen, the two
+reference tabs scrolling internally by 5,050px and 1,136px, and no touch target under 44px
+except the Quiz/Recall toggle at 32px — which is above WCAG 2.2 AA's 24px minimum and is a
+segmented control rather than a primary action.
+
 ## 2026-08-04 — the explanation standard, and a check that reads the handbook
 
 Two pieces that exist to make the explanation rewrite honest before any of it is written.
