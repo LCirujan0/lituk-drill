@@ -82,6 +82,8 @@
   --text-lg: 19px;
   --text-xl: 21px;
   --text-2xl: 26px;
+  /* Display size, used only for the one number the whole app is about. */
+  --text-3xl: 44px;
   --leading-tight: 1.35;
   --leading-normal: 1.5;
 

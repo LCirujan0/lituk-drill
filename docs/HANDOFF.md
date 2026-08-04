@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
-| Tests | 122 passing across 5 files |
+| Tests | 122 passing across 5 files (domain only — no UI tests yet) |
 | Deck | **443 facts · 1,327 forms** · 5 chapters (410/1,228 migrated from v0 + 33 added) |
 | Migration frontier | none — no database provisioned yet |
 | Next decision id | D-025 |
@@ -19,7 +19,7 @@ restates one. A hand-copied live number drifts within a session.
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | Amber facts | 1 unresolved (was 12) |
 | CI | Green — 3 required checks |
-| Deployed | **v0 at https://lituk-drill.vercel.app** (D-022). v1 has no project yet |
+| Deployed | **v0 at https://lituk-drill.vercel.app** (D-022). v1 builds and runs; no project yet |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
 
 ## What exists
@@ -43,10 +43,11 @@ model is harsher in the tail, which is stated rather than tuned away.
 
 ## What does not exist yet
 
-No UI beyond a skeleton page. No database, no sync endpoint, no readiness model, no
-practice mode, no mocks, no generated distractors, no timeline screen. No Vercel project
-for v1. **No docs-consistency test** — the kit asks for one and it is deferred, not
-skipped; it needs a schema and an `.env.example` to check against first.
+No database and no sync endpoint — the app is local-only, so the two devices do not yet
+share a schedule. No readiness model (S4) and no mocks (D-017). **No docs-consistency
+test** — deferred, not skipped; it needs a schema and an `.env.example` to check against.
+No component or end-to-end tests: the UI was smoke-checked by hand in a mobile viewport,
+which is weaker than the domain's coverage and should not stay that way.
 
 ## Next, in order
 
