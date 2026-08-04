@@ -47,6 +47,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What term describes the first people who lived in Britain during the Stone Age?",
     answer: "Hunter-gatherers",
     forms: [
@@ -121,6 +122,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which island group is the prehistoric village of Skara Brae found?",
     answer: "Orkney",
     forms: [
@@ -158,6 +160,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What is Skara Brae's claim to fame?",
     answer: "Best-preserved prehistoric village in northern Europe",
     forms: [
@@ -195,6 +198,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which English county does Stonehenge stand?",
     answer: "Wiltshire",
     forms: [
@@ -232,6 +236,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "To which prehistoric age is Stonehenge usually assigned?",
     answer: "The Bronze Age",
     forms: [
@@ -269,6 +274,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "About how many years ago did people in Britain learn to make bronze?",
     answer: "About 4,000 years ago",
     forms: [
@@ -306,6 +312,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Dorset site is the best-known Iron Age hill fort in Britain?",
     answer: "Maiden Castle",
     forms: [
@@ -343,6 +350,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Prehistory",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "To which language family did the language of Iron Age Britain belong?",
     answer: "Celtic",
     forms: [
@@ -380,6 +388,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Julius Caesar lead an unsuccessful invasion of Britain?",
     answer: "55 BC",
     forms: [
@@ -417,6 +426,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Romans successfully invade Britain?",
     answer: "AD 43",
     forms: [
@@ -454,6 +464,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Roman emperor ordered the successful invasion of Britain?",
     answer: "Claudius",
     forms: [
@@ -491,6 +502,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which tribe did Boudicca lead against the Romans?",
     answer: "The Iceni",
     forms: [
@@ -528,6 +540,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Where in London does a well-known statue of Boudicca stand?",
     answer: "On Westminster Bridge",
     forms: [
@@ -565,6 +578,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Hadrian's Wall begun?",
     answer: "AD 122",
     forms: [
@@ -602,6 +616,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which peoples was Hadrian's Wall built to keep out?",
     answer: "The Picts",
     forms: [
@@ -639,6 +654,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which part of Britain did the Romans never conquer?",
     answer: "Scotland",
     forms: [
@@ -676,6 +692,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Roman army leave Britain?",
     answer: "AD 410",
     forms: [
@@ -713,6 +730,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Romans",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Roughly how long did the Roman occupation of Britain last?",
     answer: "About 400 years",
     forms: [
@@ -750,6 +768,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which three northern European tribes invaded Britain after the Romans left?",
     answer: "Jutes, Angles and Saxons",
     forms: [
@@ -787,6 +806,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "By roughly which year were Anglo-Saxon kingdoms established in Britain?",
     answer: "AD 600",
     forms: [
@@ -824,6 +844,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which English county is the Anglo-Saxon burial site of Sutton Hoo?",
     answer: "Suffolk",
     forms: [
@@ -898,6 +919,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What position did St Augustine go on to hold?",
     answer: "First Archbishop of Canterbury",
     forms: [
@@ -935,6 +957,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which Scottish island did St Columba found a monastery?",
     answer: "Iona",
     forms: [
@@ -972,6 +995,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Vikings",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Vikings first raid Britain?",
     answer: "AD 789",
     forms: [
@@ -1009,6 +1033,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Vikings",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "From which two countries did the Vikings come?",
     answer: "Denmark and Norway",
     forms: [
@@ -1046,6 +1071,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Vikings",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which English king defeated the Vikings and forced them to make peace?",
     answer: "Alfred the Great",
     forms: [
@@ -1120,6 +1146,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Vikings",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who united the Pictish and Scottish kingdoms against the Vikings?",
     answer: "Kenneth MacAlpin",
     forms: [
@@ -1157,6 +1184,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Vikings",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who was the first Danish king to rule England?",
     answer: "Cnut (Canute)",
     forms: [
@@ -1194,6 +1222,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Norman Conquest",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Hastings fought?",
     answer: "1066",
     forms: [
@@ -1231,6 +1260,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Norman Conquest",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who defeated the English at the Battle of Hastings?",
     answer: "William, Duke of Normandy",
     forms: [
@@ -1268,6 +1298,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Norman Conquest",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which English king was killed at the Battle of Hastings?",
     answer: "Harold",
     forms: [
@@ -1305,6 +1336,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Norman Conquest",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which famous embroidery commemorates the Norman Conquest?",
     answer: "The Bayeux Tapestry",
     forms: [
@@ -1379,6 +1411,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Magna Carta agreed?",
     answer: "1215",
     forms: [
@@ -1416,6 +1449,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which king was forced to agree to Magna Carta?",
     answer: "King John",
     forms: [
@@ -1490,6 +1524,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What does the name 'Magna Carta' mean in English?",
     answer: "The Great Charter",
     forms: [
@@ -1527,6 +1562,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What was the name of the area of Ireland ruled by the English by 1200?",
     answer: "The Pale",
     forms: [
@@ -1564,6 +1600,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Statute of Rhuddlan passed, annexing Wales?",
     answer: "1284",
     forms: [
@@ -1601,6 +1638,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which English king introduced the Statute of Rhuddlan?",
     answer: "Edward I",
     forms: [
@@ -1638,6 +1676,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Scots defeat the English at Bannockburn?",
     answer: "1314",
     forms: [
@@ -1675,6 +1714,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Scottish king led the victory at Bannockburn?",
     answer: "Robert the Bruce",
     forms: [
@@ -1749,6 +1789,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "How many years did the Hundred Years War actually last?",
     answer: "116 years",
     forms: [
@@ -1786,6 +1827,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Agincourt fought?",
     answer: "1415",
     forms: [
@@ -1823,6 +1865,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which English king won the Battle of Agincourt?",
     answer: "Henry V",
     forms: [
@@ -1860,6 +1903,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Black Death reach England?",
     answer: "1348",
     forms: [
@@ -1897,6 +1941,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Roughly what fraction of England's population died in the Black Death?",
     answer: "About one third",
     forms: [
@@ -1934,6 +1979,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Wars of the Roses begin?",
     answer: "1455",
     forms: [
@@ -1971,6 +2017,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which flower was the emblem of the House of Lancaster?",
     answer: "A red rose",
     forms: [
@@ -2008,6 +2055,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which flower was the emblem of the House of York?",
     answer: "A white rose",
     forms: [
@@ -2045,6 +2093,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Bosworth Field fought?",
     answer: "1485",
     forms: [
@@ -2082,6 +2131,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which king was killed at the Battle of Bosworth Field?",
     answer: "Richard III",
     forms: [
@@ -2119,6 +2169,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who became king after the Battle of Bosworth Field?",
     answer: "Henry VII",
     forms: [
@@ -2156,6 +2207,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Whom did Henry VII marry to unite the warring houses?",
     answer: "Elizabeth of York",
     forms: [
@@ -2230,6 +2282,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "How many Houses, or Estates, did the Scottish Parliament have?",
     answer: "Three",
     forms: [
@@ -2304,6 +2357,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "How many wives did Henry VIII have?",
     answer: "Six",
     forms: [
@@ -2341,6 +2395,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who was Henry VIII's first wife?",
     answer: "Catherine of Aragon",
     forms: [
@@ -2378,6 +2433,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which of Henry VIII's wives was the mother of Mary I?",
     answer: "Catherine of Aragon",
     forms: [
@@ -2415,6 +2471,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which of Henry VIII's wives was the mother of Elizabeth I?",
     answer: "Anne Boleyn",
     forms: [
@@ -2452,6 +2509,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which of Henry VIII's wives gave birth to his son Edward?",
     answer: "Jane Seymour",
     forms: [
@@ -2489,6 +2547,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which of Henry VIII's wives was a German princess?",
     answer: "Anne of Cleves",
     forms: [
@@ -2526,6 +2585,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which wife of Henry VIII was a cousin of Anne Boleyn and was also executed?",
     answer: "Catherine Howard",
     forms: [
@@ -2563,6 +2623,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which of Henry VIII's wives outlived him?",
     answer: "Catherine Parr",
     forms: [
@@ -2674,6 +2735,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Reformation",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What church did Henry VIII establish with himself at its head?",
     answer: "The Church of England",
     forms: [
@@ -2711,6 +2773,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Wales formally united with England by law?",
     answer: "1536",
     forms: [
@@ -2748,6 +2811,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Henry VIII take the title King of Ireland?",
     answer: "1541",
     forms: [
@@ -2785,6 +2849,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "At what age did Edward VI become king?",
     answer: "Nine",
     forms: [
@@ -2822,6 +2887,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which English-language prayer book was introduced in Edward VI's reign?",
     answer: "The Book of Common Prayer",
     forms: [
@@ -2859,6 +2925,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "By what nickname is Mary I remembered?",
     answer: "Bloody Mary",
     forms: [
@@ -2896,6 +2963,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Elizabeth I become queen?",
     answer: "1558",
     forms: [
@@ -2933,6 +3001,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Elizabeth I's reign end?",
     answer: "1603",
     forms: [
@@ -3007,6 +3076,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Spanish Armada defeated?",
     answer: "1588",
     forms: [
@@ -3044,6 +3114,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was William Shakespeare born?",
     answer: "1564",
     forms: [
@@ -3081,6 +3152,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Reformation",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Scottish Parliament abolish the Pope's authority?",
     answer: "1560",
     forms: [
@@ -3118,6 +3190,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Reformation",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What form of church government did the Church of Scotland adopt?",
     answer: "Presbyterian (no bishops)",
     forms: [
@@ -3192,6 +3265,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Tudors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Mary Queen of Scots executed?",
     answer: "1587",
     forms: [
@@ -3229,6 +3303,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Stuarts",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did James VI of Scotland also become King of England?",
     answer: "1603",
     forms: [
@@ -3266,6 +3341,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Stuarts",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What title did James VI of Scotland take in England?",
     answer: "James I",
     forms: [
@@ -3303,6 +3379,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Stuarts",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Gunpowder Plot?",
     answer: "1605",
     forms: [
@@ -3377,6 +3454,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Stuarts",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the King James Bible published?",
     answer: "1611",
     forms: [
@@ -3414,6 +3492,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the English Civil War begin?",
     answer: "1642",
     forms: [
@@ -3451,6 +3530,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "By what nickname were the supporters of Charles I known?",
     answer: "Cavaliers",
     forms: [
@@ -3488,6 +3568,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "By what nickname were the supporters of Parliament known?",
     answer: "Roundheads",
     forms: [
@@ -3525,6 +3606,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Charles I executed?",
     answer: "1649",
     forms: [
@@ -3562,6 +3644,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What was England called after the execution of Charles I?",
     answer: "The Commonwealth",
     forms: [
@@ -3599,6 +3682,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Civil War",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What title did Oliver Cromwell take?",
     answer: "Lord Protector",
     forms: [
@@ -3673,6 +3757,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the monarchy restored under Charles II?",
     answer: "1660",
     forms: [
@@ -3710,6 +3795,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Great Plague strike London?",
     answer: "1665",
     forms: [
@@ -3747,6 +3833,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Great Fire of London?",
     answer: "1666",
     forms: [
@@ -3784,6 +3871,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who designed the rebuilt St Paul's Cathedral?",
     answer: "Sir Christopher Wren",
     forms: [
@@ -3821,6 +3909,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Habeas Corpus Act passed?",
     answer: "1679",
     forms: [
@@ -3932,6 +4021,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Restoration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which two political groupings emerged in the later Stuart period?",
     answer: "Whigs and Tories",
     forms: [
@@ -3969,6 +4059,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Glorious Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Glorious Revolution?",
     answer: "1688",
     forms: [
@@ -4006,6 +4097,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Glorious Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Dutch ruler was invited to take the English throne in 1688?",
     answer: "William of Orange",
     forms: [
@@ -4043,6 +4135,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Glorious Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which king fled to France during the Glorious Revolution?",
     answer: "James II",
     forms: [
@@ -4080,6 +4173,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Glorious Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of the Boyne fought in Ireland?",
     answer: "1690",
     forms: [
@@ -4117,6 +4211,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Glorious Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Bill of Rights passed?",
     answer: "1689",
     forms: [
@@ -4154,6 +4249,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Union",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Act of Union that joined England and Scotland?",
     answer: "1707",
     forms: [
@@ -4191,6 +4287,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Union",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What was the new state created by the 1707 Act of Union called?",
     answer: "The Kingdom of Great Britain",
     forms: [
@@ -4228,6 +4325,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Jacobites",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What name was given to supporters of the exiled Stuart claim?",
     answer: "Jacobites",
     forms: [
@@ -4265,6 +4363,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Jacobites",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Bonnie Prince Charlie land in Scotland to lead a rising?",
     answer: "1745",
     forms: [
@@ -4302,6 +4401,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Jacobites",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What was Bonnie Prince Charlie's real name?",
     answer: "Charles Edward Stuart",
     forms: [
@@ -4339,6 +4439,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Jacobites",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Culloden fought?",
     answer: "1746",
     forms: [
@@ -4376,6 +4477,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Politics",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Sir Robert Walpole become Britain's first Prime Minister?",
     answer: "1721",
     forms: [
@@ -4413,6 +4515,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Enlightenment",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Scottish economist wrote The Wealth of Nations?",
     answer: "Adam Smith",
     forms: [
@@ -4450,6 +4553,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Enlightenment",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Scottish thinker is best known as a philosopher of the Enlightenment?",
     answer: "David Hume",
     forms: [
@@ -4487,6 +4591,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Scottish engineer developed the steam engine used to power machinery?",
     answer: "James Watt",
     forms: [
@@ -4524,6 +4629,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which pioneer improved the carding machine and made factories efficient?",
     answer: "Richard Arkwright",
     forms: [
@@ -4561,6 +4667,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which engineer built the Great Western Railway?",
     answer: "Isambard Kingdom Brunel",
     forms: [
@@ -4598,6 +4705,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Industrial Revolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which was the first country in the world to industrialise?",
     answer: "Britain",
     forms: [
@@ -4672,6 +4780,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Empire",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the American colonies declare independence?",
     answer: "1776",
     forms: [
@@ -4709,6 +4818,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Empire",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Britain formally accept American independence?",
     answer: "1783",
     forms: [
@@ -4746,6 +4856,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Union",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Act of Union with Ireland take effect?",
     answer: "1801",
     forms: [
@@ -4783,6 +4894,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Napoleonic Wars",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Trafalgar?",
     answer: "1805",
     forms: [
@@ -4820,6 +4932,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Napoleonic Wars",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which admiral commanded the British fleet at Trafalgar and died there?",
     answer: "Admiral Nelson",
     forms: [
@@ -4857,6 +4970,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Napoleonic Wars",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What was the name of Nelson's flagship at Trafalgar?",
     answer: "HMS Victory",
     forms: [
@@ -4894,6 +5008,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Napoleonic Wars",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Waterloo?",
     answer: "1815",
     forms: [
@@ -4931,6 +5046,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Napoleonic Wars",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which British commander defeated Napoleon at Waterloo?",
     answer: "The Duke of Wellington",
     forms: [
@@ -4968,6 +5084,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Slavery",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Parliament make the slave trade illegal in British ships?",
     answer: "1807",
     forms: [
@@ -5005,6 +5122,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Slavery",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was slavery abolished throughout the British Empire?",
     answer: "1833",
     forms: [
@@ -5042,6 +5160,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Slavery",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which MP led the parliamentary campaign against the slave trade?",
     answer: "William Wilberforce",
     forms: [
@@ -5079,6 +5198,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Politics",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Reform Act passed?",
     answer: "1832",
     forms: [
@@ -5116,6 +5236,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Politics",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What were the corrupt parliamentary seats abolished in 1832 called?",
     answer: "Rotten boroughs",
     forms: [
@@ -5153,6 +5274,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Queen Victoria come to the throne?",
     answer: "1837",
     forms: [
@@ -5190,6 +5312,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Queen Victoria die?",
     answer: "1901",
     forms: [
@@ -5227,6 +5350,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Empire",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "By 1900, roughly how many people lived in the British Empire?",
     answer: "More than 400 million",
     forms: [
@@ -5264,6 +5388,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Great Exhibition held in London?",
     answer: "1851",
     forms: [
@@ -5301,6 +5426,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which years was the Crimean War fought?",
     answer: "1853-1856",
     forms: [
@@ -5338,6 +5464,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Florence Nightingale travel to Turkey to nurse the wounded?",
     answer: "1854",
     forms: [
@@ -5375,6 +5502,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Florence Nightingale open her training school for nurses?",
     answer: "1860",
     forms: [
@@ -5412,6 +5540,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which years was the Boer War fought?",
     answer: "1899-1902",
     forms: [
@@ -5449,6 +5578,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Victorians",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which part of the world was the Boer War fought?",
     answer: "South Africa",
     forms: [
@@ -5523,6 +5653,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWI",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the First World War begin?",
     answer: "1914",
     forms: [
@@ -5560,6 +5691,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWI",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Whose assassination helped trigger the First World War?",
     answer: "Archduke Franz Ferdinand",
     forms: [
@@ -5597,6 +5729,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWI",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of the Somme fought?",
     answer: "1916",
     forms: [
@@ -5671,6 +5804,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWI",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which date did the First World War end?",
     answer: "11 November 1918",
     forms: [
@@ -5708,6 +5842,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWI",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "At what time of day did the fighting stop on 11 November 1918?",
     answer: "11 am",
     forms: [
@@ -5745,6 +5880,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Easter Rising take place in Dublin?",
     answer: "1916",
     forms: [
@@ -5782,6 +5918,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Irish Free State formed?",
     answer: "1922",
     forms: [
@@ -5819,6 +5956,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Ireland become a republic?",
     answer: "1949",
     forms: [
@@ -5856,6 +5994,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Suffrage",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did some women in Britain first win the right to vote?",
     answer: "1918",
     forms: [
@@ -5893,6 +6032,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Suffrage",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which women were given the vote in 1918?",
     answer: "Women over 30 who met a property qualification",
     forms: [
@@ -5930,6 +6070,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Suffrage",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did women gain the vote on the same terms as men?",
     answer: "1928",
     forms: [
@@ -5967,6 +6108,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Suffrage",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "At what age could women vote from 1928?",
     answer: "21",
     forms: [
@@ -6004,6 +6146,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Suffrage",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who founded the Women's Franchise League and led the militant suffragettes?",
     answer: "Emmeline Pankhurst",
     forms: [
@@ -6041,6 +6184,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Interwar",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the General Strike?",
     answer: "1926",
     forms: [
@@ -6078,6 +6222,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Alexander Fleming discover penicillin?",
     answer: "1928",
     forms: [
@@ -6115,6 +6260,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which date did Germany invade Poland, starting the Second World War?",
     answer: "1 September 1939",
     forms: [
@@ -6189,6 +6335,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Winston Churchill become Prime Minister?",
     answer: "1940",
     forms: [
@@ -6226,6 +6373,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the evacuation from Dunkirk take place?",
     answer: "1940",
     forms: [
@@ -6300,6 +6448,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Battle of Britain fought?",
     answer: "1940",
     forms: [
@@ -6337,6 +6486,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What name is given to the German bombing of British cities in 1940-41?",
     answer: "The Blitz",
     forms: [
@@ -6374,6 +6524,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which date did the D-Day landings take place?",
     answer: "6 June 1944",
     forms: [
@@ -6411,6 +6562,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which region of France did the D-Day landings take place?",
     answer: "Normandy",
     forms: [
@@ -6448,6 +6600,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which date did the war in Europe end (VE Day)?",
     answer: "8 May 1945",
     forms: [
@@ -6485,6 +6638,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "WWII",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "On which two Japanese cities were atomic bombs dropped in 1945?",
     answer: "Hiroshima and Nagasaki",
     forms: [
@@ -6522,6 +6676,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Welfare State",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Beveridge Report published?",
     answer: "1942",
     forms: [
@@ -6559,6 +6714,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Welfare State",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Labour leader became Prime Minister after the 1945 election?",
     answer: "Clement Attlee",
     forms: [
@@ -6596,6 +6752,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Welfare State",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the National Health Service created?",
     answer: "1948",
     forms: [
@@ -6633,6 +6790,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Welfare State",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Minister of Health led the creation of the NHS?",
     answer: "Aneurin Bevan",
     forms: [
@@ -6707,6 +6865,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Post-war",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did India, Pakistan and Ceylon gain independence?",
     answer: "1947",
     forms: [
@@ -6744,6 +6903,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Immigration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the British Nationality Act give Commonwealth citizens the right to come to Britain?",
     answer: "1948",
     forms: [
@@ -6781,6 +6941,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Immigration",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "After 1945, Britain recruited workers especially from which region?",
     answer: "The West Indies",
     forms: [
@@ -6855,6 +7016,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Northern Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which decade did the Troubles in Northern Ireland begin?",
     answer: "The late 1960s",
     forms: [
@@ -6892,6 +7054,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Northern Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Northern Ireland Parliament suspended and direct rule imposed?",
     answer: "1972",
     forms: [
@@ -6929,6 +7092,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Northern Ireland",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was the Good Friday Agreement signed?",
     answer: "1998",
     forms: [
@@ -6966,6 +7130,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Europe",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the UK join the European Economic Community?",
     answer: "1973",
     forms: [
@@ -7003,6 +7168,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Modern Britain",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Margaret Thatcher become Prime Minister?",
     answer: "1979",
     forms: [
@@ -7040,6 +7206,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Modern Britain",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "What distinction did Margaret Thatcher hold on becoming Prime Minister?",
     answer: "Britain's first woman Prime Minister",
     forms: [
@@ -7114,6 +7281,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Modern Britain",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Tony Blair become Prime Minister?",
     answer: "1997",
     forms: [
@@ -7151,6 +7319,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Devolution",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the Scottish Parliament and Welsh Assembly first meet?",
     answer: "1999",
     forms: [
@@ -7188,6 +7357,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Which Scottish inventor demonstrated the first working television in 1924?",
     answer: "John Logie Baird",
     forms: [
@@ -7225,6 +7395,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who developed radar in 1935?",
     answer: "Sir Robert Watson-Watt",
     forms: [
@@ -7262,6 +7433,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who invented the jet engine in Britain in 1930?",
     answer: "Sir Frank Whittle",
     forms: [
@@ -7299,6 +7471,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did Crick and Watson describe the structure of DNA?",
     answer: "1953",
     forms: [
@@ -7336,6 +7509,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year was Dolly the sheep, the first cloned mammal, created?",
     answer: "1996",
     forms: [
@@ -7373,6 +7547,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "Who invented the World Wide Web?",
     answer: "Sir Tim Berners-Lee",
     forms: [
@@ -7410,6 +7585,7 @@ export const CHAPTER_3: readonly Fact[] = [
     tag: "Inventors",
     chapter: 3,
     verify: false,
+    source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "In which year did the World Wide Web become available to the wider world?",
     answer: "1990",
     forms: [

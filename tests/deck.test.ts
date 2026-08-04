@@ -104,8 +104,12 @@ describe('sourcing — R3', () => {
   it('cites a source for every fact whose answer was corrected or confirmed', () => {
     // Facts checked against the handbook carry a citation. A corrected fact without one is
     // an assertion, not a correction — and this deck has already shipped one wrong answer.
+    //
+    // 129 -> 486 when the 399 inherited facts were checked mechanically against the handbook
+    // text rather than by eye: 346 of them corroborated. The 53 that did not are with the
+    // owner. This is a floor, so it ratchets — sourcing can only go up.
     const sourced = DECK.filter((f) => f.source);
-    expect(sourced.length).toBeGreaterThanOrEqual(129);
+    expect(sourced.length).toBeGreaterThanOrEqual(486);
     for (const fact of sourced) expect(fact.source!.trim().length).toBeGreaterThan(10);
   });
 

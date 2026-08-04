@@ -10,6 +10,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Demographics",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "How often is a census taken in the UK?",
     answer: "Every 10 years",
     forms: [
@@ -85,6 +86,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Demographics",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What is meant by saying the UK has an ageing population?",
     answer: "People are living longer, so there are more elderly people",
     forms: [
@@ -122,6 +124,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Religion",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which church is the officially established church in England?",
     answer: "The Church of England",
     forms: [
@@ -196,6 +199,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Religion",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who is the most senior clergyman in the Church of England?",
     answer: "The Archbishop of Canterbury",
     forms: [
@@ -233,6 +237,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Religion",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What form of church government does the Church of Scotland have?",
     answer: "Presbyterian",
     forms: [
@@ -270,6 +275,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which two days over Christmas are bank holidays across the UK?",
     answer: "Christmas Day and Boxing Day",
     forms: [
@@ -344,6 +350,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "How many days does the Christian season of Lent last?",
     answer: "40 days",
     forms: [
@@ -381,6 +388,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which two days at Easter are public holidays in England, Wales and NI?",
     answer: "Good Friday and Easter Monday",
     forms: [
@@ -418,6 +426,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which two faith communities celebrate Diwali?",
     answer: "Hindus and Sikhs",
     forms: [
@@ -455,6 +464,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "How many days does the Jewish festival of Hanukkah last?",
     answer: "Eight days",
     forms: [
@@ -492,6 +502,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which Muslim festival marks the end of Ramadan?",
     answer: "Eid al-Fitr",
     forms: [
@@ -566,6 +577,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Festivals",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "On what date is the Sikh festival of Vaisakhi normally celebrated?",
     answer: "14 April",
     forms: [
@@ -603,6 +615,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What is the Scottish name for New Year's Eve celebrations?",
     answer: "Hogmanay",
     forms: [
@@ -640,6 +653,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Until what time of day are April Fool's jokes traditionally allowed?",
     answer: "Midday",
     forms: [
@@ -677,6 +691,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "When does Mothering Sunday fall?",
     answer: "The Sunday three weeks before Easter",
     forms: [
@@ -714,6 +729,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "When is Father's Day in the UK?",
     answer: "The third Sunday in June",
     forms: [
@@ -751,6 +767,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "On what date is Halloween?",
     answer: "31 October",
     forms: [
@@ -788,6 +805,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "On what date is Bonfire Night?",
     answer: "5 November",
     forms: [
@@ -825,6 +843,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Traditions",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "On what date is Remembrance Day?",
     answer: "11 November",
     forms: [
@@ -862,6 +881,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who was the first person to run a mile in under four minutes?",
     answer: "Sir Roger Bannister, in 1954",
     forms: [
@@ -899,6 +919,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which Scottish driver won three Formula 1 world championships?",
     answer: "Sir Jackie Stewart",
     forms: [
@@ -936,6 +957,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who captained the England football team that won the 1966 World Cup?",
     answer: "Bobby Moore",
     forms: [
@@ -973,6 +995,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British ice dancers won Olympic gold in 1984 with their Bolero routine?",
     answer: "Jayne Torvill and Christopher Dean",
     forms: [
@@ -1010,6 +1033,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British rower won gold at five consecutive Olympic Games?",
     answer: "Sir Steve Redgrave",
     forms: [
@@ -1047,6 +1071,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which two track titles did Dame Kelly Holmes win at the 2004 Olympics?",
     answer: "800 metres and 1500 metres",
     forms: [
@@ -1084,6 +1109,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which sport did Sir Chris Hoy win his six Olympic gold medals?",
     answer: "Cycling",
     forms: [
@@ -1159,6 +1185,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which event did Jessica Ennis win gold in at the 2012 Olympics?",
     answer: "The heptathlon",
     forms: [
@@ -1234,6 +1261,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Where did the Paralympic movement begin?",
     answer: "Stoke Mandeville Hospital in Buckinghamshire",
     forms: [
@@ -1271,6 +1299,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which two countries compete for the Ashes, and when was it first played?",
     answer: "England and Australia, 1882",
     forms: [
@@ -1308,6 +1337,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which six teams take part in the rugby union Six Nations?",
     answer: "England, Scotland, Wales, Ireland, France and Italy",
     forms: [
@@ -1345,6 +1375,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What is distinctive about Wimbledon among the tennis Grand Slams?",
     answer: "It is the oldest and the only one played on grass",
     forms: [
@@ -1382,6 +1413,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which country did golf originate, and in which century?",
     answer: "Scotland, in the 15th century",
     forms: [
@@ -1419,6 +1451,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "At which racecourse is the Grand National run?",
     answer: "Aintree, near Liverpool",
     forms: [
@@ -1456,6 +1489,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which county is Royal Ascot held?",
     answer: "Berkshire",
     forms: [
@@ -1493,6 +1527,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which organisation runs the Proms, and where are the concerts held?",
     answer: "The BBC, at the Royal Albert Hall",
     forms: [
@@ -1530,6 +1565,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which German-born composer became British in 1727 and wrote Messiah?",
     answer: "George Frederick Handel",
     forms: [
@@ -1567,6 +1603,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who wrote the Pomp and Circumstance Marches?",
     answer: "Sir Edward Elgar",
     forms: [
@@ -1604,6 +1641,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who wrote the opera Peter Grimes and founded the Aldeburgh festival?",
     answer: "Benjamin Britten",
     forms: [
@@ -1641,6 +1679,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What does the Mercury Music Prize reward?",
     answer: "The best album from the UK and Ireland each year",
     forms: [
@@ -1678,6 +1717,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Music",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which industry body organises the Brit Awards?",
     answer: "The British Phonographic Industry",
     forms: [
@@ -1715,6 +1755,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Theatre",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which city is the Fringe, the world's largest arts festival, held?",
     answer: "Edinburgh",
     forms: [
@@ -1752,6 +1793,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Theatre",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which awards honour the best of British theatre each year?",
     answer: "The Laurence Olivier Awards",
     forms: [
@@ -1789,6 +1831,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Theatre",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In pantomime, who traditionally plays the Dame and the principal boy?",
     answer: "A man plays the Dame and a woman plays the principal boy",
     forms: [
@@ -1826,6 +1869,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Theatre",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British composer wrote Cats, Evita and The Phantom of the Opera?",
     answer: "Andrew Lloyd Webber",
     forms: [
@@ -1863,6 +1907,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Art",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British landscape painter, who died in 1851, pioneered watercolour and light?",
     answer: "Joseph Turner",
     forms: [
@@ -1900,6 +1945,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Art",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British sculptor is known for large abstract bronze figures?",
     answer: "Henry Moore",
     forms: [
@@ -1937,6 +1983,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Art",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which year was the Turner Prize established?",
     answer: "1984",
     forms: [
@@ -1974,6 +2021,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Architecture",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which architect designed the Cenotaph in Whitehall?",
     answer: "Sir Edwin Lutyens",
     forms: [
@@ -2011,6 +2059,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Design",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which 18th-century designer is famous for his furniture?",
     answer: "Thomas Chippendale",
     forms: [
@@ -2048,6 +2097,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Design",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British fashion designer is most associated with the 1960s miniskirt?",
     answer: "Mary Quant",
     forms: [
@@ -2085,6 +2135,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Literature",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which year was the Booker Prize for Fiction first established?",
     answer: "1968",
     forms: [
@@ -2122,6 +2173,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Literature",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who wrote Pride and Prejudice?",
     answer: "Jane Austen",
     forms: [
@@ -2159,6 +2211,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Literature",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who wrote Oliver Twist and A Christmas Carol?",
     answer: "Charles Dickens",
     forms: [
@@ -2196,6 +2249,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Literature",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who created the detective Sherlock Holmes?",
     answer: "Sir Arthur Conan Doyle",
     forms: [
@@ -2233,6 +2287,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Literature",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Who wrote The Canterbury Tales?",
     answer: "Geoffrey Chaucer",
     forms: [
@@ -2307,6 +2362,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Cinema",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which British director, famous for Psycho, moved to Hollywood in 1940?",
     answer: "Sir Alfred Hitchcock",
     forms: [
@@ -2381,6 +2437,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Comedy",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which television series became famous for surreal sketch comedy from 1969?",
     answer: "Monty Python's Flying Circus",
     forms: [
@@ -2418,6 +2475,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Comedy",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which satirical magazine, launched in the 1840s, popularised the cartoon?",
     answer: "Punch",
     forms: [
@@ -2455,6 +2513,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Leisure",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which annual flower show is the best known gardening event in the UK?",
     answer: "The Chelsea Flower Show",
     forms: [
@@ -2529,6 +2588,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Leisure",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which year was the National Trust founded, and by how many people?",
     answer: "1895, by three volunteers",
     forms: [
@@ -2566,6 +2626,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Food",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which traditional dish is made from sheep's offal, suet, onions and oatmeal?",
     answer: "Haggis, from Scotland",
     forms: [
@@ -2603,6 +2664,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Food",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which fried breakfast dish is a traditional food of Northern Ireland?",
     answer: "The Ulster fry",
     forms: [
@@ -2677,6 +2739,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Landmarks",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What was the clock tower at the Houses of Parliament renamed in 2012?",
     answer: "The Elizabeth Tower",
     forms: [
@@ -2714,6 +2777,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Landmarks",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which county is the Eden Project?",
     answer: "Cornwall",
     forms: [
@@ -2751,6 +2815,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Landmarks",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "In which part of the UK is the Giant's Causeway?",
     answer: "The north-east coast of Northern Ireland",
     forms: [
@@ -2788,6 +2853,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Landmarks",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "What is the highest mountain in Wales, and in which national park?",
     answer: "Snowdon, in Snowdonia",
     forms: [
@@ -2825,6 +2891,7 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Landmarks",
     chapter: 4,
     verify: false,
+    source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
     question: "Which is the largest national park in England, and its biggest lake?",
     answer: "The Lake District, with Windermere",
     forms: [
