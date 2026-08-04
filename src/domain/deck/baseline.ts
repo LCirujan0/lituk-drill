@@ -105,10 +105,15 @@ export const DECK_BASELINE: DeckBaseline = {
   // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
   // Office rule and does not appear in the handbook, so this source cannot settle it.
   unresolvedVerifyFlags: 1,
-  // 1337, 1290, 1653, 1919, 1985, 1971 — six distinct years across seven facts, each grepped
-  // against the handbook text by hand. Four of them are worse than an explanation defect: the
-  // ANSWER is off-source too (L-023). Target 0, and it should get there in the sourcing pass.
-  explanationYearsOffSource: 6,
+  // 1337, 1290, 1653, 1919, 1985, 1971, AD 122, AD 597 — eight distinct years, each grepped
+  // against the handbook text by hand. SIX of them are worse than an explanation defect: the
+  // ANSWER is off-source too (L-023).
+  //
+  // Was 6. The two era years appeared when the check learned to read `AD 122` and `55 BC`; a
+  // rule written for four digits had been walking straight past three. This is a ceiling
+  // raised because DETECTION improved, not because the deck got worse — the defects were
+  // always there. Target 0, in the sourcing pass.
+  explanationYearsOffSource: 8,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */

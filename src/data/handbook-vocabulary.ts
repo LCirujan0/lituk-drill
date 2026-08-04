@@ -6,7 +6,8 @@
  * `domain/deck/vocabulary.ts` for why, and for what the check does with them.
  *
  * Derived from a 230,523-character extract of the 3rd-edition
- * handbook. 195 years, 1956 capitalised forms, 4848 word forms.
+ * handbook. 195 years, 5 era years, 1956 capitalised forms,
+ * 4848 word forms.
  */
 
 export const HANDBOOK_YEARS: readonly string[] = [
@@ -205,6 +206,15 @@ export const HANDBOOK_YEARS: readonly string[] = [
   '2022',
   '2023',
   '2024',
+];
+
+/** Ancient-era years, normalised to a single space and upper case. */
+export const HANDBOOK_ERA_YEARS: readonly string[] = [
+  '55 BC',
+  'AD 410',
+  'AD 43',
+  'AD 600',
+  'AD 789',
 ];
 
 /** Capitalised exactly like this somewhere in the handbook. */

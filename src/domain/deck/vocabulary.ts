@@ -37,11 +37,12 @@
  */
 
 import {
+  HANDBOOK_ERA_YEARS,
   HANDBOOK_NAME_HASHES,
   HANDBOOK_WORD_HASHES,
   HANDBOOK_YEARS,
 } from '@/data/handbook-vocabulary';
-import type { Deck } from './types';
+import type { Deck, Explanation } from './types';
 
 /** FNV-1a, 32-bit. Not a security boundary — see the collision note above. */
 export function tokenHash(value: string): string {
@@ -58,6 +59,13 @@ export const normalise = (text: string): string =>
   text.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/–|—/g, '-');
 
 const YEAR = /\b(?:1\d{3}|20\d{2})\b/g;
+/**
+ * Ancient-era years. Added after the four-digit rule missed one: `AD 122` for the start of
+ * Hadrian's Wall is not in the handbook — the book says only that Hadrian built a wall — and
+ * three digits slid straight past a rule written for four. The handbook uses exactly five era
+ * years in total, so a token matching here is either one of those or it is invented.
+ */
+const ERA = /\b(?:AD\s?\d{1,4}|\d{1,4}\s?BC)\b/g;
 const CAPITALISED = /\b[A-Z][A-Za-z']*\b/g;
 
 /**
@@ -86,16 +94,24 @@ export interface VocabularyFlags {
 }
 
 const YEAR_SET: ReadonlySet<string> = new Set(HANDBOOK_YEARS);
+const ERA_SET: ReadonlySet<string> = new Set(HANDBOOK_ERA_YEARS);
 const NAME_SET: ReadonlySet<string> = new Set(HANDBOOK_NAME_HASHES);
 const WORD_SET: ReadonlySet<string> = new Set(HANDBOOK_WORD_HASHES);
 
 /** Strip a trailing possessive so "Claudius's" is tested as "Claudius". */
 const stem = (token: string): string => token.replace(/'s$/i, '').replace(/'$/, '');
 
+/** `ad 43`, `AD43`, `AD 43` all key the same. */
+const eraKey = (token: string): string =>
+  token.toUpperCase().replace(/\s+/g, '').replace(/^AD/, 'AD ').replace(/BC$/, ' BC');
+
 export function scanText(text: string): VocabularyFlags {
   const clean = normalise(text);
 
-  const years = [...new Set(clean.match(YEAR) ?? [])].filter((y) => !YEAR_SET.has(y));
+  const eras = [...new Set((clean.match(ERA) ?? []).map(eraKey))].filter((y) => !ERA_SET.has(y));
+  const years = [...new Set(clean.match(YEAR) ?? []), ...eras].filter(
+    (y) => !YEAR_SET.has(y),
+  );
 
   const unmatched = [
     ...new Set(
@@ -129,9 +145,17 @@ export function vocabularyReport(deck: Deck): readonly VocabularyFinding[] {
   return findings;
 }
 
-/** Explanations may be one string or several lines; both scan the same way. */
-export const explanationText = (explanation: string | readonly string[]): string =>
-  typeof explanation === 'string' ? explanation : explanation.join(' ');
+/** Every slot flattened into one blob. The check does not care which line a stray year is on. */
+export const explanationText = (explanation: Explanation): string =>
+  [
+    explanation.lead,
+    explanation.versus,
+    explanation.why,
+    ...(explanation.cluster ?? []).flatMap((c) => [c.label, c.detail]),
+    explanation.note,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
 /** Totals, for the ratchet and for the top of the report. */
 export function vocabularyTotals(findings: readonly VocabularyFinding[]) {

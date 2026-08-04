@@ -43,6 +43,21 @@ const text = normalise(raw);
 
 const years = [...new Set(text.match(/\b(?:1\d{3}|20\d{2})\b/g) ?? [])].sort();
 
+/**
+ * Years written the ancient way — `AD 43`, `55 BC`.
+ *
+ * Added after the four-digit check missed one. `AD 122` for the start of Hadrian's Wall is
+ * not in the handbook — the book says only that Hadrian built a wall — and three digits slid
+ * straight past a rule written for four. The handbook uses exactly five era years in total,
+ * so this set is small and the check on it is near-exact.
+ */
+const eras = [
+  ...new Set([
+    ...(text.match(/\bAD\s?\d{1,4}\b/g) ?? []).map((m) => m.replace(/\s+/g, ' ').toUpperCase()),
+    ...(text.match(/\b\d{1,4}\s?BC\b/g) ?? []).map((m) => m.replace(/\s+/g, ' ').toUpperCase()),
+  ]),
+].sort();
+
 const tokens = new Set<string>();
 for (const token of text.match(/\b[A-Z][A-Za-z']*\b/g) ?? []) {
   tokens.add(token.replace(/'s$/i, '').replace(/'$/, ''));
@@ -77,11 +92,17 @@ const file = `/**
  * \`domain/deck/vocabulary.ts\` for why, and for what the check does with them.
  *
  * Derived from a ${text.length.toLocaleString('en-GB')}-character extract of the 3rd-edition
- * handbook. ${years.length} years, ${hashes.length} capitalised forms, ${wordHashes.length} word forms.
+ * handbook. ${years.length} years, ${eras.length} era years, ${hashes.length} capitalised forms,
+ * ${wordHashes.length} word forms.
  */
 
 export const HANDBOOK_YEARS: readonly string[] = [
 ${years.map((y) => `  '${y}',`).join('\n')}
+];
+
+/** Ancient-era years, normalised to a single space and upper case. */
+export const HANDBOOK_ERA_YEARS: readonly string[] = [
+${eras.map((y) => `  '${y}',`).join('\n')}
 ];
 
 /** Capitalised exactly like this somewhere in the handbook. */
@@ -97,6 +118,6 @@ ${wordHashes.map((h) => `  '${h}',`).join('\n')}
 
 writeFileSync(TARGET, file, 'utf8');
 console.log(
-  `${TARGET}: ${years.length} years, ${hashes.length} capitalised forms, ${wordHashes.length} word forms`,
+  `${TARGET}: ${years.length} years, ${eras.length} era years, ${hashes.length} capitalised forms, ${wordHashes.length} word forms`,
 );
 console.log(`years span ${years[0]}–${years[years.length - 1]}`);

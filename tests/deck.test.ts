@@ -20,7 +20,7 @@ import { describe, expect, it } from 'vitest';
 import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
-import { strayYears, vocabularyReport, vocabularyTotals } from '@/domain/deck/vocabulary';
+import { explanationText, strayYears, vocabularyReport, vocabularyTotals } from '@/domain/deck/vocabulary';
 import { EXPLANATIONS } from '@/data/explanations';
 import {
   ambiguousSharedStems,
@@ -197,8 +197,32 @@ describe('explanations', () => {
     // already show, and would make the extra reading feel pointless.
     for (const fact of DECK) {
       if (!fact.explanation) continue;
-      expect(fact.explanation.length, `${fact.id} explanation is too short to be context`).toBeGreaterThan(60);
-      expect(fact.explanation.trim().toLowerCase()).not.toBe(fact.answer.trim().toLowerCase());
+      const text = explanationText(fact.explanation);
+      expect(text.length, `${fact.id} explanation is too short to be context`).toBeGreaterThan(60);
+      expect(text.trim().toLowerCase()).not.toBe(fact.answer.trim().toLowerCase());
+    }
+  });
+
+  it('follows the skeleton — a lead on every panel, and no half-written cluster line', () => {
+    // `docs/EXPLANATIONS.md`: the slots are always in the same order, and a cluster entry
+    // ALWAYS carries its distinguishing detail. A label on its own is the failure mode the
+    // whole cluster idea turns on — "Caesar 55 BC, Claudius AD 43" attaches a second
+    // competing date to one cue, which is interference. The detail is what makes it
+    // discrimination instead, so a missing one is a defect, not an omission.
+    for (const fact of DECK) {
+      if (!fact.explanation) continue;
+      expect(fact.explanation.lead.trim().length, `${fact.id} has no lead`).toBeGreaterThan(0);
+      for (const entry of fact.explanation.cluster ?? []) {
+        expect(entry.label.trim().length, `${fact.id} cluster entry has no label`).toBeGreaterThan(0);
+        expect(
+          entry.detail.trim().length,
+          `${fact.id} cluster names "${entry.label}" without saying what tells it apart`,
+        ).toBeGreaterThan(0);
+      }
+      expect(
+        (fact.explanation.cluster ?? []).length,
+        `${fact.id} cluster is long enough to be a list rather than a story`,
+      ).toBeLessThanOrEqual(5);
     }
   });
 

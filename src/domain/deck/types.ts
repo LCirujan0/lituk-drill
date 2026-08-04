@@ -25,6 +25,22 @@ export const CHAPTER_NAMES: Record<Chapter, string> = {
 };
 
 /**
+ * One word each, for the home screen.
+ *
+ * The full titles are the handbook's and are kept as the drill screen's heading, where there
+ * is room and where knowing which chapter you are in matters. On a 393px home screen every
+ * one of them wraps to two lines, and five two-line rows is most of the screen — so the grid
+ * uses these and the chapter's own screen says the rest.
+ */
+export const CHAPTER_SHORT: Record<Chapter, string> = {
+  1: 'Values',
+  2: 'The UK',
+  3: 'History',
+  4: 'Society',
+  5: 'Government',
+};
+
+/**
  * A fixed set of four options, hand-written. The correct one is named rather than
  * indexed: an index is invisible in a diff, which is how the 205/206 defect survived.
  * The option order presented to the reader is decided at presentation time, so the
@@ -75,6 +91,51 @@ export interface QuestionForm {
   readonly answers: FixedAnswers;
 }
 
+/**
+ * One examinable item held alongside the answer, because the two are one story.
+ *
+ * `label` is the thing — "Caesar, 55 BC". `detail` is what tells it apart from the others —
+ * "tried twice, failed, went home". **The detail is not decoration and is not optional.**
+ * Listing "Caesar 55 BC, Claudius AD 43" attaches a second competing date to a single cue and
+ * is the interference case; saying one raided and left while the other conquered and stayed
+ * supplies the feature that separates them, and is the discrimination case. That distinction
+ * is the whole difference between this helping and hurting — see `docs/EXPLANATIONS.md`.
+ */
+export interface ClusterItem {
+  readonly label: string;
+  readonly detail: string;
+}
+
+/**
+ * The panel under a card, in the fixed skeleton every explanation uses.
+ *
+ * The order never varies and the wording never changes once written. Both are deliberate.
+ * A structurally distinctive panel is a *shape*, and shapes get pattern-matched; and a reader
+ * who has met this card twenty times needs to find one line and skip the rest, which they can
+ * only do if the slots are always in the same place.
+ *
+ * Fields drop from the bottom, never the top. Two good lines beat five padded ones — material
+ * that is interesting rather than load-bearing measures *negative* for retention, so a panel
+ * whose story is more memorable than its fact has failed.
+ */
+export interface Explanation {
+  /** The answer as a complete sentence, readable without the question. Always present. */
+  readonly lead: string;
+  /** What separates it from the thing it gets confused with. Directional, never a pair-list. */
+  readonly versus?: string;
+  /** One precise reason, comparison or link. Omitted rather than padded when none exists. */
+  readonly why?: string;
+  /** The rest of the same story. Every member must have its own card in the deck. */
+  readonly cluster?: readonly ClusterItem[];
+  /**
+   * Where the handbook differs from present-day reality. Always last, always the same shape,
+   * and always framed as the book's claim rather than as truth — the handbook is what the
+   * exam marks against (D-023). A second competing fact on a card that exists to install the
+   * first, so it is carried only where its absence would make a reader distrust the card.
+   */
+  readonly note?: string;
+}
+
 export interface Fact {
   /** `f000`–`f409`, reproducing the v0 array index. See the ordering note above. */
   readonly id: string;
@@ -92,16 +153,10 @@ export interface Fact {
   readonly question: string;
   readonly answer: string;
   /**
-   * A short paragraph of context, shown after the answer.
-   *
-   * The point is to make drilling teach understanding rather than just the answer. A date
-   * you can place in a story is far more durable than a date you have memorised, and most
-   * exam questions are answerable from context even when the specific fact has gone. So
-   * this should say *why* the answer is what it is, or what it connects to — not restate it.
-   *
-   * Optional while these are being written. A fact without one simply shows nothing extra.
+   * The panel shown after the answer. Every fact has one; `docs/EXPLANATIONS.md` is how it
+   * is written and why each rule is there.
    */
-  readonly explanation?: string;
+  readonly explanation?: Explanation;
   readonly forms: readonly QuestionForm[];
 }
 
