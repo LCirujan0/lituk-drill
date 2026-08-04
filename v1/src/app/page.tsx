@@ -11,7 +11,7 @@ import { MIGRATED_DECK } from '@/domain/deck';
 import styles from './page.module.css';
 
 export default function Home() {
-  const analysis = analyseDeck(MIGRATED_DECK);
+  const analysis = analyseDeck(DECK, MIGRATED_DECK);
   const chapters = new Map<Chapter, number>();
   for (const fact of DECK) chapters.set(fact.chapter, (chapters.get(fact.chapter) ?? 0) + 1);
 

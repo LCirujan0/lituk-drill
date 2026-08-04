@@ -70,9 +70,15 @@ export const DECK_BASELINE: DeckBaseline = {
   sharedFormsAcrossFacts: 2,
   factsBelowRecallBreadth: 6,
   factsWithNoRecallForm: 0,
-  // Unchanged: this still measures the STORED options, which D-014 deliberately left alone
-  // so the round-trip proof against v0's facts.js keeps covering the whole deck.
-  numericMiddleRankRate: 0.915,
+  // DIAGNOSTIC ONLY — no longer a build gate, and deliberately not driven down.
+  //
+  // It measures the STORED options, which for 332 of 390 numeric forms are never presented:
+  // generation builds four fresh values at display time. Worse, driving it down would be
+  // actively harmful. `buildCandidates` infers its step from the spread of the authored
+  // distractors, so distractors that bracket the true value are what give the candidate pool
+  // depth on both sides — the thing that makes uniform rank achievable. High stored
+  // bracketing is now a feature. `effectiveNumericMiddleRankRate` is the gate.
+  numericMiddleRankRate: 0.92,
   // What a reader now actually meets: 0.914 -> 0.527, against a chance floor of 0.50. The
   // remaining 2.7 points are entirely the 56 as-written forms, whose own middle rate is
   // about 68% — lower than the deck's, because differently-worded options were never
@@ -84,7 +90,10 @@ export const DECK_BASELINE: DeckBaseline = {
   // generation rule are excluded, because their stored text never reaches a screen. That
   // moved the denominator 749 -> 734 and the rate 0.4032 -> 0.4074. None of the three
   // corrected facts contributes: all of their forms are generated, so all are excluded.
-  longestOptionCorrectRate: 0.408,
+  // Tightened 0.408 -> 0.390 after the D-024 additions: their option sets were deliberately
+  // length-balanced (one distractor per form extended so the answer is never uniquely
+  // longest), which pulled the deck-wide figure down from 40.7% to 38.8%.
+  longestOptionCorrectRate: 0.39,
   maxAnswerPositionRate: 0.297,
   // Was 12. Eleven resolved against the handbook on 4 August 2026 — eight confirmed correct,
   // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
