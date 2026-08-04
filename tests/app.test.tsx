@@ -16,6 +16,7 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import App from '@/app/page';
+import { DECK } from '@/domain/deck';
 import { reloadFromStorage } from '@/adapters/store';
 import { EVENTS_KEY } from '@/adapters/local-store';
 import type { ReviewEvent } from '@/domain/scheduler/events';
@@ -98,6 +99,94 @@ describe('the card holds after answering — regression', () => {
 
     await answerOption(user, (t) => t === 'Seven');
     expect(screen.getByText(/^Not quite\.$/)).toBeTruthy();
+  });
+});
+
+describe('the options do not move under your finger — regression', () => {
+  /** Every button that is one of the four answer options, in the order shown. */
+  const optionTexts = () => {
+    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹']);
+    return screen
+      .getAllByRole('button')
+      .map((b) => b.textContent ?? '')
+      .filter((t) => t && !chrome.has(t) && !/^(Correct|Not quite)/.test(t));
+  };
+
+  // Every section, not just one. The bug lived in the seed, and the seed took a per-section
+  // count: `due`, `new` and `mistakes` all move when you answer, but a chapter's total does
+  // not. The first version of this test happened to pick a chapter and passed against
+  // broken code — so the sections are enumerated rather than sampled.
+  it.each([
+    ['Due today', /Not tried yet/], // seeded first so something is due
+    ['Not tried yet', /Not tried yet/],
+  ])('keeps the four options in the same order in %s', async (_label, opener) => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/phrasings proven/);
+    await user.click(screen.getByRole('button', { name: opener }));
+    await screen.findByRole('heading', { level: 1 });
+
+    const before = optionTexts();
+    expect(before).toHaveLength(4);
+    await user.click(screen.getByRole('button', { name: before[0] }));
+    expect(optionTexts()).toEqual(before);
+  });
+
+  it('keeps the four options in the same order after answering', async () => {
+    // The seed for the option shuffle used to include a live count derived from the event
+    // log. Answering appended an event, the count changed, and the options re-shuffled
+    // mid-click — so `chosen` indexed the old arrangement while `correctIndex` came from
+    // the new one, and the verdict was reported against a layout that no longer existed.
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/phrasings proven/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    const before = optionTexts();
+    expect(before).toHaveLength(4);
+
+    await user.click(screen.getByRole('button', { name: before[0] }));
+
+    expect(optionTexts()).toEqual(before);
+  });
+
+  it('reports the verdict against the option actually clicked', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/phrasings proven/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    const heading = await screen.findByRole('heading', { level: 1 });
+
+    // Find the fact on screen so we know its real answer independently of the UI.
+    const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
+    const correct = fact.forms.find((x) => x.question === heading.textContent)!.answers.correct;
+
+    const options = optionTexts();
+    const wrong = options.find((t) => t !== correct)!;
+    await user.click(screen.getByRole('button', { name: wrong }));
+
+    expect(screen.getByText(/^Not quite/)).toBeTruthy();
+    expect(screen.queryByText(/^Correct/)).toBeNull();
+  });
+
+  it('records the grade that matches the verdict shown', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/phrasings proven/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    const heading = await screen.findByRole('heading', { level: 1 });
+
+    const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
+    const correct = fact.forms.find((x) => x.question === heading.textContent)!.answers.correct;
+
+    await user.click(screen.getByRole('button', { name: correct }));
+
+    // Screen and schedule must agree. A wrong verdict with a right grade is still a bug:
+    // it teaches the wrong thing even while the scheduler stays intact.
+    expect(screen.getByText(/^Correct/)).toBeTruthy();
+    expect(stored()).toHaveLength(1);
+    expect(stored()[0].grade).toBe(4);
   });
 });
 

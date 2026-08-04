@@ -32,6 +32,8 @@ Severity → due date: Critical 3 days · High 2 weeks · Medium 6 weeks · Low 
 | L-013 | Low | ops | **The Vercel project serves v0, not v1.** Root Directory is `.`, so `lituk-drill.vercel.app` returns the repo-root `index.html`. Raised as High on the assumption — taken from the kickoff document — that another v0 was already deployed and carrying the owner's schedule, which would have made this a second copy at a new origin with empty storage. **That assumption was false (L-014), and the resolution inverts: this IS the v0 deployment, and it works.** Verified live: `index.html` 28,439 bytes and `facts.js` 232,747 bytes, both exact matches for the local files, both 200. | 2026-08-04 | — | `verified-fixed` — resolved by keeping it, not by changing it. Root Directory stays `.`; v1 gets its own project (D-022). Stable by construction: R-1 and the `v0 is untouched` CI job forbid any change to the files it serves |
 | L-014 | **High** | process | **The BRIEF rests on a premise that was never true.** §B states "a working v0 is already deployed and in daily use… it carries him to 25 September on its own", taken verbatim from the kickoff input and never checked. There was no deployment and no accumulated schedule. Everything built on it — the neutralised deadline, "if v1 is not ready by 20 September he sits the test on v0 and loses nothing", the whole justification for a 6-week appetite ignoring the exam date — was resting on nothing. | 2026-08-04 | 2026-08-04 | `fixed-unverified` — v0 is now genuinely deployed and verified (L-013), so the arrangement holds **from today, conditional on daily use actually starting**. Corrected in the BRIEF by D-022. Tripwire: `/jorge-drift-check` must re-read §B's premise as a claim to verify, not a given |
 
+| L-021 | **High** | correctness | **The four options re-shuffled mid-click, so the verdict was reported against a layout that had already gone.** The shuffle seed included `remaining` — a per-section count derived from the review-event log. Answering appended an event, the count moved, the memo recomputed, and the options re-ordered. `chosen` then indexed the old arrangement while `correctIndex` came from the new one, so a right answer could be marked wrong and a wrong one right. The *recorded grade* was correct throughout (the click handler closed over the pre-answer arrangement), so the schedule was never corrupted — but the screen lied, which for a learning tool is the worse half. | 2026-08-04 | 2026-08-04 | `fixed-unverified` — seed now takes a `cardNonce` that advances only with the card. Three regression tests across the affected sections; all three fail against the old code |
+
 ## Notes
 
 **L-002 and L-003 are the reason the readiness model excludes multiple-choice data until they close
@@ -41,6 +43,28 @@ a bug fix, and a red build on day one teaches everyone to ignore red builds.
 **L-006 and L-007 are both cheap to fix and neither needs an index remap** — one is a reworded form,
 the other is two `mcqOnly` flags. What they cost is recall-usable forms, which are already scarce
 (L-008), so they should be resolved in the same pass that adds forms rather than on their own.
+
+### Postmortem — screen state derived from the event log (L-019, L-021)
+
+**Trigger:** the same bug fixed twice, which the BRIEF pre-declares as a postmortem trigger.
+
+1. **What happened.** Twice, something the reader was looking at was computed from the review
+   log. Answering appends to that log, so the thing under their eyes changed at the moment
+   they acted on it. First the whole card swapped (L-019); then the four options re-ordered
+   (L-021).
+2. **Why it recurred.** The first fix treated the symptom — it held the *card* still — rather
+   than the class. The option shuffle was seeded from a live count three lines away and nobody
+   looked, because the card itself had stopped moving and the bug appeared solved.
+3. **Why the tests missed it.** 137 tests passed. The domain layer is pure and correct in both
+   cases; the defect only exists where React re-renders against changed inputs. Component
+   tests existed by then, but the first version of the new regression test happened to open a
+   *chapter* drill — the one section whose count does not move when you answer — and passed
+   against broken code.
+4. **The tripwire.** Regression tests now enumerate the sections rather than sampling one, and
+   both fixes are verified by reverting them and watching the tests fail. Added as RULES R-11
+   so the class is named, not just the two instances.
+5. **The lesson worth keeping.** A test that has never failed is not yet known to test
+   anything. Both of these were only trustworthy after being run against the broken code.
 
 **A note on how L-006 was found and mis-stated.** It surfaced from a duplicate-question scan during
 Phase 0 and was written up as "the same fact, twice". The first run of `npm run deck:report`
