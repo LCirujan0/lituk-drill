@@ -149,6 +149,19 @@ export interface Fact {
   readonly verify: boolean;
   /** Handbook edition and page. Populated as the verify flags are resolved. R3. */
   readonly source?: string;
+  /**
+   * Why this fact is no longer drilled. Present means retired; the string is the reason.
+   *
+   * **Retired, not deleted, and that is not squeamishness.** Ids are the handle the review-event
+   * log points at, and they are contiguous by contract (R-4) — `DECK[i].id === factId(i)`.
+   * Deleting a fact renumbers every fact after it, which silently re-points every historical
+   * event at the wrong question. A retired fact keeps its id and its place in `DECK`, and is
+   * filtered out of `ACTIVE`, which is what every queue and count actually reads.
+   *
+   * The cost is a handful of rows that exist only to hold a number, each carrying the sentence
+   * explaining why. That is the right trade against rewriting history.
+   */
+  readonly retired?: string;
   /** The canonical statement of the fact, independent of any question form. */
   readonly question: string;
   readonly answer: string;

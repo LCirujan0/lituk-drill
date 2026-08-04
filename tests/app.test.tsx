@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '@/app/page';
-import { DECK } from '@/domain/deck';
+import { ACTIVE, DECK } from '@/domain/deck';
 import { reloadFromStorage } from '@/adapters/store';
 import { EVENTS_KEY } from '@/adapters/local-store';
 import type { ReviewEvent } from '@/domain/scheduler/events';
@@ -320,7 +320,7 @@ describe('the home screen', () => {
     render(<App />);
     // The headline counts FACTS, not phrasings — questions are how the app checks you know
     // a fact, not the thing being learned (D-028).
-    expect(await screen.findByText(/\/539 known/)).toBeTruthy();
+    expect(await screen.findByText(/\/526 known/)).toBeTruthy();
     expect(screen.getByRole('button', { name: /^New/ })).toBeTruthy();
   });
 
@@ -350,7 +350,7 @@ describe('the home screen', () => {
 
     // One phrasing answered is not a known fact — a fact counts only once every phrasing
     // has been proved, so the headline is still 0 and the phrasing count moved instead.
-    await waitFor(() => expect(screen.getByText(/\/539 known/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/\/526 known/)).toBeTruthy());
     expect(stored()).toHaveLength(1);
   });
 });
@@ -659,7 +659,7 @@ describe('persistence', () => {
     // changing every time without asserting anything more.
     // Formatted, because the home screen groups thousands — asserting the raw digits would
     // pass today and break the first time a count crosses 1,000.
-    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
+    const total = ACTIVE.reduce((n, f) => n + f.forms.length, 0);
     const shown = (n: number) => n.toLocaleString('en-GB');
     expect(screen.queryByText(shown(total))).toBeNull();
     expect(screen.getByText(shown(total - 1))).toBeTruthy();

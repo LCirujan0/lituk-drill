@@ -159,6 +159,7 @@ export const CHAPTER_4: readonly Fact[] = [
   },
   {
     id: "f258",
+    retired: 'The handbook says the monarch is HEAD of the Church of England. "Supreme Governor" does not appear. Confirmed by the owner, 4 Aug 2026.',
     tag: "Religion",
     chapter: 4,
     verify: false,
@@ -2322,6 +2323,7 @@ export const CHAPTER_4: readonly Fact[] = [
   },
   {
     id: "f315",
+    retired: 'Neither George Orwell nor Nineteen Eighty-Four appears in the handbook. Confirmed by the owner, 4 Aug 2026.',
     tag: "Literature",
     chapter: 4,
     verify: false,

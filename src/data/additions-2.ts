@@ -12,22 +12,19 @@
  *
  * Ids continue from f527, so the event log's handle on every existing fact is untouched (R-4).
  *
- * ## The figures here are the handbook's, and two of them are contested
+ * ## The religion figures are the 2026 edition's, not the PDF's
  *
- * The owner supplied 2011 census religion figures (59% Christian, 4.8% Muslim, 1.5% Hindu,
- * 0.8% Sikh, 25% no religion) and a 2021 population of 67 million. **The handbook text this
- * project holds says something else**: the 2009 Citizenship Survey (70% / 4% / 2% / 1%, 21%
- * no religion) and a table whose last row is 2022, estimated 67.6 million.
+ * These were written from the PDF first, reporting the 2009 Citizenship Survey - 70%
+ * Christian, 21% no religion - and flagged as contested, because the owner had supplied
+ * different numbers.
  *
- * D-023 settles which wins — the handbook, uniformly, even where it is out of date — so these
- * facts carry the handbook's numbers and are marked `verify` so the card says "check the book"
- * until the owner confirms which edition his exam is drawn from. Logged as L-025. Getting this
- * wrong in either direction is exactly R3: a wrong figure drilled twenty times.
+ * **He then settled it: his 2026 edition is the authority, and it uses the 2011 census.** He
+ * also confirmed the two texts are otherwise identical apart from the handful of deltas he
+ * has listed, so the PDF stays usable as the reference for everything else. Recorded as
+ * D-031, which narrows D-023 rather than reversing it: the handbook still wins over
+ * present-day reality; it is now clear WHICH handbook.
  *
- * Note that this does NOT move the `unresolvedVerifyFlags` ratchet, and that is correct rather
- * than a loophole: that measure counts facts flagged with *nothing to check against*
- * (`verify && !source`). These are flagged **with** a citation and a stated conflict, which is
- * a different state — a question for the owner, not a hole in the sourcing.
+ * The `verify` flags came off with the doubt.
  */
 
 import type { Fact } from '@/domain/deck/types';
@@ -76,10 +73,10 @@ export const ADDITIONS_2: readonly Fact[] = [
     forms: [
       { question: 'What share of the UK population lives in Wales?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Around 5%', distractors: ['Around 3%', 'Around 8%', 'Around 12%'] } },
-      { question: 'The UK population is unevenly spread across its four parts. What proportion is in Wales?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'Around 5%', distractors: ['Around 2%', 'Around 9%', 'Around 15%'] } },
+      { question: 'Which part of the UK holds around 5% of its population?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Wales', distractors: ['Scotland', 'Northern Ireland', 'England'] } },
       { question: 'Which of these is the handbook’s figure for the Welsh share of the UK population?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'Around 5%', distractors: ['Just over 8%', 'Less than 3%', 'More or less 84%'] } },
+        answers: { kind: 'fixed', correct: 'Around five per cent', distractors: ['Just over eight per cent', 'Less than three per cent', 'More or less eighty-four per cent'] } },
     ],
   },
   {
@@ -94,10 +91,10 @@ export const ADDITIONS_2: readonly Fact[] = [
     forms: [
       { question: 'What share of the UK population lives in Scotland?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Just over 8%', distractors: ['Just over 3%', 'Just over 15%', 'Just over 22%'] } },
-      { question: 'Of the four parts of the UK, which figure does the handbook give for Scotland’s share of the population?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'Just over 8%', distractors: ['Just over 5%', 'Just over 11%', 'Just over 18%'] } },
+      { question: 'Which part of the UK holds just over 8% of its population?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Scotland', distractors: ['Wales', 'Northern Ireland', 'England'] } },
       { question: 'Which of these correctly pairs a nation with its share of the UK population?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'Scotland, just over 8%', distractors: ['Scotland, around 5%', 'Wales, just over 8%', 'Northern Ireland, around 5%'] } },
+        answers: { kind: 'fixed', correct: 'Scotland, just over eight per cent', distractors: ['Scotland, around five per cent', 'Wales, just over eight per cent', 'Northern Ireland, around five per cent'] } },
     ],
   },
   {
@@ -110,8 +107,8 @@ export const ADDITIONS_2: readonly Fact[] = [
       why: 'It is also the only one of the four not on the island of Great Britain, so the smallest population and the separate geography go together.',
     },
     forms: [
-      { question: 'What share of the UK population lives in Northern Ireland?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'Less than 3%', distractors: ['Less than 1%', 'Less than 6%', 'Less than 9%'] } },
+      { question: 'How does the handbook describe Northern Ireland’s share of the UK population?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Less than 3%', distractors: ['Around 5%', 'Just over 8%', 'More or less 84%'] } },
       { question: 'Which part of the UK has the smallest share of its population?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Northern Ireland', distractors: ['Wales', 'Scotland', 'England'] } },
       { question: 'The handbook gives four population shares. Which is Northern Ireland’s?', mcqOnly: true,
@@ -164,66 +161,68 @@ export const ADDITIONS_2: readonly Fact[] = [
   // the card says "check the book" until the edition question is settled (L-025).
   // ==========================================================================
   {
-    id: 'f534', tag: 'Religion', chapter: 4, verify: true, source: CH4_REL,
-    question: 'In the survey the handbook cites, what proportion of people identified themselves as Christian?',
-    answer: '70%',
+    id: 'f534', tag: 'Religion', chapter: 4, verify: false, source: CH4_REL,
+    question: 'In the 2011 census, what proportion of people identified themselves as Christian?',
+    answer: '59%',
     explanation: {
-      lead: 'Around 70% identified themselves as Christian in the survey the handbook cites.',
-      versus: 'Every other faith in the list is in single figures, so the shape to hold is one very large number and a set of small ones — not four comparable proportions.',
-      why: 'The handbook opens the section by calling the UK historically a Christian country, and this figure is the evidence it offers for that.',
-      note: 'CHECK THIS ONE. The handbook text held here reports the 2009 Citizenship Survey. Other editions report the 2011 census, which gives materially lower figures. Confirm which your test is drawn from before trusting the number.',
+      lead: 'In the 2011 census, 59% of people identified themselves as Christian.',
+      versus: 'Christian and "no religion" are the only two large figures, 59% against 25%. Every named faith after that is in low single figures, so the shape is two big numbers and a tail rather than a spread.',
+      why: 'The handbook opens the section by calling the UK historically a Christian country, and this is the evidence it offers. Just under three in five is the thing to hold: a majority, but not an overwhelming one.',
     },
     forms: [
-      { question: 'In the survey the handbook cites, what proportion of people identified themselves as Christian?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '70%', distractors: ['50%', '60%', '80%'] } },
-      { question: 'The handbook calls the UK historically a Christian country. What share of people identified as Christian?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '70%', distractors: ['45%', '55%', '85%'] } },
-      { question: 'Which of these proportions does the handbook give for Christians in the UK?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'About seven in ten', distractors: ['About four in ten', 'About five in ten', 'About nine in ten'] } },
+      { question: 'In the 2011 census, what proportion of people identified themselves as Christian?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: '59%', distractors: ['49%', '69%', '79%'] } },
+      { question: 'Which group did 59% of people put themselves in at the 2011 census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Christian', distractors: ['No religion', 'Muslim', 'Another religion'] } },
+      { question: 'Which of these is closest to the census figure for Christians in the UK?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'Just under three in five', distractors: ['Just under two in five', 'Just under four in five', 'Just under nine in ten'] } },
     ],
   },
   {
-    id: 'f535', tag: 'Religion', chapter: 4, verify: true, source: CH4_REL,
-    question: 'In the survey the handbook cites, what proportion identified themselves as Muslim?',
-    answer: '4%',
+    id: 'f535', tag: 'Religion', chapter: 4, verify: false, source: CH4_REL,
+    question: 'In the 2011 census, what proportion identified themselves as Muslim?',
+    answer: '4.8%',
     explanation: {
-      lead: 'Around 4% identified themselves as Muslim.',
-      versus: 'The four smaller faiths descend in a clean order — Muslim 4%, Hindu 2%, Sikh 1%, Jewish and Buddhist both under 0.5%. Learn the order and each number follows.',
-      why: 'The handbook pairs the proportions with the buildings: mosques, Hindu temples, synagogues, gurdwaras and Buddhist temples all over the UK.',
+      lead: 'In the 2011 census, 4.8% identified themselves as Muslim.',
+      versus: 'Muslim is the only named minority faith above 2%, and the only one given to one decimal place. A figure with a decimal, under five, is this one.',
+      why: 'The handbook pairs every proportion with a building - mosques, Hindu temples, synagogues, gurdwaras, Buddhist temples - so the list of faiths and the list of places of worship are the same list twice.',
       cluster: [
-        { label: 'Muslim, 4%', detail: 'the largest of the non-Christian faiths listed' },
-        { label: 'Hindu, 2%', detail: 'half the Muslim figure' },
-        { label: 'Sikh, 1%', detail: 'half again' },
-        { label: 'Jewish and Buddhist, both under 0.5%', detail: 'the only two the handbook groups together' },
+        { label: 'Muslim, 4.8%', detail: 'the largest named minority faith, roughly three times the Hindu figure' },
+        { label: 'Hindu, 1.5%', detail: 'second, and about double the Sikh figure' },
+        { label: 'Sikh, 0.8%', detail: 'third, and the last still above half a per cent' },
+        { label: 'Jewish and Buddhist, both under 0.5%', detail: 'the only two grouped together rather than listed separately' },
       ],
-      note: 'CHECK THIS ONE. From the 2009 Citizenship Survey as the handbook text held here reports it; other editions use the 2011 census.',
     },
     forms: [
-      { question: 'In the survey the handbook cites, what proportion identified themselves as Muslim?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '4%', distractors: ['2%', '6%', '9%'] } },
-      { question: 'Which is the largest of the non-Christian faiths in the handbook’s figures?', mcqOnly: false,
+      { question: 'In the 2011 census, what proportion identified themselves as Muslim?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: '4.8%', distractors: ['2.8%', '6.8%', '8.8%'] } },
+      { question: 'Which is the largest of the named non-Christian faiths in the census figures?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Muslim', distractors: ['Hindu', 'Sikh', 'Buddhist'] } },
-      { question: 'The handbook lists proportions for several faiths. Which pairing is right?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'Muslim 4%, Hindu 2%', distractors: ['Muslim 2%, Hindu 4%', 'Muslim 6%, Hindu 3%', 'Muslim 1%, Hindu 2%'] } },
+      { question: 'Which of these puts the census figures in order, largest group first?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'Christian, no religion, Muslim, Hindu', distractors: ['Christian, Muslim, no religion, Hindu', 'No religion, Christian, Muslim, Hindu', 'Christian, no religion, Hindu, Muslim'] } },
     ],
   },
   {
-    id: 'f536', tag: 'Religion', chapter: 4, verify: true, source: CH4_REL,
-    question: 'In the survey the handbook cites, what proportion said they had no religion?',
-    answer: '21%',
+    id: 'f536', tag: 'Religion', chapter: 4, verify: false, source: CH4_REL,
+    question: 'In the 2011 census, what proportion said they had no religion?',
+    answer: '25%',
     explanation: {
-      lead: 'Around 21% said they had no religion.',
-      versus: 'This is the second-largest figure in the section after the Christian one, and much larger than any single non-Christian faith — which is the shape people get wrong.',
-      why: 'The handbook puts it immediately after stating that everyone has the legal right to choose their religion or to choose not to practise one. The number is there to show the right is really used.',
-      note: 'CHECK THIS ONE. From the 2009 Citizenship Survey as the handbook text held here reports it; other editions use the 2011 census, which gives a higher figure.',
+      lead: 'A quarter of people - 25% - said they had no religion.',
+      versus: 'This is the second-largest figure in the section and it dwarfs every named minority faith: 25% against 4.8% for the largest of them. People reliably guess it far too low.',
+      why: 'The handbook puts it immediately after saying everyone has the legal right to choose their religion, or not to practise one. The number is there to show the right is actually used.',
+      cluster: [
+        { label: 'Christian, 59%', detail: 'the majority, but under three in five' },
+        { label: 'No religion, 25%', detail: 'a quarter, and larger than every named minority faith put together' },
+        { label: 'Muslim, 4.8%', detail: 'the largest named minority faith' },
+      ],
     },
     forms: [
-      { question: 'In the survey the handbook cites, what proportion said they had no religion?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '21%', distractors: ['11%', '31%', '41%'] } },
-      { question: 'Everyone in the UK may choose not to practise a religion. What share of people said they had none?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '21%', distractors: ['6%', '14%', '35%'] } },
-      { question: 'Which of these is larger, according to the handbook’s figures?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'The share with no religion, at about a fifth', distractors: ['The Muslim share, at about a fifth', 'The Hindu share, at about a tenth', 'The Sikh share, at about a tenth'] } },
+      { question: 'In the 2011 census, what proportion said they had no religion?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: '25%', distractors: ['15%', '35%', '45%'] } },
+      { question: 'A quarter of people gave which answer about religion at the 2011 census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'No religion', distractors: ['Christian', 'Muslim', 'Another religion'] } },
+      { question: 'Which of these is the larger group, according to the census?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'People with no religion, at a quarter', distractors: ['Muslims, at a quarter', 'Hindus, at a tenth', 'Sikhs, at a tenth'] } },
     ],
   },
   {
@@ -260,6 +259,66 @@ export const ADDITIONS_2: readonly Fact[] = [
         answers: { kind: 'fixed', correct: 'A gurdwara', distractors: ['A synagogue', 'A mosque', 'A temple'] } },
       { question: 'Which of these pairings does the handbook NOT make?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'Sikhs and synagogues', distractors: ['Muslims and mosques', 'Hindus and temples', 'Jews and synagogues'] } },
+    ],
+  },
+  {
+    id: 'f539', tag: 'Religion', chapter: 4, verify: false, source: CH4_REL,
+    question: 'In the 2011 census, what proportion identified themselves as Hindu?',
+    answer: '1.5%',
+    explanation: {
+      lead: 'In the 2011 census, 1.5% identified themselves as Hindu.',
+      versus: 'Hindu sits between Muslim above and Sikh below - 4.8%, 1.5%, 0.8% - and each is roughly half the one before it. Halving twice from the Muslim figure gets you both of the others.',
+      why: 'Hindus and Sikhs both celebrate Diwali, which is why the two faiths keep appearing together elsewhere in the chapter and why their figures are worth learning as a pair.',
+    },
+    forms: [
+      { question: 'Which faith did 1.5% of people identify with in the 2011 census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Hindu', distractors: ['Sikh', 'Jewish', 'Buddhist'] } },
+      { question: 'Which faith sits between Muslim and Sikh in the census figures?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Hindu', distractors: ['Jewish', 'Buddhist', 'Christian'] } },
+      { question: 'Which of these lists the three named minority faiths from largest to smallest?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'Muslim, Hindu, Sikh', distractors: ['Hindu, Muslim, Sikh', 'Sikh, Hindu, Muslim', 'Muslim, Sikh, Hindu'] } },
+    ],
+  },
+  {
+    id: 'f540', tag: 'Religion', chapter: 4, verify: false, source: CH4_REL,
+    question: 'In the 2011 census, what proportion identified themselves as Sikh?',
+    answer: '0.8%',
+    explanation: {
+      lead: 'In the 2011 census, 0.8% identified themselves as Sikh.',
+      versus: 'Sikh is the smallest faith the census still gives a number to. Below it, Jewish and Buddhist are grouped together as under 0.5% rather than counted separately.',
+      why: 'Sikhs worship in gurdwaras, and Vaisakhi in April is the festival the handbook names for them - so the faith, the building and the festival travel together.',
+    },
+    forms: [
+      { question: 'Which faith did 0.8% of people identify with in the 2011 census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Sikh', distractors: ['Hindu', 'Jewish', 'Buddhist'] } },
+      { question: 'Which is the smallest faith given its own figure in the census, rather than being grouped?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'Sikh', distractors: ['Hindu', 'Jewish', 'Buddhist'] } },
+      { question: 'Which faiths does the census group together rather than counting separately?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'Jewish and Buddhist, both under 0.5%', distractors: ['Sikh and Buddhist, both under 0.5%', 'Hindu and Sikh, both under 1%', 'Jewish and Sikh, both under 0.5%'] } },
+    ],
+  },
+  {
+    id: 'f541', tag: 'The UK today', chapter: 4, verify: false, source: CH4,
+    question: 'What was the population of the UK at the 2021 census?',
+    answer: 'About 67 million',
+    explanation: {
+      lead: 'The 2021 census put the UK population at about 67 million.',
+      versus: 'The census is taken every ten years, so 2021 is the most recent one and the figure to quote. Anything offered for a year that is not a census year is a distractor.',
+      why: 'The growth table runs 4 million in 1600, 8 million in 1801, 40 million in 1901, 50 million in 1951 - so the population has risen by roughly ten million every twenty years since the war.',
+      cluster: [
+        { label: '1801, 8 million', detail: 'the first census, and the start of the industrial rise' },
+        { label: '1901, 40 million', detail: 'five times the 1801 figure in a single century' },
+        { label: '1951, 50 million', detail: 'post-war, and the last round number before the modern curve' },
+        { label: '2021, about 67 million', detail: 'the most recent census, and the figure to quote' },
+      ],
+    },
+    forms: [
+      { question: 'What was the population of the UK at the 2021 census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'About 67 million', distractors: ['About 57 million', 'About 62 million', 'About 72 million'] } },
+      { question: 'Roughly how many people live in the UK, according to the most recent census?', mcqOnly: false,
+        answers: { kind: 'fixed', correct: 'About 67 million', distractors: ['About 47 million', 'About 55 million', 'About 80 million'] } },
+      { question: 'Which of these best describes the UK population today?', mcqOnly: true,
+        answers: { kind: 'fixed', correct: 'Between sixty-five and seventy million', distractors: ['Between fifty and fifty-five million', 'Between fifty-five and sixty million', 'Between seventy-five and eighty million'] } },
     ],
   },
 ];

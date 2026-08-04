@@ -217,6 +217,7 @@ export function Drill({
         )}
       </header>
 
+      <div className={styles.body}>
       <div className={styles.card}>
         <div className={styles.chips}>
           <span className={styles.chip}>{CHAPTER_NAMES[fact.chapter]}</span>
@@ -243,11 +244,10 @@ export function Drill({
             after, it is the difference between memorising a date and being able to place
             it — which is what makes a fact survive to September.
 
-            Bounded and scrollable rather than shortened. The whole card must fit 393×852
-            without the page moving, and a cluster is several lines; the panel takes the
-            overflow so the question, the four options and the grading controls keep their
-            fixed positions. `overscroll-behavior: contain` stops a scroll that runs out of
-            panel from turning into a page bounce. */}
+            The panel is as long as it needs to be. What is bounded is the SCROLLING BODY
+            around it: a long cluster scrolls the card, and the action bar stays on the bottom
+            edge because it is a sibling of that body rather than inside it. So reading the
+            explanation is a scroll, and acting on the card never is. */}
         {answered && fact.explanation && (
           <div className={styles.explanation}>
             <p className={styles.explLead}>{fact.explanation.lead}</p>
@@ -348,8 +348,10 @@ export function Drill({
         </>
       )}
 
+      </div>
+
       {/*
-        The action bar, pinned to the bottom of the screen.
+        The action bar, pinned to the bottom of the screen and OUTSIDE the scrolling body.
 
         Everything you can do with a card is on one row, always in the same place, and always
         reachable — so answering, going back and moving on never require scrolling past an

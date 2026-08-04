@@ -9,14 +9,14 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Three tabs, a pinned card action bar, sync live (D-030) |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **213 passing across 9 files** — 168 domain, 45 in jsdom (`app` 34, `store-sync` 11) |
-| Deck | **539 facts · 1,615 forms** · 5 chapters · every fact carries an explanation |
-| Deck sourcing | **486 of 539 carry a `source`. 53 do not** — ch1 3 · ch2 4 · ch3 25 · ch4 7 · ch5 14, covering 159 forms. With the owner (L-026) |
+| Tests | **214 passing across 9 files** — 169 domain, 45 in jsdom (`app` 34, `store-sync` 11) |
+| Deck | **526 drilled · 1,576 forms**. 542 ids in use; 16 retired, ids kept (R-4) |
+| Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically, 37 confirmed by the owner, 16 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
-| Next decision id | D-031 (D-026 never issued, D-029 never written — L-022) |
+| Next decision id | D-032 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-028 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 14 open · 6 fixed-unverified · 5 verified-fixed |
-| Open Critical | 0. **One open High — L-023**, six facts the handbook cannot answer |
+| Open Critical | 0. No open High — L-023 and L-025 closed by the owner’s edition check |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | Amber facts | 1 unresolved (f213 — L-016) |
 | CI | Green — 2 required checks |
