@@ -19,7 +19,7 @@ restates one. A hand-copied live number drifts within a session.
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | Amber facts | 1 unresolved (was 12) |
 | CI | Green — 3 required checks |
-| Deployed | **v0 at https://lituk-drill.vercel.app** (D-022). v1 builds and runs; no project yet |
+| Deployed | **v0** → https://lituk-drill.vercel.app (D-022)<br>**v1 preview** → https://lituk-v1-d7ql6f0ic-lcirujano.vercel.app |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
 
 ## What exists
@@ -51,14 +51,21 @@ which is weaker than the domain's coverage and should not stay that way.
 
 ## Next, in order
 
-0. **Owner: start using https://lituk-drill.vercel.app daily.** Not a build task, and the
-   highest-value item on this list. It is what makes the deadline neutral (D-022), and it
-   is what gives S6 something to import in September.
-1. Persistence: schema for the review-event log, and sync endpoints. The Neon database is
-   provisioned and `DATABASE_URL` is present on Production and Preview.
-2. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
-3. L-004 (the inherited amber contrast pairing) before any component uses it.
-4. A separate Vercel project rooted at `v1/` — only once v1 has an interface worth opening.
+0. **Owner: start drilling daily.** Not a build task, and still the highest-value item here.
+   v1 is now usable and is the better tool — corrected facts, generated distractors, the
+   mistakes drill. v0 remains the fallback. Whichever you pick, pick one and use it: that
+   is what makes the deadline neutral (D-022).
+1. **Promote v1 to its production URL** — `cd v1 && vercel --prod` replaces the preview hash
+   with `lituk-v1.vercel.app`. Owner action: production deploys are deny-ruled for
+   unattended sessions under D-006's fence.
+2. UI tests. The domain has 122 and the interface has a hand smoke-check; that gap is the
+   weakest thing in the repo right now.
+3. Persistence: schema for the review-event log, and sync endpoints. The Neon database is
+   provisioned and `DATABASE_URL` is present on Production and Preview. The store already
+   has the shape sync needs — a pull merges events in and calls `emit()`.
+4. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
+5. L-004 (the inherited amber contrast pairing) — now live in the grading buttons, so this
+   has stopped being theoretical.
 
 ## Gotchas
 
