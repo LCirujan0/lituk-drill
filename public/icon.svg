@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="LITK">
+  <title>Life in the UK drill</title>
+  <!--
+    The Union Flag with LITK on a band across it.
+
+    Proportions are the flag's own, because a flag drawn wrong is more distracting than no
+    flag. For a field of height H: the red cross of St George is H/5 wide with H/15 of white
+    either side, giving a white cross of H/3; the white saltire is H/5 and the red saltire
+    H/15, offset within it rather than centred. The flag is 3:5, so it is drawn 512 x 307 and
+    centred vertically on the square tile.
+
+    No gradients, no filters, and the letters are PATHS rather than a <text> element. Two
+    reasons, both about the same thing — this has to be right at 120px on someone's Home
+    Screen. A gradient at that size is mud. And <text> resolves fonts against whatever machine
+    rasterises the file, so it renders differently here, on CI, and on the next machine, and
+    the failure is silent: you still get an icon, just not this one.
+  -->
+  <defs>
+    <clipPath id="field">
+      <rect x="0" y="102.4" width="512" height="307.2"/>
+    </clipPath>
+  </defs>
+
+  <!-- Square, deliberately. iOS and Android both apply their own corner mask to a Home Screen
+       icon, so rounding it here rounds it twice and leaves a visible dark notch in each
+       corner. Supply the full bleed and let the platform cut it. -->
+  <rect width="512" height="512" fill="#012169"/>
+
+  <g clip-path="url(#field)">
+    <rect x="0" y="102.4" width="512" height="307.2" fill="#012169"/>
+
+    <!-- Saltire: white 61.4 wide, red 20.5 offset within it -->
+    <path d="M0,102.4 L512,409.6 M512,102.4 L0,409.6" stroke="#fff" stroke-width="61.4"/>
+    <path d="M0,112.6 L512,419.8" stroke="#c8102e" stroke-width="20.5"/>
+    <path d="M512,92.2 L0,399.4" stroke="#c8102e" stroke-width="20.5"/>
+
+    <!-- Cross of St George: white 102.4, red 61.4 -->
+    <path d="M256,102.4 V409.6 M0,256 H512" stroke="#fff" stroke-width="102.4"/>
+    <path d="M256,102.4 V409.6 M0,256 H512" stroke="#c8102e" stroke-width="61.4"/>
+  </g>
+
+  <!-- Full-bleed band, so it reads as part of the tile rather than a sticker on it. -->
+  <rect x="0" y="198" width="512" height="116" fill="#0d0d0d" opacity="0.84"/>
+
+  <!-- LITK. Cap height 92 on a 210–302 band, stem 18. -->
+  <g fill="#fff" transform="translate(19,0)">
+    <path d="M98,210 H116 V284 H158 V302 H98 Z"/>
+    <path d="M178,210 H196 V302 H178 Z"/>
+    <path d="M216,210 H290 V228 H262 V302 H244 V228 H216 Z"/>
+    <path d="M310,210 H328 V302 H310 Z"/>
+    <path d="M328,250 L352,210 H376 L344,256 L376,302 H352 L328,262 Z"/>
+  </g>
+</svg>

@@ -238,9 +238,39 @@ export function Drill({
 
         {/* Context, shown only after answering. Before, it would give the answer away;
             after, it is the difference between memorising a date and being able to place
-            it — which is what makes a fact survive to September. */}
+            it — which is what makes a fact survive to September.
+
+            Bounded and scrollable rather than shortened. The whole card must fit 393×852
+            without the page moving, and a cluster is several lines; the panel takes the
+            overflow so the question, the four options and the grading controls keep their
+            fixed positions. `overscroll-behavior: contain` stops a scroll that runs out of
+            panel from turning into a page bounce. */}
         {answered && fact.explanation && (
-          <p className={styles.explanation}>{fact.explanation}</p>
+          <div className={styles.explanation}>
+            <p className={styles.explLead}>{fact.explanation.lead}</p>
+
+            {fact.explanation.versus && (
+              <p className={styles.explVersus}>{fact.explanation.versus}</p>
+            )}
+
+            {fact.explanation.why && <p className={styles.explWhy}>{fact.explanation.why}</p>}
+
+            {fact.explanation.cluster && fact.explanation.cluster.length > 0 && (
+              <ul className={styles.cluster}>
+                {fact.explanation.cluster.map((entry) => (
+                  <li key={entry.label} className={styles.clusterItem}>
+                    <b className={styles.clusterLabel}>{entry.label}</b>
+                    {' — '}
+                    {entry.detail}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Always last, always this shape: the handbook is what the exam marks against,
+                so a correction must never be mistaken for the answer (D-023). */}
+            {fact.explanation.note && <p className={styles.explNote}>{fact.explanation.note}</p>}
+          </div>
         )}
 
         {answered && state.lapses >= 3 && (

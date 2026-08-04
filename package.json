@@ -16,7 +16,8 @@
     "verify": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
     "hooks:install": "git config core.hooksPath .githooks",
     "deck:vocab": "tsx scripts/vocab-report.ts",
-    "deck:vocab:build": "tsx scripts/handbook-vocab.ts"
+    "deck:vocab:build": "tsx scripts/handbook-vocab.ts",
+    "icons": "tsx scripts/icons.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -35,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "jsdom": "^30.0.1",
+    "sharp": "^0.35.3",
     "stylelint": "^17.14.1",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-declaration-strict-value": "^1.11.1",

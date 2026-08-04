@@ -48,7 +48,7 @@ describe('the card holds after answering — regression', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
 
     const question = (await screen.findByRole('heading', { level: 1 })).textContent;
     expect(question).toBeTruthy();
@@ -65,7 +65,7 @@ describe('the card holds after answering — regression', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
 
     const first = (await screen.findByRole('heading', { level: 1 })).textContent;
     const options = screen.getAllByRole('button').filter((b) => (b.textContent ?? '').length < 80);
@@ -82,7 +82,7 @@ describe('the card holds after answering — regression', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -93,7 +93,7 @@ describe('the card holds after answering — regression', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
@@ -256,7 +256,7 @@ describe('explanations', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     // Showing context before the answer would give the answer away.
@@ -267,12 +267,12 @@ describe('explanations', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     const { fact } = currentOptions();
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
-    expect(screen.getByText(fact.explanation!.slice(0, 40), { exact: false })).toBeTruthy();
+    expect(screen.getByText(fact.explanation!.lead.slice(0, 40), { exact: false })).toBeTruthy();
   });
 });
 
@@ -281,7 +281,7 @@ describe('recording a review', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     expect(stored()).toHaveLength(0);
@@ -297,7 +297,7 @@ describe('recording a review', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -325,7 +325,7 @@ describe('the home screen', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
@@ -339,7 +339,7 @@ describe('the home screen', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
@@ -357,7 +357,7 @@ describe('recall mode', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: 'Recall' }));
@@ -374,7 +374,7 @@ describe('recall mode', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
     await user.click(screen.getByRole('button', { name: 'Recall' }));
@@ -470,7 +470,7 @@ describe('stepping back through the session — regression', () => {
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(first.question);
     // The option pressed is still marked, and the explanation is on screen to be re-read.
     const fact = DECK.find((f) => f.forms.some((x) => x.question === first.question))!;
-    expect(screen.getByText(fact.explanation!.slice(0, 40), { exact: false })).toBeTruthy();
+    expect(screen.getByText(fact.explanation!.lead.slice(0, 40), { exact: false })).toBeTruthy();
     expect(screen.getByRole('button', { name: first.pressed })).toBeTruthy();
   });
 
@@ -638,7 +638,7 @@ describe('persistence', () => {
     const user = userEvent.setup();
     const { unmount } = render(<App />);
     await screen.findByText(/facts known every way/);
-    await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     unmount();
@@ -650,8 +650,11 @@ describe('persistence', () => {
     // The review survived, so the "not tried yet" count is one lower than the full deck.
     // Derived rather than hardcoded — the deck grows, and a literal here would need
     // changing every time without asserting anything more.
+    // Formatted, because the home screen groups thousands — asserting the raw digits would
+    // pass today and break the first time a count crosses 1,000.
     const total = DECK.reduce((n, f) => n + f.forms.length, 0);
-    expect(screen.queryByText(String(total))).toBeNull();
-    expect(screen.getByText(String(total - 1))).toBeTruthy();
+    const shown = (n: number) => n.toLocaleString('en-GB');
+    expect(screen.queryByText(shown(total))).toBeNull();
+    expect(screen.getByText(shown(total - 1))).toBeTruthy();
   });
 });

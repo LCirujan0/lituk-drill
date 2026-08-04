@@ -204,13 +204,70 @@
 }
 
 /* Context after the answer. Deliberately calm rather than highlighted — it is there to be
-   read when you want it, not to compete with the answer for attention. */
+   read when you want it, not to compete with the answer for attention.
+
+   Bounded and scrollable, not shortened. A cluster runs to several lines and the whole card
+   still has to fit 393×852 with nothing else moving, so the overflow lives here rather than
+   pushing the options down the screen. `overscroll-behavior: contain` keeps a scroll that
+   runs out of panel from becoming a page bounce. */
 .explanation {
+  max-height: 34vh;
   margin: var(--space-3) 0 0;
   padding-block-start: var(--space-3);
   border-block-start: 1px dashed var(--c-rule);
   color: var(--c-text-soft);
   font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.explLead {
+  margin: 0;
+  color: var(--c-text);
+  font-weight: 600;
+}
+
+/* The line that separates this fact from the one it gets confused with. Given its own weight
+   because it is the highest-value line in the panel — the format installs wrong options as
+   false knowledge, and this is what undoes that. */
+.explVersus {
+  margin: var(--space-2) 0 0;
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--c-accent);
+}
+
+.explWhy {
+  margin: var(--space-2) 0 0;
+}
+
+.cluster {
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clusterItem {
+  margin-block-start: var(--space-1);
+  padding-inline-start: var(--space-3);
+  border-inline-start: 1px solid var(--c-rule);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.clusterLabel {
+  color: var(--c-text);
+  font-weight: 600;
+}
+
+/* Subordinate on purpose. It is a footnote about the source, never the thing to remember. */
+.explNote {
+  margin: var(--space-3) 0 0;
+  padding-block-start: var(--space-2);
+  border-block-start: 1px dotted var(--c-rule);
+  color: var(--c-text-muted);
+  font-size: var(--text-xs);
   line-height: var(--leading-normal);
 }
 

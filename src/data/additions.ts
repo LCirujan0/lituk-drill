@@ -495,7 +495,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f443', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'In which year were films first shown publicly in the UK?',
     answer: '1896',
-    explanation: 'Special effects are the thread to hold on to here: the handbook says British film makers were known for clever effects from the very beginning and remain so, which makes the animation and effects work later in the section a continuation rather than a new departure. The trap is drifting a decade either way from the turn of the century.',
+    explanation: { lead: 'Special effects are the thread to hold on to here: the handbook says British film makers were known for clever effects from the very beginning and remain so, which makes the animation and effects work later in the section a continuation rather than a new departure. The trap is drifting a decade either way from the turn of the century.' },
     forms: [
       { question: 'In which year were films first shown publicly in the UK?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1896', distractors: ['1876', '1906', '1926'] } },
@@ -509,7 +509,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f444', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'Which British actor became famous in silent films for his tramp character?',
     answer: 'Sir Charles (Charlie) Chaplin',
-    explanation: 'He is the handbook’s example of a pattern rather than a one-off — British actors working on both sides of the Atlantic from the earliest days of the medium, which is the same point the later list of Oscar winners makes. Silent film is the era to fix him in; every other performer named in this section belongs to the sound years.',
+    explanation: { lead: 'He is the handbook’s example of a pattern rather than a one-off — British actors working on both sides of the Atlantic from the earliest days of the medium, which is the same point the later list of Oscar winners makes. Silent film is the era to fix him in; every other performer named in this section belongs to the sound years.' },
     forms: [
       { question: 'Which British actor became famous in silent films for his tramp character?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Charlie Chaplin', distractors: ['David Niven', 'Sir Rex Harrison', 'Richard Burton'] } },
@@ -523,7 +523,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f445', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'How many Oscars has the British animator Nick Park won?',
     answer: 'Four',
-    explanation: 'His name is really standing in for a whole industry: he is the handbook’s single piece of evidence for its claim that Britain remains particularly strong in special effects and animation. Three of his awards are for films with the same pair of characters, which is where the two numbers get muddled together.',
+    explanation: { lead: 'His name is really standing in for a whole industry: he is the handbook’s single piece of evidence for its claim that Britain remains particularly strong in special effects and animation. Three of his awards are for films with the same pair of characters, which is where the two numbers get muddled together.' },
     forms: [
       { question: 'How many Oscars has the British animator Nick Park won?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Four', distractors: ['Two', 'Three', 'Seven'] } },
@@ -537,7 +537,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f446', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'Which British film studio has a claim to being the oldest continuously working in the world?',
     answer: 'Ealing Studios',
-    explanation: 'The word carrying the claim is “continuously” — other places are older as buildings, but this one has never stopped, which is a much narrower boast than simply being first. Its name is also attached to the run of British comedies from around 1950 that the handbook lists a few lines earlier, so the studio and that comedy boom are worth learning as one thing.',
+    explanation: { lead: 'The word carrying the claim is “continuously” — other places are older as buildings, but this one has never stopped, which is a much narrower boast than simply being first. Its name is also attached to the run of British comedies from around 1950 that the handbook lists a few lines earlier, so the studio and that comedy boom are worth learning as one thing.' },
     forms: [
       { question: 'Which British film studio has a claim to being the oldest continuously working in the world?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Ealing Studios', distractors: ['Pinewood Studios', 'Shepperton Studios', 'Elstree Studios'] } },
@@ -551,7 +551,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f447', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'Which annual awards are the British equivalent of the Oscars?',
     answer: 'The British Academy Film Awards, hosted by BAFTA',
-    explanation: 'One body covers both film and television, which is why the acronym carries television in it even though the ceremony people mean is the film one. The prizes in this chapter are only ever confused across art forms — pin each award to its medium and the questions fall apart on their own.',
+    explanation: { lead: 'One body covers both film and television, which is why the acronym carries television in it even though the ceremony people mean is the film one. The prizes in this chapter are only ever confused across art forms — pin each award to its medium and the questions fall apart on their own.' },
     forms: [
       { question: 'Which annual awards are the British equivalent of the Oscars?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The British Academy Film Awards', distractors: ['The Man Booker Prize for Fiction', 'The Laurence Olivier Awards', 'The Mercury Music Prize'] } },
@@ -565,7 +565,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f448', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'Which two film franchises are the highest-grossing of all time, and where were they produced?',
     answer: 'Harry Potter and James Bond, both produced in the UK',
-    explanation: 'The claim is about where the work was done, not what the films are about — the money and the audiences are worldwide, the production is British. It sits directly beside the handbook’s point that foreign companies now make many films here using British expertise: the strength being described is in the making, not the owning.',
+    explanation: { lead: 'The claim is about where the work was done, not what the films are about — the money and the audiences are worldwide, the production is British. It sits directly beside the handbook’s point that foreign companies now make many films here using British expertise: the strength being described is in the making, not the owning.' },
     forms: [
       { question: 'Which two film franchises are the two highest-grossing of all time?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Harry Potter and James Bond', distractors: ['Wallace and Gromit and Chariots of Fire', 'The 39 Steps and The Third Man', 'Carry On and St Trinian’s'] } },
@@ -579,7 +579,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f449', tag: 'Cinema', chapter: 4, verify: false, source: CH4,
     question: 'Which British director made both Brief Encounter and Lawrence of Arabia?',
     answer: 'Sir David Lean',
-    explanation: 'He is the handbook’s bridge between two eras — a film from the year the war ended and an epic seventeen years later, both on its list of famous British films — and he is named again with Ridley Scott as a director who succeeded at home and abroad. Sir Alexander Korda and Alfred Hitchcock belong to the 1930s studio boom before him, and that chronology is what sorts the wrong answers out.',
+    explanation: { lead: 'He is the handbook’s bridge between two eras — a film from the year the war ended and an epic seventeen years later, both on its list of famous British films — and he is named again with Ridley Scott as a director who succeeded at home and abroad. Sir Alexander Korda and Alfred Hitchcock belong to the 1930s studio boom before him, and that chronology is what sorts the wrong answers out.' },
     forms: [
       { question: 'Which British director made both Brief Encounter and Lawrence of Arabia?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Sir David Lean', distractors: ['Sir Alfred Hitchcock', 'Sir Alexander Korda', 'Ridley Scott'] } },
@@ -593,7 +593,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f450', tag: 'Comedy', chapter: 4, verify: false, source: CH4,
     question: 'What was music hall, where British comedians were once a popular feature?',
     answer: 'A form of variety theatre',
-    explanation: 'The handbook describes a handover rather than an ending: the performers did not disappear when the halls emptied, they moved to the new medium and took their audience with them, which is why it names the double act that made exactly that jump. Variety is the word doing the work — a bill of many short turns, not a single play.',
+    explanation: { lead: 'The handbook describes a handover rather than an ending: the performers did not disappear when the halls emptied, they moved to the new medium and took their audience with them, which is why it names the double act that made exactly that jump. Variety is the word doing the work — a bill of many short turns, not a single play.' },
     forms: [
       { question: 'What was music hall, where British comedians were once a popular feature?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'A form of variety theatre', distractors: ['A type of orchestral concert', 'A season of open-air opera', 'A style of religious drama'] } },
@@ -607,7 +607,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f451', tag: 'Comedy', chapter: 4, verify: false, source: CH4,
     question: 'Which satirical television programme ran through the 1980s and 1990s?',
     answer: 'Spitting Image',
-    explanation: 'The handbook gives television comedy a running order, and the decade alone is usually enough to identify the show: satire early in the sixties, a new progressive style at the close of that decade, then satire again through the eighties and nineties. The tradition is far older than television — it runs back through the satirical magazines to the political cartoons of the 1700s.',
+    explanation: { lead: 'The handbook gives television comedy a running order, and the decade alone is usually enough to identify the show: satire early in the sixties, a new progressive style at the close of that decade, then satire again through the eighties and nineties. The tradition is far older than television — it runs back through the satirical magazines to the political cartoons of the 1700s.' },
     forms: [
       { question: 'Which satirical television programme ran through the 1980s and 1990s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Spitting Image', distractors: ['Monty Python’s Flying Circus', 'That Was The Week That Was', 'Coronation Street'] } },
@@ -621,7 +621,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f452', tag: 'Comedy', chapter: 4, verify: false, source: CH4,
     question: 'Who told jokes and made fun of people at the courts of medieval kings and nobles?',
     answer: 'Jesters',
-    explanation: 'It is placed first for a reason: the handbook builds an unbroken line from mocking the powerful at court, through Shakespeare’s comic characters and the eighteenth-century political cartoon, to satirical magazines and television. The claim being made is about national character — that laughing at ourselves, and at those in charge, is both old and continuous.',
+    explanation: { lead: 'It is placed first for a reason: the handbook builds an unbroken line from mocking the powerful at court, through Shakespeare’s comic characters and the eighteenth-century political cartoon, to satirical magazines and television. The claim being made is about national character — that laughing at ourselves, and at those in charge, is both old and continuous.' },
     forms: [
       { question: 'Who told jokes and made fun of people at the courts of medieval kings and nobles?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Jesters', distractors: ['Heralds', 'Chancellors', 'Troubadours'] } },
@@ -635,7 +635,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f453', tag: 'Leisure', chapter: 4, verify: false, source: CH4,
     question: 'What is an allotment?',
     answer: 'A piece of land people rent to grow fruit and vegetables',
-    explanation: 'The word is worth knowing on its own because it names something with no close equivalent in most countries — land rented purely for growing food, separate from wherever you live. It heads the leisure chapter because gardening is the first activity the handbook reaches for when describing how people here spend their free time.',
+    explanation: { lead: 'The word is worth knowing on its own because it names something with no close equivalent in most countries — land rented purely for growing food, separate from wherever you live. It heads the leisure chapter because gardening is the first activity the handbook reaches for when describing how people here spend their free time.' },
     forms: [
       { question: 'What is the name for a piece of land people rent to grow fruit and vegetables?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'An allotment', distractors: ['A smallholding', 'A market garden', 'A croft'] } },
@@ -649,7 +649,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f454', tag: 'Architecture', chapter: 4, verify: false, source: CH4,
     question: 'Which 18th-century designer laid out the grounds of country houses so that they looked natural?',
     answer: 'Lancelot ‘Capability’ Brown',
-    explanation: 'The style is the point: grass, trees and lakes arranged so the grounds read as untouched countryside rather than as a design, which was a deliberate turn away from the formal geometry that came before. He and Gertrude Jekyll are the pair the handbook names, roughly a century apart and pulling opposite ways — his landscapes are green and open, hers planted and full of colour.',
+    explanation: { lead: 'The style is the point: grass, trees and lakes arranged so the grounds read as untouched countryside rather than as a design, which was a deliberate turn away from the formal geometry that came before. He and Gertrude Jekyll are the pair the handbook names, roughly a century apart and pulling opposite ways — his landscapes are green and open, hers planted and full of colour.' },
     forms: [
       { question: 'Which 18th-century designer laid out the grounds of country houses so that they looked natural?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Capability Brown', distractors: ['Thomas Gainsborough', 'Sir Edwin Lutyens', 'Gertrude Jekyll'] } },
@@ -663,7 +663,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f455', tag: 'Leisure', chapter: 4, verify: false, source: CH4,
     question: 'Who provides vaccinations and medical treatment for animals in the UK?',
     answer: 'Veterinary surgeons, known as vets',
-    explanation: 'Two separate duties sit behind this: the law makes cruelty and neglect an offence, and the practical burden of care falls on the owner rather than on any public service. There is no NHS for animals, which is precisely why charities exist to help with the bill — that gap is what the question is really testing.',
+    explanation: { lead: 'Two separate duties sit behind this: the law makes cruelty and neglect an offence, and the practical burden of care falls on the owner rather than on any public service. There is no NHS for animals, which is precisely why charities exist to help with the bill — that gap is what the question is really testing.' },
     forms: [
       { question: 'Who provides vaccinations and medical treatment for animals in the UK?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Veterinary surgeons, known as vets', distractors: ['Officers of the RSPCA’s inspectorate', 'Animal welfare officers at the council', 'Nurses at NHS walk-in centres'] } },
@@ -677,7 +677,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f456', tag: 'Leisure', chapter: 4, verify: false, source: CH4,
     question: 'In which part of the UK is Bodnant Garden?',
     answer: 'Wales',
-    explanation: 'The famous gardens are asked as a set spread across the four nations, in the same way the traditional foods and the patron saints are. Kew and Sissinghurst are the English ones almost anyone can name, which is exactly why questions tend to reach for the Welsh, Scottish and Northern Irish entries instead.',
+    explanation: { lead: 'The famous gardens are asked as a set spread across the four nations, in the same way the traditional foods and the patron saints are. Kew and Sissinghurst are the English ones almost anyone can name, which is exactly why questions tend to reach for the Welsh, Scottish and Northern Irish entries instead.' },
     forms: [
       { question: 'In which part of the UK is Bodnant Garden?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Wales', distractors: ['England', 'Scotland', 'Northern Ireland'] } },
@@ -693,7 +693,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f457', tag: 'Education', chapter: 3, verify: false, source: CH3,
     question: 'Which Act introduced free secondary education in England and Wales?',
     answer: 'The Education Act 1944',
-    explanation: 'Schooling was reformed while the war was still being fought, ahead of the rest of the welfare state — the Beveridge Report came in 1942 and the health service not until 1948. The nickname this Act usually carries comes from the minister who steered it through, which is the other half of what questions ask.',
+    explanation: { lead: 'Schooling was reformed while the war was still being fought, ahead of the rest of the welfare state — the Beveridge Report came in 1942 and the health service not until 1948. The nickname this Act usually carries comes from the minister who steered it through, which is the other half of what questions ask.' },
     forms: [
       { question: 'Which Act introduced free secondary education in England and Wales?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The Education Act 1944', distractors: ['The Education Act 1902', 'The Elementary Education Act 1870', 'The Welfare Reform Act 1948'] } },
@@ -707,7 +707,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f458', tag: 'Education', chapter: 3, verify: false, source: CH3,
     question: 'Which politician gave his name to the 1944 Education Act?',
     answer: 'R A Butler',
-    explanation: 'He was a Conservative serving in a wartime coalition, so the Act was never a party measure — part of why it survived the change of government in 1945 untouched. Keep him apart from Beveridge and Bevan, the other two names in this stretch of the chapter, who dealt with social security and health rather than schools.',
+    explanation: { lead: 'He was a Conservative serving in a wartime coalition, so the Act was never a party measure — part of why it survived the change of government in 1945 untouched. Keep him apart from Beveridge and Bevan, the other two names in this stretch of the chapter, who dealt with social security and health rather than schools.' },
     forms: [
       { question: 'Which politician gave his name to the 1944 Education Act?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'R A Butler', distractors: ['William Beveridge', 'Aneurin Bevan', 'Clement Attlee'] } },
@@ -721,7 +721,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f459', tag: 'Education', chapter: 3, verify: false, source: CH3,
     question: 'Which division of schooling did the 1944 Education Act enforce?',
     answer: 'The division between primary and secondary schools',
-    explanation: 'This is one of the few pieces of 1940s legislation you can still see from the street: most children in Britain change school at the boundary it drew. The handbook is careful to add that almost everything else about the system has changed since, so the structure outlasted the Act that made it.',
+    explanation: { lead: 'This is one of the few pieces of 1940s legislation you can still see from the street: most children in Britain change school at the boundary it drew. The handbook is careful to add that almost everything else about the system has changed since, so the structure outlasted the Act that made it.' },
     forms: [
       { question: 'The 1944 Education Act enforced a division between which two kinds of school?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Primary and secondary schools', distractors: ['Grammar and boarding schools', 'Nursery and infant schools', 'Fee-paying and charitable schools'] } },
@@ -735,7 +735,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f460', tag: 'Union', chapter: 3, verify: false, source: CH3,
     question: 'When the Act of Union was agreed in 1707, which institutions did Scotland keep?',
     answer: 'Its own legal and education systems and its Presbyterian Church',
-    explanation: 'The union removed the Scottish parliament but left Scottish civil society standing, which is why devolution three centuries later had distinct institutions ready to hand back rather than new ones to invent. It is also why schools and courts north of the border still work differently from those in England.',
+    explanation: { lead: 'The union removed the Scottish parliament but left Scottish civil society standing, which is why devolution three centuries later had distinct institutions ready to hand back rather than new ones to invent. It is also why schools and courts north of the border still work differently from those in England.' },
     forms: [
       { question: 'Scotland kept three things of its own after the 1707 Act of Union. Which?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Its legal and education systems and its Church', distractors: ['Its own parliament, its own currency and its army', 'Its monarchy, its coinage and its own flag', 'Its foreign policy, its taxes and its navy'] } },
@@ -749,7 +749,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f461', tag: 'Education', chapter: 3, verify: false, source: CH3,
     question: 'When were free school meals first introduced in Britain?',
     answer: 'Before the First World War',
-    explanation: 'They belong to the run of social measures the handbook lists together — old-age pensions, help for the unemployed, safer workplaces — in a period it describes as one of optimism and progress. The trap is dating anything that sounds like welfare to Attlee’s government of the 1940s, when several of the pieces had been in place for decades.',
+    explanation: { lead: 'They belong to the run of social measures the handbook lists together — old-age pensions, help for the unemployed, safer workplaces — in a period it describes as one of optimism and progress. The trap is dating anything that sounds like welfare to Attlee’s government of the 1940s, when several of the pieces had been in place for decades.' },
     forms: [
       { question: 'Free school meals and old-age pensions were first introduced at which point?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Before the First World War', distractors: ['During the Second World War', 'Just after the Second World War', 'During the 1930s Depression'] } },
@@ -763,7 +763,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f462', tag: 'Welfare State', chapter: 3, verify: false, source: CH3,
     question: 'Which of the five ‘Giant Evils’ named in the Beveridge Report stood for the lack of education?',
     answer: 'Ignorance',
-    explanation: 'Beveridge gave each social problem a single blunt word, and this one is why schooling sits inside the welfare-state story rather than beside it. The five map neatly onto benefits, health, education, housing and employment, so learning the mapping gives you the list.',
+    explanation: { lead: 'Beveridge gave each social problem a single blunt word, and this one is why schooling sits inside the welfare-state story rather than beside it. The five map neatly onto benefits, health, education, housing and employment, so learning the mapping gives you the list.' },
     forms: [
       { question: 'In the Beveridge Report, which of the five ‘Giant Evils’ referred to a lack of education?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Ignorance', distractors: ['Illiteracy', 'Idleness', 'Deprivation'] } },
@@ -777,7 +777,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f463', tag: 'Education', chapter: 4, verify: false, source: CH4,
     question: 'Where in the education system is the Welsh language taught?',
     answer: 'In schools and universities',
-    explanation: 'Welsh is a separate language rather than a dialect of English, which is why it has to be formally taught rather than simply picked up at home, and why Assembly business and publications run in both languages. Gaelic and Irish are the parallel cases the chapter names, but neither is described in the same terms.',
+    explanation: { lead: 'Welsh is a separate language rather than a dialect of English, which is why it has to be formally taught rather than simply picked up at home, and why Assembly business and publications run in both languages. Gaelic and Irish are the parallel cases the chapter names, but neither is described in the same terms.' },
     forms: [
       { question: 'The Welsh language is taught in which parts of the education system?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'In schools and universities', distractors: ['In primary schools only', 'In adult evening classes only', 'In secondary schools only'] } },
@@ -791,7 +791,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f464', tag: 'Education', chapter: 4, verify: false, source: CH4,
     question: 'On average, who leaves school with better qualifications, girls or boys?',
     answer: 'Girls',
-    explanation: 'The handbook sets this beside women making up about half the workforce and outnumbering men at university — three figures offered together as evidence that the legal equality described earlier shows up in practice. It is a claim about averages rather than individuals, and the test phrases it that way too.',
+    explanation: { lead: 'The handbook sets this beside women making up about half the workforce and outnumbering men at university — three figures offered together as evidence that the legal equality described earlier shows up in practice. It is a claim about averages rather than individuals, and the test phrases it that way too.' },
     forms: [
       { question: 'On average, who leaves school with better qualifications in the UK?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Girls', distractors: ['Boys', 'Neither, results are equal', 'Boys, by a wide margin'] } },
@@ -805,7 +805,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f465', tag: 'Community', chapter: 5, verify: false, source: CH5,
     question: 'What are the three key roles of school governors and school boards?',
     answer: 'Setting the strategic direction, ensuring accountability, and monitoring and evaluating school performance',
-    explanation: 'Not one of the three is about teaching: a governing body steers the school and holds it to account rather than running the classroom, which is why no teaching qualification is wanted. The same pattern of oversight by lay volunteers turns up in magistrates and juries elsewhere in this chapter.',
+    explanation: { lead: 'Not one of the three is about teaching: a governing body steers the school and holds it to account rather than running the classroom, which is why no teaching qualification is wanted. The same pattern of oversight by lay volunteers turns up in magistrates and juries elsewhere in this chapter.' },
     forms: [
       { question: 'How many key roles do school governors and school boards have?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Three', distractors: ['Two', 'Five', 'Seven'] } },
@@ -819,7 +819,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f466', tag: 'Community', chapter: 5, verify: false, source: CH5,
     question: 'What are school governors called in Scotland?',
     answer: 'Members of the school board',
-    explanation: 'Scotland has run its own education system since the union of 1707, so the different name reflects a genuinely separate structure rather than a local habit. When a question offers an English term against a Scottish one, it is usually testing whether you noticed the system is not uniform across the UK.',
+    explanation: { lead: 'Scotland has run its own education system since the union of 1707, so the different name reflects a genuinely separate structure rather than a local habit. When a question offers an English term against a Scottish one, it is usually testing whether you noticed the system is not uniform across the UK.' },
     forms: [
       { question: 'In Scotland, what is the equivalent of a school governor called?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'A member of the school board', distractors: ['A parent representative', 'A school commissioner', 'A member of the education council'] } },
@@ -833,7 +833,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f467', tag: 'Community', chapter: 5, verify: false, source: CH5,
     question: 'In England, who can apply to open a free school?',
     answer: 'Parents and other community groups',
-    explanation: 'This is the strongest form of the participation principle in the whole book — not helping to run an institution but starting one. It applies in England only, which is the detail worth carrying, and the handbook points you at the education department for the rest.',
+    explanation: { lead: 'This is the strongest form of the participation principle in the whole book — not helping to run an institution but starting one. It applies in England only, which is the detail worth carrying, and the handbook points you at the education department for the rest.' },
     forms: [
       { question: 'In England, who may apply to open a free school in their local area?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Parents and other community groups', distractors: ['Only local councils', 'Only registered charities and churches', 'Only the Department for Education'] } },
@@ -847,7 +847,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f468', tag: 'Devolution', chapter: 5, verify: false, source: CH5,
     question: 'Which public service is run by the devolved administrations rather than by the UK government?',
     answer: 'Education',
-    explanation: 'The dividing line is that what holds the state together — defence, foreign affairs, immigration, taxation and social security — stays at Westminster, while the services people use day to day were handed over. That is why schooling can differ across the four nations while the army cannot.',
+    explanation: { lead: 'The dividing line is that what holds the state together — defence, foreign affairs, immigration, taxation and social security — stays at Westminster, while the services people use day to day were handed over. That is why schooling can differ across the four nations while the army cannot.' },
     forms: [
       { question: 'Which major public service is run by the devolved administrations rather than from Westminster?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Education', distractors: ['Defence', 'Immigration', 'Social security'] } },
@@ -863,7 +863,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f469', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'How many countries were granted independence in 1947?',
     answer: 'Nine',
-    explanation: 'Two years after winning a war, Britain was too exhausted to hold the empire together, and it let go of a whole batch of colonies at once rather than one at a time. India, Pakistan and Ceylon are simply the three the book names out of a much longer list.',
+    explanation: { lead: 'Two years after winning a war, Britain was too exhausted to hold the empire together, and it let go of a whole batch of colonies at once rather than one at a time. India, Pakistan and Ceylon are simply the three the book names out of a much longer list.' },
     forms: [
       { question: 'How many countries were granted independence in 1947?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Nine', distractors: ['Three', 'Five', 'Twelve'] } },
@@ -877,7 +877,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f470', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Ceylon, which became independent in 1947, is known by what name today?',
     answer: 'Sri Lanka',
-    explanation: 'The book gives the colonial name first and the modern one after it, so a question can come at you from either direction. It is the third of the 1947 trio and the one people forget, because the other two kept the names they became independent under.',
+    explanation: { lead: 'The book gives the colonial name first and the modern one after it, so a question can come at you from either direction. It is the third of the 1947 trio and the one people forget, because the other two kept the names they became independent under.' },
     forms: [
       { question: 'Ceylon, which became independent in 1947, is known by what name today?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Sri Lanka', distractors: ['Myanmar', 'Bangladesh', 'Malaysia'] } },
@@ -891,7 +891,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f471', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Colonies in which three regions gained independence in the twenty years after 1947?',
     answer: 'Africa, the Caribbean and the Pacific',
-    explanation: 'Independence did not arrive in one wave, which is why 1947 gets a date and everything after it gets a period instead. Two of the three regions named are also where Britain went looking for workers to rebuild after the war, so this and the post-war recruitment are halves of one story.',
+    explanation: { lead: 'Independence did not arrive in one wave, which is why 1947 gets a date and everything after it gets a period instead. Two of the three regions named are also where Britain went looking for workers to rebuild after the war, so this and the post-war recruitment are halves of one story.' },
     forms: [
       { question: 'Colonies in which three regions gained independence in the twenty years after 1947?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Africa, the Caribbean and the Pacific', distractors: ['Africa, the Mediterranean and the Baltic', 'South America, the Arctic and the Balkans', 'Europe, the Baltic and the Arctic'] } },
@@ -905,7 +905,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f472', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Which Prime Minister was famous for the ‘wind of change’ speech?',
     answer: 'Harold Macmillan',
-    explanation: 'He led during the Conservative years running from 1951 to 1964, a stretch the book treats as recovery and rising prosperity at home while the empire was being dismantled abroad. Attlee’s government granted the 1947 independences; this speech belongs to the wave that followed, which is the cleanest way to keep the two Prime Ministers apart.',
+    explanation: { lead: 'He led during the Conservative years running from 1951 to 1964, a stretch the book treats as recovery and rising prosperity at home while the empire was being dismantled abroad. Attlee’s government granted the 1947 independences; this speech belongs to the wave that followed, which is the cleanest way to keep the two Prime Ministers apart.' },
     forms: [
       { question: 'Which Prime Minister was famous for the ‘wind of change’ speech?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Harold Macmillan', distractors: ['Winston Churchill', 'Clement Attlee', 'Anthony Eden'] } },
@@ -919,7 +919,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f473', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'What was Harold Macmillan’s ‘wind of change’ speech about?',
     answer: 'Decolonisation and independence for the countries of the Empire',
-    explanation: 'The phrase is a metaphor for something nobody can stand against, and that is the whole point of it: a Prime Minister publicly accepting that the end of empire was coming rather than promising to resist it. The book sets it directly beside the prosperity of the 1950s — Britain was getting richer as it got smaller.',
+    explanation: { lead: 'The phrase is a metaphor for something nobody can stand against, and that is the whole point of it: a Prime Minister publicly accepting that the end of empire was coming rather than promising to resist it. The book sets it directly beside the prosperity of the 1950s — Britain was getting richer as it got smaller.' },
     forms: [
       { question: 'What was Harold Macmillan’s ‘wind of change’ speech about?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Decolonisation and independence for the countries of the Empire', distractors: ['The creation of the National Health Service and social security', 'The rebuilding of British industry after the Second World War', 'Britain’s decision to develop its own atomic bomb'] } },
@@ -933,7 +933,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f474', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'During the Victorian period, which territories did the British Empire grow to cover?',
     answer: 'All of India, Australia and large parts of Africa',
-    explanation: 'Victoria’s reign of more than sixty years is when the empire reached its greatest extent, which is why the two sit in the same section of the book. Notice that Africa is qualified — large parts of it, not all — while India is not, and that asymmetry is exactly what a wrong option will flip.',
+    explanation: { lead: 'Victoria’s reign of more than sixty years is when the empire reached its greatest extent, which is why the two sit in the same section of the book. Notice that Africa is qualified — large parts of it, not all — while India is not, and that asymmetry is exactly what a wrong option will flip.' },
     forms: [
       { question: 'During the Victorian period, which territories did the British Empire grow to cover?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'All of India, Australia and large parts of Africa', distractors: ['All of Brazil, Argentina and much of South America', 'All of Russia, Persia and large parts of Arabia', 'All of China, Japan and large parts of Asia'] } },
@@ -947,7 +947,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f475', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'What was the British Empire at its greatest extent?',
     answer: 'The largest empire the world has ever seen',
-    explanation: 'Scale is what makes the rest of the chapter work: the trade, the migration in both directions, and the colonial troops who fought in both world wars all follow from it. The comparison being drawn is with every empire in history, not merely with the rival empires of Britain’s own day, and that is the distinction wrong options blur.',
+    explanation: { lead: 'Scale is what makes the rest of the chapter work: the trade, the migration in both directions, and the colonial troops who fought in both world wars all follow from it. The comparison being drawn is with every empire in history, not merely with the rival empires of Britain’s own day, and that is the distinction wrong options blur.' },
     forms: [
       { question: 'What was the British Empire at its greatest extent?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The largest empire the world has ever seen', distractors: ['The second-largest empire in world history', 'The shortest-lived of the great empires', 'The largest empire in Europe alone'] } },
@@ -961,7 +961,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f476', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Until which decade did the British Empire continue to grow?',
     answer: 'The 1920s',
-    explanation: 'This one is counter-intuitive and therefore heavily tested. Doubts about the empire were already being aired in the late 19th century and the Boer War sharpened them, yet the territory carried on expanding for another twenty-odd years — arguing about an empire and growing one are not the same timeline.',
+    explanation: { lead: 'This one is counter-intuitive and therefore heavily tested. Doubts about the empire were already being aired in the late 19th century and the Boer War sharpened them, yet the territory carried on expanding for another twenty-odd years — arguing about an empire and growing one are not the same timeline.' },
     forms: [
       { question: 'Until which decade did the British Empire continue to grow?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The 1920s', distractors: ['The 1860s', 'The 1950s', 'The 1970s'] } },
@@ -975,7 +975,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f477', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Between 1853 and 1913, roughly how many British citizens left the country to settle overseas?',
     answer: 'As many as 13 million',
-    explanation: 'Empire moved people in both directions at once, which is the point being made by putting this beside the arrival of Russian and Polish Jews in the same passage. Britain’s own population was only around 40 million at the time, so the outflow was enormous — and it is why English is spoken across so much of the world.',
+    explanation: { lead: 'Empire moved people in both directions at once, which is the point being made by putting this beside the arrival of Russian and Polish Jews in the same passage. Britain’s own population was only around 40 million at the time, so the outflow was enormous — and it is why English is spoken across so much of the world.' },
     forms: [
       { question: 'Between 1853 and 1913, roughly how many British citizens left the country to settle overseas?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'As many as 13 million', distractors: ['As many as 30 million', 'As many as 3 million', 'As many as 130,000'] } },
@@ -989,7 +989,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f478', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'Which company, originally set up to trade, gained control of large parts of India?',
     answer: 'The East India Company',
-    explanation: 'This is how a great deal of the empire actually happened: commerce first, government afterwards, with no single moment of decision to conquer anything. It belongs to the same passage as Cook mapping the Australian coast and Britain taking Canada, all of it before the Victorian period rather than during it.',
+    explanation: { lead: 'This is how a great deal of the empire actually happened: commerce first, government afterwards, with no single moment of decision to conquer anything. It belongs to the same passage as Cook mapping the Australian coast and Britain taking Canada, all of it before the Victorian period rather than during it.' },
     forms: [
       { question: 'Which company, originally set up to trade, gained control of large parts of India?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The East India Company', distractors: ['The Hudson’s Bay Company', 'The Royal Africa Company', 'The South Sea Company'] } },
@@ -1003,7 +1003,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f479', tag: 'Empire', chapter: 3, verify: false, source: CH3,
     question: 'By the second half of the 20th century, what had the British Empire largely become?',
     answer: 'The Commonwealth',
-    explanation: 'The word doing the work is orderly: the account here is of independence granted rather than seized, with the American colonies standing as the great earlier exception. What replaced the empire keeps much the same membership but none of the power — it cannot make a member state do anything.',
+    explanation: { lead: 'The word doing the work is orderly: the account here is of independence granted rather than seized, with the American colonies standing as the great earlier exception. What replaced the empire keeps much the same membership but none of the power — it cannot make a member state do anything.' },
     forms: [
       { question: 'By the second half of the 20th century, what had the British Empire largely become?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The Commonwealth', distractors: ['The Atlantic alliance', 'The European Union', 'The United Nations'] } },
@@ -1017,7 +1017,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f480', tag: 'International', chapter: 5, verify: false, source: CH5,
     question: 'What are the core values of the Commonwealth?',
     answer: 'Democracy, good government and the rule of law',
-    explanation: 'These three are what membership actually commits a country to, and they explain the single sanction available when one falls short. Remember that the association has no power over its members at all — an option offering anything binding has quietly handed it the European Union’s powers instead.',
+    explanation: { lead: 'These three are what membership actually commits a country to, and they explain the single sanction available when one falls short. Remember that the association has no power over its members at all — an option offering anything binding has quietly handed it the European Union’s powers instead.' },
     forms: [
       { question: 'What are the core values of the Commonwealth?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Democracy, good government and the rule of law', distractors: ['Mutual defence, open borders and free movement', 'Monarchy, a common language and shared borders', 'Free trade, joint defence and a shared currency'] } },
@@ -1039,7 +1039,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f481', tag: 'National parks', chapter: 4, verify: false, source: CH4,
     question: 'How many national parks are there in England, Wales and Scotland?',
     answer: '15',
-    explanation: 'The count deliberately stops at three countries, so a question phrased about the UK as a whole is testing whether you noticed which one is missing. They are not fenced-off wilderness either: people live inside them and work the land, which is the part of the definition that makes them unusual.',
+    explanation: { lead: 'The count deliberately stops at three countries, so a question phrased about the UK as a whole is testing whether you noticed which one is missing. They are not fenced-off wilderness either: people live inside them and work the land, which is the part of the definition that makes them unusual.' },
     forms: [
       { question: 'How many national parks are there in England, Wales and Scotland?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '15', distractors: ['10', '12', '20'] } },
@@ -1053,7 +1053,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f482', tag: 'Environment', chapter: 5, verify: false, source: CH5,
     question: 'Why does making new products from recycled materials help the environment?',
     answer: 'It uses less energy and avoids extracting more raw materials',
-    explanation: 'Three separate savings are bundled into one idea here — energy, raw materials taken out of the ground, and space in landfill. A question will pick just one of the three, so it is worth recognising all of them as the same fact rather than memorising a single sentence.',
+    explanation: { lead: 'Three separate savings are bundled into one idea here — energy, raw materials taken out of the ground, and space in landfill. A question will pick just one of the three, so it is worth recognising all of them as the same fact rather than memorising a single sentence.' },
     forms: [
       { question: 'Why does making new products from recycled materials help the environment?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'It uses less energy and avoids extracting more raw materials', distractors: ['It removes the need for household refuse to be collected at all', 'It makes British goods cheaper than goods brought in from abroad', 'It allows old landfill sites to be reopened as building land'] } },
@@ -1067,7 +1067,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f483', tag: 'Environment', chapter: 5, verify: false, source: CH5,
     question: 'Why does buying products locally reduce your carbon footprint?',
     answer: 'The goods have not had to travel as far',
-    explanation: 'One piece of advice with two payoffs folded into it: businesses and farmers near you get the trade, and the distance the goods travel drops. Only the second half is environmental, and it is the half the phrase “carbon footprint” attaches to.',
+    explanation: { lead: 'One piece of advice with two payoffs folded into it: businesses and farmers near you get the trade, and the distance the goods travel drops. Only the second half is environmental, and it is the half the phrase “carbon footprint” attaches to.' },
     forms: [
       { question: 'Why does buying products locally reduce your carbon footprint?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The goods have not had to travel as far', distractors: ['Local shops are required by law to recycle packaging', 'Local produce is charged at a lower rate of VAT', 'Smaller shops use less electricity than large ones'] } },
@@ -1081,7 +1081,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f484', tag: 'Environment', chapter: 5, verify: false, source: CH5,
     question: 'How do walking and using public transport protect the environment?',
     answer: 'They create less pollution than using a car',
-    explanation: 'Pollution, not waste, is the mechanism — this is the one piece of environmental advice in the section that has nothing to do with rubbish or raw materials. It pairs with shopping locally: both are really about distance travelled, one by you and one by your shopping.',
+    explanation: { lead: 'Pollution, not waste, is the mechanism — this is the one piece of environmental advice in the section that has nothing to do with rubbish or raw materials. It pairs with shopping locally: both are really about distance travelled, one by you and one by your shopping.' },
     forms: [
       { question: 'How do walking and using public transport protect the environment?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'They create less pollution than using a car', distractors: ['They cut the amount of rubbish sent to landfill', 'They lower the price of goods in local shops', 'They reduce the raw materials taken from the earth'] } },
@@ -1095,7 +1095,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f485', tag: 'Values', chapter: 1, verify: false, source: CH1,
     question: 'Is looking after your local area and the environment a right the UK offers, or a responsibility expected of you?',
     answer: 'A responsibility expected of you',
-    explanation: 'Chapter 1 sets out two facing lists: what you should do, and what the UK gives in return. Caring for your area sits on the first, beside obeying the law and treating others fairly, while free speech, freedom of belief and a fair trial sit on the second. The question is almost always about which side of the page an item comes from.',
+    explanation: { lead: 'Chapter 1 sets out two facing lists: what you should do, and what the UK gives in return. Caring for your area sits on the first, beside obeying the law and treating others fairly, while free speech, freedom of belief and a fair trial sit on the second. The question is almost always about which side of the page an item comes from.' },
     forms: [
       { question: 'Is looking after your local area and the environment a right the UK offers, or a responsibility expected of you?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'A responsibility expected of you', distractors: ['A right the UK offers in return', 'A freedom protected by the courts', 'A legal duty enforced by fines'] } },
@@ -1109,7 +1109,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f486', tag: 'Community', chapter: 5, verify: false, source: CH5,
     question: 'Which volunteering activity does the handbook give as a way of improving the environment?',
     answer: 'Taking part in a local litter pick-up',
-    explanation: 'The list of volunteering examples pairs each activity with a cause — animals with a rescue shelter, the homeless with a night shelter, the environment with a litter pick-up. The wrong answers here are all genuine examples from that same list, simply attached to the wrong cause, which is exactly how the question tends to be built.',
+    explanation: { lead: 'The list of volunteering examples pairs each activity with a cause — animals with a rescue shelter, the homeless with a night shelter, the environment with a litter pick-up. The wrong answers here are all genuine examples from that same list, simply attached to the wrong cause, which is exactly how the question tends to be built.' },
     forms: [
       { question: 'Which volunteering activity does the handbook give as a way of improving the environment?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Taking part in a local litter pick-up', distractors: ['Working on an information desk in a hospital', 'Caring for animals at a rescue shelter', 'Mentoring someone released from prison'] } },
@@ -1123,7 +1123,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f487', tag: 'Environment', chapter: 5, verify: false, source: CH5,
     question: 'Which two organisations does the handbook name as environmental charities?',
     answer: 'The National Trust and Friends of the Earth',
-    explanation: 'The National Trust turning up here is the surprise — elsewhere in the book it is the body that keeps buildings, coastline and countryside open to visitors, but in the list of charities it is filed under the environment. Every other charity the handbook names belongs to a different heading: older people, children, the homeless, medical research or animals.',
+    explanation: { lead: 'The National Trust turning up here is the surprise — elsewhere in the book it is the body that keeps buildings, coastline and countryside open to visitors, but in the list of charities it is filed under the environment. Every other charity the handbook names belongs to a different heading: older people, children, the homeless, medical research or animals.' },
     forms: [
       { question: 'Which two organisations does the handbook name as environmental charities?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The National Trust and Friends of the Earth', distractors: ['Cancer Research UK and the British Red Cross', 'Shelter and the People’s Dispensary for Sick Animals', 'Age UK and the NSPCC'] } },
@@ -1137,7 +1137,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f488', tag: 'Environment', chapter: 5, verify: false, source: CH5,
     question: 'Which organisation does the handbook name as a pressure group campaigning on the environment?',
     answer: 'Greenpeace',
-    explanation: 'Pressure groups sit in a different category from charities: they exist to shift government policy rather than to carry out the work themselves. The handbook gives one example per cause — human rights to Liberty, business to the CBI — and the environmental one is routinely confused with Friends of the Earth, which belongs on the charity list instead.',
+    explanation: { lead: 'Pressure groups sit in a different category from charities: they exist to shift government policy rather than to carry out the work themselves. The handbook gives one example per cause — human rights to Liberty, business to the CBI — and the environmental one is routinely confused with Friends of the Earth, which belongs on the charity list instead.' },
     forms: [
       { question: 'Which organisation does the handbook name as a pressure group campaigning on the environment?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Greenpeace', distractors: ['Liberty', 'The CBI', 'The National Trust'] } },
@@ -1151,7 +1151,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f489', tag: 'National parks', chapter: 4, verify: false, source: CH4,
     question: 'Which national park contains the largest expanse of fresh water in mainland Britain?',
     answer: 'Loch Lomond and the Trossachs',
-    explanation: '“Mainland” is the qualifier doing all the work. Windermere is the biggest stretch of water in the Lake District, and the two get swapped constantly — one is the largest in an English park, the other the largest in Britain. The park takes its name from the loch and the range of hills beside it.',
+    explanation: { lead: '“Mainland” is the qualifier doing all the work. Windermere is the biggest stretch of water in the Lake District, and the two get swapped constantly — one is the largest in an English park, the other the largest in Britain. The park takes its name from the loch and the range of hills beside it.' },
     forms: [
       { question: 'Which national park contains the largest expanse of fresh water in mainland Britain?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Loch Lomond and the Trossachs', distractors: ['The Lake District', 'Snowdonia', 'The Cairngorms in eastern Scotland'] } },
@@ -1167,7 +1167,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f490', tag: 'Media', chapter: 5, verify: false, source: CH5,
     question: 'What does it mean to say that the UK has a free press?',
     answer: 'What newspapers print is free from government control',
-    explanation: 'The handbook dates this back to 1695, when newspapers were first allowed to publish without a government licence, so it is a three-hundred-year-old habit rather than a modern rule. The contrast to hold is with broadcasting: a paper may campaign for one party as hard as it likes, while radio and television are legally obliged to be balanced.',
+    explanation: { lead: 'The handbook dates this back to 1695, when newspapers were first allowed to publish without a government licence, so it is a three-hundred-year-old habit rather than a modern rule. The contrast to hold is with broadcasting: a paper may campaign for one party as hard as it likes, while radio and television are legally obliged to be balanced.' },
     forms: [
       { question: 'What does it mean to say that the UK has a free press?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'What newspapers print is free from government control', distractors: ['Newspapers are distributed at no cost to their readers', 'Newspaper owners are forbidden to hold political opinions', 'All newspapers must report the same agreed set of facts'] } },
@@ -1181,7 +1181,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f491', tag: 'Media', chapter: 3, verify: false, source: CH3,
     question: 'From which year were newspapers allowed to operate without a government licence?',
     answer: '1695',
-    explanation: 'Party politics and a free press appear together in the handbook’s account of the years after the Glorious Revolution — once Parliament rather than the monarch settled matters, printed argument about what Parliament should settle became worth having. The number of titles published rose sharply from this point, which is why a date about licensing carries more weight than it looks.',
+    explanation: { lead: 'Party politics and a free press appear together in the handbook’s account of the years after the Glorious Revolution — once Parliament rather than the monarch settled matters, printed argument about what Parliament should settle became worth having. The number of titles published rose sharply from this point, which is why a date about licensing carries more weight than it looks.' },
     forms: [
       { question: 'From which year were newspapers allowed to operate without a government licence?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1695', distractors: ['1605', '1715', '1765'] } },
@@ -1195,7 +1195,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f492', tag: 'Media', chapter: 5, verify: false, source: CH5,
     question: 'What does the law require of radio and television coverage of the political parties?',
     answer: 'It must be balanced, with equal time for rival viewpoints',
-    explanation: 'Print and broadcast are held to opposite standards, and that contrast is the whole reason this gets asked: a newspaper may campaign openly for one side, a broadcaster may not. If an option offers newspapers among the media obliged to be balanced, it is wrong on that ground alone.',
+    explanation: { lead: 'Print and broadcast are held to opposite standards, and that contrast is the whole reason this gets asked: a newspaper may campaign openly for one side, a broadcaster may not. If an option offers newspapers among the media obliged to be balanced, it is wrong on that ground alone.' },
     forms: [
       { question: 'What does the law require of radio and television coverage of the political parties?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'It must be balanced, with equal time for rival viewpoints', distractors: ['It must be approved by the Speaker before transmission', 'It must go only to parties already represented in Parliament', 'It must avoid naming individual candidates altogether'] } },
@@ -1209,7 +1209,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f493', tag: 'Media', chapter: 4, verify: false, source: CH4,
     question: 'Who in the UK must have a television licence?',
     answer: 'Anyone with a TV, computer or other device used to watch TV',
-    explanation: 'The licence follows the household rather than the equipment, which is why one covers everything under a single roof — and why lodgers on separate tenancy agreements in a shared house each need their own. Two reliefs sit alongside it: free for the over-75s, half price for blind viewers.',
+    explanation: { lead: 'The licence follows the household rather than the equipment, which is why one covers everything under a single roof — and why lodgers on separate tenancy agreements in a shared house each need their own. Two reliefs sit alongside it: free for the over-75s, half price for blind viewers.' },
     forms: [
       { question: 'Who in the UK must have a television licence?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Anyone with a TV, computer or other device used to watch TV', distractors: ['Only households owning a television set, not a computer or tablet', 'Only people who subscribe to a paid television service', 'Only those who watch channels made by the BBC'] } },
@@ -1223,7 +1223,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f494', tag: 'Media', chapter: 4, verify: false, source: CH4,
     question: 'What is the maximum fine for watching television without a licence?',
     answer: 'Up to £1,000',
-    explanation: 'A four-figure sum, which is what makes the smaller amounts on offer so tempting — the penalty is set at many times the price of the licence itself. It falls on the person watching, not on the shop that sold the set or the channel being watched.',
+    explanation: { lead: 'A four-figure sum, which is what makes the smaller amounts on offer so tempting — the penalty is set at many times the price of the licence itself. It falls on the person watching, not on the shop that sold the set or the channel being watched.' },
     forms: [
       { question: 'What is the maximum fine for watching television without a licence?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Up to £1,000', distractors: ['Up to £100', 'Up to £500', 'Up to £5,000'] } },
@@ -1237,7 +1237,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f495', tag: 'Media', chapter: 4, verify: false, source: CH4,
     question: 'At what age can someone apply for a free television licence?',
     answer: '75',
-    explanation: 'Two different reliefs sit side by side and the questions like to swap them: one is granted for age, the other for blindness, and only one of the two is a full exemption. Get the pair the wrong way round and you lose both.',
+    explanation: { lead: 'Two different reliefs sit side by side and the questions like to swap them: one is granted for age, the other for blindness, and only one of the two is a full exemption. Get the pair the wrong way round and you lose both.' },
     forms: [
       { question: 'At what age can someone apply for a free television licence?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '75', distractors: ['60', '65', '70'] } },
@@ -1251,7 +1251,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f496', tag: 'Media', chapter: 4, verify: false, source: CH4,
     question: 'What is the money from television licences used to pay for?',
     answer: 'The BBC',
-    explanation: 'The odd part is that a fee attached to television also pays for radio — BBC radio stations come out of the same money, while commercial stations sell advertising just as commercial channels do. There is no separate radio licence, which is the wrong answer this fact exists to rule out.',
+    explanation: { lead: 'The odd part is that a fee attached to television also pays for radio — BBC radio stations come out of the same money, while commercial stations sell advertising just as commercial channels do. There is no separate radio licence, which is the wrong answer this fact exists to rule out.' },
     forms: [
       { question: 'What is the money from television licences used to pay for?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The BBC', distractors: ['ITV, Channel 4 and Channel 5', 'All UK television channels', 'The broadcasting regulator'] } },
@@ -1265,7 +1265,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f497', tag: 'Media', chapter: 4, verify: false, source: CH4,
     question: 'What is the BBC’s standing among broadcasters worldwide?',
     answer: 'It is the largest broadcaster in the world',
-    explanation: 'It is state-funded and independent of government at the same time, which sounds contradictory and is exactly why the handbook singles it out: the money is a compulsory public fee, but no minister decides the programmes. Every other UK channel runs on advertising and subscriptions instead, so the funding question and the independence question travel together.',
+    explanation: { lead: 'It is state-funded and independent of government at the same time, which sounds contradictory and is exactly why the handbook singles it out: the money is a compulsory public fee, but no minister decides the programmes. Every other UK channel runs on advertising and subscriptions instead, so the funding question and the independence question travel together.' },
     forms: [
       { question: 'What is the BBC’s standing among broadcasters worldwide?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'It is the largest broadcaster in the world', distractors: ['It is the largest broadcaster in Europe but not worldwide', 'It is Britain’s largest broadcaster only', 'It is the only broadcaster allowed to cover Parliament'] } },
@@ -1281,7 +1281,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f498', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'What is the currency of the UK?',
     answer: 'The pound sterling',
-    explanation: 'The word sterling is what separates it from the many other currencies also called a pound, which is why the handbook gives the full name rather than just “the pound”. It sits in the section on the UK today, next to the capital cities and the languages — practical facts about the country as it is now, not history.',
+    explanation: { lead: 'The word sterling is what separates it from the many other currencies also called a pound, which is why the handbook gives the full name rather than just “the pound”. It sits in the section on the UK today, next to the capital cities and the languages — practical facts about the country as it is now, not history.' },
     forms: [
       { question: 'What is the currency of the UK?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The pound sterling', distractors: ['The euro', 'The Irish punt', 'The Commonwealth dollar'] } },
@@ -1295,7 +1295,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f499', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'How many pence are there in a pound?',
     answer: '100',
-    explanation: 'Decimal money is more recent than it feels — before decimalisation in 1971 a pound was split into 240 pence, which is why numbers like 240 and 12 make such tempting wrong answers. The clean division into a hundred is also what makes the coins sit where they do, running 1p up to 50p and then over into pounds.',
+    explanation: { lead: 'Decimal money is more recent than it feels — before decimalisation in 1971 a pound was split into 240 pence, which is why numbers like 240 and 12 make such tempting wrong answers. The clean division into a hundred is also what makes the coins sit where they do, running 1p up to 50p and then over into pounds.' },
     forms: [
       { question: 'How many pence are there in a pound?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '100', distractors: ['10', '50', '1,000'] } },
@@ -1309,7 +1309,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f500', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'What are the denominations of UK coins?',
     answer: '1p, 2p, 5p, 10p, 20p, 50p, £1 and £2',
-    explanation: 'Eight coins, and the pattern is the way to hold them: ones, twos and fives repeating at each scale — 1p, 2p, 5p, then 10p, 20p, 50p, then £1 and £2. Anything that breaks the pattern is the wrong answer, which is how a 25p or a £5 gets slipped into an option list.',
+    explanation: { lead: 'Eight coins, and the pattern is the way to hold them: ones, twos and fives repeating at each scale — 1p, 2p, 5p, then 10p, 20p, 50p, then £1 and £2. Anything that breaks the pattern is the wrong answer, which is how a 25p or a £5 gets slipped into an option list.' },
     forms: [
       { question: 'Which set gives the denominations of UK coins?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1p, 2p, 5p, 10p, 20p, 50p, £1 and £2', distractors: ['1p, 2p, 5p, 10p, 25p, 50p, £1 and £5', '1p, 5p, 10p, 20p, 50p, £1, £2 and £5', '2p, 5p, 10p, 20p, 50p, £1, £2 and £10'] } },
@@ -1323,7 +1323,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f501', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'What are the denominations of UK banknotes?',
     answer: '£5, £10, £20 and £50',
-    explanation: 'Four notes against eight coins, and the count is worth knowing on its own because questions sometimes ask for the number rather than the list. The £1 is the trap at the bottom end — it is a coin, so any list that opens with a £1 note is wrong — and nothing in ordinary use goes above £50.',
+    explanation: { lead: 'Four notes against eight coins, and the count is worth knowing on its own because questions sometimes ask for the number rather than the list. The £1 is the trap at the bottom end — it is a coin, so any list that opens with a £1 note is wrong — and nothing in ordinary use goes above £50.' },
     forms: [
       { question: 'Which set gives the denominations of UK banknotes?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '£5, £10, £20 and £50', distractors: ['£1, £5, £10 and £20', '£5, £10, £25 and £50', '£10, £20, £50 and £100'] } },
@@ -1337,7 +1337,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f502', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'Which parts of the UK issue their own banknotes?',
     answer: 'Scotland and Northern Ireland',
-    explanation: 'Wales is the one people add by mistake: it has its own language and its own capital, but not its own notes. The right that Scotland and Northern Ireland kept is a commercial one held by particular banks, which is why those notes carry a bank’s own name across the top rather than the Bank of England’s.',
+    explanation: { lead: 'Wales is the one people add by mistake: it has its own language and its own capital, but not its own notes. The right that Scotland and Northern Ireland kept is a commercial one held by particular banks, which is why those notes carry a bank’s own name across the top rather than the Bank of England’s.' },
     forms: [
       { question: 'Which parts of the UK have their own banknotes?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Scotland and Northern Ireland', distractors: ['Wales and Northern Ireland', 'Scotland and Wales', 'The Channel Islands and the Isle of Man'] } },
@@ -1351,7 +1351,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f503', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'Where are banknotes issued in Scotland and Northern Ireland valid?',
     answer: 'Everywhere in the UK',
-    explanation: 'Being valid and being accepted are two different things, and the handbook says both in consecutive sentences — this is the first half. The notes are proper currency the length of the country, even though a shopkeeper in Cornwall may never have handled one.',
+    explanation: { lead: 'Being valid and being accepted are two different things, and the handbook says both in consecutive sentences — this is the first half. The notes are proper currency the length of the country, even though a shopkeeper in Cornwall may never have handled one.' },
     forms: [
       { question: 'Where are banknotes issued in Scotland and Northern Ireland valid?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Everywhere in the UK', distractors: ['Only in the part that issued them', 'Only in Scotland and Northern Ireland', 'Only in England and Wales'] } },
@@ -1365,7 +1365,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f504', tag: 'Currency', chapter: 4, verify: false, source: CH4,
     question: 'Do shops and businesses have to accept banknotes issued in Scotland and Northern Ireland?',
     answer: 'No — they are not obliged to accept them',
-    explanation: 'This is the sting in the tail, and the reason the handbook adds a second sentence at all: valid is not the same as compulsory. A business decides for itself what it will take, so a note can be turned down without anybody breaking a rule. The trap is answering the first half and stopping there.',
+    explanation: { lead: 'This is the sting in the tail, and the reason the handbook adds a second sentence at all: valid is not the same as compulsory. A business decides for itself what it will take, so a note can be turned down without anybody breaking a rule. The trap is answering the first half and stopping there.' },
     forms: [
       { question: 'Must shops and businesses accept banknotes issued in Scotland and Northern Ireland?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'No, they do not have to accept them', distractors: ['Yes, refusing them is against the law', 'Yes, but only outside England and Wales', 'Only shops with a bank account must accept them'] } },
@@ -1379,7 +1379,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f505', tag: 'Currency', chapter: 3, verify: false, source: CH3,
     question: 'Did the UK adopt the euro while it was a member of the European Union?',
     answer: 'No — it kept the pound sterling',
-    explanation: 'Belonging to the EU never meant belonging to the single currency, and several member states kept their own money. The handbook makes the point in the same breath as joining the EEC in 1973, because the two are so easily run together — membership yes, currency no.',
+    explanation: { lead: 'Belonging to the EU never meant belonging to the single currency, and several member states kept their own money. The handbook makes the point in the same breath as joining the EEC in 1973, because the two are so easily run together — membership yes, currency no.' },
     forms: [
       { question: 'Did the UK adopt the euro while it was a member of the European Union?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'No, it kept the pound sterling', distractors: ['Yes, from the euro’s introduction', 'Yes, but only for government spending', 'Yes, alongside the pound in Northern Ireland'] } },
@@ -1393,7 +1393,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f506', tag: 'Prehistory', chapter: 3, verify: false, source: CH3,
     question: 'Which prehistoric people made the first coins to be minted in Britain?',
     answer: 'The people of the Iron Age',
-    explanation: 'Coins imply an economy doing more than barter, which is the handbook’s reason for mentioning them: the Iron Age had a sophisticated culture, not merely hill forts. Some carried the names of kings, and that writing is why this moment is treated as the point where British history begins.',
+    explanation: { lead: 'Coins imply an economy doing more than barter, which is the handbook’s reason for mentioning them: the Iron Age had a sophisticated culture, not merely hill forts. Some carried the names of kings, and that writing is why this moment is treated as the point where British history begins.' },
     forms: [
       { question: 'During which prehistoric age were the first coins minted in Britain?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The Iron Age', distractors: ['The Bronze Age', 'The Stone Age', 'The age of the first farmers'] } },
@@ -1416,7 +1416,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f507', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'What is the minimum age to buy alcohol in a pub or night club?',
     answer: '18',
-    explanation: 'Two ages sit side by side in this part of the book and questions live in the gap between them — one governs buying at the bar, the other only drinking with a meal under supervision. Note too that being too young to buy does not mean being barred from the premises: some pubs admit younger people if an adult is with them.',
+    explanation: { lead: 'Two ages sit side by side in this part of the book and questions live in the gap between them — one governs buying at the bar, the other only drinking with a meal under supervision. Note too that being too young to buy does not mean being barred from the premises: some pubs admit younger people if an adult is with them.' },
     forms: [
       { question: 'What is the minimum age to buy alcohol in a pub or night club?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '18', distractors: ['16', '17', '21'] } },
@@ -1430,7 +1430,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f508', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'From what age may a young person drink beer or wine with a meal, if accompanied by someone over 18?',
     answer: '16',
-    explanation: 'The exception exists because drinking with a meal, under an adult’s eye, is treated as different in kind from buying a round at the bar — which is why the setting and the company matter as much as the age. Anyone who remembers only the rule about buying gets caught by a question describing a family dinner.',
+    explanation: { lead: 'The exception exists because drinking with a meal, under an adult’s eye, is treated as different in kind from buying a round at the bar — which is why the setting and the company matter as much as the age. Anyone who remembers only the rule about buying gets caught by a question describing a family dinner.' },
     forms: [
       { question: 'From what age may a young person drink beer or wine with a meal, if accompanied by someone over 18?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '16', distractors: ['14', '15', '17'] } },
@@ -1444,7 +1444,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f509', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'What is the word ‘pub’ short for?',
     answer: 'Public house',
-    explanation: 'The full form is the giveaway: these are houses licensed to serve the public, which is why licensing law rather than private house rules governs what happens inside. Chapter four files them under leisure alongside night clubs and the National Lottery, treating them as social institutions rather than simply places that sell drink.',
+    explanation: { lead: 'The full form is the giveaway: these are houses licensed to serve the public, which is why licensing law rather than private house rules governs what happens inside. Chapter four files them under leisure alongside night clubs and the National Lottery, treating them as social institutions rather than simply places that sell drink.' },
     forms: [
       { question: 'What is the word ‘pub’ short for?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Public house', distractors: ['Publican’s house', 'Public bar room', 'People’s house'] } },
@@ -1458,7 +1458,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f510', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'Which two games are described as traditional pub games?',
     answer: 'Pool and darts',
-    explanation: 'Both need no pitch and very little space — bar games that fit inside a room, which is how they became fixtures rather than pastimes. The quiz belongs to the same list of pub sociability, so a question will sometimes mix the games and the quiz together to see whether you can separate them.',
+    explanation: { lead: 'Both need no pitch and very little space — bar games that fit inside a room, which is how they became fixtures rather than pastimes. The quiz belongs to the same list of pub sociability, so a question will sometimes mix the games and the quiz together to see whether you can separate them.' },
     forms: [
       { question: 'Which two games are described as traditional pub games?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Pool and darts', distractors: ['Snooker and dominoes', 'Cribbage and skittles', 'Bowls and shove ha’penny'] } },
@@ -1472,7 +1472,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f511', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'From what time do pubs usually open during the day, and what is different on Sundays?',
     answer: '11.00 am, but 12 noon on Sundays',
-    explanation: 'The Sunday start is later than the rest of the week, and that difference is what a question is most likely to hinge on. These are customary hours rather than a legal ceiling — nothing fixes them nationally, which is why the next thing worth knowing is who actually sets them.',
+    explanation: { lead: 'The Sunday start is later than the rest of the week, and that difference is what a question is most likely to hinge on. These are customary hours rather than a legal ceiling — nothing fixes them nationally, which is why the next thing worth knowing is who actually sets them.' },
     forms: [
       { question: 'From what time do pubs in the UK usually open during the day?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '11.00 am', distractors: ['9.00 am', '10.00 am', '12 noon'] } },
@@ -1486,7 +1486,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f512', tag: 'Pubs', chapter: 4, verify: false, source: CH4,
     question: 'Who decides the hours that a pub or night club is open?',
     answer: 'The licensee',
-    explanation: 'Opening hours are not set nationally, which is why two pubs on the same street can keep different times and why clubs are free to run so much later. Watch for options offering the council or the police — both are plausible because both have real roles elsewhere in licensing and public order.',
+    explanation: { lead: 'Opening hours are not set nationally, which is why two pubs on the same street can keep different times and why clubs are free to run so much later. Watch for options offering the council or the police — both are plausible because both have real roles elsewhere in licensing and public order.' },
     forms: [
       { question: 'Who decides the hours that a pub or night club is open?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The licensee', distractors: ['The local council', 'The police', 'Parliament'] } },
@@ -1500,7 +1500,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f513', tag: 'Law', chapter: 5, verify: false, source: CH5,
     question: 'Besides selling alcohol to someone under 18, what related act is also a criminal offence?',
     answer: 'Buying alcohol for someone under 18',
-    explanation: 'Alcohol appears in chapter five as an example of criminal rather than civil law, sitting alongside carrying a weapon, selling tobacco to minors and racial harassment. The pairing is the point: the offence is not committed only at the till, which is what catches out someone buying a round for a younger friend.',
+    explanation: { lead: 'Alcohol appears in chapter five as an example of criminal rather than civil law, sitting alongside carrying a weapon, selling tobacco to minors and racial harassment. The pairing is the point: the offence is not committed only at the till, which is what catches out someone buying a round for a younger friend.' },
     forms: [
       { question: 'Besides selling alcohol to an under-18, which related act is also a criminal offence?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Buying alcohol on their behalf', distractors: ['Serving them a soft drink at the bar', 'Letting them sit in the pub garden', 'Employing them to collect glasses'] } },
@@ -1514,7 +1514,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f514', tag: 'Law', chapter: 5, verify: false, source: CH5,
     question: 'What is an alcohol-free zone?',
     answer: 'A place where you are not allowed to drink alcohol in public',
-    explanation: 'These zones are local rather than national, which is the whole point of the rule: drinking in the street is not an offence everywhere, so the question turns on where you happen to be standing. The police powers described here reach further than the drinker, since young people can be moved on whether or not they are actually drinking.',
+    explanation: { lead: 'These zones are local rather than national, which is the whole point of the rule: drinking in the street is not an offence everywhere, so the question turns on where you happen to be standing. The police powers described here reach further than the drinker, since young people can be moved on whether or not they are actually drinking.' },
     forms: [
       { question: 'In some places you may not drink alcohol in public. What are those places called?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Alcohol-free zones', distractors: ['Dry licensing districts', 'Controlled drinking areas', 'Public order zones'] } },
@@ -1535,7 +1535,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f515', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'In which year did the world enter the Great Depression?',
     answer: '1929',
-    explanation: 'It lands at the hinge of the decade: the early 1920s were getting better for most people, and everything after this point pulls the other way. The handbook is careful to say the pain was uneven across the UK rather than universal, which is the detail the harder questions turn on.',
+    explanation: { lead: 'It lands at the hinge of the decade: the early 1920s were getting better for most people, and everything after this point pulls the other way. The handbook is careful to say the pain was uneven across the UK rather than universal, which is the detail the harder questions turn on.' },
     forms: [
       { question: 'In which year did the world enter the Great Depression?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1929', distractors: ['1919', '1926', '1933'] } },
@@ -1549,7 +1549,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f516', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'Which traditional heavy industry is named as badly affected by the depression of the 1930s?',
     answer: 'Shipbuilding',
-    explanation: 'The whole point of the section is the split: the old industries went down while the new ones went up, in the same country in the same decade. If a question offers you an industry that was growing, it is testing whether you know which side of that divide it sat on.',
+    explanation: { lead: 'The whole point of the section is the split: the old industries went down while the new ones went up, in the same country in the same decade. If a question offers you an industry that was growing, it is testing whether you know which side of that divide it sat on.' },
     forms: [
       { question: 'Which traditional heavy industry was badly hit by the depression of the 1930s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Shipbuilding', distractors: ['Car manufacturing', 'Aircraft manufacturing', 'Radio broadcasting'] } },
@@ -1563,7 +1563,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f517', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'Which two new industries developed in the UK during the 1930s?',
     answer: 'The automobile and aviation industries',
-    explanation: 'These two are the counterweight to the shipyards, and they are why the decade is not simply a story of decline. They also connect forward: Whittle was working on the jet engine in these same years, and car ownership doubling is the consumer end of the same shift.',
+    explanation: { lead: 'These two are the counterweight to the shipyards, and they are why the decade is not simply a story of decline. They also connect forward: Whittle was working on the jet engine in these same years, and car ownership doubling is the consumer end of the same shift.' },
     forms: [
       { question: 'Which two new industries developed in the UK during the 1930s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'The automobile and aviation industries', distractors: ['The coal and shipbuilding industries', 'The textile and pottery industries', 'The railway and canal-building industries'] } },
@@ -1577,7 +1577,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f518', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'What happened to car ownership in the UK between 1930 and 1939?',
     answer: 'It doubled, from 1 million to 2 million',
-    explanation: 'This is the handbook’s evidence that the 1930s were not uniformly grim. Prices were generally falling, so people who kept their jobs found their money went further — and what they spent it on shows up in figures like this one.',
+    explanation: { lead: 'This is the handbook’s evidence that the 1930s were not uniformly grim. Prices were generally falling, so people who kept their jobs found their money went further — and what they spent it on shows up in figures like this one.' },
     forms: [
       { question: 'What happened to car ownership in the UK between 1930 and 1939?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'It doubled, from 1 million to 2 million', distractors: ['It trebled, from 1 million to 3 million', 'It stayed flat at about 1 million cars', 'It fell, from 2 million to 1 million'] } },
@@ -1591,7 +1591,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f519', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'What improved for many people in the UK during the 1920s?',
     answer: 'Living conditions, including public housing and new homes in towns and cities',
-    explanation: 'Housing is the concrete example the handbook reaches for, and it bookends the period: new homes in the 1920s, and more of them again in the 1930s. The trap is treating the whole inter-war stretch as one long slump — the improvement came first, the crash came in 1929.',
+    explanation: { lead: 'Housing is the concrete example the handbook reaches for, and it bookends the period: new homes in the 1920s, and more of them again in the 1930s. The trap is treating the whole inter-war stretch as one long slump — the improvement came first, the crash came in 1929.' },
     forms: [
       { question: 'What improved for many people in the UK during the 1920s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Living conditions, including public housing', distractors: ['Wages in the traditional heavy industries', 'The number of hours worked in factories each week', 'Access to universities and higher education'] } },
@@ -1605,7 +1605,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f520', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'Which two novelists are named as prominent writers of the 1930s?',
     answer: 'Graham Greene and Evelyn Waugh',
-    explanation: 'The handbook calls the decade a time of cultural blossoming, which is the counter-intuitive part worth holding on to: depression and creative flowering in the same years. Both men are 20th-century novelists, so any Victorian or Romantic name offered alongside them is the wrong century.',
+    explanation: { lead: 'The handbook calls the decade a time of cultural blossoming, which is the counter-intuitive part worth holding on to: depression and creative flowering in the same years. Both men are 20th-century novelists, so any Victorian or Romantic name offered alongside them is the wrong century.' },
     forms: [
       { question: 'Which two novelists are named as prominent writers of the 1930s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Graham Greene and Evelyn Waugh', distractors: ['Charles Dickens and Thomas Hardy', 'Jane Austen and the Brontë sisters', 'Kingsley Amis and Ian McEwan'] } },
@@ -1619,7 +1619,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f521', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'Which economist published influential new theories of economics in the inter-war years?',
     answer: 'John Maynard Keynes',
-    explanation: 'He belongs to the same paragraph as the depression for a reason: mass unemployment was the problem his theories were written to explain. Beveridge is the tempting wrong answer because he is also a social thinker of the period, but his report comes in 1942 and is about social security, not economics.',
+    explanation: { lead: 'He belongs to the same paragraph as the depression for a reason: mass unemployment was the problem his theories were written to explain. Beveridge is the tempting wrong answer because he is also a social thinker of the period, but his report comes in 1942 and is about social security, not economics.' },
     forms: [
       { question: 'Which British economist published influential new economic theories between the wars?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'John Maynard Keynes', distractors: ['Sir William Beveridge', 'David Ricardo', 'Adam Smith'] } },
@@ -1633,7 +1633,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f522', tag: 'Interwar', chapter: 3, verify: false, source: CH3,
     question: 'In which year did the BBC begin the world’s first regular television service?',
     answer: '1936',
-    explanation: 'Two BBC dates sit side by side here and are easy to swap: radio came first, television more than a decade later. Baird was developing television through the 1920s and made his first broadcast between London and Glasgow in 1932, so the invention and the regular service are separate facts with separate years.',
+    explanation: { lead: 'Two BBC dates sit side by side here and are easy to swap: radio came first, television more than a decade later. Baird was developing television through the 1920s and made his first broadcast between London and Glasgow in 1932, so the invention and the regular service are separate facts with separate years.' },
     forms: [
       { question: 'In which year did the BBC begin the world’s first regular television service?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1936', distractors: ['1922', '1926', '1946'] } },
@@ -1651,7 +1651,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f523', tag: 'Modern Britain', chapter: 3, verify: false, source: CH3,
     question: 'In the late 1970s, what did many people begin to argue about the trade unions?',
     answer: 'That they were too powerful and their activities were harming the UK',
-    explanation: 'This argument is what makes the next decade legible: the legal controls imposed after 1979 were a response to it, not a policy that came out of nowhere. The same paragraph sets the scene — the post-war boom ending, prices rising sharply, and strikes across many industries and services.',
+    explanation: { lead: 'This argument is what makes the next decade legible: the legal controls imposed after 1979 were a response to it, not a policy that came out of nowhere. The same paragraph sets the scene — the post-war boom ending, prices rising sharply, and strikes across many industries and services.' },
     forms: [
       { question: 'In the late 1970s, what did many people begin to argue about the trade unions?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'That they were too powerful and were harming the UK', distractors: ['That they had become too small to negotiate properly', 'That they were too weak to protect their members', 'That they should be given a seat in the Cabinet'] } },
@@ -1665,7 +1665,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f524', tag: 'Modern Britain', chapter: 3, verify: false, source: CH3,
     question: 'What did the Conservative government after 1979 impose on trade union powers?',
     answer: 'Legal controls',
-    explanation: 'Three changes travel together in this passage and questions often ask for one while offering the others: legal limits on the unions, privatisation of nationalised industries, and deregulation that grew the City of London. The industries that declined — shipbuilding and coal mining — are the same traditional heavy industries that suffered in the 1930s.',
+    explanation: { lead: 'Three changes travel together in this passage and questions often ask for one while offering the others: legal limits on the unions, privatisation of nationalised industries, and deregulation that grew the City of London. The industries that declined — shipbuilding and coal mining — are the same traditional heavy industries that suffered in the 1930s.' },
     forms: [
       { question: 'What did the Conservative government of 1979 to 1990 impose on trade unions?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Legal controls on their powers', distractors: ['A guaranteed seat on every company board', 'Compulsory membership for all workers', 'Public funding for their operations'] } },
@@ -1683,7 +1683,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f525', tag: 'Law', chapter: 5, verify: false, source: CH5,
     question: 'Which area of civil law covers disputes between landlords and tenants?',
     answer: 'Housing law',
-    explanation: 'Four kinds of civil law are listed together — housing, consumer rights, employment and debt — and questions usually give you a scenario and ask which one it is. Nothing here is prosecuted or punished: one side simply wants something from the other, which is what makes it civil rather than criminal.',
+    explanation: { lead: 'Four kinds of civil law are listed together — housing, consumer rights, employment and debt — and questions usually give you a scenario and ask which one it is. Nothing here is prosecuted or punished: one side simply wants something from the other, which is what makes it civil rather than criminal.' },
     forms: [
       { question: 'Which area of civil law covers disputes between landlords and tenants?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Housing law', distractors: ['Consumer rights', 'Employment law', 'Criminal law'] } },
@@ -1697,7 +1697,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f526', tag: 'Law', chapter: 5, verify: false, source: CH5,
     question: 'Under which area of civil law would a case of unfair dismissal be brought?',
     answer: 'Employment law',
-    explanation: 'Discrimination appears in two places in the handbook and they behave differently: racial harassment is a crime, while discrimination at work is a civil employment matter. Which side of the line a question sits on is usually the whole question.',
+    explanation: { lead: 'Discrimination appears in two places in the handbook and they behave differently: racial harassment is a crime, while discrimination at work is a civil employment matter. Which side of the line a question sits on is usually the whole question.' },
     forms: [
       { question: 'Under which area of civil law would a case of unfair dismissal be brought?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Employment law', distractors: ['Consumer rights', 'Criminal law', 'Housing law'] } },
@@ -1711,7 +1711,7 @@ export const ADDITIONS: readonly Fact[] = [
     id: 'f527', tag: 'Tax', chapter: 5, verify: false, source: CH5,
     question: 'What happens if you do not pay enough National Insurance Contributions?',
     answer: 'You cannot receive certain contributory benefits, such as Jobseeker’s Allowance or a full state pension',
-    explanation: 'The word doing the work is “contributory”: these are benefits you have to have paid into, which is why a gap in your record shows up years later as a reduced state pension. Part-time workers who earn too little can miss out on statutory payments such as maternity pay for the same reason.',
+    explanation: { lead: 'The word doing the work is “contributory”: these are benefits you have to have paid into, which is why a gap in your record shows up years later as a reduced state pension. Part-time workers who earn too little can miss out on statutory payments such as maternity pay for the same reason.' },
     forms: [
       { question: 'What is the consequence of not paying enough National Insurance Contributions?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'You lose entitlement to certain contributory benefits', distractors: ['You must pay income tax at a much higher rate instead', 'You are required to leave paid work altogether', 'You are automatically disqualified from voting'] } },
