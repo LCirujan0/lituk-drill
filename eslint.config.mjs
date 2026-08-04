@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Scratch space for content work: the handbook text and in-progress fact fragments.
+    // These are deliberately not valid standalone modules and are never shipped.
+    ".work/**",
   ]),
 ]);
 

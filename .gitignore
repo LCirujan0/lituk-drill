@@ -27,3 +27,5 @@ npm-debug.log*
 
 # Handbook source text, used to write explanations. Crown copyright — never committed.
 .work/
+
+.env*

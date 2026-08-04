@@ -114,7 +114,7 @@ export function useDrill() {
       if (queue.length === 0) return null;
       return queue.find((i) => !recent.includes(i.factId)) ?? queue[0];
     },
-    [ctx, events, recent, settings, states, today],
+    [ctx, recent],
   );
 
   const grade = useCallback(
