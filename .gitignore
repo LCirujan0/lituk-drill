@@ -21,3 +21,5 @@ npm-debug.log*
 
 # Superseded v0 artefact, kept locally until deleted.
 cards.js.OLD-v1-unused
+
+.vercel

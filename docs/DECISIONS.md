@@ -566,4 +566,38 @@ are and are never modified. The v1 Vercel project sets its root directory to `v1
 - *Negative.* The repository root README describes v0 rather than the repository, which is what a visitor
   to a public repo sees first and will be confusing until it is revisited. Tooling paths are one level
   deeper than default throughout, and a mis-set root directory in Vercel is a failure mode that does not
-  exist in a single-app repo.
+  exist in a single-app repo. **This last consequence materialised within hours** — see L-013.
+
+---
+
+## D-021 — Generation rules are derived at load time, never stored in the deck
+
+**Date:** 4 August 2026 · **Status:** accepted · **Refines D-014**
+
+**Context.** D-014 settled that numeric distractors would be generated rather than fixed, and the
+obvious implementation was to write a rule into each numeric form during migration: value, template,
+candidate pool. Building it exposed three problems with that. The generated rule would become a second
+copy of information already present in the authored options, free to drift from them. Editing an option
+would silently leave a stale rule behind. And — the decisive one — a form carrying a rule instead of
+four options can no longer be reconstructed into v0's positional shape, so the round-trip proof that
+the migration lost nothing would stop covering the converted forms. That proof is what stands in for
+human review of 1,228 forms; shrinking it to buy a feature is a poor trade.
+
+**Decision.** The deck stores exactly what the author wrote: four options, unchanged. The generation
+rule is **derived from those options at load time** and memoised. `presentation.ts` is the single place
+a stored form becomes four options on a screen, and it also randomises display order for forms that
+cannot be generated.
+
+**Consequences.**
+- *Positive.* The rule cannot drift from its source, because it has no independent existence. Editing an
+  option updates the rule for free. The round-trip proof still covers all 410 facts and all 1,228 forms.
+  The data files gained no churn at all — this feature is a net-zero diff in `src/data`. And the deck
+  layer stays free of scheduler dependencies (R-2), which matters because presentation now needs
+  randomness.
+- *Negative.* A rule cannot be hand-tuned for a fact that derives badly; the only lever is rewriting the
+  options, which is a blunter instrument. Derivation runs at load rather than build, so a change to the
+  algorithm silently changes every existing form's option pool — invisible in a data diff, which is why
+  the statistical ratchet and the rank-uniformity test are the only defence. And the stored deck now
+  permanently shows a 91.4% middle-value rate that no reader ever meets, so anyone reading
+  `numericMiddleRankRate` without reading `effectiveNumericMiddleRankRate` will draw the wrong
+  conclusion.

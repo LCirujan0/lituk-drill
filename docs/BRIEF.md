@@ -259,8 +259,39 @@ A postmortem without an action item is no postmortem.
 
 ## Feature mini-specs
 
-None yet. The three thesis capabilities — practice on demand (S3), the readiness signal (S4), and
-resistance to form memorisation (S7) — each require a mini-spec through the scoping gate before any
-code is written: Problem / Appetite / Solution sketch / Rabbit holes / No-gos / Acceptance criteria +
-verification method. S7 is the one most likely to be started accidentally as a side quest inside
-another feature; it is fenced in the rabbit-hole table above for that reason.
+Practice on demand (S3) and the readiness signal (S4) still need theirs before any code is written.
+
+### S7 — question forms that resist memorisation · *approved 4 Aug 2026, built*
+
+**Problem.** Two failures share one cause. R1: the correct answer is a middle value in 91.4% of 373
+all-numeric forms against 50% by chance, so "pick a middle number" scores ~91% knowing nothing, and
+any readiness figure built on multiple-choice data inherits it. R2: 1,228 fixed forms drilled for
+eight weeks is a memorisable bank — the same failure this project exists to prevent — and it bites
+hardest on repeatedly-missed facts, which are drilled most. Both come from option sets being fixed
+and bracketing the truth.
+
+**Appetite.** Days, not weeks. It sits in front of S4, which is untrustworthy until it lands.
+
+**Solution sketch.** Numeric forms carry a *derived* generation rule: the true value, a template, and
+a candidate pool with depth on both sides, with the scale inferred from the spread of the author's own
+distractors. At presentation, a target rank is drawn uniformly from those achievable and distractors
+chosen to place the true value there. Non-numeric forms keep their authored options, with display
+order randomised.
+
+**Rabbit holes.** Generating *text* distractors — rejected as out of appetite and prone to producing
+accidentally-correct options. Rewriting the 56 forms whose options are differently-worded sentences —
+that is authoring, not engineering. Storing the rules in the deck files — rejected; see D-021.
+
+**No-gos.** Never changes what a question asks. Never alters the stored options, so the round-trip
+proof against v0 keeps covering the whole deck. Never introduces a *narrower* tell in place of a
+broader one.
+
+**Acceptance criteria + verification.**
+- On-screen middle-value rate at or below 53%, from 91.4%. **Met: 52.7%**, measured across every
+  all-numeric form using whichever path a reader actually gets.
+- Rank distribution within 20–30% at every rank over 8,000 draws. **Met: 25.0 / 25.0 / 24.9 / 25.1.**
+- At most one form unable to reach all four ranks. **Met: one** (`f387[2]`, the £3,000 small-claims
+  limit — its answer is never the largest option).
+- The correct answer appears exactly once, options never duplicate, order is reproducible from a
+  seed. All asserted.
+- Ratcheted in `baseline.ts`, so none of the above can regress unnoticed.
