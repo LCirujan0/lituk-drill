@@ -24,6 +24,7 @@ import {
   chapterQueue,
   dueQueue,
   mistakeStandings,
+  masteredQueue,
   mistakesQueue,
   newQueue,
   randomQueue,
@@ -43,7 +44,7 @@ import {
   sync,
 } from '@/adapters/store';
 
-export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random';
+export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
 const FORM_COUNTS = new Map(DECK.map((f) => [f.id, f.forms.length]));
 const FACT_IDS = DECK.map((f) => f.id);
@@ -108,6 +109,8 @@ export function useDrill() {
         queue = newQueue(ctx, 60);
       } else if (section === 'mistakes') {
         queue = mistakesQueue(ctx, 60);
+      } else if (section === 'mastered') {
+        queue = masteredQueue(ctx, 60);
       } else {
         queue = chapterQueue(ctx, chapter ?? 1, 60);
       }

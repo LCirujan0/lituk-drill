@@ -64,6 +64,26 @@ body {
   overflow: hidden;
 }
 
+/**
+ * A tab's content, between the header and the tab bar.
+ *
+ * The drill tab fits outright and never scrolls. Progress and the chronology are reference
+ * screens — 1,100px and 5,000px of content respectively — and there is no honest way to fit
+ * those in 852px. So they scroll HERE, inside the frame, with the tab bar staying put: the
+ * page itself still never moves, which is the property that makes this feel like an app
+ * rather than a web page. `overscroll-behavior: contain` stops a scroll running out at the
+ * end and becoming a bounce.
+ */
+.tabBody {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
 h1 {
   margin: 0;
   font-size: var(--text-lg);

@@ -1,58 +1,18 @@
 /**
- * The home screen fits 393×852 with no page scroll, and the layout is what makes that true —
- * not smaller type and not smaller targets. Every button here is still at least
- * `--target-min` tall.
+ * The drill tab, sized to fit 393×852 with the tab bar below it.
  *
- * The frame is a flex column that fills the viewport; the chapter grid is the part allowed to
- * take up the slack, so on a taller screen the spacing opens up rather than everything
- * drifting to the top.
+ * Two things are doing the work: the copy is gone, and the sections are tiles rather than
+ * rows. What used to be 1,460px of prose and full-width buttons is now a headline, one
+ * primary action, a 2×2 grid and five chapter rows.
  */
 
 .header {
   display: flex;
   flex: none;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
   padding-block-end: var(--space-3);
-}
-
-.sub {
-  margin: var(--space-1) 0 0;
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-}
-
-.streak {
-  flex: none;
-  padding: var(--space-1) var(--space-2);
-  background: var(--c-fill);
-  border-radius: var(--radius-sm);
-  color: var(--c-text-soft);
-  font-size: var(--text-xs);
-  font-weight: 600;
-}
-
-.warning {
-  flex: none;
-  margin: 0 0 var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--c-danger);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--c-danger) 8%, transparent);
-  color: var(--c-text);
-  font-size: var(--text-sm);
-  line-height: var(--leading-normal);
-}
-
-/* ---- headline --------------------------------------------------------- */
-.headline {
-  flex: none;
-  padding: var(--space-3) var(--space-4);
-  margin-block-end: var(--space-2);
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-lg);
 }
 
 .big {
@@ -68,115 +28,111 @@
 .of {
   margin-inline-start: var(--space-2);
   color: var(--c-text-muted);
-  font-size: var(--text-md);
+  font-size: var(--text-sm);
   font-weight: 400;
   letter-spacing: 0;
 }
 
-.headlineLabel {
-  margin: var(--space-1) 0 0;
-  font-size: var(--text-base);
-  font-weight: 600;
-}
-
-.headlineNote {
-  margin: var(--space-1) 0 0;
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-  line-height: var(--leading-normal);
-}
-
-/* ---- the three sections ------------------------------------------------ */
-.sections {
+.headerRight {
   display: flex;
   flex: none;
-  flex-direction: column;
+  align-items: center;
   gap: var(--space-2);
-  margin-block-end: var(--space-3);
 }
 
-.section,
-.primary,
-.sectionAlert {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0 var(--space-3);
-  min-height: var(--target-min);
+.streak {
+  padding: var(--space-1) var(--space-2);
+  background: var(--c-fill);
+  border-radius: var(--radius-sm);
+  color: var(--c-text-soft);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.syncButton {
+  width: var(--target-min);
+  height: var(--target-min);
+  font: inherit;
+  font-size: var(--text-lg);
+  color: var(--c-accent);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.syncButton:disabled {
+  color: var(--c-text-muted);
+  cursor: default;
+}
+
+.warning {
+  flex: none;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--c-danger);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--c-danger) 8%, transparent);
+  color: var(--c-text);
+  font-size: var(--text-sm);
+}
+
+/* ---- the day ----------------------------------------------------------- */
+.primary {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--target-lg);
+  margin-block-end: var(--space-2);
   padding: var(--space-3) var(--space-4);
   font: inherit;
   text-align: start;
   background: var(--c-surface);
-  border: 1px solid var(--c-border);
+  border: 1px solid var(--c-accent);
   border-radius: var(--radius-lg);
   color: var(--c-text);
   cursor: pointer;
-  transition: border-color var(--motion-fast);
 }
 
-.primary {
-  border-color: var(--c-accent);
+.primaryIcon {
+  color: var(--c-accent);
+  font-size: var(--text-xl);
+  line-height: 1;
 }
 
-.sectionAlert {
-  border-color: color-mix(in srgb, var(--c-gate) 55%, transparent);
-}
-
-.sectionName {
-  font-size: var(--text-base);
+.primaryName {
+  flex: 1;
+  font-size: var(--text-lg);
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.sectionCount {
-  grid-row: 1 / span 2;
-  grid-column: 2;
-  align-self: center;
-  font-size: var(--text-xl);
+.primaryCount {
+  font-size: var(--text-2xl);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
-/* One line, and clipped rather than wrapped: a second line here is 40px of screen across the
-   three of them, and the button's name already says what it is. */
-.sectionNote {
-  grid-column: 1;
-  overflow: hidden;
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-  line-height: var(--leading-normal);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-/* ---- chapters and Random ----------------------------------------------- */
+/* ---- the four other ways in -------------------------------------------- */
 .grid {
   display: grid;
-  flex: 1 1 auto;
-  align-content: start;
+  flex: none;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-2);
-  min-height: 0;
-  margin-block-end: var(--space-2);
+  margin-block-end: var(--space-3);
 }
 
-.gridTitle {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.cell {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--space-1);
-  min-height: var(--target-min);
-  padding: var(--space-2) var(--space-3);
+.tile,
+.tileAlert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0 var(--space-2);
+  min-height: var(--target-lg);
+  padding: var(--space-3);
   font: inherit;
   text-align: start;
   background: var(--c-surface);
@@ -186,22 +142,64 @@
   cursor: pointer;
 }
 
-.cellName {
-  font-size: var(--text-base);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+.tileAlert {
+  border-color: color-mix(in srgb, var(--c-gate) 55%, transparent);
 }
 
-.cellMeta {
+.tileIcon {
+  grid-row: 1 / span 2;
+  color: var(--c-text-muted);
+  font-size: var(--text-lg);
+  line-height: 1;
+}
+
+.tileName {
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.tileCount {
   color: var(--c-text-muted);
   font-size: var(--text-xs);
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- chapters ---------------------------------------------------------- */
+.chapters {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+}
+
+.chapter {
+  display: flex;
+  flex: 1 1 var(--target-min);
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--target-min);
+  padding-inline: var(--space-3);
+  font: inherit;
+  text-align: start;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.chapterName {
+  flex: none;
+  width: 7.5rem;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
 .bar {
   display: block;
+  flex: 1;
   height: var(--bar-height);
-  margin-block-start: var(--space-1);
   background: var(--c-fill);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -211,37 +209,4 @@
   display: block;
   height: 100%;
   background: var(--c-proven);
-}
-
-/* ---- footer ------------------------------------------------------------ */
-.sync {
-  flex: none;
-  margin: 0 0 var(--space-2);
-  color: var(--c-text-muted);
-  font-size: var(--text-xs);
-  line-height: var(--leading-normal);
-}
-
-.links {
-  display: flex;
-  flex: none;
-  gap: var(--space-2);
-}
-
-.link {
-  flex: 1;
-  min-height: var(--target-min);
-  font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--c-accent);
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-}
-
-.link:disabled {
-  color: var(--c-text-muted);
-  cursor: default;
 }

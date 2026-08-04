@@ -18,16 +18,23 @@ import { useDrill, type SectionKey } from './_lib/use-drill';
 import { Home } from '@/components/Home';
 import { Drill, type CardAnswer, type DrillMode } from '@/components/Drill';
 import { Progress } from '@/components/Progress';
+import { TabBar, type Tab } from '@/components/TabBar';
 import { Timeline } from '@/components/Timeline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 import type { Grade } from '@/domain/scheduler/types';
 import type { DrillItem } from '@/domain/drill/sections';
 
+/**
+ * Where you are.
+ *
+ * Three tabs, plus a drill that opens over the top of whichever tab you were on. The drill is
+ * not a tab of its own: it is a thing you are doing, it ends, and the tab bar is hidden while
+ * it is on screen — a stray tap mid-question costs you your place, and the bottom of that
+ * screen belongs to the card's own actions.
+ */
 type View =
-  | { kind: 'home' }
-  | { kind: 'drill'; section: SectionKey; chapter?: Chapter }
-  | { kind: 'progress' }
-  | { kind: 'timeline' };
+  | { kind: 'tab'; tab: Tab }
+  | { kind: 'drill'; section: SectionKey; chapter?: Chapter };
 
 /** A card as it was served: which phrasing, which option order, and what was done with it. */
 interface Served {
@@ -37,16 +44,17 @@ interface Served {
 }
 
 const EMPTY_MESSAGE: Record<SectionKey, string> = {
-  due: 'That is your thirty for today. Anything else you drill now is a bonus — the other sections are unlimited.',
-  new: 'You have now met every phrasing in the deck at least once — all 1,582 of them.',
-  mistakes: 'Nothing outstanding. Every fact you have missed has since been answered correctly on three different phrasings.',
-  chapter: 'Nothing left to drill in this chapter right now.',
+  due: 'That is your thirty for today.',
+  new: 'Every phrasing in the deck has been served at least once.',
+  mistakes: 'Nothing outstanding.',
+  chapter: 'Nothing left in this chapter right now.',
   random: 'Nothing to draw from, which should be impossible.',
+  mastered: 'Nothing mastered yet — a fact lands here once every phrasing of it has been right.',
 };
 
 export default function App() {
   const drill = useDrill();
-  const [view, setView] = useState<View>({ kind: 'home' });
+  const [view, setView] = useState<View>({ kind: 'tab', tab: 'drill' });
   const [mode, setMode] = useState<DrillMode>('quiz');
 
   /**
@@ -131,8 +139,9 @@ export default function App() {
     [drill],
   );
 
+  /** Leave the drill and go back to the tab it was opened from. */
   const home = useCallback(() => {
-    setView({ kind: 'home' });
+    setView({ kind: 'tab', tab: 'drill' });
     setCurrent(null);
     setAnswer(null);
     setPast([]);
@@ -198,7 +207,8 @@ export default function App() {
 
   return (
     <div className="wrap">
-      {view.kind === 'home' && (
+      <div className="tabBody">
+      {view.kind === 'tab' && view.tab === 'drill' && (
         <Home
           counts={drill.counts}
           progress={drill.progress}
@@ -209,8 +219,6 @@ export default function App() {
           onSync={() => void drill.syncNow()}
           onOpen={(section) => openDrill(section)}
           onChapter={(chapter) => openDrill('chapter', chapter)}
-          onProgress={() => setView({ kind: 'progress' })}
-          onTimeline={() => setView({ kind: 'timeline' })}
         />
       )}
 
@@ -245,7 +253,7 @@ export default function App() {
         />
       )}
 
-      {view.kind === 'progress' && (
+      {view.kind === 'tab' && view.tab === 'progress' && (
         <Progress
           progress={drill.progress}
           upcoming={drill.upcoming()}
@@ -261,7 +269,14 @@ export default function App() {
         />
       )}
 
-      {view.kind === 'timeline' && <Timeline onExit={home} />}
+      {view.kind === 'tab' && view.tab === 'timeline' && <Timeline />}
+      </div>
+
+      {/* Hidden during a drill: the bottom of that screen is the card's action bar, and a
+          stray tap here would cost you your place mid-question. */}
+      {view.kind === 'tab' && (
+        <TabBar current={view.tab} onChange={(tab) => setView({ kind: 'tab', tab })} />
+      )}
     </div>
   );
 }
