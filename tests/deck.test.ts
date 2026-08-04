@@ -177,6 +177,14 @@ describe('explanations', () => {
     expect(withExplanation.length).toBe(Object.keys(EXPLANATIONS).length);
   });
 
+  it('covers every fact — no card answers into silence', () => {
+    // Now at 443/443. The whole point of the feature is that answering teaches something,
+    // so a fact without context is a card that says "Not quite." and nothing else. Adding a
+    // fact without an explanation should fail the build rather than quietly leave a hole.
+    const missing = DECK.filter((f) => !f.explanation).map((f) => f.id);
+    expect(missing, `facts with no explanation: ${missing.join(', ')}`).toEqual([]);
+  });
+
   it('writes context rather than restating the answer', () => {
     // An explanation that just repeats the answer teaches nothing that the card did not
     // already show, and would make the extra reading feel pointless.
@@ -186,4 +194,16 @@ describe('explanations', () => {
       expect(fact.explanation.trim().toLowerCase()).not.toBe(fact.answer.trim().toLowerCase());
     }
   });
+
+  // A check for "opens by repeating the answer verbatim" was written here and removed.
+  //
+  // It flagged 26 explanations, and every one inspected was good: "A constituency is a place,
+  // not a group of supporters", "First past the post means whoever gets the most votes in a
+  // constituency wins it, even without a majority". For a definitional fact, naming the term
+  // and then defining it is the correct construction — you cannot explain what first past the
+  // post means without saying it. The heuristic mistook the subject of a sentence for a
+  // restatement.
+  //
+  // Setting the threshold to 26 would have encoded today's count and asserted nothing. The
+  // test above — not equal to the answer, and long enough to be context — is the real check.
 });
