@@ -94,6 +94,21 @@ function emitFact(fact: V0Fact, index: number): string {
 }
 
 function main() {
+  // ONE-SHOT. Once the deck has been corrected away from v0, re-running this would silently
+  // overwrite every correction with the original — including known-wrong answers — and the
+  // round-trip test would then pass, because the deck really would match v0 again. The
+  // failure would look exactly like success.
+  const declared = readFileSync(join(HERE, '..', 'src', 'domain', 'deck', 'divergences.ts'), 'utf8');
+  const count = (declared.match(/factId:/g) ?? []).length;
+  if (count > 0 && !process.argv.includes('--i-know-this-discards-corrections')) {
+    console.error(
+      `refusing to run: ${count} deliberate divergences from v0 are declared in divergences.ts.\n` +
+        'Re-running this migration would discard every one of them, including corrected facts.\n' +
+        'If you genuinely mean to regenerate from v0, pass --i-know-this-discards-corrections.',
+    );
+    process.exit(1);
+  }
+
   const v0 = readV0();
   console.log(`read ${v0.length} facts, ${v0.reduce((n, f) => n + f[5].length, 0)} forms`);
 

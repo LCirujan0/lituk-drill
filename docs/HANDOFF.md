@@ -9,14 +9,15 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
-| Tests | 90 passing across 4 files |
+| Tests | 92 passing across 4 files |
 | Deck | 410 facts · 1,228 forms · 5 chapters · 82 tags |
 | Migration frontier | none — no database provisioned yet |
-| Next decision id | D-023 |
-| Next ledger id | L-015 |
-| Open ledger rows | 9; 3 verified-fixed; L-002 and L-014 fixed-unverified |
+| Next decision id | D-024 |
+| Next ledger id | L-018 |
+| Open ledger rows | 10; 3 verified-fixed; L-002, L-005, L-014, L-015 fixed-unverified |
 | Open Critical | 0. No open High |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
+| Amber facts | 1 unresolved (was 12) |
 | CI | Green — 3 required checks |
 | Deployed | **v0 at https://lituk-drill.vercel.app** (D-022). v1 has no project yet |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |

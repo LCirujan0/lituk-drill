@@ -22,6 +22,7 @@ import { describe, expect, it } from 'vitest';
 import { DECK, MIGRATED_DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
+import { divergedFactIds, divergenceFor } from '@/domain/deck/divergences';
 import {
   ambiguousSharedStems,
   duplicateCanonicalQuestions,
@@ -60,8 +61,46 @@ function toV0Shape(): V0Fact[] {
 describe('migration round-trip', () => {
   const v0 = readV0Deck();
 
-  it('reproduces v0 exactly, fact for fact and form for form', () => {
-    expect(toV0Shape()).toEqual(v0);
+  it('reproduces v0 exactly, except where a divergence is declared', () => {
+    // The guarantee is that no content changes by accident. A fact may differ from v0 only
+    // if it is listed in divergences.ts with a reason and a source; anything else that
+    // differs fails here, which is the whole point of keeping this test after the deck
+    // started being corrected.
+    const rebuilt = toV0Shape();
+    const declared = divergedFactIds();
+
+    const undeclared: string[] = [];
+    rebuilt.forEach((fact, i) => {
+      const id = factId(i);
+      if (declared.has(id)) return;
+      if (JSON.stringify(fact) !== JSON.stringify(v0[i])) undeclared.push(id);
+    });
+
+    expect(
+      undeclared,
+      `these facts differ from v0 but are not declared in divergences.ts: ${undeclared.join(', ')}`,
+    ).toEqual([]);
+  });
+
+  it('has no stale divergence declarations', () => {
+    // A declaration for a fact that no longer differs is worse than none: it implies a
+    // correction was made when it was not, and it silently exempts that fact from the check.
+    const rebuilt = toV0Shape();
+    const stale = [...divergedFactIds()].filter((id) => {
+      const i = Number.parseInt(id.slice(1), 10);
+      return JSON.stringify(rebuilt[i]) === JSON.stringify(v0[i]);
+    });
+
+    expect(stale, `declared as diverged but identical to v0: ${stale.join(', ')}`).toEqual([]);
+  });
+
+  it('gives every diverged fact a source citation', () => {
+    // R3: a corrected fact without a citation is an assertion, not a correction.
+    for (const id of divergedFactIds()) {
+      const fact = DECK.find((f) => f.id === id)!;
+      expect(fact.source, `${id} diverges from v0 but carries no source`).toBeTruthy();
+      expect(divergenceFor(id)?.change, `${id} has no stated reason`).toBeTruthy();
+    }
   });
 
   it('carries every fact and form across', () => {
@@ -79,8 +118,12 @@ describe('migration round-trip', () => {
   });
 
   it('preserves form order within each fact — the ok[]/ls[] contract', () => {
-    // v0 tracks per-form progress in parallel arrays indexed by form position.
+    // v0 tracks per-form progress in parallel arrays indexed by form position, so the COUNT
+    // and ORDER of forms is the contract even where a fact's wording has been corrected.
+    const declared = divergedFactIds();
     DECK.forEach((fact, i) => {
+      expect(fact.forms.length, `${fact.id} changed its number of forms`).toBe(v0[i][5].length);
+      if (declared.has(fact.id)) return; // wording may legitimately differ; see divergences.ts
       fact.forms.forEach((form, j) => expect(form.question).toBe(v0[i][5][j][0]));
     });
   });

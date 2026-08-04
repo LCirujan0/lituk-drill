@@ -171,6 +171,13 @@ export function numericMiddleRankRate(deck: Deck): { rate: number; middle: numbe
 /**
  * How often the correct answer is the single longest option. Chance is 0.25.
  * Forms with a tie for longest are excluded — there is no tell to measure.
+ *
+ * Only forms presented **as written** are counted. A form carrying a generation rule has its
+ * four options built fresh at presentation, so its stored text is never on a screen and
+ * measuring it says nothing about what a reader meets — the same mistake
+ * `numericMiddleRankRate` makes deliberately and `effectiveNumericMiddleRankRate` exists to
+ * correct. Generated numeric options do vary in length, but length there tracks magnitude,
+ * and magnitude rank is uniform by construction, so the tell does not survive generation.
  */
 export function longestOptionCorrectRate(deck: Deck): { rate: number; longest: number; total: number } {
   let longest = 0;
@@ -178,6 +185,7 @@ export function longestOptionCorrectRate(deck: Deck): { rate: number; longest: n
   for (const fact of deck) {
     for (const form of fact.forms) {
       const options = fixedOptions(form.answers);
+      if (deriveNumericAnswers(options, 0)) continue; // generated, not presented as written
       const lengths = options.map((o) => o.length);
       const max = Math.max(...lengths);
       if (lengths.filter((l) => l === max).length !== 1) continue;

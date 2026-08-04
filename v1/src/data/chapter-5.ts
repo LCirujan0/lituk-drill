@@ -929,9 +929,10 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f354",
     tag: "Devolution",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "How many members did the Welsh Parliament have when devolution began?",
     answer: "60",
+    source: "Handbook 3rd ed., ch.5 “The government” — the Welsh government",
     forms: [
     {
       question: "How many members did the Welsh Parliament have when devolution began?",
@@ -969,9 +970,10 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f355",
     tag: "Devolution",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "How many MLAs sit in the Northern Ireland Assembly?",
     answer: "90",
+    source: "Handbook 3rd ed., ch.5 “The government” — the Northern Ireland Assembly",
     forms: [
     {
       question: "How many MLAs sit in the Northern Ireland Assembly?",
@@ -1489,16 +1491,17 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f368",
     tag: "International",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "How many countries are members of the Commonwealth?",
-    answer: "54",
+    answer: "56",
+    source: "Handbook 3rd ed., ch.5 — Commonwealth member list",
     forms: [
     {
       question: "How many countries are members of the Commonwealth?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "54",
+        correct: "56",
         distractors: ["70", "46", "28"],
       },
       v0CorrectIndex: 1,
@@ -1508,7 +1511,7 @@ export const CHAPTER_5: readonly MigratedFact[] = [
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "54",
+        correct: "56",
         distractors: ["62", "27", "47"],
       },
       v0CorrectIndex: 3,
@@ -1518,7 +1521,7 @@ export const CHAPTER_5: readonly MigratedFact[] = [
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "54",
+        correct: "56",
         distractors: ["70", "28", "40"],
       },
       v0CorrectIndex: 1,
@@ -1649,9 +1652,10 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f372",
     tag: "International",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "How many member states does the Council of Europe have?",
     answer: "47",
+    source: "Handbook 3rd ed., ch.5 “The UK and international institutions” — the Council of Europe",
     forms: [
     {
       question: "How many member states does the Council of Europe have?",
@@ -2209,9 +2213,10 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f386",
     tag: "Courts",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "What is the upper value for a small claim in England and Wales?",
     answer: "£10,000",
+    source: "Handbook 3rd ed., ch.5 “Respecting the law” — the small claims procedure",
     forms: [
     {
       question: "What is the upper value for a small claim in England and Wales?",
@@ -2249,17 +2254,18 @@ export const CHAPTER_5: readonly MigratedFact[] = [
     id: "f387",
     tag: "Courts",
     chapter: 5,
-    verify: true,
+    verify: false,
     question: "What is the upper value for a small claim in Scotland and NI?",
-    answer: "£3,000",
+    answer: "£5,000",
+    source: "Handbook 3rd ed., ch.5 — the small claims procedure",
     forms: [
     {
       question: "What is the upper value for a small claim in Scotland and NI?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "£3,000",
-        distractors: ["£10,000", "£5,000", "£500"],
+        correct: "£5,000",
+        distractors: ["£10,000", "£3,000", "£500"],
       },
       v0CorrectIndex: 3,
     },
@@ -2268,8 +2274,8 @@ export const CHAPTER_5: readonly MigratedFact[] = [
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "£3,000",
-        distractors: ["£500", "£5,000", "£10,000"],
+        correct: "£5,000",
+        distractors: ["£500", "£3,000", "£10,000"],
       },
       v0CorrectIndex: 1,
     },
@@ -2278,8 +2284,8 @@ export const CHAPTER_5: readonly MigratedFact[] = [
       mcqOnly: false,
       answers: {
         kind: 'fixed',
-        correct: "£3,000",
-        distractors: ["£10,000", "£5,000", "£1,000"],
+        correct: "£5,000",
+        distractors: ["£10,000", "£3,000", "£1,000"],
       },
       v0CorrectIndex: 3,
     },

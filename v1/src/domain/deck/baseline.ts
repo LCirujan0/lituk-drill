@@ -79,9 +79,17 @@ export const DECK_BASELINE: DeckBaseline = {
   // bracketing a value in the first place. Closing the rest means rewriting those by hand.
   effectiveNumericMiddleRankRate: 0.53,
   restrictedRankForms: 1,
-  longestOptionCorrectRate: 0.403,
+  // Re-derived 4 Aug 2026 when the metric changed definition, NOT loosened to pass a build.
+  // It now counts only forms presented as written; the 15 all-numeric forms that carry a
+  // generation rule are excluded, because their stored text never reaches a screen. That
+  // moved the denominator 749 -> 734 and the rate 0.4032 -> 0.4074. None of the three
+  // corrected facts contributes: all of their forms are generated, so all are excluded.
+  longestOptionCorrectRate: 0.408,
   maxAnswerPositionRate: 0.297,
-  unresolvedVerifyFlags: 12,
+  // Was 12. Eleven resolved against the handbook on 4 August 2026 — eight confirmed correct,
+  // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
+  // Office rule and does not appear in the handbook, so this source cannot settle it.
+  unresolvedVerifyFlags: 1,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */
