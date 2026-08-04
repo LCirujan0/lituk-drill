@@ -12,6 +12,7 @@ import { CHAPTER_3 } from '@/data/chapter-3';
 import { CHAPTER_4 } from '@/data/chapter-4';
 import { CHAPTER_5 } from '@/data/chapter-5';
 import { ADDITIONS } from '@/data/additions';
+import { ADDITIONS_2 } from '@/data/additions-2';
 import { EXPLANATIONS } from '@/data/explanations';
 import type { Deck, Fact } from './types';
 
@@ -22,6 +23,7 @@ const ALL: Fact[] = [
   ...CHAPTER_4,
   ...CHAPTER_5,
   ...ADDITIONS,
+  ...ADDITIONS_2,
 ]
   // Explanations live in their own map so authoring them is one flat editable list rather
   // than 443 scattered edits, and so coverage is countable. Attached here, once.

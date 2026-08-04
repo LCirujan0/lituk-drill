@@ -38,8 +38,8 @@ describe('shape', () => {
   it('is the size it should be', () => {
     // Hardcoded on purpose: growing the deck should fail here and make someone confirm it
     // was deliberate, rather than sliding past unnoticed.
-    expect(TOTAL_FACTS).toBe(528);
-    expect(TOTAL_FORMS).toBe(1582);
+    expect(TOTAL_FACTS).toBe(539);
+    expect(TOTAL_FORMS).toBe(1615);
   });
 
   it('keeps ids unique and contiguous', () => {

@@ -49,7 +49,7 @@ const EMPTY_MESSAGE: Record<SectionKey, string> = {
   mistakes: 'Nothing outstanding.',
   chapter: 'Nothing left in this chapter right now.',
   random: 'Nothing to draw from, which should be impossible.',
-  mastered: 'Nothing mastered yet — a fact lands here once every phrasing of it has been right.',
+  mastered: 'Nothing here yet. A fact arrives once you have answered it, and stays until you miss it.',
 };
 
 export default function App() {
