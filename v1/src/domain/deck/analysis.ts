@@ -306,11 +306,19 @@ export function structuralFaults(deck: Deck): string[] {
   return faults;
 }
 
-/** Everything, for a report or a failing-test message. */
-export function analyseDeck(deck: readonly MigratedFact[]) {
+/**
+ * Everything, for a report or a failing-test message.
+ *
+ * `migrated` is passed separately because answer-position is the one measure that needs
+ * `v0CorrectIndex`, which only facts that came from v0 carry. Everything else measures the
+ * whole deck, additions included — a report that quietly excluded the newest facts would be
+ * describing a deck nobody is drilling.
+ */
+export function analyseDeck(deck: Deck, migrated: readonly MigratedFact[] = []) {
   return {
     facts: deck.length,
     forms: deck.reduce((n, f) => n + f.forms.length, 0),
+    migratedFacts: migrated.length,
     structuralFaults: structuralFaults(deck),
     duplicateCanonicalQuestions: duplicateCanonicalQuestions(deck),
     ambiguousSharedStems: ambiguousSharedStems(deck),
@@ -322,7 +330,7 @@ export function analyseDeck(deck: readonly MigratedFact[]) {
     effectiveNumericMiddleRank: effectiveNumericMiddleRankRate(deck),
     restrictedRankForms: formsWithRestrictedRanks(deck),
     longestOptionCorrect: longestOptionCorrectRate(deck),
-    answerPosition: maxAnswerPositionRate(deck),
+    answerPosition: maxAnswerPositionRate(migrated),
   };
 }
 

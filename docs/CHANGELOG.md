@@ -2,6 +2,36 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — deck expansion
+
+**D-024: 33 facts added to fill measured coverage gaps.** Deck 410 → **443** facts, 1,228 → **1,327**
+forms. Amends the BRIEF's non-goal ("more facts is not [good] — 410 is the material"), which was
+written assuming the 410 covered the handbook; measuring showed otherwise. Added: the EU and
+international institutions, the modern constitutional monarchy, the civil service, local government,
+the civil/criminal law distinction, the Industrial Revolution, and architecture. Every one carries a
+handbook `source`.
+
+- **The additions were length-balanced deliberately**, and it worked: the deck-wide longest-option tell
+  fell from **40.7% to 38.8%**, so expansion improved a measured property rather than diluting it.
+  Ceiling tightened to match. On-screen numeric tell holds at 52.8%, and no form now fails to reach
+  every rank.
+- **My first draft was rejected by the deck's own checks, twice over (L-018).** The gap probe searched
+  canonical questions and answers but not form text, so it reported *zero* EU facts when f188 already
+  covers the UK joining the EEC. Two drafted facts duplicated f188 and f331 and were caught by the
+  duplicate-canonical-question and shared-form checks on the first run, not by review. A probe over a
+  subset of the data reads exactly like a probe over all of it.
+- **Then it rejected my option sets.** 30 of the new as-written forms had the correct answer as the
+  uniquely longest option — the exact tell the file's own header warns about. Fixed by extending one
+  distractor per form rather than by moving the ceiling.
+- **The stored numeric-bracketing ratchet was retired as a gate**, and this one is worth recording
+  because it inverts an earlier position. `buildCandidates` derives its step from the spread of the
+  authored distractors, so distractors that bracket the true value are what give the candidate pool
+  depth on both sides — the thing that makes uniform rank achievable. Driving that number down would
+  now *degrade* generation while improving nothing a reader sees. It stays in `deck:report` as a
+  diagnostic; `effectiveNumericMiddleRankRate` is the gate.
+
+93 tests green.
+
 ## 2026-08-04 — deck corrections
 
 **The owner supplied a full 3rd-edition handbook text**, which changed the sourcing rule and closed

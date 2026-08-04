@@ -690,3 +690,41 @@ wins**, applied as one rule with no exceptions. Every fact corrected or confirme
   migration script now refuses to run while divergences exist, because re-running it would restore
   every original answer and the round-trip test would then pass — a failure that looks exactly like
   success.
+
+---
+
+## D-024 — The deck expands to fill measured coverage gaps · **amends BRIEF §What v1 must do**
+
+**Date:** 4 August 2026 · **Status:** accepted
+
+**Context.** The BRIEF states plainly: *"More question forms per fact is good; more **facts** is not —
+410 is the material."* That was written on the assumption that the 410 covered the handbook. Measuring
+them against the full text showed they do not, evenly: one fact on the EU against a full handbook
+section, two on the modern constitutional monarchy while thirty mention medieval kings, four on the
+Industrial Revolution all filed under *Inventors*, and one each on local government, the civil service
+and the civil/criminal law distinction.
+
+The owner asked for expansion. The distinction that makes this legitimate rather than drift is that it
+is a **coverage** defect, not volume for its own sake: a fact never drilled cannot be recalled, and the
+BRIEF's outcome measure is the proportion of the material answerable.
+
+**Decision.** Add facts to fill measured gaps only, sourced against the handbook per D-023, each
+carrying a `source` citation. 33 added, taking the deck from 410 facts / 1,228 forms to **443 / 1,327**.
+They live in `src/data/additions.ts` typed as plain `Fact`, keeping them out of `MIGRATED_DECK` so the
+round-trip proof still compares only what actually came from v0.
+
+**Consequences.**
+- *Positive.* Coverage now roughly tracks the handbook's own weighting. The additions were
+  length-balanced on purpose, which pulled the deck-wide longest-option tell **down** from 40.7% to
+  38.8% — expansion improved a measured property rather than diluting it. Ids continue from f410, so
+  the v0 import contract is untouched.
+- *Negative.* Review load rises about 8%; at 20 new facts a day the deck now takes ~22 days rather than
+  ~21 to see once, which is affordable but not free. More facts is more surface for a content error,
+  and these are the only facts in the deck not written by the owner. And the BRIEF's non-goal was there
+  for a reason — the line between "filling a measured gap" and "adding facts because we can" is a
+  judgement, and this decision moves it.
+- *Process consequence.* The first gap analysis **over-claimed**, reporting zero EU facts when there was
+  one, because it searched canonical questions and answers but not form text. Two of the drafted facts
+  duplicated existing ones and were caught by the deck's own duplicate check rather than by review.
+  Corrected in L-017; the lesson is that a probe over a subset of the data reads exactly like a probe
+  over all of it.

@@ -30,7 +30,7 @@ import {
   factsWithNoRecallForm,
   longestOptionCorrectRate,
   maxAnswerPositionRate,
-  numericMiddleRankRate,
+  effectiveNumericMiddleRankRate,
   sharedFormsAcrossFacts,
   structuralFaults,
   unresolvedVerifyFlags,
@@ -103,25 +103,34 @@ describe('migration round-trip', () => {
     }
   });
 
-  it('carries every fact and form across', () => {
-    expect(TOTAL_FACTS).toBe(410);
-    expect(TOTAL_FORMS).toBe(1228);
-    expect(TOTAL_FACTS).toBe(v0.length);
-    expect(TOTAL_FORMS).toBe(v0.reduce((n, f) => n + f[5].length, 0));
+  it('carries every migrated fact and form across', () => {
+    expect(MIGRATED_DECK.length).toBe(410);
+    expect(MIGRATED_DECK.reduce((n, f) => n + f.forms.length, 0)).toBe(1228);
+    expect(MIGRATED_DECK.length).toBe(v0.length);
   });
 
-  it('preserves v0 ordering — the S6 import contract', () => {
+  it('keeps additions out of the migrated set', () => {
+    // Facts added after the migration have no v0 counterpart. Letting them into
+    // MIGRATED_DECK would make the round-trip proof compare against nothing and quietly
+    // stop meaning anything.
+    expect(TOTAL_FACTS).toBeGreaterThan(MIGRATED_DECK.length);
+    expect(MIGRATED_DECK.every((f) => Number.parseInt(f.id.slice(1), 10) < 410)).toBe(true);
+  });
+
+  it('preserves v0 ordering and keeps ids contiguous — the S6 import contract', () => {
     // v0 keys its saved schedule by array index (S.f[i]). If DECK[i] is not the fact
     // that sat at v0 index i, six weeks of accumulated schedule lands on the wrong facts
-    // on import, and nothing about the result would look wrong.
+    // on import, and nothing about the result would look wrong. Additions continue the
+    // sequence, so a gap would break the same contract.
     DECK.forEach((fact, i) => expect(fact.id).toBe(factId(i)));
+    expect(TOTAL_FORMS).toBe(DECK.reduce((n, f) => n + f.forms.length, 0));
   });
 
   it('preserves form order within each fact — the ok[]/ls[] contract', () => {
     // v0 tracks per-form progress in parallel arrays indexed by form position, so the COUNT
     // and ORDER of forms is the contract even where a fact's wording has been corrected.
     const declared = divergedFactIds();
-    DECK.forEach((fact, i) => {
+    MIGRATED_DECK.forEach((fact, i) => {
       expect(fact.forms.length, `${fact.id} changed its number of forms`).toBe(v0[i][5].length);
       if (declared.has(fact.id)) return; // wording may legitimately differ; see divergences.ts
       fact.forms.forEach((form, j) => expect(form.question).toBe(v0[i][5][j][0]));
@@ -129,7 +138,7 @@ describe('migration round-trip', () => {
   });
 
   it('matches the chapter counts documented in v0 README', () => {
-    const counts = DECK.reduce<Record<number, number>>((acc, f) => {
+    const counts = MIGRATED_DECK.reduce<Record<number, number>>((acc, f) => {
       acc[f.chapter] = (acc[f.chapter] ?? 0) + 1;
       return acc;
     }, {});
@@ -204,13 +213,22 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     );
   });
 
-  it('does not worsen the numeric bracketing tell', () => {
-    // The worst measurement in the deck. Chance is 0.50; v0 shipped 0.914.
-    // "Pick a middle number" scores 91% on 373 forms while knowing nothing.
-    const { rate, middle, total } = numericMiddleRankRate(DECK);
-    expect(rate, `correct answer is a middle value in ${middle}/${total} numeric forms`).toBeLessThanOrEqual(
-      DECK_BASELINE.numericMiddleRankRate,
-    );
+  it('keeps the ON-SCREEN numeric tell near chance', () => {
+    // This replaced a ratchet on the STORED options (v0 shipped 0.914 against 0.50 by
+    // chance). That measure is no longer a gate, for a reason that only became clear once
+    // generation existed: `buildCandidates` derives its step from the spread of the authored
+    // distractors, so distractors that bracket the true value are what give the candidate
+    // pool depth on both sides — which is precisely what makes uniform rank achievable.
+    // Driving the stored number down would now DEGRADE generation while improving nothing a
+    // reader ever sees. It stays in `deck:report` as a diagnostic; the gate is what reaches
+    // the screen.
+    const { rate, generatedForms, writtenForms } = effectiveNumericMiddleRankRate(DECK);
+    expect(
+      rate,
+      `on screen the answer is a middle value ${(rate * 100).toFixed(1)}% of the time ` +
+        `(${generatedForms} generated, ${writtenForms} as written)`,
+    ).toBeLessThanOrEqual(DECK_BASELINE.effectiveNumericMiddleRankRate);
+    expect(rate, 'below chance would be a tell in the other direction').toBeGreaterThan(0.45);
   });
 
   it('does not worsen the longest-option tell', () => {

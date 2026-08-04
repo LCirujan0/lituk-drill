@@ -62,6 +62,9 @@ Every build task must trace back to a line here. A task with no parent line is d
   moment daily use of the deployed v0 begins, since by mid-September that is six weeks of schedule.)*
 - **S7 — Question forms that resist being memorised as forms.** More ways to ask each fact, weighted
   toward the facts that keep being missed. See R2 — this is the hardest open problem in the project.
+- **S10 — Coverage matches the material.** The deck covers the handbook in roughly its own proportions.
+  *(Added 4 August 2026 by D-024, amending the non-goal below: measuring the deck against the full
+  handbook showed uneven coverage, and a fact never drilled cannot be recalled.)*
 - **S8 — Content correctness enforced mechanically.** The deck's structural integrity is a build
   gate, not an act of vigilance.
 - **S9 — The chronology stays.** The ten-era timeline ported as a static reference. Not scheduled,
@@ -74,6 +77,7 @@ Shipping any of these requires a superseding DECISIONS entry first.
 
 | Not in v1 | Why it is tempting | Why not |
 |---|---|---|
+| More facts for their own sake | Volume feels like progress | **Amended by D-024.** Facts may be added to fill a *measured* coverage gap against the handbook, with a source citation. They may not be added because the deck could be bigger |
 | Other subjects or decks | The obvious next step | Deliberately rejected. One app, one subject. No deck abstraction, no deck picker, no `deck_id` "just in case" — that is precisely the generalisation this project chose against |
 | Other users, sharing, accounts for friends | Cheap once identity exists | One user, forever |
 | In-app card authoring | Feels necessary | Content is data in the repo, edited in an editor, validated by the build |

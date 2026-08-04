@@ -6,12 +6,12 @@
  * cheap. Read-only.
  */
 
-import { MIGRATED_DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+import { DECK, MIGRATED_DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { analyseDeck } from '@/domain/deck/analysis';
 import { DECK_BASELINE, DECK_TARGETS } from '@/domain/deck/baseline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 
-const a = analyseDeck(MIGRATED_DECK);
+const a = analyseDeck(DECK, MIGRATED_DECK);
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 const row = (label: string, value: string, note = '') =>
   console.log(`  ${label.padEnd(34)}${value.padStart(12)}  ${note}`);
@@ -20,7 +20,7 @@ console.log(`\nDECK — ${TOTAL_FACTS} facts, ${TOTAL_FORMS} question forms\n`);
 
 console.log('Chapters');
 const byChapter = new Map<number, number>();
-for (const fact of MIGRATED_DECK) byChapter.set(fact.chapter, (byChapter.get(fact.chapter) ?? 0) + 1);
+for (const fact of DECK) byChapter.set(fact.chapter, (byChapter.get(fact.chapter) ?? 0) + 1);
 for (const [chapter, count] of [...byChapter].sort((x, y) => y[1] - x[1])) {
   row(CHAPTER_NAMES[chapter as Chapter], String(count));
 }
