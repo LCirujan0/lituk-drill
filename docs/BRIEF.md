@@ -57,7 +57,9 @@ Every build task must trace back to a line here. A task with no parent line is d
 - **S5 — The same schedule on both devices.** Studying on the phone and later opening the laptop must
   never lose a grade. No sign-in, no account, nothing to remember.
 - **S6 — Carry forward existing progress.** The schedule accumulated in v0 transfers into v1 intact.
-  Shipping a reset in mid-September would be worse than shipping nothing.
+  Shipping a reset in mid-September would be worse than shipping nothing. *(4 August 2026: there was no
+  accumulated progress when this was written — see D-022. The line stands and becomes load-bearing the
+  moment daily use of the deployed v0 begins, since by mid-September that is six weeks of schedule.)*
 - **S7 — Question forms that resist being memorised as forms.** More ways to ask each fact, weighted
   toward the facts that keep being missed. See R2 — this is the hardest open problem in the project.
 - **S8 — Content correctness enforced mechanically.** The deck's structural integrity is a build
@@ -87,10 +89,19 @@ Shipping any of these requires a superseding DECISIONS entry first.
 therefore expires around **18 September 2026**. When the budget runs out, unfinished scope is cut, not
 extended.
 
-**The exam deadline is deliberately neutralised and must not pull scope or quality.** A working v0 is
-deployed and in daily use; it carries the test on its own. If v1 is not ready by **20 September 2026**,
-the test is sat on v0 and nothing is lost. If a shortcut is ever justified with "the test is in
-September", that is the failure this arrangement exists to prevent — stop and re-read this paragraph.
+**The exam deadline is neutralised only while a fallback actually exists.** *(Corrected 4 August 2026
+by D-022. This section previously asserted that a working v0 was already deployed and in daily use,
+and that it carried the test on its own. That was taken from the kickoff input, never verified, and
+was false — there was no deployment and no accumulated schedule. Everything built on it was resting on
+nothing.)*
+
+v0 is now genuinely deployed, at **https://lituk-drill.vercel.app**, verified serving byte-identical
+copies of `index.html` and `facts.js`. So the arrangement holds again — **from today, and only if
+daily use actually starts.** If it does, then if v1 is not ready by **20 September 2026** the test is
+sat on v0 and nothing is lost, and a shortcut justified with "the test is in September" is the failure
+this arrangement exists to prevent. If daily use does not start, there is no fallback, the deadline is
+not neutral, and the appetite needs re-deciding as a superseding DECISIONS entry rather than
+absorbed silently.
 
 **End of life is declared, not discovered.** The exam is 25 September 2026. On **26 September 2026**
 this project is archived unless a new stated purpose is logged as a DECISIONS entry on or before that

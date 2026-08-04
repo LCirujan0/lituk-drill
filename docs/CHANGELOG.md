@@ -7,12 +7,23 @@ An entry for every working day that has commits.
 **Infrastructure landed, and immediately produced a finding.** Vercel project created from the GitHub
 import, Neon Postgres linked (`DATABASE_URL` and friends on Production and Preview).
 
-- **L-013, High.** The project's Root Directory is `.`, so `lituk-drill.vercel.app` is serving the
-  repo-root `index.html` — **a second live copy of v0 at a new origin**. Browser storage is per-origin,
-  so it looks identical and has an empty schedule. Attempted to fix it in git with a `vercel.json`
-  pointing the build at `v1/`; the deploy failed with "No Next.js version detected… check your Root
-  Directory setting", which is Vercel stating plainly that this is not something `vercel.json` can
-  override. File removed rather than left misleading. Needs one project setting; owner action.
+- **L-014, High — the BRIEF rested on a premise that was never true.** §B stated that a working v0 was
+  "already deployed and in daily use" and "carries him to 25 September on its own". Taken verbatim from
+  the kickoff input and never checked. There was no deployment and no accumulated schedule; the owner
+  had been using commercial apps. The neutralised deadline, the 6-week appetite, the instruction to
+  ignore the exam date, and scope line S6 were all resting on it. Corrected in the BRIEF by D-022, with
+  a drift-check tripwire so §B's premise is treated as a claim to verify rather than a given.
+- **L-013 raised as High, then resolved by inverting it.** The Vercel project's Root Directory is `.`,
+  so `lituk-drill.vercel.app` serves the repo-root `index.html` — v0. Flagged as dangerous on the
+  assumption that a *real* v0 already held the owner's schedule, which would have made this a second
+  copy at a new origin with empty storage. With no real one, it is not a collision: **it is the missing
+  deployment.** Verified live — `index.html` 28,439 bytes, `facts.js` 232,747 bytes, both exact matches
+  for the local files. Kept as-is; v1 will get its own project (D-022). Stable by construction, since
+  R-1 and the `v0 is untouched` CI job forbid changing the files it serves.
+  - Along the way, tried to fix it in git with a `vercel.json` pointing the build at `v1/`. The deploy
+    failed with "No Next.js version detected… check your Root Directory setting" — Vercel stating
+    plainly that this is not something `vercel.json` can override. File removed rather than left
+    misleading.
 - D-012 recorded Vercel Postgres; what was provisioned is Neon, which is the same thing — Vercel's
   Postgres offering is a Neon integration. No amendment needed.
 
