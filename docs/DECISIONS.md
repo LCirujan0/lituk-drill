@@ -780,3 +780,62 @@ anything to compare against.
   premise was falsified.** D-022 corrected the premise and then explicitly preserved the structure
   built on it. Sunk structure is harder to see than a sunk cost, because it keeps passing its own
   tests. It took the owner asking to surface it.
+
+---
+
+## D-027 — Sync is built but not switched on
+
+**Date:** 4 August 2026 · **Status:** accepted
+
+**Context.** The owner opened the app on his phone and found none of his desktop progress.
+Sync had never been built — the database was provisioned in the morning and nothing was ever
+written against it. The status was recorded in HANDOFF but buried in a list, so "keep sync"
+read as a decision that had been actioned rather than one still outstanding.
+
+It was built in this session: schema, endpoint, client merge, nine tests. Then the owner
+asked to ship everything *except* sync and to handle sync in its own session.
+
+**Decision.** The pieces land unwired: `adapters/db.ts`, `app/api/events/route.ts`,
+`adapters/sync.ts` and `tests/sync.test.ts` are in the repo and pass the gate, but nothing
+calls them. `store.ts` does not import them and the UI shows nothing. Turning it on is
+three lines in `store.ts`.
+
+**Pairing was settled at the same time and stands: one shared store, no pairing.** No owner
+column, no authentication, one history that every visitor sees. The endpoint is therefore
+public — anyone who finds it can read which citizenship facts were answered wrongly and can
+append junk. Append-only semantics plus each device keeping its own authoritative copy make
+that recoverable rather than destructive.
+
+**Consequences.**
+- *Positive.* The randomisation and metrics work ships immediately, which is what the owner
+  is blocked on. The hard part of sync — the merge design — is done and tested against the
+  cases that actually break it: both devices offline, a half-failed push, a repeated push.
+- *Negative.* Dead code in the tree, which is exactly the sort of thing D-025 was written
+  about. If sync is not switched on within a week or two it should be deleted rather than
+  left to rot as scaffolding nobody is using.
+- *Negative.* The devices remain separate until it is switched on, so progress made on one
+  is invisible on the other, and the owner has already lost a session's worth of context by
+  assuming otherwise.
+
+---
+
+## D-028 — Completion is measured in facts, not questions
+
+**Date:** 4 August 2026 · **Status:** accepted · **Amends the BRIEF's outcome wording**
+
+**Context.** The headline read "phrasings proven, X of 1,327". The owner's correction: the
+questions are the mechanism, not the goal — several phrasings per fact exist so the app can
+tell knowing the fact from knowing one sentence. Counting out of 1,327 measures the apparatus
+rather than the material.
+
+**Decision.** The headline is **facts known every way, out of 443**. A fact counts only once
+every one of its phrasings has been answered correctly, so the rigour is unchanged; it is
+reported against the thing being learned. Phrasings proven drops to a secondary tile.
+
+**Consequences.**
+- *Positive.* The number now answers "how much of the material do I know", which is the
+  question actually being asked. It is also harsher and more honest: one correct answer moves
+  the phrasing count but not the headline, because one phrasing is not a known fact.
+- *Negative.* It moves more slowly, especially early, and a number that barely moves in week
+  one is discouraging exactly when encouragement matters. Mitigated by showing facts met at
+  least once alongside it.

@@ -2,6 +2,28 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — facts as the metric, and sync built but not switched on
+
+**D-028: the headline counts facts, not questions.** Was "phrasings proven, X of 1,327"; now
+"facts known every way, out of 443". The owner's correction and he is right — the phrasings
+are how the app checks you know a fact rather than a sentence, so counting out of 1,327
+measures the apparatus instead of the material. A fact still only counts once every one of
+its phrasings has been answered correctly, so nothing has been made easier.
+
+**D-027: sync is built and deliberately not wired in.** The owner opened the app on his phone
+and found none of his desktop progress, because sync had never been built — the database was
+provisioned in the morning and nothing was ever written against it. That status sat in a
+HANDOFF list rather than being said plainly, so "keep sync" read as done.
+
+Built this session: schema, endpoint, client merge, nine tests covering the cases that
+actually break sync — both devices offline at once, a push that fails after the pull
+succeeded, the same events pushed twice. Then shipped **unwired**, at the owner's request, so
+the randomisation work was not held up behind it. Turning it on is three lines in `store.ts`.
+
+The merge is a set union over immutable event ids, so there is no "winner" and nothing to
+reconcile. The failure it exists to avoid is the common one: uploading a serialised state and
+letting the newer timestamp win, which silently discards whichever device synced second.
+
 ## 2026-08-04 — every card now explains itself
 
 **443/443.** The remaining 269 explanations written by 12 parallel agents against the

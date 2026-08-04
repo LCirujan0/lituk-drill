@@ -27,21 +27,27 @@ beforeEach(() => {
   reloadFromStorage();
 });
 
-const stored = (): ReviewEvent[] => JSON.parse(window.localStorage.getItem(EVENTS_KEY) ?? '[]');
 
-/** Click whichever option is currently rendered at `index`. */
-async function answerOption(user: ReturnType<typeof userEvent.setup>, predicate: (text: string) => boolean) {
-  const buttons = screen.getAllByRole('button');
-  const option = buttons.find((b) => predicate(b.textContent ?? ''));
-  expect(option, 'no option matched').toBeTruthy();
-  await user.click(option!);
+/** The correct and a wrong option for whatever card is currently on screen. */
+function currentOptions() {
+  const heading = screen.getByRole('heading', { level: 1 }).textContent;
+  const fact = DECK.find((f) => f.forms.some((x) => x.question === heading))!;
+  const form = fact.forms.find((x) => x.question === heading)!;
+  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹']);
+  const shown = screen
+    .getAllByRole('button')
+    .map((b) => b.textContent ?? '')
+    .filter((t) => t && !chrome.has(t) && !/^(Correct|Not quite)/.test(t));
+  return { fact, correct: form.answers.correct, wrong: shown.find((t) => t !== form.answers.correct)! };
 }
+
+const stored = (): ReviewEvent[] => JSON.parse(window.localStorage.getItem(EVENTS_KEY) ?? '[]');
 
 describe('the card holds after answering — regression', () => {
   it('keeps the same question on screen once an option is chosen', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
 
     const question = (await screen.findByRole('heading', { level: 1 })).textContent;
@@ -58,7 +64,7 @@ describe('the card holds after answering — regression', () => {
   it('advances only when Next is pressed', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
 
     const first = (await screen.findByRole('heading', { level: 1 })).textContent;
@@ -75,22 +81,22 @@ describe('the card holds after answering — regression', () => {
   it('shows a verdict that says whether the answer was right', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(screen.getByText(/^Correct\.$/)).toBeTruthy();
   });
 
   it('says so when the answer was wrong', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Seven');
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(screen.getByText(/^Not quite\.$/)).toBeTruthy();
   });
 });
@@ -115,7 +121,7 @@ describe('the options do not move under your finger — regression', () => {
   ])('keeps the four options in the same order in %s', async (_label, opener) => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: opener }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -132,7 +138,7 @@ describe('the options do not move under your finger — regression', () => {
     // the new one, and the verdict was reported against a layout that no longer existed.
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -147,7 +153,7 @@ describe('the options do not move under your finger — regression', () => {
   it('reports the verdict against the option actually clicked', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
     const heading = await screen.findByRole('heading', { level: 1 });
 
@@ -166,7 +172,7 @@ describe('the options do not move under your finger — regression', () => {
   it('records the grade that matches the verdict shown', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
     const heading = await screen.findByRole('heading', { level: 1 });
 
@@ -187,7 +193,7 @@ describe('explanations', () => {
   it('is hidden until the question is answered', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -198,12 +204,13 @@ describe('explanations', () => {
   it('appears once the question is answered', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
-    expect(screen.getByText(/backbone of the whole first chapter/)).toBeTruthy();
+    const { fact } = currentOptions();
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    expect(screen.getByText(fact.explanation!.slice(0, 40), { exact: false })).toBeTruthy();
   });
 });
 
@@ -211,12 +218,12 @@ describe('recording a review', () => {
   it('writes exactly one event per answer', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
     expect(stored()).toHaveLength(0);
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(stored()).toHaveLength(1);
 
     // Pressing Next must not record a second review.
@@ -227,17 +234,18 @@ describe('recording a review', () => {
   it('records a correct quiz answer as Good and a wrong one as Again', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(stored()[0].grade).toBe(4);
     expect(stored()[0].mode).toBe('scheduled'); // first contact is always scheduled
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
-    await answerOption(user, (t) => t === 'The rule of law' || t === 'Individual liberty');
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(stored()).toHaveLength(2);
+    expect(stored()[1].grade).toBe(0);
   });
 });
 
@@ -245,18 +253,20 @@ describe('the home screen', () => {
   it('shows the deck size and a zeroed count on a fresh install', async () => {
     render(<App />);
     expect(await screen.findByText(/443 facts/)).toBeTruthy();
-    expect(screen.getByText(/of 1327/)).toBeTruthy();
+    // The headline counts FACTS, not phrasings — questions are how the app checks you know
+    // a fact, not the thing being learned (D-028).
+    expect(screen.getByText(/of 443/)).toBeTruthy();
     expect(screen.getByRole('button', { name: /Not tried yet/ })).toBeTruthy();
   });
 
   it('moves a missed fact into the mistakes section', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Seven'); // wrong
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     await user.click(screen.getByRole('button', { name: 'Back' }));
 
     const mistakes = await screen.findByRole('button', { name: /Your mistakes/ });
@@ -266,14 +276,17 @@ describe('the home screen', () => {
   it('counts a proven phrasing after a correct answer', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     await user.click(screen.getByRole('button', { name: 'Back' }));
 
-    await waitFor(() => expect(screen.getByText('1')).toBeTruthy());
+    // One phrasing answered is not a known fact — a fact counts only once every phrasing
+    // has been proved, so the headline is still 0 and the phrasing count moved instead.
+    await waitFor(() => expect(screen.getByText(/of 443/)).toBeTruthy());
+    expect(stored()).toHaveLength(1);
   });
 });
 
@@ -281,7 +294,7 @@ describe('recall mode', () => {
   it('hides the answer until it is revealed, then offers four grades', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -298,7 +311,7 @@ describe('recall mode', () => {
   it('holds the card after grading, same as quiz mode', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
@@ -317,33 +330,33 @@ describe('navigation', () => {
   it('reaches progress and back', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
 
     await user.click(screen.getByRole('button', { name: 'Progress' }));
     expect(await screen.findByRole('heading', { name: 'Progress' })).toBeTruthy();
     expect(screen.getByText(/facts known every way/)).toBeTruthy();
 
     await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(await screen.findByText(/phrasings proven/)).toBeTruthy();
+    expect(await screen.findByText(/facts known every way/)).toBeTruthy();
   });
 
   it('reaches the chronology and back', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
 
     await user.click(screen.getByRole('button', { name: 'Timeline' }));
     expect(await screen.findByRole('heading', { name: 'The spine' })).toBeTruthy();
     expect(screen.getByText(/Battle of Hastings/)).toBeTruthy();
 
     await user.click(screen.getByRole('button', { name: 'Back' }));
-    expect(await screen.findByText(/phrasings proven/)).toBeTruthy();
+    expect(await screen.findByText(/facts known every way/)).toBeTruthy();
   });
 
   it('shows an empty state for a section with nothing in it', async () => {
     const user = userEvent.setup();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
 
     await user.click(screen.getByRole('button', { name: /Your mistakes/ }));
     expect(await screen.findByText(/Nothing outstanding/)).toBeTruthy();
@@ -354,15 +367,15 @@ describe('persistence', () => {
   it('restores answered reviews after a remount', async () => {
     const user = userEvent.setup();
     const { unmount } = render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     unmount();
 
     reloadFromStorage();
     render(<App />);
-    await screen.findByText(/phrasings proven/);
+    await screen.findByText(/facts known every way/);
 
     // The review survived, so the "not tried yet" count is one lower than the full deck.
     expect(screen.queryByText('1327')).toBeNull();

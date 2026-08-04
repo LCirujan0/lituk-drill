@@ -41,9 +41,9 @@ export function Progress({
       </header>
 
       <div className={styles.tiles}>
-        <Tile value={progress.provenForms} of={progress.forms} label="phrasings proven" accent />
-        <Tile value={progress.provenAllForms} of={progress.facts} label="facts known every way" />
-        <Tile value={progress.started} of={progress.facts} label="facts started" />
+        <Tile value={progress.provenAllForms} of={progress.facts} label="facts known every way" accent />
+        <Tile value={progress.started} of={progress.facts} label="facts met at least once" />
+        <Tile value={progress.provenForms} of={progress.forms} label="phrasings proven" />
         <Tile value={progress.mature} label="solid (3 weeks+)" />
         <Tile value={progress.inMistakes} label="in your mistakes" />
         <Tile value={progress.totalReviews} label="reviews answered" />

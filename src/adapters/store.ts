@@ -10,10 +10,11 @@
  *      that copies it into component state is a cache that can go stale.
  *   2. It renders correctly on the server. `getServerSnapshot` returns an empty log, so the
  *      first paint is deterministic instead of reaching for `localStorage` that is not there.
- *   3. **It is the shape cross-device sync needs.** When the Postgres adapter (D-002) lands,
- *      a pull merges remote events into this store and calls `emit()`. Every screen updates,
- *      because every screen is already a projection of this snapshot. Nothing above this
- *      line has to know that sync exists.
+ *   3. **It is the shape cross-device sync needs.** The pieces exist and are tested
+ *      (`adapters/sync.ts`, `adapters/db.ts`, `app/api/events`) but are deliberately NOT
+ *      wired in yet. Turning them on is: call `syncOnce` here, merge the result, `emit()`.
+ *      Every screen updates, because every screen is already a projection of this snapshot.
+ *      Nothing above this line has to learn that sync exists.
  *
  * `today` lives here too. Reading the clock during render is impure — the same render could
  * produce different output — so the day number is captured here and refreshed when the tab

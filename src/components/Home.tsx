@@ -7,9 +7,14 @@
  * sees most, which is what makes the breadth gate and the readiness number mean anything —
  * the self-directed sections sit alongside it rather than replacing it.
  *
- * The headline number is **phrasings proven**, not facts started. A fact proven one way is
- * a memorised sentence; proven every way, it is knowledge. That distinction is the reason
- * the deck is built as it is, so it gets the largest type on the screen.
+ * The headline is **facts known every way**, out of 443.
+ *
+ * The phrasings are the mechanism, not the goal. Asking a fact several ways is how the app
+ * checks you know the fact rather than the sentence — but what you are trying to learn is
+ * 443 facts, and a count out of 1,327 questions measures the apparatus instead of the
+ * material. A fact counts as known when every one of its phrasings has been answered
+ * correctly, so the rigour is still there; it is just reported against the thing that
+ * matters.
  */
 
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
@@ -22,7 +27,7 @@ interface Props {
   readonly progress: DeckProgress;
   readonly streak: number;
   readonly persistent: boolean;
-  readonly onOpen: (section: 'due' | 'new' | 'mistakes') => void;
+  readonly onOpen: (section: 'due' | 'new' | 'mistakes' | 'random') => void;
   readonly onChapter: (chapter: Chapter) => void;
   readonly onProgress: () => void;
   readonly onTimeline: () => void;
@@ -31,7 +36,8 @@ interface Props {
 export function Home({
   counts, progress, streak, persistent, onOpen, onChapter, onProgress, onTimeline,
 }: Props) {
-  const provenPct = progress.forms ? Math.round((progress.provenForms / progress.forms) * 100) : 0;
+  const knownPct = progress.facts ? Math.round((progress.provenAllForms / progress.facts) * 100) : 0;
+  const partPct = progress.facts ? Math.round((progress.started / progress.facts) * 100) : 0;
 
   return (
     <>
@@ -54,15 +60,18 @@ export function Home({
 
       <section className={styles.headline} aria-labelledby="proven-heading">
         <p className={styles.big}>
-          {progress.provenForms}
-          <span className={styles.of}>of {progress.forms}</span>
+          {progress.provenAllForms}
+          <span className={styles.of}>of {progress.facts}</span>
         </p>
         <h2 id="proven-heading" className={styles.headlineLabel}>
-          phrasings proven · {provenPct}%
+          facts known every way · {knownPct}%
         </h2>
         <p className={styles.headlineNote}>
-          This is the number that matters. It counts ways of asking, not facts — you can only
-          move it by knowing the fact underneath the sentence.
+          A fact counts here only once you have answered every one of its phrasings
+          correctly — which is how the app tells knowing the fact from knowing one sentence.
+          {progress.started > progress.provenAllForms && (
+            <> You have met {progress.started} ({partPct}%) at least once.</>
+          )}
         </p>
       </section>
 
@@ -71,7 +80,9 @@ export function Home({
           <span className={styles.sectionName}>Due today</span>
           <span className={styles.sectionCount}>{counts.due}</span>
           <span className={styles.sectionNote}>
-            {counts.due > 0 ? 'What the schedule says you are about to forget' : 'Nothing due — come back tomorrow'}
+            {counts.due > 0
+              ? 'A mix of mistakes, new material and facts you have got right — each fact once'
+              : 'Done for today. Thirty facts is the day'}
           </span>
         </button>
 
@@ -115,6 +126,17 @@ export function Home({
             );
           })}
         </div>
+      </section>
+
+      <section className={styles.block} aria-labelledby="random-heading">
+        <h2 id="random-heading" className={styles.blockTitle}>Random</h2>
+        <button type="button" className={styles.chapter} onClick={() => onOpen('random')}>
+          <span className={styles.chapterName}>One at random</span>
+          <span className={styles.chapterMeta}>
+            Any of the {counts.totalForms.toLocaleString('en-GB')} phrasings, with no memory
+            and no order — the honest sample the other sections are designed not to be
+          </span>
+        </button>
       </section>
 
       <div className={styles.links}>

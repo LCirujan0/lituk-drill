@@ -156,10 +156,13 @@ describe('not tried yet — counts phrasings, not facts', () => {
     ]);
   });
 
-  it('puts unseen phrasings of started facts before untouched facts', () => {
+  it('does NOT bring a started fact straight back for its other phrasings', () => {
+    // This test used to assert the opposite, and that assertion was the bug: unseen
+    // phrasings of already-started facts jumped ahead of untouched ones, so four facts
+    // cycled through all three forms before anything new appeared. See rotation.test.ts.
     const events = [ev('f000', 0, 4)];
     const queue = newQueue(context(events), 10);
-    expect(queue[0].factId).toBe('f000');
+    expect(queue.slice(0, 5).map((i) => i.factId)).not.toContain('f000');
   });
 
   it('serves only one phrasing per untouched fact in a pass', () => {
@@ -188,19 +191,24 @@ describe('by chapter', () => {
     }
   });
 
-  it('puts the most-missed facts first', () => {
+  it('puts the least-drilled facts first, not the most-missed', () => {
+    // Chapter drills now rotate: a fact you have already met sits behind every fact you
+    // have not. Ordering by lapses would have kept handing back the same few facts.
     const chapter3 = DECK.filter((f) => f.chapter === 3);
-    const target = chapter3[40];
-    const events = [ev(target.id, 0, 0), ev(target.id, 1, 0, 1)];
-    expect(chapterQueue(context(events), 3, 5)[0].factId).toBe(target.id);
+    const drilled = chapter3.slice(0, 3).map((f) => ev(f.id, 0, 0));
+    const queue = chapterQueue(context(drilled), 3, 10);
+    expect(queue.map((i) => i.factId)).not.toContain(chapter3[0].id);
   });
 
-  it('prefers a recall-usable phrasing', () => {
+  it('offers a valid phrasing for every fact it serves', () => {
+    // Form choice is no longer recall-biased here: the drill screen re-resolves it when in
+    // recall mode, because whether an mcqOnly form is usable depends on the mode, which the
+    // queue does not know.
     const queue = chapterQueue(context([]), 5, 40);
     for (const item of queue) {
       const fact = DECK.find((f) => f.id === item.factId)!;
-      const hasRecall = fact.forms.some((f) => !f.mcqOnly);
-      if (hasRecall) expect(fact.forms[item.formIndex].mcqOnly).toBe(false);
+      expect(item.formIndex).toBeGreaterThanOrEqual(0);
+      expect(item.formIndex).toBeLessThan(fact.forms.length);
     }
   });
 });
@@ -208,7 +216,9 @@ describe('by chapter', () => {
 describe('section counts', () => {
   it('reports an empty log honestly', () => {
     const counts = sectionCounts(context([]));
-    expect(counts.due).toBe(0);
+    // Due today is a daily budget of 30, not "what SM-2 says is overdue" — on a fresh
+    // install the whole day is still ahead of you.
+    expect(counts.due).toBe(30);
     expect(counts.mistakes).toBe(0);
     expect(counts.newForms).toBe(DECK.reduce((n, f) => n + f.forms.length, 0));
     expect([...counts.byChapter.values()].reduce((n, c) => n + c.total, 0)).toBe(DECK.length);
