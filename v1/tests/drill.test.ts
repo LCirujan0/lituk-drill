@@ -13,7 +13,7 @@ import { DECK } from '@/domain/deck';
 import { mistakesFrom, nextFormForMistake, CLEAR_STREAK } from '@/domain/drill/mistakes';
 import {
   chapterQueue,
-  mistakesQueue,
+
   newQueue,
   sectionCounts,
   unseenForms,

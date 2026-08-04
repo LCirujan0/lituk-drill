@@ -3,6 +3,12 @@
   "plugins": ["stylelint-declaration-strict-value"],
   "ignoreFiles": ["src/styles/tokens.css"],
   "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {
+        "message": "CSS Module class names are camelCase, so they can be used as `styles.someName` without bracket syntax"
+      }
+    ],
     "scale-unlimited/declaration-strict-value": [
       [
         "/color$/",

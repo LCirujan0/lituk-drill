@@ -1,0 +1,303 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ---- top bar ---------------------------------------------------------- */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+}
+
+.back {
+  flex: none;
+  width: var(--target-min);
+  height: var(--target-min);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--c-accent);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.barTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.remaining {
+  display: block;
+  color: var(--c-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.modes {
+  display: flex;
+  flex: none;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--c-fill);
+  border-radius: var(--radius-md);
+}
+
+.mode,
+.modeOn {
+  min-height: 32px;
+  padding-inline: var(--space-3);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.mode {
+  background: none;
+  color: var(--c-text-soft);
+}
+
+.modeOn {
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+
+/* ---- the card --------------------------------------------------------- */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-end: var(--space-3);
+}
+
+.chip,
+.chipWarn {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+.chip {
+  background: var(--c-fill);
+  color: var(--c-text-soft);
+}
+
+.chipWarn {
+  background: var(--c-fill);
+  color: var(--c-caution-text);
+}
+
+.dots {
+  display: inline-flex;
+  gap: var(--space-1);
+  margin-inline-start: auto;
+}
+
+.dot,
+.dotOn {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-sm);
+}
+
+.dot {
+  background: var(--c-rule);
+}
+
+.dotOn {
+  background: var(--c-proven);
+}
+
+.question {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+.answer {
+  margin: var(--space-3) 0 0;
+  color: var(--c-answer);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.fact,
+.note {
+  margin: var(--space-3) 0 0;
+  padding-block-start: var(--space-3);
+  border-block-start: 1px dashed var(--c-rule);
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+}
+
+.fact span {
+  color: var(--c-text-muted);
+}
+
+/* ---- quiz options ----------------------------------------------------- */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.option {
+  min-height: var(--target-min);
+  padding: var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  text-align: start;
+  color: var(--c-text);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--motion-fast), border-color var(--motion-fast);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.right {
+  border-color: var(--c-proven);
+  background: color-mix(in srgb, var(--c-proven) 14%, transparent);
+  font-weight: 600;
+}
+
+.wrong {
+  border-color: var(--c-danger);
+  background: color-mix(in srgb, var(--c-danger) 12%, transparent);
+}
+
+.dim {
+  opacity: 0.45;
+}
+
+.verdict {
+  margin: var(--space-2) 0 0;
+  color: var(--c-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---- recall grading --------------------------------------------------- */
+.reveal {
+  min-height: var(--target-min);
+  padding: var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-accent-text);
+  background: var(--c-accent);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.grades {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+.grade {
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-1);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.g0 {
+  color: var(--c-grade-again);
+  border-color: color-mix(in srgb, var(--c-grade-again) 40%, transparent);
+}
+
+.g3 {
+  color: var(--c-caution-text);
+  border-color: color-mix(in srgb, var(--c-grade-hard) 45%, transparent);
+}
+
+.g4 {
+  color: var(--c-grade-good);
+  border-color: color-mix(in srgb, var(--c-grade-good) 40%, transparent);
+}
+
+.g5 {
+  color: var(--c-grade-easy);
+  border-color: color-mix(in srgb, var(--c-grade-easy) 40%, transparent);
+}
+
+.intervals,
+.honesty {
+  margin: 0;
+  color: var(--c-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+/* ---- empty state ------------------------------------------------------ */
+.done {
+  padding-block: var(--space-7);
+  text-align: center;
+}
+
+.doneMark {
+  color: var(--c-proven);
+  font-size: var(--text-2xl);
+}
+
+.doneTitle {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-xl);
+}
+
+.doneNote {
+  max-width: 340px;
+  margin: var(--space-2) auto 0;
+  color: var(--c-text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.exit {
+  min-height: var(--target-min);
+  margin-block-start: var(--space-5);
+  padding-inline: var(--space-5);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-accent-text);
+  background: var(--c-accent);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}

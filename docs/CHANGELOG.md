@@ -2,6 +2,40 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — the app becomes usable
+
+**Interface and local persistence.** v1 can now be drilled: home screen, the five sections,
+the card, progress, and the chronology (S9, ported from v0).
+
+- **One external store, read through `useSyncExternalStore`.** Not state loaded inside an
+  effect — browser storage is external mutable state, and an effect that copies it into
+  component state is a cache that can go stale. The deciding reason is what comes next: when
+  the Postgres adapter lands, a sync pull merges remote events into this store and calls
+  `emit()`, and every screen updates because every screen is already a projection of that
+  snapshot. Nothing above the adapter has to learn that sync exists.
+- **Which sections write to the schedule.** First contact with a phrasing is always
+  `scheduled`, whichever section it happened in — D-003 discounts self-directed successes
+  because the card was chosen and had just been seen, and neither is true the first time a
+  phrasing appears. After that the section decides: due and new are scheduled; mistakes and
+  chapter drills are practice.
+- **A quiz answer grades binary** — right is Good, wrong is Again. There is no honest way to
+  ask "how hard was that?" of a multiple-choice answer.
+- React's linter caught two things worth fixing rather than suppressing: `setState` inside an
+  effect to reset a card (now a `key` on the component, so a new card *remounts* and an
+  answer can never be on screen before its question), and `Date.now()` during render (now
+  captured in the store and refreshed on `visibilitychange`, so a phone left overnight does
+  not keep yesterday's due list).
+- The token lint caught two raw values on the way through — a `1ms` and a `44px` — which is
+  the check doing exactly what it was installed for.
+
+**Smoke-checked by hand** in a 375×812 viewport, not assumed: answered one question right and
+one wrong, and confirmed the event log, the counts and every screen agreed. Two events
+produced 1 phrasing proven, 1 fact in mistakes, 1 due today, a 1-day streak and the missed
+fact at the top of the problem list. No console errors.
+
+**Weakest part of this commit:** there are no UI tests. The domain has 122; the interface has
+a hand smoke-check. Recorded in HANDOFF rather than left implied.
+
 ## 2026-08-04 — deck expansion
 
 **D-024: 33 facts added to fill measured coverage gaps.** Deck 410 → **443** facts, 1,228 → **1,327**

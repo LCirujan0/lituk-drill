@@ -20,7 +20,7 @@
  */
 
 import type { Deck, Fact } from '../deck/types';
-import { recallForms } from '../deck/types';
+
 import type { ReviewEvent } from '../scheduler/events';
 import { shuffle, type Rng } from '../scheduler/rng';
 import type { FactState } from '../scheduler/types';

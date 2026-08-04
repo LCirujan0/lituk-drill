@@ -1,68 +1,136 @@
+'use client';
+
 /**
- * The skeleton page. Milestone 1 has no interface by design (D-019) — this exists to
- * prove the thing builds, deploys, and renders real data from the migrated deck rather
- * than a placeholder. The drill screens come with the thesis features.
+ * The app shell.
+ *
+ * One client component holding view state, rather than routes. For an offline-first PWA
+ * launched from the Home Screen, a single view is simpler and more robust: no route
+ * transitions to lose state across, nothing to re-hydrate mid-session, and the back
+ * affordance is an explicit button rather than browser history the user cannot see.
+ *
+ * All state above this lives in `useDrill`, which is a projection of one array of review
+ * events. Grading appends one event and everything on screen recomputes.
  */
 
-import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
-import { analyseDeck } from '@/domain/deck/analysis';
-import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
-import { MIGRATED_DECK } from '@/domain/deck';
-import styles from './page.module.css';
+import { useCallback, useMemo, useState } from 'react';
 
-export default function Home() {
-  const analysis = analyseDeck(DECK, MIGRATED_DECK);
-  const chapters = new Map<Chapter, number>();
-  for (const fact of DECK) chapters.set(fact.chapter, (chapters.get(fact.chapter) ?? 0) + 1);
+import { useDrill, type SectionKey } from './_lib/use-drill';
+import { Home } from '@/components/Home';
+import { Drill, type DrillMode } from '@/components/Drill';
+import { Progress } from '@/components/Progress';
+import { Timeline } from '@/components/Timeline';
+import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
+import type { Grade } from '@/domain/scheduler/types';
+
+type View =
+  | { kind: 'home' }
+  | { kind: 'drill'; section: SectionKey; chapter?: Chapter }
+  | { kind: 'progress' }
+  | { kind: 'timeline' };
+
+const EMPTY_MESSAGE: Record<SectionKey, string> = {
+  due: 'Nothing is due. That is the schedule working, not a gap — come back tomorrow, or meet some new material.',
+  new: 'You have now seen every phrasing in the deck at least once. Which is the whole 1,327 of them.',
+  mistakes: 'Nothing outstanding. Every fact you have missed has since been answered correctly on three different phrasings.',
+  chapter: 'Nothing left to drill in this chapter right now.',
+};
+
+export default function App() {
+  const drill = useDrill();
+  const [view, setView] = useState<View>({ kind: 'home' });
+  const [mode, setMode] = useState<DrillMode>('quiz');
+
+  const home = useCallback(() => setView({ kind: 'home' }), []);
+
+  const item = useMemo(
+    () => (view.kind === 'drill' ? drill.nextItem(view.section, view.chapter) : null),
+    [view, drill],
+  );
+
+  const remaining = useMemo(() => {
+    if (view.kind !== 'drill') return 0;
+    if (view.section === 'due') return drill.counts.due;
+    if (view.section === 'new') return drill.counts.newForms;
+    if (view.section === 'mistakes') return drill.counts.mistakes;
+    return drill.counts.byChapter.get(view.chapter ?? 1)?.total ?? 0;
+  }, [view, drill.counts]);
+
+  const onGrade = useCallback(
+    (factId: string, formIndex: number, grade: Grade) => {
+      if (view.kind !== 'drill') return;
+      drill.grade(factId, formIndex, grade, view.section);
+    },
+    [drill, view],
+  );
+
+  // Hold the first paint until the log has loaded, so the counts never flash zero and then
+  // jump — which on a phone reads as "it lost my progress".
+  if (!drill.loaded) {
+    return (
+      <div className="wrap">
+        <p style={{ color: 'var(--c-text-muted)' }}>Loading…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="wrap">
-      <header className={styles.header}>
-        <h1>Life in the UK</h1>
-        <p className={styles.sub}>
-          {TOTAL_FACTS} facts · {TOTAL_FORMS} question forms
-        </p>
-      </header>
+      {view.kind === 'home' && (
+        <Home
+          counts={drill.counts}
+          progress={drill.progress}
+          streak={drill.streak()}
+          persistent={drill.persistent}
+          onOpen={(section) => setView({ kind: 'drill', section })}
+          onChapter={(chapter) => setView({ kind: 'drill', section: 'chapter', chapter })}
+          onProgress={() => setView({ kind: 'progress' })}
+          onTimeline={() => setView({ kind: 'timeline' })}
+        />
+      )}
 
-      <section className={styles.card} aria-labelledby="deck-heading">
-        <h2 id="deck-heading" className={styles.heading}>
-          The deck
-        </h2>
-        <dl className={styles.list}>
-          {[...chapters]
-            .sort((a, b) => b[1] - a[1])
-            .map(([chapter, count]) => (
-              <div key={chapter} className={styles.row}>
-                <dt>{CHAPTER_NAMES[chapter]}</dt>
-                <dd>{count}</dd>
-              </div>
-            ))}
-        </dl>
-      </section>
+      {view.kind === 'drill' && (
+        <Drill
+          // Identity of the card, not of the screen. A new card remounts, which discards
+          // the revealed/chosen state — so an answer can never be on screen before its
+          // question has been read.
+          key={`${item?.factId ?? 'none'}:${item?.formIndex ?? -1}:${mode}`}
 
-      <section className={styles.card} aria-labelledby="integrity-heading">
-        <h2 id="integrity-heading" className={styles.heading}>
-          Content integrity
-        </h2>
-        <dl className={styles.list}>
-          <div className={styles.row}>
-            <dt>Structural faults</dt>
-            <dd>{analysis.structuralFaults.length}</dd>
-          </div>
-          <div className={styles.row}>
-            <dt>Facts awaiting a check against the book</dt>
-            <dd>{analysis.unresolvedVerifyFlags.length}</dd>
-          </div>
-          <div className={styles.row}>
-            <dt>Numeric answer is a middle value</dt>
-            <dd>{(analysis.numericMiddleRank.rate * 100).toFixed(1)}%</dd>
-          </div>
-        </dl>
-        <p className={styles.note}>
-          Chance would be 50%. Until that figure comes down, a multiple-choice score is
-          measuring the shape of the options rather than the material.
-        </p>
-      </section>
+          title={titleFor(view)}
+          item={item}
+          mode={mode}
+          onModeChange={setMode}
+          onGrade={onGrade}
+          onExit={home}
+          stateFor={(factId) => drill.states.get(factId)}
+          remaining={remaining}
+          emptyMessage={EMPTY_MESSAGE[view.section]}
+        />
+      )}
+
+      {view.kind === 'progress' && (
+        <Progress
+          progress={drill.progress}
+          upcoming={drill.upcoming()}
+          activity={drill.activity()}
+          problems={drill.problems()}
+          settings={drill.settings}
+          onSettings={drill.updateSettings}
+          onErase={() => {
+            drill.eraseEverything();
+            home();
+          }}
+          onExit={home}
+        />
+      )}
+
+      {view.kind === 'timeline' && <Timeline onExit={home} />}
     </div>
   );
+}
+
+function titleFor(view: Extract<View, { kind: 'drill' }>): string {
+  if (view.section === 'due') return 'Due today';
+  if (view.section === 'new') return 'Not tried yet';
+  if (view.section === 'mistakes') return 'Your mistakes';
+  return CHAPTER_NAMES[view.chapter ?? 1];
 }
