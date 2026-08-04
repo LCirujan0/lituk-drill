@@ -38,6 +38,19 @@ export interface DeckBaseline {
    */
   readonly numericMiddleRankRate: number;
   /**
+   * The number that matters after D-014: how often the correct answer would be a middle
+   * value **on screen**, across every all-numeric form, using whichever path the reader
+   * actually gets — generated for the 317 forms that carry a derivable rule, as written for
+   * the 56 that cannot. Chance is 0.50.
+   */
+  readonly effectiveNumericMiddleRankRate: number;
+  /**
+   * Forms whose candidate pool cannot place the answer at all four ranks. Each is a small
+   * residual tell of its own — the answer is never the largest option, say — so this is
+   * tracked separately rather than hiding inside the aggregate.
+   */
+  readonly restrictedRankForms: number;
+  /**
    * Rate at which the correct answer is the longest option, among forms with a unique
    * longest. Chance is 0.25. Today 301/749 = 0.4019. Target 0.30.
    */
@@ -57,7 +70,15 @@ export const DECK_BASELINE: DeckBaseline = {
   sharedFormsAcrossFacts: 2,
   factsBelowRecallBreadth: 6,
   factsWithNoRecallForm: 0,
+  // Unchanged: this still measures the STORED options, which D-014 deliberately left alone
+  // so the round-trip proof against v0's facts.js keeps covering the whole deck.
   numericMiddleRankRate: 0.915,
+  // What a reader now actually meets: 0.914 -> 0.527, against a chance floor of 0.50. The
+  // remaining 2.7 points are entirely the 56 as-written forms, whose own middle rate is
+  // about 68% — lower than the deck's, because differently-worded options were never
+  // bracketing a value in the first place. Closing the rest means rewriting those by hand.
+  effectiveNumericMiddleRankRate: 0.53,
+  restrictedRankForms: 1,
   longestOptionCorrectRate: 0.403,
   maxAnswerPositionRate: 0.297,
   unresolvedVerifyFlags: 12,
@@ -69,7 +90,10 @@ export const DECK_TARGETS: Partial<DeckBaseline> = {
   ambiguousSharedStems: 0,
   sharedFormsAcrossFacts: 0,
   factsBelowRecallBreadth: 0,
-  numericMiddleRankRate: 0.55,
+  // The stored options are deliberately never "fixed" — generation happens on top of them,
+  // so this one has no target. `effectiveNumericMiddleRankRate` is the one to drive down.
+  effectiveNumericMiddleRankRate: 0.52,
+  restrictedRankForms: 0,
   longestOptionCorrectRate: 0.3,
   unresolvedVerifyFlags: 0,
 };

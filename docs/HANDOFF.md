@@ -9,13 +9,14 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
-| Tests | 68 passing across 3 files |
+| Tests | 90 passing across 4 files |
 | Deck | 410 facts · 1,228 forms · 5 chapters · 82 tags |
 | Migration frontier | none — no database provisioned yet |
-| Next decision id | D-021 |
-| Next ledger id | L-011 |
-| Open ledger rows | 8 (L-002…L-009); 2 verified-fixed |
-| Open Critical | 0 |
+| Next decision id | D-022 |
+| Next ledger id | L-014 |
+| Open ledger rows | 10; 2 verified-fixed; L-002 fixed-unverified |
+| Open Critical | 0. **One open High: L-013** — the Vercel project serves v0, not v1 |
+| On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | CI | Green — 3 required checks, all passing on first push |
 | Deployed | v0 only. v1 not yet deployed |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
@@ -48,12 +49,13 @@ skipped; it needs a schema and an `.env.example` to check against first.
 
 ## Next, in order
 
-1. Create a **separate** Vercel project rooted at `v1/` (D-020). v0's project is never a
-   deploy target. Preview deployments need deployment protection — a preview URL is public.
-2. Mini-specs through the scoping gate for the three thesis features, S3/S4/S7. **S7
-   first** — generated numeric distractors close L-002, and the readiness model in S4 is
-   not trustworthy until they do.
-3. L-004 (the inherited amber contrast pairing) before any component uses it.
+1. **L-013 — set the Vercel project's Root Directory to `v1`.** Owner action, cannot be
+   done from the repo. Until it is, `lituk-drill.vercel.app` serves a second copy of v0 at
+   a new origin with an empty schedule.
+2. Persistence: schema for the review-event log, and sync endpoints. The Neon database is
+   provisioned and `DATABASE_URL` is present on Production and Preview.
+3. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
+4. L-004 (the inherited amber contrast pairing) before any component uses it.
 
 ## Gotchas
 

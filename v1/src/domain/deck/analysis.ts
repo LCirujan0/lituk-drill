@@ -19,6 +19,28 @@
 import type { MigratedFact } from './migrated';
 import type { Deck, Fact } from './types';
 import { fixedOptions, recallForms } from './types';
+import { achievableRanks, deriveNumericAnswers, generateOptions } from './numeric';
+
+/** Extract a leading number from option text, or null. */
+const readNumber = (text: string): number | null => {
+  const m = text.replace(/,/g, '').match(/-?\d+(?:\.\d+)?/);
+  return m ? Number.parseFloat(m[0]) : null;
+};
+
+/**
+ * A small deterministic generator, so measurements are reproducible without dragging the
+ * scheduler's RNG into the deck layer (R-2). mulberry32, same algorithm, local copy.
+ */
+const defaultSeed = (n: number) => {
+  let a = (n * 0x9e3779b1) >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
 
 export const normalise = (s: string): string =>
   s
@@ -49,7 +71,7 @@ export function ambiguousSharedStems(deck: Deck): { stem: string; factIds: strin
 
   for (const fact of deck) {
     for (const form of fact.forms) {
-      const correct = form.answers.kind === 'fixed' ? form.answers.correct : String(form.answers.value);
+      const correct = form.answers.correct;
       const key = normalise(form.question);
       byStem.set(key, [...(byStem.get(key) ?? []), { factId: fact.id, correct, mcqOnly: form.mcqOnly }]);
     }
@@ -118,7 +140,6 @@ function numericSets(deck: Deck): { correct: number; all: number[] }[] {
   const out: { correct: number; all: number[] }[] = [];
   for (const fact of deck) {
     for (const form of fact.forms) {
-      if (form.answers.kind !== 'fixed') continue;
       const options = fixedOptions(form.answers);
       const values = options.map((o) => {
         const m = o.replace(/,/g, '').match(/-?\d+(?:\.\d+)?/);
@@ -156,7 +177,6 @@ export function longestOptionCorrectRate(deck: Deck): { rate: number; longest: n
   let total = 0;
   for (const fact of deck) {
     for (const form of fact.forms) {
-      if (form.answers.kind !== 'fixed') continue;
       const options = fixedOptions(form.answers);
       const lengths = options.map((o) => o.length);
       const max = Math.max(...lengths);
@@ -166,6 +186,71 @@ export function longestOptionCorrectRate(deck: Deck): { rate: number; longest: n
     }
   }
   return { rate: total ? longest / total : 0, longest, total };
+}
+
+/**
+ * The measurement that actually matters after D-014: how often the correct answer would be
+ * a middle value **on screen**, across the whole deck.
+ *
+ * `numericMiddleRankRate` above measures the stored options, which is the right number for
+ * material a reader will see as written. It is the wrong number once generation exists,
+ * because it would keep reporting 91% for forms that no longer present those options — and
+ * it would report an improvement if a form simply became underivable. This walks every
+ * all-numeric form and uses whichever path the reader would actually get.
+ *
+ * Sampling rather than solving: the rank is drawn from an achievable set whose size varies
+ * per form, so the honest way to ask "what does this deck do" is to run it.
+ */
+export function effectiveNumericMiddleRankRate(
+  deck: Deck,
+  samplesPerForm = 40,
+  seed: (n: number) => () => number = defaultSeed,
+): { rate: number; generatedForms: number; writtenForms: number } {
+  let middle = 0;
+  let total = 0;
+  let generatedForms = 0;
+  let writtenForms = 0;
+  let n = 0;
+
+  for (const fact of deck) {
+    for (const form of fact.forms) {
+      const options = fixedOptions(form.answers);
+      const values = options.map(readNumber);
+      if (values.some((v) => v === null)) continue;
+      const nums = values as number[];
+      if (new Set(nums).size !== nums.length) continue;
+
+      const rule = deriveNumericAnswers(options, 0);
+      if (!rule) {
+        writtenForms++;
+        const rank = [...nums].sort((a, b) => a - b).indexOf(nums[0]);
+        if (rank === 1 || rank === 2) middle += samplesPerForm;
+        total += samplesPerForm;
+        continue;
+      }
+
+      generatedForms++;
+      for (let i = 0; i < samplesPerForm; i++) {
+        const { rank } = generateOptions(rule, seed(n++));
+        if (rank === 1 || rank === 2) middle++;
+        total++;
+      }
+    }
+  }
+
+  return { rate: total ? middle / total : 0, generatedForms, writtenForms };
+}
+
+/** Forms whose candidate pool cannot place the answer at all four ranks — a residual tell. */
+export function formsWithRestrictedRanks(deck: Deck): string[] {
+  const out: string[] = [];
+  for (const fact of deck) {
+    fact.forms.forEach((form, j) => {
+      const rule = deriveNumericAnswers(fixedOptions(form.answers), 0);
+      if (rule && achievableRanks(rule).length < 4) out.push(`${fact.id}[${j}]`);
+    });
+  }
+  return out;
 }
 
 /**
@@ -201,7 +286,6 @@ export function structuralFaults(deck: Deck): string[] {
     fact.forms.forEach((form, i) => {
       const where = `${fact.id}[${i}]`;
       if (!form.question.trim()) faults.push(`${where}: empty question`);
-      if (form.answers.kind !== 'fixed') return;
 
       const options = fixedOptions(form.answers);
       if (options.length !== 4) faults.push(`${where}: ${options.length} options, expected 4`);
@@ -227,6 +311,8 @@ export function analyseDeck(deck: readonly MigratedFact[]) {
     factsWithNoRecallForm: factsWithNoRecallForm(deck),
     unresolvedVerifyFlags: unresolvedVerifyFlags(deck),
     numericMiddleRank: numericMiddleRankRate(deck),
+    effectiveNumericMiddleRank: effectiveNumericMiddleRankRate(deck),
+    restrictedRankForms: formsWithRestrictedRanks(deck),
     longestOptionCorrect: longestOptionCorrectRate(deck),
     answerPosition: maxAnswerPositionRate(deck),
   };

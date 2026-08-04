@@ -39,16 +39,22 @@ export interface FixedAnswers {
 /**
  * A numeric answer plus the material to generate wrong ones (D-014).
  *
- * Measured in v0: the correct answer was a middle value among four numeric options
- * in 91.4% of 373 all-numeric forms, against 50% by chance — because plausible
- * distractors get written by bracketing the true value. Generating at presentation
- * time with the correct answer's rank chosen uniformly removes the tell at its root
- * and, incidentally, means numeric forms never repeat an option set (R2).
+ * **This is derived, never stored.** It is computed from a form's hand-written options at
+ * load time (`presentation.ts`), which buys three things over writing it into the data:
+ * the rule can never drift out of step with the options it came from; editing an option
+ * updates the rule for free; and the round-trip proof against v0's `facts.js` keeps
+ * covering the entire deck, because nothing in the deck changed shape.
+ *
+ * Measured in v0: the correct answer was a middle value among four numeric options in
+ * 91.4% of 373 all-numeric forms, against 50% by chance — because plausible distractors get
+ * written by bracketing the true value. Generating at presentation time with the correct
+ * answer's rank chosen uniformly removes the tell at its root and, incidentally, means
+ * numeric forms almost never repeat an option set (R2).
  *
  * `template` renders a value into option text; `{v}` is the substitution point.
  * `candidates` are wrong values to draw from, and must never contain `value`.
  */
-export interface NumericAnswers {
+export interface NumericRule {
   readonly kind: 'numeric';
   readonly value: number;
   readonly template: string;
@@ -56,8 +62,6 @@ export interface NumericAnswers {
   /** How to render the number itself — thousands separators, currency, and so on. */
   readonly format?: 'plain' | 'comma' | 'gbp';
 }
-
-export type Answers = FixedAnswers | NumericAnswers;
 
 export interface QuestionForm {
   readonly question: string;
@@ -67,7 +71,8 @@ export interface QuestionForm {
    * screen. 53 of 1,228 forms in v0.
    */
   readonly mcqOnly: boolean;
-  readonly answers: Answers;
+  /** Always the author's four options. Generation is layered on top, not stored here. */
+  readonly answers: FixedAnswers;
 }
 
 export interface Fact {

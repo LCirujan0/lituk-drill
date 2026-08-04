@@ -56,9 +56,24 @@ row(
 
 console.log('\nAnswer leakage — the measurements that produced R1');
 row(
-  'numeric answer is a middle value',
+  'ON SCREEN: answer is a middle value',
+  pct(a.effectiveNumericMiddleRank.rate),
+  `chance 50% · ceiling ${pct(DECK_BASELINE.effectiveNumericMiddleRankRate)} · target ${pct(DECK_TARGETS.effectiveNumericMiddleRankRate ?? 0.5)}`,
+);
+row(
+  '  of which generated / as written',
+  `${a.effectiveNumericMiddleRank.generatedForms} / ${a.effectiveNumericMiddleRank.writtenForms}`,
+  'the residual is entirely the as-written forms',
+);
+row(
+  '  forms not reaching every rank',
+  `${a.restrictedRankForms.length}/${DECK_BASELINE.restrictedRankForms}`,
+  a.restrictedRankForms.join(' '),
+);
+row(
+  'stored: numeric answer is a middle value',
   pct(a.numericMiddleRank.rate),
-  `${a.numericMiddleRank.middle}/${a.numericMiddleRank.total} · chance 50% · target ${pct(DECK_TARGETS.numericMiddleRankRate ?? 0.5)}`,
+  `${a.numericMiddleRank.middle}/${a.numericMiddleRank.total} · left as authored on purpose (D-014)`,
 );
 row(
   'correct answer is longest option',
@@ -74,7 +89,8 @@ row(
 const failing = [
   a.structuralFaults.length > 0 && 'structural faults',
   a.factsWithNoRecallForm.length > 0 && 'facts with no recall form',
-  a.numericMiddleRank.rate > DECK_BASELINE.numericMiddleRankRate && 'numeric tell worsened',
+  a.effectiveNumericMiddleRank.rate > DECK_BASELINE.effectiveNumericMiddleRankRate && 'on-screen numeric tell worsened',
+  a.restrictedRankForms.length > DECK_BASELINE.restrictedRankForms && 'more forms cannot reach every rank',
   a.longestOptionCorrect.rate > DECK_BASELINE.longestOptionCorrectRate && 'length tell worsened',
 ].filter(Boolean);
 
