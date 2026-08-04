@@ -71,6 +71,21 @@ function ensureLoaded() {
   };
 }
 
+/**
+ * Re-read everything from storage and notify.
+ *
+ * Needed whenever the underlying store changed without going through `appendEvent` — a
+ * restore, another tab writing, and eventually a sync pull. Tests use it to reset the
+ * module-level state between cases, which is the honest way to handle a singleton rather
+ * than adding a test-only back door.
+ */
+export function reloadFromStorage() {
+  backing = null;
+  snapshot = EMPTY;
+  ensureLoaded();
+  emit();
+}
+
 export function subscribe(listener: () => void): () => void {
   ensureLoaded();
   listeners.add(listener);
