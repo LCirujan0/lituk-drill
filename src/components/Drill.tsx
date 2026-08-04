@@ -75,6 +75,8 @@ export function Drill({
   // rather than dependent on an effect's dependency list staying correct.
   const [revealed, setRevealed] = useState(false);
   const [chosen, setChosen] = useState<number | null>(null);
+  /** Set once "Got lucky" has been pressed, so it cannot be pressed twice. */
+  const [downgraded, setDowngraded] = useState(false);
   const [graded, setGraded] = useState<Grade | null>(null);
 
   const fact = item ? factById(item.factId) : undefined;
@@ -203,8 +205,33 @@ export function Drill({
           {chosen !== null && (
             <>
               <p className={chosen === presented.correctIndex ? styles.verdictRight : styles.verdictWrong}>
-                {chosen === presented.correctIndex ? 'Correct.' : 'Not quite.'}
+                {downgraded
+                  ? 'Recorded as a miss.'
+                  : chosen === presented.correctIndex
+                    ? 'Correct.'
+                    : 'Not quite.'}
               </p>
+
+              {/*
+                Guessing right is the one thing multiple choice cannot tell from knowing. One
+                in four is chance, and a fact you guessed will otherwise be treated as proved
+                and pushed out to a long interval — so the schedule quietly fills with things
+                you never knew. This is the only way the app can find out, and it has to come
+                from the reader.
+              */}
+              {chosen === presented.correctIndex && !downgraded && (
+                <button
+                  type="button"
+                  className={styles.lucky}
+                  onClick={() => {
+                    setDowngraded(true);
+                    commit(0);
+                  }}
+                >
+                  Got lucky — I guessed
+                </button>
+              )}
+
               <button type="button" className={styles.next} onClick={onNext}>Next</button>
             </>
           )}

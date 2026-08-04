@@ -340,3 +340,19 @@
   border-radius: var(--radius-md);
   cursor: pointer;
 }
+
+/* Deliberately quieter than Next: it should be easy to reach and never the obvious button,
+   because most correct answers are not guesses. */
+.lucky {
+  min-height: var(--target-min);
+  margin-block-end: var(--space-2);
+  padding: var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-caution-text);
+  background: var(--c-surface);
+  border: 1px solid color-mix(in srgb, var(--c-grade-hard) 45%, transparent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}

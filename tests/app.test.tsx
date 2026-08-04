@@ -33,7 +33,7 @@ function currentOptions() {
   const heading = screen.getByRole('heading', { level: 1 }).textContent;
   const fact = DECK.find((f) => f.forms.some((x) => x.question === heading))!;
   const form = fact.forms.find((x) => x.question === heading)!;
-  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹']);
+  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed']);
   const shown = screen
     .getAllByRole('button')
     .map((b) => b.textContent ?? '')
@@ -104,7 +104,7 @@ describe('the card holds after answering — regression', () => {
 describe('the options do not move under your finger — regression', () => {
   /** Every button that is one of the four answer options, in the order shown. */
   const optionTexts = () => {
-    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹']);
+    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed']);
     return screen
       .getAllByRole('button')
       .map((b) => b.textContent ?? '')
@@ -186,6 +186,68 @@ describe('the options do not move under your finger — regression', () => {
     expect(screen.getByText(/^Correct/)).toBeTruthy();
     expect(stored()).toHaveLength(1);
     expect(stored()[0].grade).toBe(4);
+  });
+});
+
+describe('got lucky — a guess is not knowledge', () => {
+  it('offers the downgrade only after a CORRECT answer', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
+    // Nothing to downgrade — it was already wrong.
+    expect(screen.queryByRole('button', { name: /Got lucky/ })).toBeNull();
+  });
+
+  it('records a second event as a miss, so the fact lapses', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    expect(stored()).toHaveLength(1);
+    expect(stored()[0].grade).toBe(4);
+
+    await user.click(screen.getByRole('button', { name: /Got lucky/ }));
+
+    expect(stored()).toHaveLength(2);
+    expect(stored()[1].grade).toBe(0);
+    expect(stored()[1].factId).toBe(stored()[0].factId);
+    expect(screen.getByText(/Recorded as a miss/)).toBeTruthy();
+  });
+
+  it('cannot be pressed twice', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    await user.click(screen.getByRole('button', { name: /Got lucky/ }));
+
+    expect(screen.queryByRole('button', { name: /Got lucky/ })).toBeNull();
+    expect(stored()).toHaveLength(2);
+  });
+
+  it('puts the fact into the mistakes section', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    await user.click(screen.getByRole('button', { name: /Got lucky/ }));
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    const mistakes = await screen.findByRole('button', { name: /Your mistakes/ });
+    expect(within(mistakes).getByText('1')).toBeTruthy();
   });
 });
 
