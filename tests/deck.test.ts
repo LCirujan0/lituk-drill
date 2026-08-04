@@ -20,6 +20,7 @@ import { describe, expect, it } from 'vitest';
 import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
+import { EXPLANATIONS } from '@/data/explanations';
 import {
   ambiguousSharedStems,
   duplicateCanonicalQuestions,
@@ -161,5 +162,28 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     expect(rate, `longest option correct in ${longest}/${total} forms`).toBeLessThanOrEqual(
       DECK_BASELINE.longestOptionCorrectRate,
     );
+  });
+});
+
+describe('explanations', () => {
+  it('attaches every authored explanation to a real fact', () => {
+    // A typo in a fact id would silently write an explanation nobody ever sees.
+    const orphans = Object.keys(EXPLANATIONS).filter((id) => !DECK.some((f) => f.id === id));
+    expect(orphans, `explanations for facts that do not exist: ${orphans.join(', ')}`).toEqual([]);
+  });
+
+  it('reaches the deck', () => {
+    const withExplanation = DECK.filter((f) => f.explanation);
+    expect(withExplanation.length).toBe(Object.keys(EXPLANATIONS).length);
+  });
+
+  it('writes context rather than restating the answer', () => {
+    // An explanation that just repeats the answer teaches nothing that the card did not
+    // already show, and would make the extra reading feel pointless.
+    for (const fact of DECK) {
+      if (!fact.explanation) continue;
+      expect(fact.explanation.length, `${fact.id} explanation is too short to be context`).toBeGreaterThan(60);
+      expect(fact.explanation.trim().toLowerCase()).not.toBe(fact.answer.trim().toLowerCase());
+    }
   });
 });

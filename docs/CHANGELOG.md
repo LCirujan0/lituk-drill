@@ -2,6 +2,29 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — explanations, and a bug found by using the app
+
+**Per-fact context, shown after you answer.** The owner asked for a paragraph on each card so
+that drilling teaches understanding rather than answers. A date you can place in a story
+survives far longer than one you have memorised, and most exam questions are answerable from
+context even when the specific fact has gone.
+
+- Explanations live in `src/data/explanations.ts` as a flat id→text map rather than a field
+  on each fact: authoring is one editable list instead of 443 scattered edits, coverage is
+  countable, and the deck files stay unchurned while it fills in. Attached to the deck once,
+  at assembly.
+- **53 of 443 written** — all of chapters 1 and 2. The rest is authoring work in progress.
+- Tests assert every authored explanation attaches to a real fact (a typo in an id would
+  silently write something nobody ever sees), and that none merely restates its answer.
+
+**A real bug, found by opening the app rather than by reading it.** Grading swapped the card
+instantly, because the current card was derived straight from the event log and the log
+changed on every grade. You never saw whether you were right, and the explanation flashed past
+unread — the feature would have shipped defeating its own purpose.
+
+The card is now held in state and stays put until you press Next, in both quiz and recall
+mode. Feedback you cannot read is not feedback.
+
 ## 2026-08-04 — collapsed to one version
 
 The owner asked why there were two. There was no longer a reason, and the honest answer is

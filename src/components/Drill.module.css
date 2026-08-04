@@ -157,6 +157,17 @@
   color: var(--c-text-muted);
 }
 
+/* Context after the answer. Deliberately calm rather than highlighted — it is there to be
+   read when you want it, not to compete with the answer for attention. */
+.explanation {
+  margin: var(--space-3) 0 0;
+  padding-block-start: var(--space-3);
+  border-block-start: 1px dashed var(--c-rule);
+  color: var(--c-text-soft);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
 /* ---- quiz options ----------------------------------------------------- */
 .options {
   display: flex;
@@ -198,10 +209,38 @@
   opacity: 0.45;
 }
 
-.verdict {
-  margin: var(--space-2) 0 0;
-  color: var(--c-text-muted);
-  font-size: var(--text-sm);
+.verdictRight,
+.verdictWrong {
+  margin: var(--space-3) 0 0;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.verdictRight {
+  color: var(--c-proven);
+}
+
+.verdictWrong {
+  color: var(--c-danger);
+}
+
+/* The card holds until this is pressed. Feedback you cannot read is not feedback. */
+.next {
+  min-height: var(--target-min);
+  margin-block-start: var(--space-3);
+  padding: var(--space-3);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-accent-text);
+  background: var(--c-accent);
+  border: 1px solid var(--c-accent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.gradeChosen {
+  background: var(--c-fill);
 }
 
 /* ---- recall grading --------------------------------------------------- */

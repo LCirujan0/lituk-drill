@@ -12,6 +12,7 @@ import { CHAPTER_3 } from '@/data/chapter-3';
 import { CHAPTER_4 } from '@/data/chapter-4';
 import { CHAPTER_5 } from '@/data/chapter-5';
 import { ADDITIONS } from '@/data/additions';
+import { EXPLANATIONS } from '@/data/explanations';
 import type { Deck, Fact } from './types';
 
 const ALL: Fact[] = [
@@ -21,7 +22,11 @@ const ALL: Fact[] = [
   ...CHAPTER_4,
   ...CHAPTER_5,
   ...ADDITIONS,
-].sort((a, b) => a.id.localeCompare(b.id));
+]
+  // Explanations live in their own map so authoring them is one flat editable list rather
+  // than 443 scattered edits, and so coverage is countable. Attached here, once.
+  .map((fact) => (EXPLANATIONS[fact.id] ? { ...fact, explanation: EXPLANATIONS[fact.id] } : fact))
+  .sort((a, b) => a.id.localeCompare(b.id));
 
 export const DECK: Deck = ALL;
 

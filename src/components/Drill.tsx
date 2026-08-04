@@ -38,6 +38,7 @@ interface Props {
   readonly mode: DrillMode;
   readonly onModeChange: (mode: DrillMode) => void;
   readonly onGrade: (factId: string, formIndex: number, grade: Grade) => void;
+  readonly onNext: () => void;
   readonly onExit: () => void;
   readonly stateFor: (factId: string) => FactState | undefined;
   readonly remaining: number;
@@ -63,7 +64,7 @@ function resolveForm(item: DrillItem, mode: DrillMode, seed: number): number {
 }
 
 export function Drill({
-  title, item, mode, onModeChange, onGrade, onExit, stateFor, remaining, emptyMessage,
+  title, item, mode, onModeChange, onGrade, onNext, onExit, stateFor, remaining, emptyMessage,
 }: Props) {
   // Reset on a new card is handled by the caller giving this component a `key` tied to the
   // card's identity, so React discards this state rather than an effect clearing it. A new
@@ -72,6 +73,7 @@ export function Drill({
   // rather than dependent on an effect's dependency list staying correct.
   const [revealed, setRevealed] = useState(false);
   const [chosen, setChosen] = useState<number | null>(null);
+  const [graded, setGraded] = useState<Grade | null>(null);
 
   const fact = item ? factById(item.factId) : undefined;
   const formIndex = useMemo(
@@ -108,7 +110,7 @@ export function Drill({
   const state = stateFor(fact.id) ?? initialState(fact.forms.length);
   const proven = state.ok.filter((v) => v > 0).length;
   const answer = fact.forms[formIndex].answers.correct;
-  const answered = mode === 'quiz' ? chosen !== null : revealed;
+  const answered = mode === 'quiz' ? chosen !== null : graded !== null;
 
   return (
     <div className={styles.wrap}>
@@ -160,6 +162,13 @@ export function Drill({
           </p>
         )}
 
+        {/* Context, shown only after answering. Before, it would give the answer away;
+            after, it is the difference between memorising a date and being able to place
+            it — which is what makes a fact survive to September. */}
+        {answered && fact.explanation && (
+          <p className={styles.explanation}>{fact.explanation}</p>
+        )}
+
         {answered && state.lapses >= 3 && (
           <p className={styles.note}>Missed {state.lapses}× — intervals on this one are permanently cut by 40%.</p>
         )}
@@ -188,9 +197,12 @@ export function Drill({
             );
           })}
           {chosen !== null && (
-            <p className={styles.verdict}>
-              {chosen === presented.correctIndex ? 'Correct.' : 'Not quite.'} Next card is loading.
-            </p>
+            <>
+              <p className={chosen === presented.correctIndex ? styles.verdictRight : styles.verdictWrong}>
+                {chosen === presented.correctIndex ? 'Correct.' : 'Not quite.'}
+              </p>
+              <button type="button" className={styles.next} onClick={onNext}>Next</button>
+            </>
           )}
         </div>
       ) : !revealed ? (
@@ -204,13 +216,20 @@ export function Drill({
               <button
                 key={g}
                 type="button"
-                className={`${styles.grade} ${styles[`g${g}`]}`}
-                onClick={() => commit(g as Grade)}
+                className={`${styles.grade} ${styles[`g${g}`]} ${graded === g ? styles.gradeChosen : ''}`}
+                disabled={graded !== null}
+                onClick={() => {
+                  setGraded(g);
+                  commit(g as Grade);
+                }}
               >
                 {label}
               </button>
             ))}
           </div>
+          {graded !== null && (
+            <button type="button" className={styles.next} onClick={onNext}>Next</button>
+          )}
           <p className={styles.intervals}>
             Again → later this session. Hard → {describe(previewInterval(state, formIndex, 3, CONFIG))}.
             {' '}Good → {describe(previewInterval(state, formIndex, 4, CONFIG))}.

@@ -21,6 +21,7 @@ import { Progress } from '@/components/Progress';
 import { Timeline } from '@/components/Timeline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 import type { Grade } from '@/domain/scheduler/types';
+import type { DrillItem } from '@/domain/drill/sections';
 
 type View =
   | { kind: 'home' }
@@ -40,12 +41,39 @@ export default function App() {
   const [view, setView] = useState<View>({ kind: 'home' });
   const [mode, setMode] = useState<DrillMode>('quiz');
 
-  const home = useCallback(() => setView({ kind: 'home' }), []);
+  /**
+   * The card currently on screen, held deliberately.
+   *
+   * It used to be derived straight from the event log, which meant grading swapped the card
+   * instantly — you never saw whether you were right, and the explanation flashed past
+   * unread. The card now stays put until you ask for the next one. Feedback you cannot read
+   * is not feedback.
+   */
+  const [current, setCurrent] = useState<DrillItem | null>(null);
 
-  const item = useMemo(
-    () => (view.kind === 'drill' ? drill.nextItem(view.section, view.chapter) : null),
-    [view, drill],
+  const advance = useCallback(
+    (v: View = view) => {
+      if (v.kind !== 'drill') return;
+      setCurrent(drill.nextItem(v.section, v.chapter));
+    },
+    [drill, view],
   );
+
+  const openDrill = useCallback(
+    (section: SectionKey, chapter?: Chapter) => {
+      const next: View = { kind: 'drill', section, chapter };
+      setView(next);
+      setCurrent(drill.nextItem(section, chapter));
+    },
+    [drill],
+  );
+
+  const home = useCallback(() => {
+    setView({ kind: 'home' });
+    setCurrent(null);
+  }, []);
+
+  const item = view.kind === 'drill' ? current : null;
 
   const remaining = useMemo(() => {
     if (view.kind !== 'drill') return 0;
@@ -81,8 +109,8 @@ export default function App() {
           progress={drill.progress}
           streak={drill.streak()}
           persistent={drill.persistent}
-          onOpen={(section) => setView({ kind: 'drill', section })}
-          onChapter={(chapter) => setView({ kind: 'drill', section: 'chapter', chapter })}
+          onOpen={(section) => openDrill(section)}
+          onChapter={(chapter) => openDrill('chapter', chapter)}
           onProgress={() => setView({ kind: 'progress' })}
           onTimeline={() => setView({ kind: 'timeline' })}
         />
@@ -94,12 +122,12 @@ export default function App() {
           // the revealed/chosen state — so an answer can never be on screen before its
           // question has been read.
           key={`${item?.factId ?? 'none'}:${item?.formIndex ?? -1}:${mode}`}
-
           title={titleFor(view)}
           item={item}
           mode={mode}
           onModeChange={setMode}
           onGrade={onGrade}
+          onNext={() => advance()}
           onExit={home}
           stateFor={(factId) => drill.states.get(factId)}
           remaining={remaining}
