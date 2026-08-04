@@ -42,9 +42,9 @@ describe('shape', () => {
     // Two numbers, because there are now two. ACTIVE is what is drilled; DECK is the id
     // space and keeps the retired facts, so that every historical review event still points
     // at the question it was answering (R-4).
-    expect(TOTAL_FACTS, 'facts drilled').toBe(526);
-    expect(TOTAL_FORMS, 'phrasings drilled').toBe(1576);
-    expect(ALL_FACTS, 'ids in use, retired included').toBe(542);
+    expect(TOTAL_FACTS, 'facts drilled').toBe(543);
+    expect(TOTAL_FORMS, 'phrasings drilled').toBe(1627);
+    expect(ALL_FACTS, 'ids in use, retired included').toBe(559);
     expect(RETIRED).toHaveLength(16);
   });
 
