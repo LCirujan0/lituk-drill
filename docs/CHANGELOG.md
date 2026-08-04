@@ -2,6 +2,22 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — "Got lucky"
+
+A correct multiple-choice answer can mean two very different things, and the app had no way
+to tell them apart. One in four is chance. Left alone, a fact you guessed is treated as
+proved and pushed out to a long interval — so the schedule quietly fills with material you
+never knew, and the readiness number counts it as known.
+
+After a correct answer the card now offers **"Got lucky — I guessed"**, which records a
+second event as a miss. The fact lapses, lands in the mistakes drill, and has to be earned
+back on three phrasings like any other miss.
+
+Deliberately quieter than Next, and only shown after a correct answer — there is nothing to
+downgrade about a wrong one. It can only be pressed once. This is the one piece of evidence
+the app cannot gather for itself, so it has to be cheap to give and impossible to give by
+accident.
+
 ## 2026-08-04 — deck to 528 facts (D-029)
 
 **443 → 528 facts, 1,327 → 1,582 forms.** 85 added across topics measured thin against the
