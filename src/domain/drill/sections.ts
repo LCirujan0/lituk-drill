@@ -19,7 +19,7 @@
  */
 
 import type { Deck, Fact } from '../deck/types';
-import type { ReviewEvent } from '../scheduler/events';
+import { compareEvents, type ReviewEvent } from '../scheduler/events';
 import { shuffle, type Rng } from '../scheduler/rng';
 import type { FactState } from '../scheduler/types';
 import { mistakesFrom, nextFormForMistake, type MistakeStanding } from './mistakes';
@@ -289,35 +289,61 @@ export function randomQueue(ctx: SectionContext, limit = 40): DrillItem[] {
   return shuffle(all, ctx.rng).slice(0, limit);
 }
 
-/** Facts answered correctly on every one of their phrasings. */
+/**
+ * Facts currently being got right: **tried at least once, with no miss in the last three
+ * attempts.**
+ *
+ * The owner's definition, and it is a deliberately different thing from the headline. The
+ * headline ("known every way") asks whether every phrasing has ever been proved, which is a
+ * measure of coverage and only ever rises. This asks whether the fact is being answered
+ * correctly *now*, which is a measure of current form and falls the moment one is missed.
+ *
+ * Three attempts rather than one, so a single lucky answer does not qualify a fact and a
+ * single bad day does not disqualify one for ever — the window rolls forward, so a fact
+ * returns to mastered as soon as three clean attempts have pushed the miss out of it.
+ */
+export const MASTERY_WINDOW = 3;
+
 export function masteredFacts(ctx: SectionContext): string[] {
+  const byFact = new Map<string, ReviewEvent[]>();
+  for (const e of ctx.events) {
+    const list = byFact.get(e.factId);
+    if (list) list.push(e);
+    else byFact.set(e.factId, [e]);
+  }
+
   const out: string[] = [];
   for (const fact of ctx.deck) {
-    const state = ctx.states.get(fact.id);
-    if (state && state.ok.length > 0 && state.ok.every((v) => v > 0)) out.push(fact.id);
+    const attempts = byFact.get(fact.id);
+    if (!attempts || attempts.length === 0) continue;
+    const recent = [...attempts].sort(compareEvents).slice(-MASTERY_WINDOW);
+    if (recent.every((e) => e.grade > 0)) out.push(fact.id);
   }
   return out;
 }
 
 /**
- * Drill only what is already known every way.
+ * Drill what is currently being got right, to find out whether it still is.
  *
- * The point is not to learn anything — it is to find out whether "known" is still true. The
- * headline counts a fact as mastered the moment every phrasing has been right once, and that
- * claim decays silently: nothing on the home screen ever goes down on its own. This is the
- * section that can take it down, which is what makes the number worth reading.
+ * Nothing else on the home screen can fall on its own. "I know this" is a claim that decays
+ * silently, and without a section that retests it the only way to discover otherwise is the
+ * exam. A miss here removes the fact from the count immediately, which is what makes the
+ * number worth looking at.
  *
- * It is a practice section (D-003), so a success here changes nothing and a miss lapses the
- * fact and drops it out of the count. Exactly the asymmetry the decision asks for.
+ * **A different phrasing every time.** Rotation by served count, then the least-seen form —
+ * the same machinery the other self-directed sections use. Serving the phrasing you have
+ * already answered would test the sentence rather than the fact, which is the failure this
+ * whole app is built against.
+ *
+ * Practice, not scheduled (D-003): a success changes no interval, a miss lapses the fact.
  */
 export function masteredQueue(ctx: SectionContext, limit = 40): DrillItem[] {
-  const mastered = new Set(masteredFacts(ctx));
-  const all: DrillItem[] = [];
-  for (const fact of ctx.deck) {
-    if (!mastered.has(fact.id)) continue;
-    fact.forms.forEach((_, formIndex) => all.push({ factId: fact.id, formIndex }));
-  }
-  return shuffle(all, ctx.rng).slice(0, limit);
+  const counts = countsFor(ctx);
+  const mastered = rotate(masteredFacts(ctx), counts, ctx.rng).slice(0, limit);
+  return mastered.map((factId) => ({
+    factId,
+    formIndex: leastSeenForm(factById(ctx.deck, factId), counts, ctx.rng),
+  }));
 }
 
 // ===========================================================================
@@ -330,7 +356,7 @@ export interface SectionCounts {
   /** Phrasings never served, across the whole deck. */
   readonly newForms: number;
   readonly mistakes: number;
-  /** Facts right on every phrasing — the headline number, and what `mastered` drills. */
+  /** Facts tried at least once with no miss in the last three attempts. Falls on a miss. */
   readonly mastered: number;
   readonly totalForms: number;
   readonly byChapter: ReadonlyMap<number, { total: number; proven: number }>;

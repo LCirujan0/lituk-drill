@@ -10,6 +10,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Constitution",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What kind of monarchy does the UK have?",
     answer: "A constitutional monarchy",
     forms: [
@@ -121,6 +122,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Monarchy",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What does the monarch do at the State Opening of Parliament?",
     answer: "Delivers a speech setting out the government's programme",
     forms: [
@@ -158,6 +160,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many Members of Parliament sit in the House of Commons?",
     answer: "650",
     forms: [
@@ -195,6 +198,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the area that a single MP represents called?",
     answer: "A constituency",
     forms: [
@@ -232,6 +236,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the maximum interval allowed between UK general elections?",
     answer: "Five years",
     forms: [
@@ -269,6 +274,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Since 1958, who has had the power to nominate people for life peerages?",
     answer: "The Prime Minister",
     forms: [
@@ -306,6 +312,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "In which year did hereditary peers lose the automatic right to sit in the Lords?",
     answer: "1999",
     forms: [
@@ -343,6 +350,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Can the House of Lords permanently block a law the Commons is determined to pass?",
     answer: "No",
     forms: [
@@ -380,6 +388,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Who chairs debates and keeps order in the House of Commons?",
     answer: "The Speaker",
     forms: [
@@ -417,6 +426,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Parliament",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How is the Speaker of the House of Commons chosen?",
     answer: "By a secret ballot of MPs",
     forms: [
@@ -491,6 +501,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which Cabinet minister is responsible for the economy?",
     answer: "The Chancellor of the Exchequer",
     forms: [
@@ -528,6 +539,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which Cabinet minister is responsible for crime, policing and immigration?",
     answer: "The Home Secretary",
     forms: [
@@ -565,6 +577,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which Cabinet minister manages relationships with other countries?",
     answer: "The Foreign Secretary",
     forms: [
@@ -602,6 +615,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the group of senior opposition members who mirror ministers called?",
     answer: "The shadow cabinet",
     forms: [
@@ -639,6 +653,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What term describes organisations that try to influence policy without seeking office?",
     answer: "Pressure groups",
     forms: [
@@ -676,6 +691,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Civil service",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What must civil servants be, regardless of which party is in power?",
     answer: "Politically neutral",
     forms: [
@@ -713,6 +729,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Local government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What are the two main sources of funding for local councils?",
     answer: "Central government grants and council tax",
     forms: [
@@ -750,6 +767,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Local government",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many London boroughs are there?",
     answer: "33",
     forms: [
@@ -787,6 +805,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Devolution",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "In which year did the devolved administrations first receive their powers?",
     answer: "1999",
     forms: [
@@ -937,6 +956,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Devolution",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which 1998 agreement paved the way for the Northern Ireland Assembly?",
     answer: "The Good Friday Agreement",
     forms: [
@@ -974,6 +994,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Devolution",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Name a matter reserved to the UK Parliament and not devolved.",
     answer: "Defence",
     forms: [
@@ -1011,6 +1032,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What voting system is used to elect members of the devolved legislatures?",
     answer: "A form of proportional representation",
     forms: [
@@ -1048,6 +1070,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Media",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the official published report of debates in Parliament called?",
     answer: "Hansard",
     forms: [
@@ -1085,6 +1108,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the minimum age to vote in a UK general election?",
     answer: "18",
     forms: [
@@ -1122,6 +1146,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the list of everyone entitled to vote called?",
     answer: "The electoral register",
     forms: [
@@ -1159,6 +1184,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which citizens may vote in every type of UK election?",
     answer: "British, Irish and qualifying Commonwealth citizens",
     forms: [
@@ -1196,6 +1222,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What voting system is used to elect MPs to the House of Commons?",
     answer: "First past the post",
     forms: [
@@ -1307,6 +1334,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Elections",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the minimum age to stand for election as an MP?",
     answer: "18",
     forms: [
@@ -1419,6 +1447,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "International",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Who is the head of the Commonwealth?",
     answer: "The monarch",
     forms: [
@@ -1456,6 +1485,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "International",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many permanent members does the UN Security Council have?",
     answer: "5, including the UK",
     forms: [
@@ -1568,6 +1598,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "International",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which convention is the Council of Europe responsible for?",
     answer: "The European Convention on Human Rights",
     forms: [
@@ -1605,6 +1636,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Law",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which branch of law deals with disputes between individuals, such as debt?",
     answer: "Civil law",
     forms: [
@@ -1642,6 +1674,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Police",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What does PCC stand for in policing in England and Wales?",
     answer: "Police and Crime Commissioner",
     forms: [
@@ -1679,6 +1712,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Police",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "In which month and year were the first Police and Crime Commissioners elected?",
     answer: "November 2012",
     forms: [
@@ -1716,6 +1750,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which courts hear minor criminal cases in England, Wales and NI?",
     answer: "Magistrates' courts",
     forms: [
@@ -1753,6 +1788,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the Scottish equivalent of a magistrates' court?",
     answer: "The Justice of the Peace Court",
     forms: [
@@ -1790,6 +1826,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many magistrates normally hear a case together?",
     answer: "Three",
     forms: [
@@ -1864,6 +1901,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which court tries serious criminal offences before a judge and jury in England?",
     answer: "The Crown Court",
     forms: [
@@ -1901,6 +1939,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many people sit on a jury in England, Wales and Northern Ireland?",
     answer: "12",
     forms: [
@@ -1938,6 +1977,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "How many people sit on a jury in Scotland?",
     answer: "15",
     forms: [
@@ -1975,6 +2015,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which Scottish court hears serious cases with a judge and jury?",
     answer: "The Sheriff Court",
     forms: [
@@ -2012,6 +2053,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which courts handle civil disputes such as debt in England, Wales and NI?",
     answer: "County Courts",
     forms: [
@@ -2125,6 +2167,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What age range of defendants is dealt with by the Youth Court?",
     answer: "10 to 17",
     forms: [
@@ -2162,6 +2205,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Courts",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Is the general public allowed to attend Youth Court hearings?",
     answer: "No",
     forms: [
@@ -2273,6 +2317,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Rights",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Since which year has it been an offence to take a girl abroad for FGM?",
     answer: "2003",
     forms: [
@@ -2310,6 +2355,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Rights",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "In which year were Forced Marriage Protection Orders introduced in England?",
     answer: "2008",
     forms: [
@@ -2347,6 +2393,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Rights",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "In which year did Forced Marriage Protection Orders become available in Scotland?",
     answer: "2011",
     forms: [
@@ -2384,6 +2431,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Tax",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Which government department collects taxes in the UK?",
     answer: "HM Revenue and Customs",
     forms: [
@@ -2421,6 +2469,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Tax",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Who is usually required to complete a self-assessment tax return?",
     answer: "Self-employed people",
     forms: [
@@ -2495,6 +2544,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Tax",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "At what age is a National Insurance number normally issued?",
     answer: "Just before the 16th birthday",
     forms: [
@@ -2532,6 +2582,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the minimum age to drive a car in the UK?",
     answer: "17",
     forms: [
@@ -2569,6 +2620,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the minimum age to ride a moped in the UK?",
     answer: "16",
     forms: [
@@ -2606,6 +2658,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "Up to what age is a UK driving licence normally valid before more frequent renewal?",
     answer: "70",
     forms: [
@@ -2643,6 +2696,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "After the age of 70, how often must a UK driving licence be renewed?",
     answer: "Every three years",
     forms: [
@@ -2680,6 +2734,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "From what age must a car in Great Britain have an annual MOT test?",
     answer: "Three years old",
     forms: [
@@ -2754,6 +2809,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Driving",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "For how long can a visitor drive in the UK on a licence issued abroad?",
     answer: "12 months",
     forms: [
@@ -2828,6 +2884,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Community",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "From which list are people randomly selected for jury service?",
     answer: "The electoral register",
     forms: [
@@ -2865,6 +2922,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Community",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What is the minimum age to become a school governor in England?",
     answer: "18",
     forms: [
@@ -2902,6 +2960,7 @@ export const CHAPTER_5: readonly Fact[] = [
     tag: "Community",
     chapter: 5,
     verify: false,
+    source: 'Handbook 3rd ed., ch.5 — corroborated against the handbook text',
     question: "What term describes giving time to help others without being paid?",
     answer: "Volunteering",
     forms: [

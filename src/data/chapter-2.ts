@@ -10,6 +10,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "UK definition",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What is the full official name of the UK?",
     answer: "The United Kingdom of Great Britain and Northern Ireland",
     forms: [
@@ -47,6 +48,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "UK definition",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Which four countries make up the UK?",
     answer: "England, Scotland, Wales and Northern Ireland",
     forms: [
@@ -84,6 +86,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Great Britain",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Which three countries make up Great Britain?",
     answer: "England, Scotland and Wales",
     forms: [
@@ -121,6 +124,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Great Britain",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Which part of the UK is not included in the term 'Great Britain'?",
     answer: "Northern Ireland",
     forms: [
@@ -158,6 +162,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "British Isles",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Besides the UK, which places are counted as part of the British Isles?",
     answer: "The Channel Islands and the Isle of Man",
     forms: [
@@ -195,6 +200,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "British Isles",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Is the Republic of Ireland part of the UK?",
     answer: "No, it is an independent country",
     forms: [
@@ -232,6 +238,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Crown dependencies",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Which two territories are the Crown dependencies?",
     answer: "The Isle of Man and the Channel Islands",
     forms: [
@@ -269,6 +276,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Crown dependencies",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Are the Crown dependencies part of the UK?",
     answer: "No",
     forms: [
@@ -343,6 +351,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Overseas territories",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Are the British overseas territories part of the UK?",
     answer: "No, they are linked to it",
     forms: [
@@ -380,6 +389,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Overseas territories",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Which of these is a British overseas territory?",
     answer: "The Falkland Islands",
     forms: [
@@ -417,6 +427,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Capitals",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What is the capital city of Scotland?",
     answer: "Edinburgh",
     forms: [
@@ -454,6 +465,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Capitals",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What is the capital city of Wales?",
     answer: "Cardiff",
     forms: [
@@ -491,6 +503,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Capitals",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What is the capital city of Northern Ireland?",
     answer: "Belfast",
     forms: [
@@ -528,6 +541,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "By what popular name is the Union Flag usually known?",
     answer: "The Union Jack",
     forms: [
@@ -565,6 +579,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "How many crosses are combined in the Union Flag?",
     answer: "Three",
     forms: [
@@ -602,6 +617,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What does St George's cross look like?",
     answer: "A red upright cross on a white ground",
     forms: [
@@ -639,6 +655,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What does St Andrew's cross look like?",
     answer: "A white diagonal cross on a blue ground",
     forms: [
@@ -676,6 +693,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "What does St Patrick's cross look like?",
     answer: "A red diagonal cross on a white ground",
     forms: [
@@ -713,6 +731,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Union Flag",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Why does the Union Flag include no Welsh emblem?",
     answer: "Wales was already joined to England when the flag was created",
     forms: [
@@ -787,6 +806,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Who is the patron saint of England?",
     answer: "St George",
     forms: [
@@ -815,6 +835,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Who is the patron saint of Scotland?",
     answer: "St Andrew",
     forms: [
@@ -852,6 +873,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Who is the patron saint of Wales?",
     answer: "St David",
     forms: [
@@ -889,6 +911,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "Who is the patron saint of Northern Ireland?",
     answer: "St Patrick",
     forms: [
@@ -917,6 +940,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "On what date is St David's Day?",
     answer: "1 March",
     forms: [
@@ -954,6 +978,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "On what date is St Patrick's Day?",
     answer: "17 March",
     forms: [
@@ -991,6 +1016,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "On what date is St George's Day?",
     answer: "23 April",
     forms: [
@@ -1028,6 +1054,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "On what date is St Andrew's Day?",
     answer: "30 November",
     forms: [
@@ -1065,6 +1092,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Patron saints",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "In which two parts of the UK is the patron saint's day an official holiday?",
     answer: "Scotland and Northern Ireland",
     forms: [
@@ -1102,6 +1130,7 @@ export const CHAPTER_2: readonly Fact[] = [
     tag: "Languages",
     chapter: 2,
     verify: false,
+    source: 'Handbook 3rd ed., ch.2 — corroborated against the handbook text',
     question: "In which part of Scotland is Gaelic mainly spoken?",
     answer: "The Highlands and Islands",
     forms: [

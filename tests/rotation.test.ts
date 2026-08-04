@@ -21,6 +21,9 @@ import {
   dueBuckets,
   dueQueue,
   dueRemaining,
+  MASTERY_WINDOW,
+  masteredFacts,
+  masteredQueue,
   mistakesQueue,
   newQueue,
   randomQueue,
@@ -284,10 +287,22 @@ describe('random — no memory, no order', () => {
   });
 
   it('is the one section that may repeat, because it has no memory', () => {
-    const events = DECK.slice(0, 5).flatMap((f) => f.forms.map((_, i) => ev(f.id, i, 4)));
-    const queue = randomQueue(context(events), 40);
-    // Facts already drilled are still eligible — that is the point of it.
-    expect(queue.some((i) => DECK.slice(0, 5).some((f) => f.id === i.factId))).toBe(true);
+    const drilled = DECK.slice(0, 5);
+    const events = drilled.flatMap((f) => f.forms.map((_, i) => ev(f.id, i, 4)));
+
+    // Asserted over the WHOLE pool, not a 40-card draw.
+    //
+    // This used to take 40 cards and expect one of the five drilled facts among them. That is
+    // a lottery dressed as a test: it passed at 1,228 forms, and adding facts quietly pushed
+    // the odds under the line until it failed on a change that had nothing to do with it.
+    // The property is "drilled facts stay eligible", so ask the pool that question directly.
+    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
+    const pool = randomQueue(context(events), total);
+    const ids = new Set(pool.map((i) => i.factId));
+    for (const fact of drilled) {
+      expect(ids.has(fact.id), `${fact.id} was drilled and then dropped from random`).toBe(true);
+    }
+    expect(pool).toHaveLength(total);
   });
 
   it('varies between draws', () => {
@@ -332,5 +347,67 @@ describe('rotation primitives', () => {
   it('counts a day by fact, not by review', () => {
     const events = [ev('f000', 0, 4), ev('f000', 1, 4), ev('f001', 0, 4)];
     expect(servedToday(events, TODAY)).toEqual(new Set(['f000', 'f001']));
+  });
+});
+
+describe('mastered — current form, not coverage', () => {
+  const A = DECK[0].id;
+  const B = DECK[1].id;
+
+  it('counts a fact after a single correct answer', () => {
+    // The owner's rule, and it is deliberately not the headline's: you do not have to prove
+    // every phrasing for a fact to appear here. One right answer is enough to say "I am
+    // currently getting this right", which is what this section is asking.
+    expect(masteredFacts(context([ev(A, 0, 4)]))).toContain(A);
+  });
+
+  it('never counts a fact that has not been tried', () => {
+    expect(masteredFacts(context([ev(A, 0, 4)]))).not.toContain(B);
+  });
+
+  it('drops a fact the moment it is missed, and does not wait for a review', () => {
+    const events = [ev(A, 0, 4), ev(A, 1, 5), ev(A, 2, 0)];
+    expect(masteredFacts(context(events))).not.toContain(A);
+  });
+
+  it('lets a fact back in once the miss falls out of the window', () => {
+    // Three attempts, not for ever. A bad day should not disqualify a fact permanently, and
+    // the window rolling forward is what makes that true.
+    const missed = [ev(A, 0, 0)];
+    expect(masteredFacts(context(missed))).not.toContain(A);
+
+    const recovering = [...missed, ev(A, 1, 4), ev(A, 2, 4)];
+    expect(
+      masteredFacts(context(recovering)),
+      'the miss is still inside the last three attempts',
+    ).not.toContain(A);
+
+    const recovered = [...recovering, ev(A, 0, 4)];
+    expect(masteredFacts(context(recovered))).toContain(A);
+  });
+
+  it('looks only at the last three attempts, however long the history', () => {
+    const old = Array.from({ length: 10 }, (_, i) => ev(A, i % 3, 0));
+    const recent = [ev(A, 0, 4), ev(A, 1, 4), ev(A, 2, 5)];
+    expect(MASTERY_WINDOW).toBe(3);
+    expect(masteredFacts(context([...old, ...recent]))).toContain(A);
+  });
+
+  it('serves a different phrasing each time a fact comes round', () => {
+    // Serving the phrasing already answered would test the sentence rather than the fact,
+    // which is the failure this whole app is built against.
+    const fact = DECK.find((f) => f.forms.length >= 3)!;
+    let events = [ev(fact.id, 0, 4)];
+    const served: number[] = [];
+
+    for (let i = 0; i < 2; i++) {
+      const item = masteredQueue(context(events), 40).find((x) => x.factId === fact.id);
+      expect(item, 'a mastered fact should still be offered').toBeTruthy();
+      served.push(item!.formIndex);
+      events = [...events, ev(fact.id, item!.formIndex, 4)];
+    }
+
+    expect(served).not.toContain(0);
+    expect(new Set(served).size).toBe(served.length);
   });
 });

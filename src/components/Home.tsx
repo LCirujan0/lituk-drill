@@ -107,9 +107,9 @@ export function Home({
           alert={counts.mistakes > 0}
           onClick={() => onOpen('mistakes')}
         />
-        {/* Mastered is the only section that can take the headline DOWN. Nothing else on this
-            screen ever falls on its own, so without it "known every way" is a claim that
-            decays quietly and is never retested. */}
+        {/* The only count on this screen that can fall. A fact arrives here once answered
+            and stays until it is missed, so this is current form rather than coverage — and
+            it is retested with a different phrasing every time it comes round. */}
         <Tile icon="✓" name="Mastered" count={counts.mastered} onClick={() => onOpen('mastered')} />
         <Tile icon="⤨" name="Random" onClick={() => onOpen('random')} />
       </div>

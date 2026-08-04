@@ -10,6 +10,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "How many fundamental principles of British life does the handbook set out?",
     answer: "Five",
     forms: [
@@ -47,6 +48,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which principle means the government is chosen by the people through elections?",
     answer: "Democracy",
     forms: [
@@ -84,6 +86,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which principle means everyone, including those in power, must obey the law?",
     answer: "The rule of law",
     forms: [
@@ -121,6 +124,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which principle means people are free to make their own choices within the law?",
     answer: "Individual liberty",
     forms: [
@@ -158,6 +162,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which principle covers accepting people who hold different religious beliefs?",
     answer: "Tolerance of those with different faiths and beliefs",
     forms: [
@@ -195,6 +200,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Values",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which principle asks residents to get involved in their local area?",
     answer: "Participation in community life",
     forms: [
@@ -232,6 +238,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Freedoms",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which freedom allows you to practise any religion or none at all?",
     answer: "Freedom of belief and religion",
     forms: [
@@ -269,6 +276,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Freedoms",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Which freedom protects you from being treated worse because of race, sex or religion?",
     answer: "Freedom from unfair discrimination",
     forms: [
@@ -306,6 +314,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Freedoms",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "What right do you have if you are accused of a crime in the UK?",
     answer: "A right to a fair trial",
     forms: [
@@ -343,6 +352,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Citizenship",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "What two things must someone seeking citizenship demonstrate?",
     answer: "Ability in English and knowledge of life in the UK",
     forms: [
@@ -380,6 +390,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Citizenship",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "What is the name of the exam testing knowledge of British life?",
     answer: "The Life in the UK test",
     forms: [
@@ -455,6 +466,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Citizenship",
     chapter: 1,
     verify: true,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "On grounds of age, which applicants are normally excused from the KoLL requirements?",
     answer: "Those under 18 or aged 65 and over",
     forms: [
@@ -492,6 +504,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "What event must a successful applicant attend before becoming a British citizen?",
     answer: "A citizenship ceremony",
     forms: [
@@ -529,6 +542,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Who normally organises a citizenship ceremony?",
     answer: "The local authority",
     forms: [
@@ -640,6 +654,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "What alternative exists for someone who prefers not to swear by God?",
     answer: "An affirmation of allegiance",
     forms: [
