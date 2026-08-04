@@ -18,6 +18,7 @@
  */
 
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
+import type { SyncPhase } from '@/adapters/sync';
 import type { SectionCounts } from '@/domain/drill/sections';
 import type { DeckProgress } from '@/domain/drill/stats';
 import styles from './Home.module.css';
@@ -27,14 +28,40 @@ interface Props {
   readonly progress: DeckProgress;
   readonly streak: number;
   readonly persistent: boolean;
+  readonly syncPhase: SyncPhase;
+  readonly syncedAt: number | null;
+  readonly onSync: () => void;
   readonly onOpen: (section: 'due' | 'new' | 'mistakes' | 'random') => void;
   readonly onChapter: (chapter: Chapter) => void;
   readonly onProgress: () => void;
   readonly onTimeline: () => void;
 }
 
+/**
+ * What the sync line says.
+ *
+ * It reports where the last attempt got to and nothing more. There is deliberately no
+ * "everything is up to date" claim: the local log is authoritative and complete whatever the
+ * server says, so the only honest thing to report is whether the last round reached it.
+ */
+function syncLabel(phase: SyncPhase, syncedAt: number | null): string {
+  if (phase === 'syncing') return 'Syncing…';
+  if (phase === 'offline') return 'Offline — this device has everything you have done on it.';
+  if (phase === 'error') {
+    return syncedAt
+      ? `Could not reach the server. Last synced ${clockTime(syncedAt)}.`
+      : 'Could not reach the server. Nothing is lost — it will try again.';
+  }
+  if (syncedAt) return `Synced ${clockTime(syncedAt)}.`;
+  return 'Both devices share one history.';
+}
+
+const clockTime = (at: number): string =>
+  new Date(at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
 export function Home({
-  counts, progress, streak, persistent, onOpen, onChapter, onProgress, onTimeline,
+  counts, progress, streak, persistent, syncPhase, syncedAt,
+  onSync, onOpen, onChapter, onProgress, onTimeline,
 }: Props) {
   const knownPct = progress.facts ? Math.round((progress.provenAllForms / progress.facts) * 100) : 0;
   const partPct = progress.facts ? Math.round((progress.started / progress.facts) * 100) : 0;
@@ -138,6 +165,18 @@ export function Home({
           </span>
         </button>
       </section>
+
+      <p className={styles.sync}>
+        <span aria-live="polite">{syncLabel(syncPhase, syncedAt)}</span>
+        <button
+          type="button"
+          className={styles.syncButton}
+          onClick={onSync}
+          disabled={syncPhase === 'syncing'}
+        >
+          Sync now
+        </button>
+      </p>
 
       <div className={styles.links}>
         <button type="button" className={styles.link} onClick={onProgress}>Progress</button>

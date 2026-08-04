@@ -2,6 +2,51 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — sync switched on (D-030)
+
+The two devices now share one history. D-027 had shipped the schema, the endpoint, the merge
+and nine tests, and deliberately called none of it; this wires it up. Sync runs on subscribe,
+on the tab becoming visible, and after every grade, with a **Sync now** button and a status
+line on the home screen for when the question is "did it actually go across?".
+
+Nothing above `store.ts` changed. Every screen was already a projection of one snapshot, so a
+pull updates all of them by emitting once — which is the payoff for building the log first and
+the interface on top of it.
+
+**Wiring it up found two hazards that nine passing merge tests said nothing about**, because
+neither is in the merge:
+
+- **A grade answered mid-round was deleted.** Capture the log at the start of a round, write
+  the round's own merge back at the end, and anything recorded in between is gone — the log it
+  merged never contained it. That is last-write-wins data loss, in the architecture chosen
+  specifically to make it impossible, arriving from the inside where the merge algebra cannot
+  see it. No error, no symptom. The write-back now merges against the log as it stands when
+  the round *finishes*.
+- **The last grade of a session never reached the server.** Dropping a sync request that
+  arrives while a round is running is right — two rounds must never race — but dropping it and
+  doing nothing else strands it. Put the phone down, open the laptop, and the final card is
+  missing. A dropped call is now a trailing round.
+
+Both were run against the broken code before being trusted: reverting the first fails two
+tests, reverting the second fails exactly one, and each fails the one that names it.
+
+**R-11 gets its second way in, and two tests to say so.** Until today the review log only
+changed because the reader answered something. It can now change while they sit looking at a
+card. The card, its phrasing and its option order are held in component state and none is
+derived from the log, so the property holds — but by construction rather than by luck. Proved
+by letting something that moves *only* when a sync succeeds reach the card's presentation: the
+two new tests fail and the other twenty-six do not, which is what makes them worth having.
+
+Verified live against the deployment as well as in the suite — `db-check` reports
+`inserted: 0` on a repeated push and `rejected: 1` for a malformed probe.
+
+**Also, from reading rather than from any check: four numbered ids were spent without an entry
+ever being written** — D-026, D-029, L-019, L-020. D-029 in particular is a deliberate
+amendment to a BRIEF non-goal that exists only as a changelog paragraph. Logged as L-022 with
+the tripwire it should have had.
+
+198 tests across 9 files, up from 185.
+
 ## 2026-08-04 — "Got lucky"
 
 A correct multiple-choice answer can mean two very different things, and the app had no way

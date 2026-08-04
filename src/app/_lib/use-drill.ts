@@ -40,6 +40,7 @@ import {
   getSnapshot,
   saveSettings,
   subscribe,
+  sync,
 } from '@/adapters/store';
 
 export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random';
@@ -66,7 +67,7 @@ export function modeFor(section: SectionKey, seenBefore: boolean): ReviewMode {
 
 export function useDrill() {
   const snapshot = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  const { events, settings, today, persistent, loaded } = snapshot;
+  const { events, settings, today, persistent, loaded, sync: syncPhase, syncedAt } = snapshot;
 
   const states = useMemo(() => replay(events, FORM_COUNTS).states, [events]);
 
@@ -154,5 +155,11 @@ export function useDrill() {
     grade,
     updateSettings,
     eraseEverything: eraseAll,
+    // Sync is automatic — on mount, on returning to the tab, and after every grade. This is
+    // here so the home screen can say where it got to, and so there is a button for the
+    // moment when "did it actually go across?" is the question being asked.
+    syncPhase,
+    syncedAt,
+    syncNow: sync,
   };
 }
