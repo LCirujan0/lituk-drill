@@ -91,6 +91,17 @@ export interface Fact {
   /** The canonical statement of the fact, independent of any question form. */
   readonly question: string;
   readonly answer: string;
+  /**
+   * A short paragraph of context, shown after the answer.
+   *
+   * The point is to make drilling teach understanding rather than just the answer. A date
+   * you can place in a story is far more durable than a date you have memorised, and most
+   * exam questions are answerable from context even when the specific fact has gone. So
+   * this should say *why* the answer is what it is, or what it connects to — not restate it.
+   *
+   * Optional while these are being written. A fact without one simply shows nothing extra.
+   */
+  readonly explanation?: string;
   readonly forms: readonly QuestionForm[];
 }
 

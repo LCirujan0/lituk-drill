@@ -4,11 +4,10 @@ Numbered invariants. **Changing one requires a DECISIONS entry first**, not a co
 Every rule here either is a machine check or names the one that enforces it — a rule that is only
 written down will decay.
 
-### R-1 · v0 is never modified and never deployed over
-`index.html`, `facts.js` and `README.md` at the repository root are read-only for the life of this
-project. They stay deployed and in daily use, and the "the exam deadline is neutralised" arrangement
-depends on that.
-**Enforced by:** the `v0-untouched` CI job and `.githooks/pre-push`, both of which fail on any diff.
+### R-1 · ~~v0 is never modified and never deployed over~~ — RETIRED 4 Aug 2026 (D-025)
+There is one version of this app. The rule protected a fallback that turned out never to have
+existed (L-014), and the CI job enforcing it was deleted with it. Kept here rather than erased,
+because a numbered rule vanishing without trace is how a rule set stops being trustworthy.
 
 ### R-2 · The domain layer holds no framework or vendor types
 `src/domain/**` is pure functions over plain data — no React, no Next, no database client, no clock,
@@ -21,11 +20,11 @@ Never `Math.random()`, never a clock, never a log position. Two devices replayin
 derive the same schedule, or sync silently disagrees.
 **Enforced by:** `scheduler.test.ts` — replay in shuffled order, assert identical state.
 
-### R-4 · Fact ids and form order reproduce v0's array indices
-v0 keys six weeks of accumulated schedule by array position. Reordering or deleting a fact is a
-migration with an index remap, never an edit.
-**Enforced by:** `deck.test.ts` — `DECK[i].id === factId(i)` and form-by-form comparison against
-`facts.js`.
+### R-4 · Fact ids are stable, unique and contiguous
+Ids are the handle the review-event log points at. A gap, a duplicate or a renumber means events
+pointing at the wrong fact — or at nothing. Adding a fact appends; removing one is a migration that
+must rewrite the log, never a deletion.
+**Enforced by:** `deck.test.ts` — `DECK[i].id === factId(i)` and a uniqueness check.
 
 ### R-5 · A practice or mock session can never push a fact further out
 Failures always write; successes write only when scheduled. Practice may pull a due date forward or

@@ -2,6 +2,29 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — collapsed to one version
+
+The owner asked why there were two. There was no longer a reason, and the honest answer is
+that the machinery outlived its premise by several hours without anyone noticing.
+
+**D-025.** `index.html`, `facts.js` and the old README deleted; v1 moved to the repository
+root; `lituk-drill.vercel.app` now serves it. Deleted with them: the round-trip test,
+`divergences.ts`, `migrated.ts`, the migration script and its guard, the `v0 is untouched`
+CI job, the `v0CorrectIndex` field on all 1,228 original forms, and `maxAnswerPositionRate`.
+Roughly 900 lines of scaffolding, plus a field repeated 1,228 times.
+
+**Kept: `source` on every corrected or confirmed fact.** That was the load-bearing part —
+the record of *why* the deck says £5,000 where the printed book says £3,000 — and it stands
+without anything to compare against.
+
+**The failure worth naming** is not that the premise was wrong; it came from the handover
+and was reasonable to accept. It is that the structure built on it was not dismantled when
+D-022 falsified it, hours earlier. That decision corrected the premise and then explicitly
+*preserved* the apparatus. Sunk structure is harder to spot than a sunk cost, because it
+keeps passing its own tests. It took the owner asking.
+
+R-1 retired, R-4 rewritten around what ids are actually for, S6 retired.
+
 ## 2026-08-04 — the app becomes usable
 
 **Interface and local persistence.** v1 can now be drilled: home screen, the five sections,

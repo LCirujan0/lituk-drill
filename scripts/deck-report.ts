@@ -6,12 +6,12 @@
  * cheap. Read-only.
  */
 
-import { DECK, MIGRATED_DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { analyseDeck } from '@/domain/deck/analysis';
 import { DECK_BASELINE, DECK_TARGETS } from '@/domain/deck/baseline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 
-const a = analyseDeck(DECK, MIGRATED_DECK);
+const a = analyseDeck(DECK);
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 const row = (label: string, value: string, note = '') =>
   console.log(`  ${label.padEnd(34)}${value.padStart(12)}  ${note}`);
@@ -79,11 +79,6 @@ row(
   'correct answer is longest option',
   pct(a.longestOptionCorrect.rate),
   `${a.longestOptionCorrect.longest}/${a.longestOptionCorrect.total} · chance 25% · target ${pct(DECK_TARGETS.longestOptionCorrectRate ?? 0.25)}`,
-);
-row(
-  'stored answer position (max share)',
-  pct(a.answerPosition.rate),
-  `${a.answerPosition.counts.join(' / ')} · neutralised by shuffling on presentation`,
 );
 
 const failing = [

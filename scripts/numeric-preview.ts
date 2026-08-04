@@ -6,7 +6,7 @@
  * is worse than the tell it replaces, and only reading the output catches that.
  */
 
-import { MIGRATED_DECK } from '@/domain/deck';
+import { DECK } from '@/domain/deck';
 import { fixedOptions } from '@/domain/deck/types';
 import { achievableRanks, deriveNumericAnswers, generateOptions } from '@/domain/deck/numeric';
 import { mulberry32 } from '@/domain/scheduler/rng';
@@ -18,7 +18,7 @@ const samples: string[] = [];
 const rankCounts = [0, 0, 0, 0];
 const restricted: string[] = [];
 
-for (const fact of MIGRATED_DECK) {
+for (const fact of DECK) {
   fact.forms.forEach((form, j) => {
     const options = fixedOptions(form.answers);
     const values = options.map((o) => {

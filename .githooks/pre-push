@@ -6,25 +6,13 @@
 # workflow reports, the code has already gone. This hook runs the same checks before the
 # push leaves the machine, which is where the decision actually gets made.
 #
-# Install:  cd v1 && npm run hooks:install
+# Install:  npm run hooks:install
 # Bypass:   git push --no-verify   (a deliberate act, and one worth explaining to yourself)
 
 set -e
 
-root=$(git rev-parse --show-toplevel)
+cd "$(git rev-parse --show-toplevel)"
 
-# ---- v0 is untouchable -----------------------------------------------------------
-# Mirrors the CI job. v0 stays deployed and in daily use throughout the build; losing it
-# would remove the fallback the whole appetite arrangement rests on (D-001, D-020).
-if ! git diff --quiet HEAD -- "$root/index.html" "$root/facts.js" "$root/README.md" 2>/dev/null; then
-  echo "refusing to push: v0 files are modified."
-  echo "  index.html / facts.js / README.md are reference, not a base to build on."
-  echo "  See docs/DECISIONS.md D-001 and D-020."
-  exit 1
-fi
-
-# ---- the same gate CI runs -------------------------------------------------------
-cd "$root/v1"
 echo "pre-push: typecheck, lint, css tokens, tests"
 npm run verify
 

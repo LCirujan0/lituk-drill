@@ -16,7 +16,6 @@
  * dangerous one and the position measurement is mostly a historical check.
  */
 
-import type { MigratedFact } from './migrated';
 import type { Deck, Fact } from './types';
 import { fixedOptions, recallForms } from './types';
 import { achievableRanks, deriveNumericAnswers, generateOptions } from './numeric';
@@ -261,24 +260,6 @@ export function formsWithRestrictedRanks(deck: Deck): string[] {
   return out;
 }
 
-/**
- * The largest share held by any one stored answer position. Neutralised at runtime by
- * shuffling on presentation; tracked because it documents what v0 shipped and would
- * catch a regression if presentation order ever stopped being randomised.
- */
-export function maxAnswerPositionRate(deck: readonly MigratedFact[]): { rate: number; counts: number[] } {
-  const counts = [0, 0, 0, 0];
-  let total = 0;
-  for (const fact of deck) {
-    for (const form of fact.forms) {
-      if (typeof form.v0CorrectIndex !== 'number') continue;
-      counts[form.v0CorrectIndex]++;
-      total++;
-    }
-  }
-  return { rate: total ? Math.max(...counts) / total : 0, counts };
-}
-
 /** Structural faults that are never acceptable, at any baseline. */
 export function structuralFaults(deck: Deck): string[] {
   const faults: string[] = [];
@@ -309,16 +290,13 @@ export function structuralFaults(deck: Deck): string[] {
 /**
  * Everything, for a report or a failing-test message.
  *
- * `migrated` is passed separately because answer-position is the one measure that needs
- * `v0CorrectIndex`, which only facts that came from v0 carry. Everything else measures the
- * whole deck, additions included — a report that quietly excluded the newest facts would be
- * describing a deck nobody is drilling.
+ * Measures the whole deck. A report that quietly excluded some of it would be describing a
+ * deck nobody is drilling.
  */
-export function analyseDeck(deck: Deck, migrated: readonly MigratedFact[] = []) {
+export function analyseDeck(deck: Deck) {
   return {
     facts: deck.length,
     forms: deck.reduce((n, f) => n + f.forms.length, 0),
-    migratedFacts: migrated.length,
     structuralFaults: structuralFaults(deck),
     duplicateCanonicalQuestions: duplicateCanonicalQuestions(deck),
     ambiguousSharedStems: ambiguousSharedStems(deck),
@@ -330,7 +308,6 @@ export function analyseDeck(deck: Deck, migrated: readonly MigratedFact[] = []) 
     effectiveNumericMiddleRank: effectiveNumericMiddleRankRate(deck),
     restrictedRankForms: formsWithRestrictedRanks(deck),
     longestOptionCorrect: longestOptionCorrectRate(deck),
-    answerPosition: maxAnswerPositionRate(migrated),
   };
 }
 
