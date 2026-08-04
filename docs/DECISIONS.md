@@ -785,7 +785,10 @@ anything to compare against.
 
 ## D-027 — Sync is built but not switched on
 
-**Date:** 4 August 2026 · **Status:** accepted
+> **Superseded by D-030, 4 August 2026**, which switched it on. The pairing half of this entry
+> — one shared store, no owner column, no authentication — still stands and was not reopened.
+
+**Date:** 4 August 2026 · **Status:** superseded by D-030
 
 **Context.** The owner opened the app on his phone and found none of his desktop progress.
 Sync had never been built — the database was provisioned in the morning and nothing was ever
@@ -839,3 +842,67 @@ reported against the thing being learned. Phrasings proven drops to a secondary 
 - *Negative.* It moves more slowly, especially early, and a number that barely moves in week
   one is discouraging exactly when encouragement matters. Mitigated by showing facts met at
   least once alongside it.
+
+---
+
+## D-030 — Sync is switched on, and a round always follows the last grade
+
+**Date:** 4 August 2026 · **Status:** accepted
+**Supersedes** D-027's "the pieces land unwired"
+
+**Context.** D-027 shipped the schema, the endpoint, the client merge and nine tests, and
+deliberately called none of it, so the two devices stayed separate. It named its own expiry
+condition: *"if sync is not switched on within a week or two it should be deleted rather than
+left to rot as scaffolding nobody is using."* The owner opened the app on his phone and found
+none of his desktop progress — the cost D-027 accepted, being paid.
+
+Wiring it up exposed two hazards a merge-only design never has to think about. Both live in
+the store rather than in the merge, which is why nine passing tests on the merge said nothing
+about either.
+
+The first is a **write-back race**. The obvious shape captures the log at the start of a round
+and writes the round's own merge back at the end. Answer a card while the round is in the air
+and that write deletes the answer — the log it merged never contained it. That is
+last-write-wins data loss, in the one architecture (D-002) chosen specifically to make it
+impossible, reintroduced from the inside where the merge algebra cannot see it. No error, no
+symptom.
+
+The second is **the last grade of a session**. Dropping a sync request that arrives while a
+round is already running is right — two rounds must never race — but dropping it and doing
+nothing else strands whatever asked for it. The final card of a session is exactly that case:
+put the phone down, open the laptop, and it is missing.
+
+**Decision.** Sync runs automatically at three points — on subscribe, on the tab becoming
+visible, and after every appended event — plus a **Sync now** button on the home screen for
+the moment the question being asked is "did it actually go across?". The status line reports
+where the last attempt got to and claims nothing more.
+
+Two guarantees are written into the store rather than left to the merge:
+
+1. **The write-back merges against the log as it stands when the round finishes**, never as it
+   was when the round started.
+2. **A dropped concurrent call becomes a trailing round**, so a round always follows the last
+   event that asked for one.
+
+**Pairing stays settled as D-027 left it:** one shared store, no owner column, no
+authentication, one history every visitor sees. The endpoint is public by decision (D-011).
+
+**Consequences.**
+- *Positive.* The two devices share one schedule, which is BRIEF scope line S5 and the thing
+  the database was bought for. Nothing above `store.ts` changed: every screen was already a
+  projection of one snapshot, so a pull updates all of them by emitting once. D-027's dead
+  code stops being dead, which removes the reason it was on borrowed time. Both hazards above
+  are regression tests that were run against the broken code before being trusted.
+- *Negative.* Every grade now starts a round that pulls the **entire** remote log, not a
+  delta. At this size that is a few hundred kilobytes at worst and the answering path never
+  waits on it — but it is real mobile data spent per card, and "small enough not to matter" is
+  precisely the assumption D-002 already flagged as the one that goes unexamined until it
+  isn't. Past roughly 50k events the endpoint's own note applies and this needs cursors.
+- *Negative.* A pull genuinely rewrites subsequent schedule history, so a due date can move
+  after a sync with no action by the reader. That is correct — the schedule should reflect all
+  known evidence — and it is still surprising the first time it happens.
+- *Negative.* R-11's class of bug gains a second way in. Until today the log changed only
+  because the reader answered something; it can now change while they sit looking at a card.
+  The card, its phrasing and its option order are held in component state and none is derived
+  from the log, so the property holds — but it holds by construction rather than by luck, and
+  it needed its own tests to say so.

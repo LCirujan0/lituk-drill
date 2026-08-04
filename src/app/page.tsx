@@ -127,6 +127,9 @@ export default function App() {
           progress={drill.progress}
           streak={drill.streak()}
           persistent={drill.persistent}
+          syncPhase={drill.syncPhase}
+          syncedAt={drill.syncedAt}
+          onSync={() => void drill.syncNow()}
           onOpen={(section) => openDrill(section)}
           onChapter={(chapter) => openDrill('chapter', chapter)}
           onProgress={() => setView({ kind: 'progress' })}

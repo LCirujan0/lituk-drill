@@ -13,7 +13,7 @@
 
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '@/app/page';
 import { DECK } from '@/domain/deck';
@@ -422,6 +422,84 @@ describe('navigation', () => {
 
     await user.click(screen.getByRole('button', { name: /Your mistakes/ }));
     expect(await screen.findByText(/Nothing outstanding/)).toBeTruthy();
+  });
+});
+
+describe('a sync landing mid-card does not move it — R-11', () => {
+  /**
+   * The rule R-11 exists for: nothing derived from the review log may drive what is on
+   * screen mid-card. Sync makes the log change on its own schedule rather than only when
+   * you answer, so the class of bug it names now has a second way in — the other device.
+   */
+  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed', 'Sync now']);
+  const optionTexts = () =>
+    screen
+      .getAllByRole('button')
+      .map((b) => b.textContent ?? '')
+      .filter((t) => t && !chrome.has(t) && !/^(Correct|Not quite|Recorded)/.test(t));
+
+  /** A server holding reviews this device has never seen, so a pull genuinely changes the log. */
+  function serverWith(count: number) {
+    const events: ReviewEvent[] = Array.from({ length: count }, (_, i) => ({
+      id: `remote-${i}`,
+      factId: DECK[i + 40].id,
+      formIndex: 0,
+      grade: 4 as const,
+      mode: 'scheduled' as const,
+      at: 1_700_000_000_000 + i * 1000,
+    }));
+    vi.stubGlobal('fetch', async (_url: unknown, init?: RequestInit) =>
+      ({
+        ok: true,
+        status: 200,
+        json: async () => (init?.method === 'POST' ? { inserted: 0 } : { events }),
+      }) as unknown as Response,
+    );
+    return events;
+  }
+
+  afterEach(() => {
+    vi.stubGlobal('fetch', () => Promise.reject(new Error('network disabled in tests')));
+  });
+
+  it('keeps the question and the option order when a pull arrives after answering', async () => {
+    const remote = serverWith(6);
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    const question = screen.getByRole('heading', { level: 1 }).textContent;
+    const before = optionTexts();
+    expect(before).toHaveLength(4);
+
+    // Answering fires a sync. The pull lands while this card is still on screen.
+    await user.click(screen.getByRole('button', { name: before[0] }));
+
+    // Prove the sync actually landed — otherwise this test asserts nothing at all.
+    await waitFor(() => expect(stored().length).toBe(remote.length + 1));
+
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(question);
+    expect(optionTexts()).toEqual(before);
+  });
+
+  it('keeps the verdict it showed', async () => {
+    serverWith(6);
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    const heading = await screen.findByRole('heading', { level: 1 });
+
+    const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
+    const correct = fact.forms.find((x) => x.question === heading.textContent)!.answers.correct;
+
+    await user.click(screen.getByRole('button', { name: correct }));
+    await waitFor(() => expect(stored().length).toBeGreaterThan(1));
+
+    expect(screen.getByText(/^Correct/)).toBeTruthy();
+    expect(screen.queryByText(/^Not quite/)).toBeNull();
   });
 });
 
