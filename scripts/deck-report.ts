@@ -10,6 +10,7 @@ import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { analyseDeck } from '@/domain/deck/analysis';
 import { DECK_BASELINE, DECK_TARGETS } from '@/domain/deck/baseline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
+import { EXPLANATIONS } from '@/data/explanations';
 
 const a = analyseDeck(DECK);
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
@@ -23,6 +24,17 @@ const byChapter = new Map<number, number>();
 for (const fact of DECK) byChapter.set(fact.chapter, (byChapter.get(fact.chapter) ?? 0) + 1);
 for (const [chapter, count] of [...byChapter].sort((x, y) => y[1] - x[1])) {
   row(CHAPTER_NAMES[chapter as Chapter], String(count));
+}
+
+console.log('\nExplanations — context shown after each answer');
+for (const chapter of [1, 2, 3, 4, 5] as Chapter[]) {
+  const facts = DECK.filter((f) => f.chapter === chapter);
+  const done = facts.filter((f) => EXPLANATIONS[f.id]).length;
+  row(CHAPTER_NAMES[chapter], `${done}/${facts.length}`, done === facts.length ? 'complete' : '');
+}
+{
+  const done = DECK.filter((f) => EXPLANATIONS[f.id]).length;
+  row('TOTAL', `${done}/${DECK.length}`, `${((done / DECK.length) * 100).toFixed(0)}%`);
 }
 
 console.log('\nStructure');

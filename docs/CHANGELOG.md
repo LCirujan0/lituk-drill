@@ -2,6 +2,20 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — explanations, second batch
+
+**174 of 443 facts now carry context** (was 53). Chapters 1 and 2 complete, chapter 5 at
+60/101, chapter 3's narrative spine — prehistory through the Middle Ages — at 61/208.
+
+The history explanations lean on sequence and cause rather than dates, because that is what
+actually makes the chapter answerable: knowing roughly where in the story something sits
+answers most questions even when the specific date has gone. Where two facts explain each
+other, both say so — Wales having no emblem on the Union Flag and the Statute of Rhuddlan in
+1284 are the same fact seen twice, and each explanation points at the other.
+
+Coverage is now reported per chapter by `npm run deck:report`, so the remaining work is
+visible rather than something to remember.
+
 ## 2026-08-04 — component tests
 
 **17 component tests, closing the gap that let the card-advance bug through.** The domain had
