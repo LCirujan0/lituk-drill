@@ -8,13 +8,15 @@ restates one. A hand-copied live number drifts within a session.
 | | |
 |---|---|
 | Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
-| Tests | 67 passing across 3 files |
+| Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
+| Tests | 68 passing across 3 files |
 | Deck | 410 facts · 1,228 forms · 5 chapters · 82 tags |
 | Migration frontier | none — no database provisioned yet |
 | Next decision id | D-021 |
 | Next ledger id | L-011 |
 | Open ledger rows | 8 (L-002…L-009); 2 verified-fixed |
 | Open Critical | 0 |
+| CI | Green — 3 required checks, all passing on first push |
 | Deployed | v0 only. v1 not yet deployed |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
 
@@ -41,21 +43,26 @@ model is harsher in the tail, which is stated rather than tuned away.
 
 No UI beyond a skeleton page. No database, no sync endpoint, no readiness model, no
 practice mode, no mocks, no generated distractors, no timeline screen. No Vercel project
-for v1, no GitHub remote, no branch protection.
+for v1. **No docs-consistency test** — the kit asks for one and it is deferred, not
+skipped; it needs a schema and an `.env.example` to check against first.
 
 ## Next, in order
 
-1. Create the GitHub repo (public, per D-005) and push. Turn on branch protection
-   requiring the CI check.
-2. Create a **separate** Vercel project rooted at `v1/` (D-020). v0's project is never a
-   deploy target.
-3. Mini-specs through the scoping gate for the three thesis features, S3/S4/S7. **S7
+1. Create a **separate** Vercel project rooted at `v1/` (D-020). v0's project is never a
+   deploy target. Preview deployments need deployment protection — a preview URL is public.
+2. Mini-specs through the scoping gate for the three thesis features, S3/S4/S7. **S7
    first** — generated numeric distractors close L-002, and the readiness model in S4 is
    not trustworthy until they do.
+3. L-004 (the inherited amber contrast pairing) before any component uses it.
 
 ## Gotchas
 
+- **`main` is protected and rejects direct pushes.** All three CI checks are required, so
+  work lands via a branch and a PR. No review is required, so an unattended session can
+  merge its own PR once CI is green — the gate is the machine, not a person.
 - `vitest.config.mts` must keep the `.mts` extension; as `.ts` it loads as CommonJS and warns.
 - The generated chapter files are large. Never reformat them by hand — re-run
   `npm run deck:migrate` and let the round-trip test prove the result.
 - `npm run deck:report` prints every deck measurement without running the suite.
+- The repository root `README.md` is v0's, not the project's — v0 is untouchable (R-1), and
+  that is the first thing a visitor to a public repo sees. Known consequence of D-020.
