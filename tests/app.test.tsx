@@ -29,13 +29,6 @@ beforeEach(() => {
 
 const stored = (): ReviewEvent[] => JSON.parse(window.localStorage.getItem(EVENTS_KEY) ?? '[]');
 
-async function openChapterOne(user: ReturnType<typeof userEvent.setup>) {
-  render(<App />);
-  await screen.findByText(/phrasings proven/);
-  await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
-  return within(await screen.findByRole('heading', { level: 1 }).then((h) => h.parentElement!));
-}
-
 /** Click whichever option is currently rendered at `index`. */
 async function answerOption(user: ReturnType<typeof userEvent.setup>, predicate: (text: string) => boolean) {
   const buttons = screen.getAllByRole('button');

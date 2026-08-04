@@ -24,3 +24,6 @@ npm-debug.log*
 
 # Vercel link state from before the repo was flattened.
 .vercel-v1/
+
+# Handbook source text, used to write explanations. Crown copyright — never committed.
+.work/

@@ -2,6 +2,33 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — every card now explains itself
+
+**443/443.** The remaining 269 explanations written by 12 parallel agents against the
+handbook text, then a quality pass over all of them, then merged deterministically.
+
+**The review pass earned its place.** It found six explanations making false claims about
+the deck's own options — telling the reader which half of an answer to check, based on
+distractors that were not the distractors actually there. The worst was f277 (Bannister):
+
+> "The name is rarely the thing distractors change; they move the year instead, so fix 1954."
+
+Three of that fact's distractors keep 1954 and change the name — *Redgrave, in 1954*,
+*Chataway, in 1954*, *Pirie, in 1954*. Following that advice picks a wrong option. An
+explanation that confidently misdirects is worse than no explanation, and all six were
+plausible enough to survive a casual read. Verified three of the six against the deck data
+independently before applying the corrections rather than trusting the report.
+
+**A test was written and then deleted.** A check for "opens by repeating the answer verbatim"
+flagged 26 entries, and every one inspected was good — *"A constituency is a place, not a
+group of supporters"*, *"First past the post means whoever gets the most votes in a
+constituency wins it, even without a majority"*. For a definitional fact, naming the term and
+then defining it is the correct construction. Setting the threshold to 26 would have encoded
+today's count and asserted nothing, so the check went and the reasoning stayed in its place.
+
+**Now a build gate:** every fact must have an explanation. Adding one without fails the
+build, rather than quietly leaving a card that answers into silence.
+
 ## 2026-08-04 — the options moved under your finger
 
 **L-021, High.** Reported from real use: clicking an answer re-shuffled the four options as
