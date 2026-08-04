@@ -2,6 +2,45 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — stepping back through a session
+
+**Reported: "Back returns to Home, so once I press Next the card is gone."** The only control
+that moved you on destroyed the card, and Back left the drill entirely. Which made the
+explanation close to unreadable in practice — one glance at it, while still thinking about the
+question, and then it was gone for good.
+
+The drill screen now keeps the cards it has served and pages through them: **‹ Previous** and
+**Next ›**, with the position through the session between them. A card being re-read shows the
+question, the option that was pressed, the correct answer and the explanation, and nothing
+else — no grading, no second event, and the mode toggle is replaced by a label saying which
+mode it was answered in.
+
+Three things this had to get right, each with a test that was run against the broken version
+first:
+
+- **The option order is reproduced, not recorded.** Each served card keeps the nonce that
+  seeded its shuffle, so the four options come back in the order they were in. Storing the
+  order itself would have been a second copy of the same thing, free to drift — the mistake
+  D-021 already named once. Reusing the live nonce instead fails exactly one test.
+- **Coming back to the live card must not re-deal it.** Forward off the last past card returns
+  to the card that is still sitting there, unanswered or answered as it was left. Nothing in
+  the pager consults the review log and nothing calls `nextItem`, so R-11 holds: stepping back
+  cannot change what is on screen now or what comes next. Making forward deal a card instead
+  fails two tests.
+- **Re-reading records nothing.** A past card's controls arrive already disabled. There is a
+  `readOnly` guard in `commit` as well, and it is worth being precise about it: removing it
+  fails no test, because the disabled controls are what actually does the work. It stays as a
+  second lock, described as one rather than as the mechanism.
+
+Running a section dry no longer locks the session away either — the empty state offers a way
+back over what was answered getting there.
+
+Verified in a real browser at 393×852 as well as in the suite: stepping back returned the same
+question with the same four options in the same order, the explanation on screen, every option
+inert; forward returned to the live card, unchanged and still answerable.
+
+204 tests across 9 files, up from 198.
+
 ## 2026-08-04 — sync switched on (D-030)
 
 The two devices now share one history. D-027 had shipped the schema, the endpoint, the merge

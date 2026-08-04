@@ -31,6 +31,22 @@ import styles from './Drill.module.css';
 
 export type DrillMode = 'quiz' | 'recall';
 
+/**
+ * What happened on a card, in enough detail to put it back on screen exactly as it was.
+ *
+ * The option ORDER is not in here and does not need to be: it is a pure function of the
+ * card's nonce (see `presented` below), and the nonce is stored alongside this. Recording
+ * the order as well would be a second copy of the same thing, free to drift — the mistake
+ * D-021 already named once.
+ */
+export interface CardAnswer {
+  readonly mode: DrillMode;
+  /** Index into the options as presented. Quiz only; null in recall. */
+  readonly chosen: number | null;
+  readonly grade: Grade;
+  readonly downgraded: boolean;
+}
+
 interface Props {
 
   readonly title: string;
@@ -38,6 +54,7 @@ interface Props {
   readonly mode: DrillMode;
   readonly onModeChange: (mode: DrillMode) => void;
   readonly onGrade: (factId: string, formIndex: number, grade: Grade) => void;
+  readonly onAnswer: (answer: CardAnswer) => void;
   readonly onNext: () => void;
   readonly onExit: () => void;
   readonly stateFor: (factId: string) => FactState | undefined;
@@ -45,6 +62,20 @@ interface Props {
   /** Changes only when a new card is dealt. Seeds the shuffle. See page.tsx. */
   readonly nonce: number;
   readonly emptyMessage: string;
+  /**
+   * How this card was answered, if it was. Read once, on mount — the caller changes the
+   * `key` whenever the displayed card changes, so this is an initial value rather than
+   * something to keep in step.
+   */
+  readonly restore: CardAnswer | null;
+  /** A card already left behind. Nothing here may record a second review of it. */
+  readonly readOnly: boolean;
+  readonly onPrevious: () => void;
+  readonly onForward: () => void;
+  readonly canPrevious: boolean;
+  readonly canForward: boolean;
+  /** 1-based position in this session's cards, or null when there is only one. */
+  readonly position: { readonly index: number; readonly total: number } | null;
 }
 
 /** Pick the phrasing to show. `formIndex: -1` means the section left the choice to us. */
@@ -66,18 +97,24 @@ function resolveForm(item: DrillItem, mode: DrillMode, seed: number): number {
 }
 
 export function Drill({
-  title, item, mode, onModeChange, onGrade, onNext, onExit, stateFor, remaining, nonce, emptyMessage,
+  title, item, mode, onModeChange, onGrade, onAnswer, onNext, onExit, stateFor, remaining,
+  nonce, emptyMessage, restore, readOnly, onPrevious, onForward, canPrevious, canForward, position,
 }: Props) {
   // Reset on a new card is handled by the caller giving this component a `key` tied to the
   // card's identity, so React discards this state rather than an effect clearing it. A new
   // card must never inherit the previous one's revealed state — that would show an answer
   // before the question had been read — and a remount makes that structurally impossible
   // rather than dependent on an effect's dependency list staying correct.
-  const [revealed, setRevealed] = useState(false);
-  const [chosen, setChosen] = useState<number | null>(null);
+  //
+  // A card being stepped back to arrives with its answer instead of a blank slate. Only if
+  // the mode still matches: switching between quiz and recall re-mounts this component with
+  // a different question shape, and a quiz answer means nothing on a recall card.
+  const prior = restore && restore.mode === mode ? restore : null;
+  const [revealed, setRevealed] = useState(prior?.mode === 'recall');
+  const [chosen, setChosen] = useState<number | null>(prior?.mode === 'quiz' ? prior.chosen : null);
   /** Set once "Got lucky" has been pressed, so it cannot be pressed twice. */
-  const [downgraded, setDowngraded] = useState(false);
-  const [graded, setGraded] = useState<Grade | null>(null);
+  const [downgraded, setDowngraded] = useState(prior?.downgraded ?? false);
+  const [graded, setGraded] = useState<Grade | null>(prior?.mode === 'recall' ? prior.grade : null);
 
   const fact = item ? factById(item.factId) : undefined;
   const formIndex = useMemo(
@@ -94,12 +131,27 @@ export function Drill({
     return presentForm(fact.forms[formIndex], mulberry32(hash(`${fact.id}:${formIndex}:${nonce}`)));
   }, [fact, formIndex, nonce]);
 
+  /**
+   * Record a review, and tell the caller what the card now looks like.
+   *
+   * Both halves matter and they are different things. `onGrade` appends to the review log
+   * and is what the scheduler sees. `onAnswer` is only so this card can be put back on
+   * screen unchanged when it is stepped back to — it never reaches the log.
+   *
+   * The `readOnly` check here is defence in depth, not the mechanism — and that was
+   * measured rather than assumed. What actually makes a re-read card inert is that its
+   * controls arrive already disabled: `chosen` and `graded` are restored non-null, and the
+   * Next and "Got lucky" buttons are not rendered at all. Removing this guard fails no
+   * test, which is exactly what a second lock should do. It stays because it states the
+   * invariant where someone changing the disabled logic will read it.
+   */
   const commit = useCallback(
-    (grade: Grade) => {
-      if (!item || !fact) return;
+    (grade: Grade, chosenIndex: number | null, wasDowngrade: boolean) => {
+      if (!item || !fact || readOnly) return;
       onGrade(fact.id, formIndex, grade);
+      onAnswer({ mode, chosen: chosenIndex, grade, downgraded: wasDowngrade });
     },
-    [item, fact, formIndex, onGrade],
+    [item, fact, formIndex, mode, readOnly, onGrade, onAnswer],
   );
 
   if (!item || !fact || !presented) {
@@ -109,6 +161,14 @@ export function Drill({
         <h2 className={styles.doneTitle}>Nothing here right now</h2>
         <p className={styles.doneNote}>{emptyMessage}</p>
         <button type="button" className={styles.exit} onClick={onExit}>Back</button>
+        {/* Running a section dry must not lock away what was answered getting there. */}
+        {canPrevious && (
+          <nav className={styles.pager} aria-label="Cards this session">
+            <button type="button" className={styles.page} onClick={onPrevious}>
+              ‹ Look back over this session
+            </button>
+          </nav>
+        )}
       </div>
     );
   }
@@ -124,26 +184,34 @@ export function Drill({
         <button type="button" className={styles.back} onClick={onExit} aria-label="Back">‹</button>
         <div className={styles.barTitle}>
           {title}
-          <span className={styles.remaining}>{remaining} to go</span>
+          <span className={styles.remaining}>
+            {readOnly ? 'Already answered' : `${remaining} to go`}
+          </span>
         </div>
-        <div className={styles.modes} role="group" aria-label="Drill mode">
-          <button
-            type="button"
-            className={mode === 'quiz' ? styles.modeOn : styles.mode}
-            onClick={() => onModeChange('quiz')}
-            aria-pressed={mode === 'quiz'}
-          >
-            Quiz
-          </button>
-          <button
-            type="button"
-            className={mode === 'recall' ? styles.modeOn : styles.mode}
-            onClick={() => onModeChange('recall')}
-            aria-pressed={mode === 'recall'}
-          >
-            Recall
-          </button>
-        </div>
+        {readOnly ? (
+          // Switching mode would re-resolve the phrasing and re-shuffle the options, which
+          // for a card being re-read means showing something that was never on screen.
+          <span className={styles.modeLocked}>{mode === 'quiz' ? 'Quiz' : 'Recall'}</span>
+        ) : (
+          <div className={styles.modes} role="group" aria-label="Drill mode">
+            <button
+              type="button"
+              className={mode === 'quiz' ? styles.modeOn : styles.mode}
+              onClick={() => onModeChange('quiz')}
+              aria-pressed={mode === 'quiz'}
+            >
+              Quiz
+            </button>
+            <button
+              type="button"
+              className={mode === 'recall' ? styles.modeOn : styles.mode}
+              onClick={() => onModeChange('recall')}
+              aria-pressed={mode === 'recall'}
+            >
+              Recall
+            </button>
+          </div>
+        )}
       </header>
 
       <div className={styles.card}>
@@ -195,7 +263,7 @@ export function Drill({
                   setChosen(i);
                   // A quiz answer is binary: right is Good, wrong is Again. There is no
                   // honest way to ask "how hard was that?" of a multiple-choice answer.
-                  commit(i === presented.correctIndex ? 4 : 0);
+                  commit(i === presented.correctIndex ? 4 : 0, i, false);
                 }}
               >
                 {option}
@@ -219,20 +287,22 @@ export function Drill({
                 you never knew. This is the only way the app can find out, and it has to come
                 from the reader.
               */}
-              {chosen === presented.correctIndex && !downgraded && (
+              {!readOnly && chosen === presented.correctIndex && !downgraded && (
                 <button
                   type="button"
                   className={styles.lucky}
                   onClick={() => {
                     setDowngraded(true);
-                    commit(0);
+                    commit(0, chosen, true);
                   }}
                 >
                   Got lucky — I guessed
                 </button>
               )}
 
-              <button type="button" className={styles.next} onClick={onNext}>Next</button>
+              {!readOnly && (
+                <button type="button" className={styles.next} onClick={onNext}>Next</button>
+              )}
             </>
           )}
         </div>
@@ -251,25 +321,62 @@ export function Drill({
                 disabled={graded !== null}
                 onClick={() => {
                   setGraded(g);
-                  commit(g as Grade);
+                  commit(g as Grade, null, false);
                 }}
               >
                 {label}
               </button>
             ))}
           </div>
-          {graded !== null && (
+          {!readOnly && graded !== null && (
             <button type="button" className={styles.next} onClick={onNext}>Next</button>
           )}
-          <p className={styles.intervals}>
-            Again → later this session. Hard → {describe(previewInterval(state, formIndex, 3, CONFIG))}.
-            {' '}Good → {describe(previewInterval(state, formIndex, 4, CONFIG))}.
-            {' '}Easy → {describe(previewInterval(state, formIndex, 5, CONFIG))}.
-          </p>
-          <p className={styles.honesty}>
-            Good means you knew it. Marking Good when you nearly got there is the one way to break this.
-          </p>
+          {/* The interval preview is about a decision that has already been taken, and the
+              schedule has moved on since — showing it on a card being re-read would be a
+              prediction of something that already happened, and a wrong one. */}
+          {!readOnly && (
+            <>
+              <p className={styles.intervals}>
+                Again → later this session. Hard → {describe(previewInterval(state, formIndex, 3, CONFIG))}.
+                {' '}Good → {describe(previewInterval(state, formIndex, 4, CONFIG))}.
+                {' '}Easy → {describe(previewInterval(state, formIndex, 5, CONFIG))}.
+              </p>
+              <p className={styles.honesty}>
+                Good means you knew it. Marking Good when you nearly got there is the one way to break this.
+              </p>
+            </>
+          )}
         </>
+      )}
+
+      {/*
+        Stepping back through the session. Read-only by construction: `commit` refuses while
+        `readOnly` is set, so there is no path from re-reading a card to a second review of
+        it. Forward is deliberately absent on the live card — going forward from there is
+        dealing a new card, which is what the Next button above already is.
+      */}
+      {position && (
+        <nav className={styles.pager} aria-label="Cards this session">
+          <button
+            type="button"
+            className={styles.page}
+            onClick={onPrevious}
+            disabled={!canPrevious}
+          >
+            ‹ Previous
+          </button>
+          <span className={styles.pagePosition}>
+            {position.index} of {position.total}
+          </span>
+          <button
+            type="button"
+            className={styles.page}
+            onClick={onForward}
+            disabled={!canForward}
+          >
+            Next ›
+          </button>
+        </nav>
       )}
     </div>
   );
