@@ -1,0 +1,59 @@
+/**
+ * Global reset and page frame. Semantic tokens only — stylelint fails the build on a raw
+ * colour or size here, which is what stops tokens.css becoming advisory.
+ */
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  color-scheme: light dark;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--c-page);
+  color: var(--c-text);
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+
+  /* Home Screen launch: keep content clear of the notch and the home indicator (§F). */
+  padding-block-end: env(safe-area-inset-bottom);
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+
+/* Mobile-first, hard. The desktop is a wide phone (§F). */
+.wrap {
+  max-width: 680px;
+  margin-inline: auto;
+  padding: var(--space-4);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+}
+
+/* Visible focus is not optional, and not the browser's job to remember (§G). */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--motion-instant) !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--motion-instant) !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#fcfcfb">
+<title>Life in the UK — drill</title>
+<style>
+:root{color-scheme:light;--bg:#f9f9f7;--sf:#fcfcfb;--tx:#0b0b0b;--t2:#52514e;--mu:#898781;
+--gr:#e1e0d9;--bd:rgba(11,11,11,.10);--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;
+--s7:#4a3aa7;--good:#0ca30c;--warn:#fab219;--crit:#d03b3b;--nu:#f0efec}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#0d0d0d;--sf:#1a1a19;--tx:#fff;
+--t2:#c3c2b7;--mu:#898781;--gr:#2c2c2a;--bd:rgba(255,255,255,.10);--s1:#3987e5;--s2:#d95926;
+--s3:#199e70;--s4:#c98500;--s7:#9085e9;--nu:#383835}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;
+-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+.wrap{max-width:680px;margin:0 auto;padding:16px 16px 96px}
+h1{font-size:19px;margin:0;letter-spacing:-.01em}
+header{display:flex;justify-content:space-between;align-items:center;padding:8px 0 16px;gap:12px}
+.sub{font-size:12.5px;color:var(--mu)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:14px}
+.btn{font:inherit;font-size:15px;font-weight:600;padding:14px 16px;border-radius:11px;border:1px solid var(--bd);
+background:var(--sf);color:var(--tx);cursor:pointer;width:100%;margin-top:8px;text-align:left;
+display:flex;align-items:center;gap:10px;transition:transform .08s}
+.btn:active{transform:scale(.985)}
+.btn.pri{background:var(--s1);border-color:var(--s1);color:#fff;justify-content:center}
+.row{display:flex;gap:8px}.row .btn{margin-top:0}
+.g0{background:color-mix(in srgb,var(--crit) 12%,transparent);border-color:color-mix(in srgb,var(--crit) 40%,transparent);color:var(--crit);justify-content:center}
+.g3{background:color-mix(in srgb,var(--s4) 14%,transparent);border-color:color-mix(in srgb,var(--s4) 45%,transparent);color:#8a5a00;justify-content:center}
+.g4{background:color-mix(in srgb,var(--s1) 12%,transparent);border-color:color-mix(in srgb,var(--s1) 40%,transparent);color:var(--s1);justify-content:center}
+.g5{background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 40%,transparent);color:var(--good);justify-content:center}
+@media(prefers-color-scheme:dark){.g3{color:var(--s4)}}
+.q{font-size:21px;font-weight:600;line-height:1.35;margin:6px 0 4px;letter-spacing:-.01em}
+.a{font-size:26px;font-weight:700;color:var(--s1);margin:14px 0 4px;letter-spacing:-.02em}
+.tag{display:inline-block;font-size:11px;font-weight:650;padding:3px 9px;border-radius:20px;
+background:var(--nu);color:var(--t2);margin-right:6px}
+.tag.v{background:color-mix(in srgb,var(--warn) 20%,transparent);color:#8a5a00}
+@media(prefers-color-scheme:dark){.tag.v{color:var(--warn)}}
+.opt{font:inherit;font-size:15px;padding:15px;border-radius:11px;border:1px solid var(--bd);background:var(--sf);
+color:var(--tx);cursor:pointer;width:100%;margin-top:9px;text-align:left;line-height:1.4;transition:all .12s}
+.opt:active{transform:scale(.99)}
+.opt.ok{background:color-mix(in srgb,var(--good) 14%,transparent);border-color:var(--good);font-weight:600}
+.opt.no{background:color-mix(in srgb,var(--crit) 12%,transparent);border-color:var(--crit)}
+.opt.dim{opacity:.45}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);
+display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:50}
+nav button{flex:1;background:none;border:0;font:inherit;font-size:11px;font-weight:600;color:var(--mu);
+padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button.on{color:var(--s1)}
+nav .ic{font-size:19px;line-height:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.st{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px 12px;text-align:center}
+.st .n{font-size:27px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.st .l{font-size:11px;color:var(--mu);margin-top:5px}
+.bar{height:7px;background:var(--nu);border-radius:4px;overflow:hidden;display:flex;gap:1px;margin:12px 0 6px}
+.bar i{display:block;height:100%}
+.lg{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--t2)}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.tl{position:relative;padding-left:22px}
+.tl:before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--gr)}
+.ev{position:relative;padding:9px 0}
+.ev:before{content:"";position:absolute;left:-21px;top:16px;width:9px;height:9px;border-radius:50%;
+background:var(--s1);border:2px solid var(--bg)}
+.ev.big:before{background:var(--s2);width:12px;height:12px;left:-22px}
+.ev .y{font-size:13px;font-weight:700;color:var(--s1);font-variant-numeric:tabular-nums}
+.ev.big .y{color:var(--s2);font-size:15px}
+.ev .t{font-size:14.5px;margin-top:1px}
+.ev .d{font-size:12.5px;color:var(--t2);margin-top:2px}
+.era{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);font-weight:700;
+margin:22px 0 2px;padding-top:14px;border-top:1px solid var(--gr)}
+.era:first-child{border:0;margin-top:0;padding-top:0}
+select,input[type=range]{font:inherit;accent-color:var(--s1)}
+select{padding:9px;border-radius:9px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);width:100%}
+.done{text-align:center;padding:40px 16px}
+.done .em{font-size:44px}
+label{font-size:13px;color:var(--t2);display:block;margin:14px 0 5px;font-weight:600}
+.mini{font-size:12.5px;color:var(--mu);margin-top:8px;line-height:1.5}
+.surf{display:inline-flex;gap:4px;vertical-align:1px;margin-left:2px}
+.surf b{width:7px;height:7px;border-radius:50%;background:var(--gr);display:block}
+.surf b.on{background:var(--good)}
+.fact{font-size:12.5px;color:var(--t2);margin-top:12px;padding-top:10px;border-top:1px dashed var(--gr);line-height:1.5}
+.fact s{text-decoration:none;color:var(--mu)}
+.gate{font-size:12px;color:var(--s2);font-weight:600;margin-top:10px}
+</style></head><body><div class="wrap">
+
+<header>
+  <div><h1>Life in the UK</h1><div class="sub" id="sub">—</div></div>
+  <div class="tag" id="streak">—</div>
+</header>
+
+<div id="view"></div>
+</div>
+
+<nav>
+  <button data-v="learn" class="on"><span class="ic">◧</span>Cards</button>
+  <button data-v="quiz"><span class="ic">◎</span>Quiz</button>
+  <button data-v="time"><span class="ic">⌛</span>Timeline</button>
+  <button data-v="stats"><span class="ic">▤</span>Progress</button>
+</nav>
+
+<script src="facts.js"></script>
+<script>
+/* ============================================================
+   FACT-LEVEL SPACED REPETITION
+   ------------------------------------------------------------
+   FACTS[i] = [tag, chapter, verifyFlag, canonicalQ, canonicalA, forms]
+   form     = [question, [o0,o1,o2,o3], correctIndex, mcqOnly]
+
+   The scheduling unit is the FACT, not the question. Each fact has
+   ~3 interchangeable question forms. One SM-2 state per fact; a
+   different form is served each time it comes round. Miss any form
+   and the whole fact lapses.
+   ============================================================ */
+
+const K='lituk.v2';
+const DEF={f:{},newPerDay:20,maxRev:120,day:null,doneToday:0,newToday:0,streak:0,last:null,step:0};
+let S=Object.assign({},DEF,JSON.parse(localStorage.getItem(K)||'null')||{});
+const save=()=>localStorage.setItem(K,JSON.stringify(S));
+const today=()=>Math.floor(Date.now()/864e5);
+const NF=i=>FACTS[i][5].length;               // number of forms on this fact
+
+// ---- day rollover -------------------------------------------------
+(function(){const t=today();
+ if(S.day!==t){
+   if(S.doneToday>0&&S.last===t-1) S.streak=(S.streak||0)+1;
+   else if(S.day!==null&&S.last!==t-1&&S.last!==t) S.streak=0;
+   S.day=t; S.doneToday=0; S.newToday=0; save();
+ }})();
+
+function st(i){
+  let c=S.f[i];
+  if(!c){ c=S.f[i]={ef:2.5,ivl:0,reps:0,due:0,lapses:0,seen:0,
+                    ok:new Array(NF(i)).fill(0),   // correct count per form
+                    ls:new Array(NF(i)).fill(0),   // step index when last shown
+                    lf:-1,                          // last form served
+                    rl:0, rlAt:0, pl:0, intro:null};}
+  if(!c.ok||c.ok.length!==NF(i)){c.ok=new Array(NF(i)).fill(0);c.ls=new Array(NF(i)).fill(0);}
+  return c;
+}
+const breadth=i=>{const c=st(i);return c.ok.reduce((n,v)=>n+(v>0?1:0),0);};
+
+/* ---- SM-2, extended ------------------------------------------------
+   g: 0 = Again, 3 = Hard, 4 = Good, 5 = Easy
+   Additions over textbook SM-2, all deliberate:
+     · breadth gate   — interval capped until the fact is proven on
+                        more than one question form
+     · post-lapse     — a relapse doesn't throw away all history; the
+                        fact returns at 35% of its pre-lapse interval
+     · relearn step   — a missed fact comes back later in the SAME
+                        session, not instantly (spacing beats echo)
+     · leech taper    — 3+ lapses permanently shortens intervals 40%
+     · fuzz           — ±5% jitter so days don't clump into spikes
+   -------------------------------------------------------------------*/
+const CAP2=6, CAP_ALL=30;      // breadth gate ceilings, in days
+
+function grade(i,form,g){
+  const c=st(i), t=today();
+  c.seen++; S.step++;
+  c.ls[form]=S.step; c.lf=form;
+  if(c.intro===null||c.intro===undefined){c.intro=t;S.newToday++;}
+
+  if(g<3){                                   // ---- missed ----
+    if(c.ivl>0) c.pl=c.ivl;                  // remember where we were
+    c.ok[form]=0;                            // this surface must be re-earned
+    c.lapses++; c.reps=0; c.ivl=0;
+    c.ef=Math.max(1.3,c.ef-0.20);
+    c.rl=1; c.rlAt=S.step+3;                 // back after ~3 other facts
+    c.due=t;
+  } else {                                   // ---- recalled ----
+    c.ok[form]=(c.ok[form]||0)+1;
+    c.rl=0;
+    let ivl;
+    if(c.reps===0){                          // graduating, or re-graduating
+      ivl = c.pl ? Math.max(1,Math.min(30,Math.round(c.pl*0.35))) : 1;
+      c.pl=0;
+    } else if(c.reps===1){ ivl=6; }
+    else { ivl=c.ivl*(g===5?c.ef+0.15:g===3?1.2:c.ef); }
+    c.reps++;
+    // SM-2 ease update
+    c.ef=Math.max(1.3, c.ef + (0.1-(5-g)*(0.08+(5-g)*0.02)));
+    // leech taper
+    if(c.lapses>=3) ivl*=0.6;
+    // breadth gate — you cannot bank a long interval on one phrasing
+    const b=breadth(i);
+    if(b<2) ivl=Math.min(ivl,CAP2);
+    else if(b<NF(i)) ivl=Math.min(ivl,CAP_ALL);
+    // fuzz
+    ivl=Math.max(1,Math.round(ivl*(0.95+Math.random()*0.10)));
+    c.ivl=ivl; c.due=t+ivl;
+  }
+  S.doneToday++; S.last=t; save();
+}
+
+// ---- form selection ------------------------------------------------
+// least-proven form first, then least-recently-seen, then random;
+// never the same form twice running if an alternative exists.
+function pickForm(i,mode){
+  const F=FACTS[i][5], c=st(i);
+  let idx=F.map((_,j)=>j);
+  if(mode==='recall'){ const r=idx.filter(j=>!F[j][3]); if(r.length) idx=r; }
+  idx.sort((a,b)=> (c.ok[a]-c.ok[b]) || (c.ls[a]-c.ls[b]) || (Math.random()-0.5));
+  if(idx.length>1 && idx[0]===c.lf) [idx[0],idx[1]]=[idx[1],idx[0]];
+  return idx[0];
+}
+
+// ---- queue ---------------------------------------------------------
+function queue(){
+  const t=today(), due=[], fresh=[], relearn=[];
+  for(let i=0;i<FACTS.length;i++){
+    const c=S.f[i];
+    if(!c||!c.seen) fresh.push(i);
+    else if(c.rl) relearn.push(i);
+    else if(c.due<=t) due.push(i);
+  }
+  relearn.sort((a,b)=>S.f[a].rlAt-S.f[b].rlAt);
+  const ready=relearn.filter(i=>S.f[i].rlAt<=S.step);
+  const waiting=relearn.filter(i=>S.f[i].rlAt>S.step);
+  const newSlots=Math.max(0,S.newPerDay-(S.newToday||0));
+  const q=ready
+    .concat(shuffle(due).slice(0,S.maxRev))
+    .concat(shuffle(fresh).slice(0,newSlots))
+    .concat(waiting);                     // if nothing else is left, still drill them
+  return q;
+}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+// ---- views ---------------------------------------------------------
+let V='learn', cur=null, curF=0, shown=false, qAns=null;
+const el=document.getElementById('view');
+const CH={1:'Values',2:'What is the UK',3:'History',4:'Society',5:'Government'};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function counts(){const t=today();let n=0,l=0,d=0,m=0;
+ for(let i=0;i<FACTS.length;i++){const c=S.f[i];
+  if(!c||!c.seen)n++; else if(c.rl)l++; else if(c.due<=t)d++; else m++;}
+ return {n,l,d,m};}
+
+function header(){
+  const c=counts(), forms=FACTS.reduce((n,f)=>n+f[5].length,0);
+  document.getElementById('sub').textContent=
+    `${FACTS.length} facts · ${forms} forms · ${c.d+c.l} due · ${c.n} new`;
+  document.getElementById('streak').textContent=(S.streak||0)+'🔥';
+}
+function surf(i){const c=st(i);
+  return `<span class="surf">${c.ok.map(v=>`<b class="${v>0?'on':''}"></b>`).join('')}</span>`;}
+function chips(i){const F=FACTS[i];
+  return `<div><span class="tag">${CH[F[1]]}</span><span class="tag">${esc(F[0])}</span>`+
+         (F[2]?'<span class="tag v">check the book</span>':'')+
+         `<span class="tag" title="question forms proven">${surf(i)}</span></div>`;}
+
+function render(){header();
+  if(V==='learn')return learn();
+  if(V==='quiz')return quiz();
+  if(V==='time')return timeline();
+  if(V==='stats')return stats();}
+
+function pick(){const q=queue();return q.length?q[0]:null;}
+
+function gateNote(i){
+  const b=breadth(i), n=NF(i);
+  if(!st(i).seen) return '';
+  if(b<2) return `<div class="gate">Locked at ${CAP2} days until you get this right on a second phrasing.</div>`;
+  if(b<n)  return `<div class="gate">Locked at ${CAP_ALL} days until all ${n} phrasings are proven.</div>`;
+  return '';
+}
+
+function learn(){
+  if(cur===null){cur=pick(); if(cur!==null)curF=pickForm(cur,'recall'); shown=false;}
+  if(cur===null)return el.innerHTML=doneHTML();
+  const F=FACTS[cur], fm=F[5][curF], c=st(cur), ans=fm[1][fm[2]];
+  el.innerHTML=`<div class="card">
+    ${chips(cur)}
+    <div class="q">${esc(fm[0])}</div>
+    ${shown?`<div class="a">${esc(ans)}</div>
+      ${ans.trim().toLowerCase()!==F[4].trim().toLowerCase()
+        ?`<div class="fact"><s>The fact:</s> ${esc(F[3])} — <b>${esc(F[4])}</b></div>`:''}`:''}
+    ${c.lapses>=3?`<div class="mini">Missed ${c.lapses}× — intervals on this one are permanently cut by 40%.</div>`:''}
+    ${shown?gateNote(cur):''}
+  </div>
+  ${shown?`<div class="row">
+     <button class="btn g0" onclick="G(0)">Again</button>
+     <button class="btn g3" onclick="G(3)">Hard</button>
+     <button class="btn g4" onclick="G(4)">Good</button>
+     <button class="btn g5" onclick="G(5)">Easy</button></div>
+     <div class="mini">Again → later this session. Hard → ${nx(cur,3)}. Good → ${nx(cur,4)}. Easy → ${nx(cur,5)}.</div>`
+   :`<button class="btn pri" onclick="shown=true;render()">Show answer</button>`}`;
+}
+function nx(i,g){const c=st(i);let ivl;
+ if(c.reps===0) ivl=c.pl?Math.max(1,Math.min(30,Math.round(c.pl*0.35))):1;
+ else if(c.reps===1) ivl=6;
+ else ivl=c.ivl*(g===5?c.ef+0.15:g===3?1.2:c.ef);
+ if(c.lapses>=3) ivl*=0.6;
+ const b=breadth(i)+(c.ok[curF]>0?0:1);
+ if(b<2) ivl=Math.min(ivl,CAP2); else if(b<NF(i)) ivl=Math.min(ivl,CAP_ALL);
+ ivl=Math.max(1,Math.round(ivl));
+ return ivl===1?'tomorrow':ivl<60?`in ${ivl} days`:`in ${Math.round(ivl/30)} months`;}
+window.G=g=>{grade(cur,curF,g);cur=null;shown=false;render()};
+
+function quiz(){
+  if(cur===null){cur=pick(); if(cur!==null)curF=pickForm(cur,'quiz'); qAns=null;}
+  if(cur===null)return el.innerHTML=doneHTML();
+  const F=FACTS[cur], fm=F[5][curF];
+  el.innerHTML=`<div class="card">
+    ${chips(cur)}
+    <div class="q">${esc(fm[0])}</div>
+    ${qAns!==null&&fm[1][fm[2]].trim().toLowerCase()!==F[4].trim().toLowerCase()
+      ?`<div class="fact"><s>The fact:</s> ${esc(F[3])} — <b>${esc(F[4])}</b></div>`:''}
+    ${qAns!==null?gateNote(cur):''}
+    </div>
+    ${fm[1].map((o,j)=>`<button class="opt ${qAns===null?'':j===fm[2]?'ok':j===qAns?'no':'dim'}"
+       ${qAns===null?`onclick="A(${j})"`:''}>${esc(o)}</button>`).join('')}
+    ${qAns!==null?`<button class="btn pri" style="margin-top:14px" onclick="N()">
+       ${qAns===fm[2]?'Correct — next':'Next'}</button>`:''}`;
+}
+window.A=j=>{const fm=FACTS[cur][5][curF];qAns=j;grade(cur,curF,j===fm[2]?4:0);render()};
+window.N=()=>{cur=null;qAns=null;render()};
+
+function doneHTML(){const c=counts();
+ return `<div class="done"><div class="em">✓</div>
+  <div class="q" style="margin-top:12px">Nothing due right now</div>
+  <div class="mini" style="max-width:340px;margin:8px auto">
+   ${c.n>0?`${c.n} facts still unseen — they come in at ${S.newPerDay} a day. Raise that in Progress if you want to go faster.`
+          :'Every fact is scheduled. Come back tomorrow.'}</div></div>`;}
+
+function stats(){
+  const c=counts(),tot=FACTS.length;
+  let mature=0,full=0,formsSeen=0,formsTot=0;
+  for(let i=0;i<tot;i++){const s=S.f[i];formsTot+=NF(i);
+    if(s){if(s.ivl>=21)mature++; const b=breadth(i); formsSeen+=b; if(b===NF(i))full++;}}
+  const hard=FACTS.map((_,i)=>[i,S.f[i]]).filter(x=>x[1]&&x[1].lapses>=2)
+        .sort((a,b)=>b[1].lapses-a[1].lapses).slice(0,8);
+  const fc=[0,0,0,0,0,0]; for(let i=0;i<tot;i++){const s=S.f[i];if(s&&s.due>today()&&s.due<=today()+5)fc[s.due-today()]++;}
+  el.innerHTML=`
+   <div class="stats">
+     <div class="st"><div class="n">${tot-c.n}</div><div class="l">facts started</div></div>
+     <div class="st"><div class="n" style="color:var(--good)">${full}</div><div class="l">proven all ways</div></div>
+     <div class="st"><div class="n" style="color:var(--s2)">${c.d+c.l}</div><div class="l">due now</div></div>
+   </div>
+   <div class="card">
+     <div style="font-weight:600;margin-bottom:2px">Deck</div>
+     <div class="bar">
+       <i style="background:var(--good);width:${mature/tot*100}%"></i>
+       <i style="background:var(--s1);width:${(tot-c.n-mature-c.l)/tot*100}%"></i>
+       <i style="background:var(--crit);width:${c.l/tot*100}%"></i>
+       <i style="background:var(--nu);width:${c.n/tot*100}%"></i></div>
+     <div class="lg"><span><i style="background:var(--good)"></i>Solid ${mature}</span>
+       <span><i style="background:var(--s1)"></i>Learning ${tot-c.n-mature-c.l}</span>
+       <span><i style="background:var(--crit)"></i>Relearning ${c.l}</span>
+       <span><i style="background:var(--nu);border:1px solid var(--gr)"></i>New ${c.n}</span></div>
+     <div class="mini">Question forms proven: <b>${formsSeen}</b> of ${formsTot}. This is the number that matters —
+     it means you know the fact, not the sentence.</div>
+     <label>New facts per day — ${S.newPerDay}</label>
+     <input type="range" min="5" max="60" step="5" value="${S.newPerDay}" style="width:100%"
+       oninput="S.newPerDay=+this.value;save();render()">
+     <div class="mini">20 a day covers all 410 facts in about three weeks with the review load staying manageable.
+     40 gets you there in ten days but roughly doubles the daily minutes.</div>
+     <label>Review ceiling — ${S.maxRev} a day</label>
+     <input type="range" min="40" max="300" step="20" value="${S.maxRev}" style="width:100%"
+       oninput="S.maxRev=+this.value;save();render()">
+   </div>
+   <div class="card"><div style="font-weight:600;margin-bottom:6px">Coming up</div>
+     <div class="lg" style="gap:16px">${fc.slice(1).map((n,k)=>
+       `<span><b style="font-size:17px">${n}</b> <span style="color:var(--mu)">${k===0?'tomorrow':'+'+(k+1)+'d'}</span></span>`).join('')}</div>
+   </div>
+   ${hard.length?`<div class="card"><div style="font-weight:600;margin-bottom:8px">Your problem facts</div>
+     ${hard.map(([i,s])=>`<div style="padding:8px 0;border-bottom:1px solid var(--gr)">
+       <div style="font-size:14px">${esc(FACTS[i][3])}</div>
+       <div style="font-size:13px;color:var(--s1);font-weight:600;margin-top:2px">${esc(FACTS[i][4])}
+       <span style="color:var(--crit);font-weight:600"> · missed ${s.lapses}×</span>${surf(i)}</div></div>`).join('')}
+     <div class="mini">Three misses or more and every future interval is cut by 40%, so these keep surfacing.
+     If one is still here after a week, go and read that page of the book — drilling won't fix a fact you never understood.</div></div>`:''}
+   <div class="card"><div style="font-weight:600;margin-bottom:6px">How the scheduling works</div>
+     <div class="mini">
+     <b>The fact is the unit, not the question.</b> Each of the 410 facts carries about three different question
+     forms. Only one schedule exists per fact, and a different form is served each time it comes round — the
+     least-proven one first, never the same one twice running. So you can't learn the shape of a question; you
+     have to learn the fact underneath it.<br><br>
+     <b>SM-2.</b> Every fact has an ease factor starting at 2.5. Recall it and the gap grows —
+     1 day, then 6, then × ease, out to months. Hard grows it by only 1.2×; Easy adds 0.15 to the multiplier.<br><br>
+     <b>The breadth gate.</b> A fact can't go past <b>${CAP2} days</b> until you've answered it correctly on a
+     second phrasing, and can't go past <b>${CAP_ALL} days</b> until every phrasing is proven. The green dots on
+     each card show where you are. This is the part that stops you banking a long interval on one memorised sentence.<br><br>
+     <b>Missing.</b> Any form you miss resets the whole fact and clears that form's credit — ease drops 0.2 and it
+     returns later in the same session, after about three other facts, not instantly. When it re-graduates it doesn't
+     start from scratch: it resumes at 35% of the interval it had before the lapse.<br><br>
+     <b>Leeches.</b> Three lapses or more and every future interval is permanently cut by 40%.<br><br>
+     <b>Fuzz.</b> Intervals get ±5% jitter so a big study day doesn't come back as a single spike weeks later.<br><br>
+     <b>Grade honestly.</b> Good means you knew it. Marking Good when you nearly got there is the one way to break this.
+     </div></div>
+   <div class="card"><div style="font-weight:600;margin-bottom:6px">Reset</div>
+     <button class="btn" onclick="if(confirm('Erase all progress?')){S=Object.assign({},DEF,{f:{},day:today()});save();render()}">Erase all progress</button></div>`;
+}
+
+const TL=[
+ ['Before the Romans',[
+  ['10,000 BC','Britain separates from Europe','Rising seas cut the land bridge. Hunter-gatherers only.',0],
+  ['4000 BC','First farmers arrive','Stone Age. Skara Brae in Orkney is from this world.',0],
+  ['2500 BC','Bronze Age begins','Stonehenge. Round barrows. Metalworking.',0],
+  ['800 BC','Iron Age','Hill forts like Maiden Castle. The language is Celtic.',0]]],
+ ['Rome',[
+  ['55 BC','Julius Caesar invades — and fails','Twice. He does not stay.',1],
+  ['AD 43','Claudius conquers Britain','This is the one that sticks. 400 years of occupation begin.',1],
+  ['AD 60','Boudicca revolts','Queen of the Iceni. Defeated, but remembered.',0],
+  ['AD 122','Hadrian\'s Wall begun','Marks the northern limit. Scotland is never conquered.',0],
+  ['AD 410','The Romans leave','Called home to defend Rome itself.',1]]],
+ ['Anglo-Saxons and Vikings',[
+  ['AD 450+','Angles, Saxons and Jutes arrive','From northern Europe. England takes its name from the Angles.',0],
+  ['AD 597','St Augustine arrives','Christianity spreads. He becomes first Archbishop of Canterbury.',0],
+  ['AD 789','First Viking raids','From Denmark and Norway.',0],
+  ['AD 878','Alfred the Great defeats the Vikings','King of Wessex. The Danelaw divides the country.',0]]],
+ ['The hinge',[
+  ['1066','Battle of Hastings','William of Normandy defeats Harold. The single most examined date.',1],
+  ['1086','Domesday Book','A survey of who owns what.',0]]],
+ ['Middle Ages — power leaks from the crown',[
+  ['1215','Magna Carta','King John forced to sign at Runnymede. The Great Charter.',1],
+  ['1284','Statute of Rhuddlan','Wales annexed by Edward I.',0],
+  ['1314','Bannockburn','Robert the Bruce defeats the English.',0],
+  ['1337','Hundred Years War begins','Lasts 116 years.',0],
+  ['1348','The Black Death','Kills about a third of the population.',0],
+  ['1415','Agincourt','Henry V wins against the odds.',0],
+  ['1455','Wars of the Roses begin','Lancaster (red rose) against York (white rose).',0],
+  ['1485','Bosworth Field','Richard III killed. Henry Tudor becomes Henry VII.',1]]],
+ ['Tudors and the Reformation',[
+  ['1509','Henry VIII becomes king','Six wives follow.',0],
+  ['1534','Break with Rome','To remarry, not from theology. Church of England created.',1],
+  ['1558','Elizabeth I becomes queen','Her religious compromise is the "middle way".',0],
+  ['1588','The Spanish Armada defeated','',1],
+  ['1603','Elizabeth dies childless','James VI of Scotland becomes James I of England.',0]]],
+ ['Stuarts, civil war, revolution',[
+  ['1605','The Gunpowder Plot','Guy Fawkes caught. Remembered every 5 November.',0],
+  ['1642','Civil War begins','Cavaliers for the King, Roundheads for Parliament.',0],
+  ['1649','Charles I executed','Cromwell rules as Lord Protector.',1],
+  ['1660','The Restoration','Charles II returns.',0],
+  ['1665-66','Plague, then the Great Fire','Wren rebuilds St Paul\'s.',0],
+  ['1688','The Glorious Revolution','William of Orange invited. Parliament outranks the monarch.',0],
+  ['1689','Bill of Rights','',0]]],
+ ['Britain forms and industrialises',[
+  ['1707','Act of Union with Scotland','Creates the Kingdom of Great Britain.',1],
+  ['1721','Robert Walpole, first Prime Minister','',0],
+  ['1746','Culloden','The last Jacobite rising crushed.',0],
+  ['1776','American independence declared','Accepted by Britain in 1783.',0],
+  ['1801','Act of Union with Ireland','Creates the United Kingdom.',0],
+  ['1805','Trafalgar','At sea. Nelson wins and dies.',1],
+  ['1807','Slave trade abolished','Slavery itself abolished across the Empire in 1833.',0],
+  ['1815','Waterloo','On land. Wellington defeats Napoleon.',1],
+  ['1832','The Reform Act','Rotten boroughs abolished, franchise widened.',0]]],
+ ['Empire and the Victorians',[
+  ['1837','Victoria comes to the throne','Reigns until 1901.',0],
+  ['1851','The Great Exhibition','',0],
+  ['1853-56','Crimean War','Florence Nightingale goes to Turkey in 1854.',0],
+  ['1899-1902','The Boer War','In South Africa.',0]]],
+ ['The twentieth century',[
+  ['1914-18','First World War','The Somme, 1916. Ends 11am, 11 November 1918.',1],
+  ['1918','Some women get the vote','Over 30, with a property qualification.',1],
+  ['1928','Equal suffrage','All women at 21, same as men.',1],
+  ['1928','Fleming discovers penicillin','',0],
+  ['1939-45','Second World War','Dunkirk and the Battle of Britain both 1940. D-Day 6 June 1944.',1],
+  ['1948','The NHS is founded','Following the Beveridge Report of 1942.',1],
+  ['1949','NATO founded','',0],
+  ['1973','UK joins the EEC','',0],
+  ['1979','Thatcher becomes PM','Britain\'s first woman Prime Minister.',0],
+  ['1998','Good Friday Agreement','',1],
+  ['1999','Devolution','Scottish Parliament, Welsh Assembly, NI Assembly all first sit.',1]]]
+];
+function timeline(){
+  el.innerHTML=`<div class="card"><div style="font-weight:600">The spine</div>
+    <div class="mini">Don't memorise dates — memorise the <b>sequence</b>, then hang dates on it. Nearly every history question is answerable if you know roughly where in the story something sits. Orange markers are the twelve worth knowing cold.<br><br>
+    <b>Drill:</b> cover the screen and say the ten eras aloud in under two minutes. Once a day for a week and it's permanent.</div></div>
+    <div class="card">${TL.map(([era,evs])=>`<div class="era">${era}</div><div class="tl">
+      ${evs.map(([y,t,d,big])=>`<div class="ev${big?' big':''}"><div class="y">${y}</div>
+        <div class="t">${t}</div>${d?`<div class="d">${d}</div>`:''}</div>`).join('')}
+      </div>`).join('')}</div>`;
+}
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); V=b.dataset.v; cur=null; shown=false; qAns=null; render();});
+render();
+</script></body></html>

@@ -1,0 +1,15 @@
+# Normalise to LF in the repository. Windows checkouts still get CRLF where it matters,
+# but the shell hook and the CI workflow must be LF or they fail on Linux — and a hook
+# that silently doesn't run is worse than no hook.
+* text=auto eol=lf
+
+.githooks/* text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+
+# Generated deck files. Marked so diffs stay readable in review rather than collapsing a
+# 200-fact chapter into one unreviewable blob.
+v1/src/data/*.ts linguist-generated=false
+
+*.png binary
+*.ico binary

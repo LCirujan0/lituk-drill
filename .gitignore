@@ -1,0 +1,23 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Never commit secrets. They go into the Vercel dashboard, separately.
+.env
+.env.*
+!.env.example
+*.pem
+
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# Superseded v0 artefact, kept locally until deleted.
+cards.js.OLD-v1-unused

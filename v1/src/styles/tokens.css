@@ -1,0 +1,137 @@
+/**
+ * Design tokens. Two tiers, and the only place a raw colour or size may appear.
+ *
+ *   · REFERENCE tier (--ref-*) — the raw palette, lifted from v0 so the app still looks
+ *     like the one already in daily use. Names describe the colour, not its job.
+ *   · SEMANTIC tier (--c-*, --space-*, --text-*) — what a thing is FOR. Components may
+ *     reference only these. `stylelint-declaration-strict-value` fails the build on a raw
+ *     value anywhere else, which is what stops this file decaying into a suggestion.
+ *
+ * Light and dark are both first-class and follow the system setting (§F). Contrast is
+ * checked as tokens are defined rather than audited afterwards — the amber "check the
+ * book" pairing is carried over from v0 and is flagged below as the first thing an
+ * accessibility pass should look at (ledger L-004).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- reference: neutrals ---------------------------------------------- */
+  --ref-paper: #f9f9f7;
+  --ref-surface: #fcfcfb;
+  --ref-ink: #0b0b0b;
+  --ref-ink-soft: #52514e;
+  --ref-ink-muted: #898781;
+  --ref-rule: #e1e0d9;
+  --ref-edge: rgb(11 11 11 / 10%);
+  --ref-fill: #f0efec;
+
+  /* ---- reference: accents ----------------------------------------------- */
+  --ref-blue: #2a78d6;
+  --ref-orange: #eb6834;
+  --ref-teal: #1baf7a;
+  --ref-amber: #eda100;
+  --ref-violet: #4a3aa7;
+  --ref-green: #0ca30c;
+  --ref-yellow: #fab219;
+  --ref-red: #d03b3b;
+  --ref-amber-ink: #8a5a00;
+  --ref-white: #fff;
+
+  /* ---- semantic: surface and text --------------------------------------- */
+  --c-page: var(--ref-paper);
+  --c-surface: var(--ref-surface);
+  --c-text: var(--ref-ink);
+  --c-text-soft: var(--ref-ink-soft);
+  --c-text-muted: var(--ref-ink-muted);
+  --c-border: var(--ref-edge);
+  --c-rule: var(--ref-rule);
+  --c-fill: var(--ref-fill);
+
+  /* ---- semantic: meaning ------------------------------------------------ */
+  --c-accent: var(--ref-blue);
+  --c-accent-text: var(--ref-white);
+  --c-answer: var(--ref-blue);
+  --c-gate: var(--ref-orange);
+  --c-proven: var(--ref-green);
+  --c-caution: var(--ref-yellow);
+  --c-caution-text: var(--ref-amber-ink);
+  --c-danger: var(--ref-red);
+
+  /* ---- semantic: grading buttons ---------------------------------------- */
+  --c-grade-again: var(--ref-red);
+  --c-grade-hard: var(--ref-amber);
+  --c-grade-good: var(--ref-blue);
+  --c-grade-easy: var(--ref-green);
+
+  /* ---- space ------------------------------------------------------------ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ---- type ------------------------------------------------------------- */
+  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-xs: 11px;
+  --text-sm: 12.5px;
+  --text-base: 15px;
+  --text-md: 16px;
+  --text-lg: 19px;
+  --text-xl: 21px;
+  --text-2xl: 26px;
+  --leading-tight: 1.35;
+  --leading-normal: 1.5;
+
+  /* ---- shape ------------------------------------------------------------ */
+  --radius-sm: 9px;
+  --radius-md: 11px;
+  --radius-lg: 14px;
+
+  /* ---- targets: WCAG 2.2 AA minimum is 24px; 44px is the comfortable iOS size ---- */
+  --target-min: 44px;
+
+  /* ---- motion ----------------------------------------------------------- */
+  --motion-fast: 80ms;
+  --motion-base: 120ms;
+
+  /* Effectively instant, but non-zero: a 0ms transition never fires `transitionend`,
+     so anything sequencing off that event would silently stall under reduced motion. */
+  --motion-instant: 1ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --ref-paper: #0d0d0d;
+    --ref-surface: #1a1a19;
+    --ref-ink: #fff;
+    --ref-ink-soft: #c3c2b7;
+    --ref-ink-muted: #898781;
+    --ref-rule: #2c2c2a;
+    --ref-edge: rgb(255 255 255 / 10%);
+    --ref-fill: #383835;
+
+    --ref-blue: #3987e5;
+    --ref-orange: #d95926;
+    --ref-teal: #199e70;
+    --ref-amber: #c98500;
+    --ref-violet: #9085e9;
+
+    /* v0 switched the caution text to the amber itself in dark mode, because the
+       dark brown it uses on light backgrounds disappears against near-black. */
+    --c-caution-text: var(--ref-amber);
+  }
+}
+
+/* Honour the system setting for motion. Every transition in the app must degrade to
+   nothing here, not merely get faster (§G). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-base: 0ms;
+  }
+}

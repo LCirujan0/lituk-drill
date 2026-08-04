@@ -1,0 +1,45 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "ignoreFiles": ["src/styles/tokens.css"],
+  "rules": {
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "fill",
+        "stroke",
+        "font-size",
+        "font-family",
+        "border-radius",
+        "padding",
+        "padding-top",
+        "padding-right",
+        "padding-bottom",
+        "padding-left",
+        "margin",
+        "margin-top",
+        "margin-right",
+        "margin-bottom",
+        "margin-left",
+        "gap",
+        "transition-duration"
+      ],
+      {
+        "ignoreValues": [
+          "transparent",
+          "currentColor",
+          "inherit",
+          "initial",
+          "unset",
+          "none",
+          "auto",
+          "0",
+          "0px",
+          "100%"
+        ],
+        "disableFix": true,
+        "message": "Use a semantic token from src/styles/tokens.css — raw values are the thing tokens exist to prevent (§F)."
+      }
+    ]
+  }
+}
