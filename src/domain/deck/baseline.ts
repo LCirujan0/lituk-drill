@@ -57,6 +57,15 @@ export interface DeckBaseline {
   readonly longestOptionCorrectRate: number;
   /** Facts still carrying an unresolved verify flag. R3. Must reach 0 before the launch gate. */
   readonly unresolvedVerifyFlags: number;
+  /**
+   * Distinct four-digit years named in an explanation that appear nowhere in the handbook.
+   *
+   * Ratcheted, where the companion name check is only a report, because a year has almost no
+   * false-positive room: it is in the book or it is not. Every one of today's was checked by
+   * hand against the text before this ceiling was set — see `vocabulary.ts` for why the check
+   * exists at all, and L-023 for what the first run found.
+   */
+  readonly explanationYearsOffSource: number;
 }
 
 export const DECK_BASELINE: DeckBaseline = {
@@ -96,6 +105,10 @@ export const DECK_BASELINE: DeckBaseline = {
   // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
   // Office rule and does not appear in the handbook, so this source cannot settle it.
   unresolvedVerifyFlags: 1,
+  // 1337, 1290, 1653, 1919, 1985, 1971 — six distinct years across seven facts, each grepped
+  // against the handbook text by hand. Four of them are worse than an explanation defect: the
+  // ANSWER is off-source too (L-023). Target 0, and it should get there in the sourcing pass.
+  explanationYearsOffSource: 6,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */
@@ -110,4 +123,5 @@ export const DECK_TARGETS: Partial<DeckBaseline> = {
   restrictedRankForms: 0,
   longestOptionCorrectRate: 0.3,
   unresolvedVerifyFlags: 0,
+  explanationYearsOffSource: 0,
 };
