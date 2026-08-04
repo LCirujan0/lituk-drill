@@ -7,18 +7,18 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | Three tabs, a pinned card action bar, sync live (D-030) |
+| Phase | Explanations rewritten as memorisation clusters, 543/543 |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
 | Tests | **216 passing across 9 files** — 169 domain, 47 in jsdom (`app` 36, `store-sync` 11) |
 | Deck | **543 drilled · 1,627 forms**. 559 ids in use; 16 retired, ids kept (R-4) |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically, 37 confirmed by the owner, 16 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-032 (D-026 never issued, D-029 never written — L-022) |
-| Next ledger id | L-028 (L-019 and L-020 never written — L-022) |
+| Next ledger id | L-031 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 14 open · 6 fixed-unverified · 5 verified-fixed |
 | Open Critical | 0. No open High — L-023 and L-025 closed by the owner’s edition check |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
-| Amber facts | 1 unresolved (f213 — L-016) |
+| Amber facts | 2 — f213 (L-016) and f006 (L-028) |
 | CI | Green — 2 required checks |
 | Deployed | https://lituk-drill.vercel.app |
 | Appetite expires | ~18 September 2026 · exam 25 September |
