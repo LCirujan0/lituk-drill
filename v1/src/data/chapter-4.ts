@@ -49,9 +49,10 @@ export const CHAPTER_4: readonly MigratedFact[] = [
     id: "f255",
     tag: "Demographics",
     chapter: 4,
-    verify: true,
+    verify: false,
     question: "What percentage of the UK population lives in England?",
     answer: "84%",
+    source: "Handbook 3rd ed., ch.4 “The UK today” — population distribution",
     forms: [
     {
       question: "What percentage of the UK population lives in England?",
@@ -1209,9 +1210,10 @@ export const CHAPTER_4: readonly MigratedFact[] = [
     id: "f284",
     tag: "Sport",
     chapter: 4,
-    verify: true,
+    verify: false,
     question: "Which British athlete became the first person to win the Tour de France, in 2012?",
     answer: "Sir Bradley Wiggins",
+    source: "Handbook 3rd ed., ch.4 “Sport”",
     forms: [
     {
       question: "Which British athlete became the first person to win the Tour de France, in 2012?",
@@ -1289,9 +1291,10 @@ export const CHAPTER_4: readonly MigratedFact[] = [
     id: "f286",
     tag: "Sport",
     chapter: 4,
-    verify: true,
+    verify: false,
     question: "In which three years has London hosted the Olympic Games?",
     answer: "1908, 1948 and 2012",
+    source: "Handbook 3rd ed., ch.4 “Sport”",
     forms: [
     {
       question: "In which three years has London hosted the Olympic Games?",

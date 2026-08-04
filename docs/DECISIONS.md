@@ -649,3 +649,44 @@ describing an existing state.
   into a pre-mortem without verification, and it took an unrelated infrastructure change to expose it.
   Recorded as L-014 with a tripwire: `/jorge-drift-check` treats §B's premise as a claim to re-verify,
   not a given.
+
+---
+
+## D-023 — The maintained handbook edition is the source of truth, not the frozen 2013 text
+
+**Date:** 4 August 2026 · **Status:** accepted · **Supersedes** the sourcing rule in v0's README
+
+**Context.** v0's README states the rule plainly: *"The examinable answer is always the book's, even
+where it's now out of date."* Twelve facts were flagged amber against it. The owner then supplied a
+full 3rd-edition text (Britizen PDF edition, Crown copyright), and it turns out that rule no longer
+describes reality — the edition is **maintained, not frozen**. It carries the Brexit update (the UK
+left at 23:00 GMT on 31 January 2020; 27 member states; no general principle of EU law in UK law from
+2024) while keeping other original figures, such as the Council of Europe's 47 members.
+
+So "the book" is no longer a single fixed artifact, and three of the twelve amber facts turned out to
+differ from it. One — the small claims limit for Scotland and Northern Ireland — was simply wrong.
+
+**Decision.** Where the maintained edition differs from the frozen 2013 text, **the maintained edition
+wins**, applied as one rule with no exceptions. Every fact corrected or confirmed against it records a
+`source` citation and is declared in `divergences.ts`.
+
+**Consequences.**
+- *Positive.* One rule, uniformly applied, which is far easier to hold than a per-fact judgement about
+  which vintage of the book to follow. It closed eleven of the twelve amber facts in a single pass —
+  eight confirmed correct, three corrected — taking a launch-gate blocker from twelve to one. It also
+  caught a genuinely wrong answer that spaced repetition would otherwise have drilled to permanence,
+  which is R3 exactly.
+- *Negative.* The maintained edition is a **third-party** rendering. Its Brexit update may be editorial
+  rather than a reflection of what the official test now asks, and the deck has no EU facts yet, so
+  that judgement is about to be load-bearing for material with zero existing coverage. It also
+  contradicts itself in at least one place — 54 members of the Commonwealth in prose, 56 above its own
+  member list — so "the guide wins" does not always identify a single answer, and the tie was broken by
+  reasoning about which part was maintained rather than by the rule itself. One fact (f213, the KoLL
+  age exemption) is not in the handbook at all and remains unresolvable from this source.
+- *Consequence for the deck.* Correcting content breaks the round-trip proof against v0's `facts.js`.
+  Rather than weaken that test, divergence is now **declared**: a fact may differ from v0 only if it is
+  listed in `divergences.ts` with a reason and a source, and the build fails on anything that differs
+  and is not listed, on any stale declaration, and on any diverged fact lacking a citation. The
+  migration script now refuses to run while divergences exist, because re-running it would restore
+  every original answer and the round-trip test would then pass — a failure that looks exactly like
+  success.

@@ -2,6 +2,37 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — deck corrections
+
+**The owner supplied a full 3rd-edition handbook text**, which changed the sourcing rule and closed
+most of a launch-gate blocker.
+
+- **D-023.** The supplied edition is *maintained, not frozen*: it carries the Brexit update (UK left
+  23:00 GMT 31 January 2020; 27 member states) while keeping other original figures. v0's README rule —
+  "the examinable answer is always the book's, even where it's now out of date" — no longer describes a
+  single artifact. Owner's decision: the maintained edition wins, one rule, no exceptions.
+- **L-005: 11 of 12 amber facts resolved.** Eight confirmed correct (B1 CEFR, 84% in England, Wiggins,
+  Olympics 1908/1948/2012, 60 Welsh AMs, 90 MLAs, Council of Europe 47, small claims £10,000 E&W).
+- **L-015: three were wrong.** Small claims for Scotland and NI was **£3,000**, should be **£5,000** —
+  a plainly wrong answer that spaced repetition would have drilled to permanence, which is R3's whole
+  argument. Commonwealth 54 → 56. UK population 62m → 67.6m.
+- **Divergence is now declared, not tolerated.** Correcting content breaks the round-trip proof against
+  v0's `facts.js`. Rather than weaken that test, `divergences.ts` lists every deliberate difference with
+  a reason and a source; the build fails on anything that differs and is not declared, on any stale
+  declaration, and on any diverged fact missing a citation. The migration script refuses to run while
+  divergences exist — re-running it would restore every original answer *and the round-trip test would
+  then pass*, a failure indistinguishable from success.
+- **The ratchet caught a metric that had quietly stopped measuring reality.** `longestOptionCorrectRate`
+  was counting stored option text for forms that carry a generation rule and are never presented as
+  written — the same flaw `effectiveNumericMiddleRankRate` exists to correct. Now restricted to
+  as-written forms; denominator 749 → 734, rate 0.4032 → 0.4074, ceiling **re-derived rather than
+  loosened**, with both figures recorded in `baseline.ts`.
+- **L-017 logged:** measured coverage gaps. Zero facts on the EU despite a full handbook section; the
+  modern monarchy, Industrial Revolution, local government, civil vs criminal law and the civil service
+  are all thin. Filling them conflicts with BRIEF §What-v1-must-do and needs a superseding decision.
+
+92 tests green.
+
 ## 2026-08-04 — later
 
 **Infrastructure landed, and immediately produced a finding.** Vercel project created from the GitHub

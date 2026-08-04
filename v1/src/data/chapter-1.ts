@@ -449,9 +449,10 @@ export const CHAPTER_1: readonly MigratedFact[] = [
     id: "f212",
     tag: "Citizenship",
     chapter: 1,
-    verify: true,
+    verify: false,
     question: "What CEFR level must an applicant's English speaking and listening reach?",
     answer: "B1",
+    source: "Handbook 3rd ed., ch.1 — taking the Life in the UK test",
     forms: [
     {
       question: "What CEFR level must an applicant's English speaking and listening reach?",
