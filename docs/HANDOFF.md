@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Three tabs, a pinned card action bar, sync live (D-030) |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **214 passing across 9 files** — 169 domain, 45 in jsdom (`app` 34, `store-sync` 11) |
+| Tests | **216 passing across 9 files** — 169 domain, 47 in jsdom (`app` 36, `store-sync` 11) |
 | Deck | **526 drilled · 1,576 forms**. 542 ids in use; 16 retired, ids kept (R-4) |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically, 37 confirmed by the owner, 16 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
