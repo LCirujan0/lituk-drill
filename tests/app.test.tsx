@@ -421,6 +421,43 @@ describe('navigation', () => {
     expect(screen.queryByRole('navigation', { name: 'Sections' })).toBeNull();
   });
 
+  it('collapses the chronology, and can open all of it at once', async () => {
+    // Eleven eras is an eleven-screen scroll if everything is open, and a screen that long
+    // gets read once and then avoided. Collapsed, the whole arc fits — and the arc is the
+    // thing a timeline is for.
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /Timeline/ }));
+    await screen.findByRole('heading', { name: 'The spine' });
+
+    const eras = document.querySelectorAll('details');
+    expect(eras.length).toBeGreaterThan(8);
+    // One open to show the rows do something; the rest closed.
+    expect([...eras].filter((e) => (e as HTMLDetailsElement).open)).toHaveLength(1);
+
+    await user.click(screen.getByRole('button', { name: 'Expand all' }));
+    const opened = document.querySelectorAll('details');
+    expect([...opened].every((e) => (e as HTMLDetailsElement).open)).toBe(true);
+
+    await user.click(screen.getByRole('button', { name: 'Collapse all' }));
+    expect([...document.querySelectorAll('details')].some((e) => (e as HTMLDetailsElement).open)).toBe(false);
+  });
+
+  it('names the people an era turns on, and what each is remembered for', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /Timeline/ }));
+    await screen.findByRole('heading', { name: 'The spine' });
+
+    // Caesar and Claudius are the discrimination the drill cards keep testing. Gathered here,
+    // side by side, with the thing that tells them apart.
+    expect(screen.getByText(/The invasion that failed/)).toBeTruthy();
+    expect(screen.getByText(/The invasion that succeeded/)).toBeTruthy();
+    expect(screen.getAllByRole('heading', { name: 'Who to know' }).length).toBeGreaterThan(4);
+  });
+
   it('shows an empty state for a section with nothing in it', async () => {
     const user = userEvent.setup();
     render(<App />);
