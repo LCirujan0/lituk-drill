@@ -906,3 +906,46 @@ authentication, one history every visitor sees. The endpoint is public by decisi
   The card, its phrasing and its option order are held in component state and none is derived
   from the log, so the property holds — but it holds by construction rather than by luck, and
   it needed its own tests to say so.
+
+---
+
+## D-031 — The owner's 2026 printed edition is the handbook; the PDF is its stand-in
+
+**Date:** 4 August 2026 · **Status:** accepted · **Narrows D-023**
+
+**Context.** D-023 settled that the maintained handbook beats present-day reality: the book
+says the Council of Europe has 47 members, it has 46, and the deck says 47 because the exam
+marks against the book. What that entry never had to answer is *which* maintained edition,
+because there was only one text in play.
+
+Two arrived. The project works from a PDF rendering extracted to `.work/handbook.txt`; the
+owner sits the exam on a **2026 printed edition**. Building the religion facts surfaced a
+material disagreement — the PDF reports the 2009 Citizenship Survey (70% Christian, 21% no
+religion), his edition the 2011 census (59%, 25%) — and a population table ending at a
+different year.
+
+He then established the useful part: **the two texts are identical apart from a handful of
+deltas he has listed.** Religion proportions, the census population, and the pages he
+photographed. Everything else matches.
+
+**Decision.** The **2026 printed edition is the handbook.** Where the two disagree, his
+figures win and the PDF is corrected to match. The PDF remains the working reference for
+everything else, and remains the corpus the vocabulary check greps — which is sound precisely
+because the deltas are enumerated rather than unknown.
+
+**Consequences.**
+- *Positive.* The deck now matches the book the exam is actually drawn from, which is the only
+  thing that matters on 25 September. The religion figures lose their `verify` flags because
+  the doubt is gone rather than deferred. And because the deltas are a list rather than a
+  guess, the vocabulary check keeps its authority — a year absent from the PDF is still a real
+  finding unless it falls inside a known delta.
+- *Negative.* The authority is now a book this project cannot read. Every future check against
+  the handbook is a check against a proxy, and the proxy is known-wrong in named places. That
+  is manageable while the list of deltas is short and honest; it stops being manageable the
+  moment an unlisted difference exists, and nothing here can detect one.
+- *Negative.* It puts the owner on the critical path for content questions in a way D-023 did
+  not. The sixteen retirements went through him, and so will the next ambiguity.
+- *Process consequence.* The first check ran against the PDF and reported six facts as
+  unanswerable that his edition may well answer. Confirming each with him before pulling
+  anything was what stopped that becoming sixteen wrong deletions — and confirming, rather
+  than asking him to re-derive, is what made it cheap enough to actually happen.

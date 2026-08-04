@@ -311,6 +311,7 @@ export const CHAPTER_2: readonly Fact[] = [
   },
   {
     id: "f228",
+    retired: 'The Channel Islands are named as Crown dependencies, but Jersey and Guernsey are never named individually. Confirmed by the owner, 4 Aug 2026.',
     tag: "Crown dependencies",
     chapter: 2,
     verify: false,
@@ -1202,6 +1203,7 @@ export const CHAPTER_2: readonly Fact[] = [
   },
   {
     id: "f252",
+    retired: 'Cornwall is mentioned once; the Cornish language is not. Confirmed by the owner, 4 Aug 2026.',
     tag: "Languages",
     chapter: 2,
     verify: false,

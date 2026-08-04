@@ -16,7 +16,12 @@
 
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
-import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+// ACTIVE, never DECK. `DECK` is the id space and still holds the retired facts, which exist
+// only so that historical review events keep pointing at the question they were actually
+// answering (R-4). Anything deciding what to serve, or counting what is left to learn, reads
+// ACTIVE. A retired fact's past events simply fall out of the replay, which is correct — its
+// schedule is no longer anybody's business.
+import { ACTIVE, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { dayNumber, replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
 import { DEFAULT_CONFIG, type Grade, type ReviewMode } from '@/domain/scheduler/types';
@@ -46,8 +51,8 @@ import {
 
 export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
-const FORM_COUNTS = new Map(DECK.map((f) => [f.id, f.forms.length]));
-const FACT_IDS = DECK.map((f) => f.id);
+const FORM_COUNTS = new Map(ACTIVE.map((f) => [f.id, f.forms.length]));
+const FACT_IDS = ACTIVE.map((f) => f.id);
 
 /**
  * Whether a review counts toward the spaced-repetition schedule.
@@ -79,14 +84,14 @@ export function useDrill() {
   }, [events]);
 
   const ctx: SectionContext = useMemo(
-    () => ({ deck: DECK, events, states, today, rng: mulberry32(events.length + 1) }),
+    () => ({ deck: ACTIVE, events, states, today, rng: mulberry32(events.length + 1) }),
     [events, states, today],
   );
 
   const counts = useMemo(() => sectionCounts(ctx), [ctx]);
 
   const progress = useMemo(
-    () => deckProgress(DECK, states, events, counts.mistakes),
+    () => deckProgress(ACTIVE, states, events, counts.mistakes),
     [states, events, counts.mistakes],
   );
 
@@ -150,10 +155,10 @@ export function useDrill() {
     config: DEFAULT_CONFIG,
     totals: { facts: TOTAL_FACTS, forms: TOTAL_FORMS },
     standings: () => mistakeStandings(ctx),
-    upcoming: () => upcomingLoad(DECK, states, today, 7),
+    upcoming: () => upcomingLoad(ACTIVE, states, today, 7),
     activity: () => recentActivity(events, today, 14),
     streak: () => streak(events, today),
-    problems: () => problemFacts(DECK, states, 8),
+    problems: () => problemFacts(ACTIVE, states, 8),
     nextItem,
     grade,
     updateSettings,

@@ -879,6 +879,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f023",
+    retired: 'The handbook names St Augustine but gives no year for his arrival. Confirmed by the owner against the 2026 edition, 4 Aug 2026.',
     tag: "Anglo-Saxons",
     chapter: 3,
     verify: false,
@@ -1106,6 +1107,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f029",
+    retired: 'The handbook names Alfred the Great but never gives him a kingdom; "Wessex" does not appear. Confirmed by the owner, 4 Aug 2026.',
     tag: "Vikings",
     chapter: 3,
     verify: false,
@@ -1371,6 +1373,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f036",
+    retired: 'The Domesday Book is named but never dated. The owner adds that 1066 in the book is William defeating Harold, not the Domesday survey — so the question invites the wrong association as well as being unanswerable.',
     tag: "Norman Conquest",
     chapter: 3,
     verify: false,
@@ -1484,6 +1487,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f039",
+    retired: 'Magna Carta is covered but the place of signing is not given; "Runnymede" does not appear. Confirmed by the owner, 4 Aug 2026.',
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
@@ -1749,6 +1753,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f046",
+    retired: 'The handbook says the Hundred Years War lasted 116 years and that the English left France in the 1450s. It gives no start year. Confirmed by the owner, 4 Aug 2026.',
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
@@ -2242,6 +2247,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f059",
+    retired: 'No expulsion of Jews is mentioned anywhere. The nearest text says the first Jews to come to Britain since the Middle Ages settled in London in 1656. Confirmed by the owner, 4 Aug 2026.',
     tag: "Middle Ages",
     chapter: 3,
     verify: false,
@@ -2317,6 +2323,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f061",
+    retired: 'The handbook covers Henry VIII at length but does not give the year he became king. Confirmed by the owner, 4 Aug 2026.',
     tag: "Tudors",
     chapter: 3,
     verify: false,
@@ -2658,6 +2665,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f070",
+    retired: 'The break with Rome is described but not dated. Confirmed by the owner, 4 Aug 2026.',
     tag: "Reformation",
     chapter: 3,
     verify: false,
@@ -2695,6 +2703,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f071",
+    retired: 'The handbook describes the break with Rome without giving the annulment as the reason in these terms. Confirmed by the owner, 4 Aug 2026.',
     tag: "Reformation",
     chapter: 3,
     verify: false,
@@ -3981,6 +3990,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f105",
+    retired: 'Principia Mathematica is named and described, with no publication year. Confirmed by the owner, 4 Aug 2026.',
     tag: "Science",
     chapter: 3,
     verify: false,
@@ -4740,6 +4750,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f125",
+    retired: 'The Seven Years War is not mentioned at all — the owner could not find it either. Confirmed 4 Aug 2026.',
     tag: "Empire",
     chapter: 3,
     verify: false,
@@ -5613,6 +5624,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f148",
+    retired: 'Charles Darwin and On the Origin of Species appear nowhere in the handbook. Zero hits for either. Confirmed by the owner, 4 Aug 2026.',
     tag: "Science",
     chapter: 3,
     verify: false,

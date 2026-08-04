@@ -1,11 +1,37 @@
-/* Fills the frame, so the action bar can pin to the bottom with `margin-block-start: auto`
-   and the explanation panel is the only thing that ever scrolls. */
+/**
+ * Fills the frame exactly, so the action bar sits on the bottom edge and the explanation
+ * panel is the only thing that ever scrolls.
+ *
+ * `height: 100%` rather than `flex: 1 1 auto`: as a flex child it grew to its content and
+ * left the rest of the screen empty below the buttons on a short card, which is the dead
+ * space the owner reported. Taking the full height puts `margin-block-start: auto` on the
+ * action bar in charge, and the bar lands on the bottom edge on every card regardless of how
+ * long the question is.
+ */
 .wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  min-height: 0;
+}
+
+/**
+ * The scrolling middle: everything between the header and the action bar.
+ *
+ * The card and the options live in here and scroll together when they have to. The action bar
+ * is a sibling, outside it, so Previous / Got lucky / Next are on screen at every scroll
+ * position — you never have to scroll to reach the thing that moves you on.
+ */
+.body {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   gap: var(--space-3);
   min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ---- top bar ---------------------------------------------------------- */
@@ -181,16 +207,12 @@
    pushing the options down the screen. `overscroll-behavior: contain` keeps a scroll that
    runs out of panel from becoming a page bounce. */
 .explanation {
-  max-height: 34vh;
   margin: var(--space-3) 0 0;
   padding-block-start: var(--space-3);
   border-block-start: 1px dashed var(--c-rule);
   color: var(--c-text-soft);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
 }
 
 .explLead {
@@ -310,6 +332,7 @@
   gap: var(--space-2);
   margin-block-start: auto;
   padding-block-start: var(--space-3);
+  border-block-start: 1px solid var(--c-rule);
 }
 
 .act {

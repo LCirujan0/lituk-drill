@@ -17,7 +17,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+import { ACTIVE, ALL_FACTS, DECK, RETIRED, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
 import { explanationText, strayYears, vocabularyReport, vocabularyTotals } from '@/domain/deck/vocabulary';
@@ -36,10 +36,25 @@ import {
 
 describe('shape', () => {
   it('is the size it should be', () => {
-    // Hardcoded on purpose: growing the deck should fail here and make someone confirm it
-    // was deliberate, rather than sliding past unnoticed.
-    expect(TOTAL_FACTS).toBe(539);
-    expect(TOTAL_FORMS).toBe(1615);
+    // Hardcoded on purpose: changing the deck's size should fail here and make someone
+    // confirm it was deliberate, rather than sliding past unnoticed.
+    //
+    // Two numbers, because there are now two. ACTIVE is what is drilled; DECK is the id
+    // space and keeps the retired facts, so that every historical review event still points
+    // at the question it was answering (R-4).
+    expect(TOTAL_FACTS, 'facts drilled').toBe(526);
+    expect(TOTAL_FORMS, 'phrasings drilled').toBe(1576);
+    expect(ALL_FACTS, 'ids in use, retired included').toBe(542);
+    expect(RETIRED).toHaveLength(16);
+  });
+
+  it('gives every retired fact a reason, and keeps it out of the deck that is drilled', () => {
+    // A fact pulled without a written reason is indistinguishable from one deleted by
+    // accident, and the reason is the only record of a decision taken against the handbook.
+    for (const fact of RETIRED) {
+      expect(fact.retired!.length, `${fact.id} retired with no reason`).toBeGreaterThan(30);
+      expect(ACTIVE.some((f) => f.id === fact.id), `${fact.id} is still being drilled`).toBe(false);
+    }
   });
 
   it('keeps ids unique and contiguous', () => {
@@ -50,7 +65,7 @@ describe('shape', () => {
   });
 
   it('covers all five chapters', () => {
-    const counts = DECK.reduce<Record<number, number>>((acc, f) => {
+    const counts = ACTIVE.reduce<Record<number, number>>((acc, f) => {
       acc[f.chapter] = (acc[f.chapter] ?? 0) + 1;
       return acc;
     }, {});
