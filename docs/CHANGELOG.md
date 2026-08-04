@@ -55,6 +55,13 @@ An entry for every working day that has commits.
 - CI: typecheck, eslint, token lint, tests, build, gitleaks, and a job that fails on any change to v0.
   Same gate in `.githooks/pre-push`. Actions pinned to commit SHAs, workflow permissions read-only.
 
+**Repo live.** [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill), public per D-005.
+All three CI checks green on the first push; the pre-push hook fired and ran the full gate before the
+push left the machine. `main` protected — required status checks, linear history, no force pushes, no
+deletions, no review required. Consequence worth stating: **direct pushes to `main` are now rejected**,
+so work lands via PRs. That is the trade D-005 bought and it is the right one under D-006's full
+autonomy — a local hook can be bypassed with `--no-verify`, a required check cannot.
+
 **Deferred, deliberately:** generated numeric distractors (D-014, closes L-002) · the readiness model ·
 practice mode · mocks · the timeline screen · any real UI · database provisioning. All of milestone 2+.
 
