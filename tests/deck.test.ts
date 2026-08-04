@@ -35,8 +35,10 @@ import {
 
 describe('shape', () => {
   it('is the size it should be', () => {
-    expect(TOTAL_FACTS).toBe(443);
-    expect(TOTAL_FORMS).toBe(1327);
+    // Hardcoded on purpose: growing the deck should fail here and make someone confirm it
+    // was deliberate, rather than sliding past unnoticed.
+    expect(TOTAL_FACTS).toBe(528);
+    expect(TOTAL_FORMS).toBe(1582);
   });
 
   it('keeps ids unique and contiguous', () => {
@@ -102,7 +104,7 @@ describe('sourcing — R3', () => {
     // Facts checked against the handbook carry a citation. A corrected fact without one is
     // an assertion, not a correction — and this deck has already shipped one wrong answer.
     const sourced = DECK.filter((f) => f.source);
-    expect(sourced.length).toBeGreaterThanOrEqual(44);
+    expect(sourced.length).toBeGreaterThanOrEqual(129);
     for (const fact of sourced) expect(fact.source!.trim().length).toBeGreaterThan(10);
   });
 
@@ -172,13 +174,17 @@ describe('explanations', () => {
     expect(orphans, `explanations for facts that do not exist: ${orphans.join(', ')}`).toEqual([]);
   });
 
-  it('reaches the deck', () => {
-    const withExplanation = DECK.filter((f) => f.explanation);
-    expect(withExplanation.length).toBe(Object.keys(EXPLANATIONS).length);
+  it('attaches every entry in the map to its fact', () => {
+    // Explanations arrive two ways now: the older facts take theirs from EXPLANATIONS at
+    // assembly, the newer ones carry it inline. Both must end up on the fact — so assert
+    // the map lands rather than comparing two counts that legitimately differ.
+    for (const [id, text] of Object.entries(EXPLANATIONS)) {
+      expect(DECK.find((f) => f.id === id)?.explanation, `${id} did not reach the deck`).toBe(text);
+    }
   });
 
   it('covers every fact — no card answers into silence', () => {
-    // Now at 443/443. The whole point of the feature is that answering teaches something,
+    // Now at 528/528. The whole point of the feature is that answering teaches something,
     // so a fact without context is a card that says "Not quite." and nothing else. Adding a
     // fact without an explanation should fail the build rather than quietly leave a hole.
     const missing = DECK.filter((f) => !f.explanation).map((f) => f.id);
