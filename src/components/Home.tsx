@@ -22,7 +22,7 @@ interface Props {
   readonly progress: DeckProgress;
   readonly streak: number;
   readonly persistent: boolean;
-  readonly onOpen: (section: 'due' | 'new' | 'mistakes') => void;
+  readonly onOpen: (section: 'due' | 'new' | 'mistakes' | 'random') => void;
   readonly onChapter: (chapter: Chapter) => void;
   readonly onProgress: () => void;
   readonly onTimeline: () => void;
@@ -71,7 +71,9 @@ export function Home({
           <span className={styles.sectionName}>Due today</span>
           <span className={styles.sectionCount}>{counts.due}</span>
           <span className={styles.sectionNote}>
-            {counts.due > 0 ? 'What the schedule says you are about to forget' : 'Nothing due — come back tomorrow'}
+            {counts.due > 0
+              ? 'A mix of mistakes, new material and facts you have got right — each fact once'
+              : 'Done for today. Thirty facts is the day'}
           </span>
         </button>
 
@@ -115,6 +117,17 @@ export function Home({
             );
           })}
         </div>
+      </section>
+
+      <section className={styles.block} aria-labelledby="random-heading">
+        <h2 id="random-heading" className={styles.blockTitle}>Random</h2>
+        <button type="button" className={styles.chapter} onClick={() => onOpen('random')}>
+          <span className={styles.chapterName}>One at random</span>
+          <span className={styles.chapterMeta}>
+            Any of the {counts.totalForms.toLocaleString('en-GB')} phrasings, with no memory
+            and no order — the honest sample the other sections are designed not to be
+          </span>
+        </button>
       </section>
 
       <div className={styles.links}>

@@ -19,13 +19,14 @@ import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { dayNumber, replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
-import { buildQueue } from '@/domain/scheduler/queue';
 import { DEFAULT_CONFIG, type Grade, type ReviewMode } from '@/domain/scheduler/types';
 import {
   chapterQueue,
+  dueQueue,
   mistakeStandings,
   mistakesQueue,
   newQueue,
+  randomQueue,
   sectionCounts,
   type DrillItem,
   type SectionContext,
@@ -41,7 +42,7 @@ import {
   subscribe,
 } from '@/adapters/store';
 
-export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter';
+export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random';
 
 const FORM_COUNTS = new Map(DECK.map((f) => [f.id, f.forms.length]));
 const FACT_IDS = DECK.map((f) => f.id);
@@ -99,23 +100,9 @@ export function useDrill() {
       let queue: DrillItem[] = [];
 
       if (section === 'due') {
-        const newToday = events.filter(
-          (e) => dayNumber(e.at) === today && e.mode === 'scheduled',
-        ).length;
-        const { queue: ids } = buildQueue(
-          {
-            factIds: FACT_IDS,
-            states,
-            today,
-            step: events.length,
-            newPerDay: settings.newPerDay,
-            newToday,
-            maxReviews: settings.maxReviews,
-          },
-          ctx.rng,
-        );
-        // -1 lets the drill screen choose a phrasing appropriate to the current mode.
-        queue = ids.map((factId) => ({ factId, formIndex: -1 }));
+        queue = dueQueue(ctx);
+      } else if (section === 'random') {
+        queue = randomQueue(ctx, 40);
       } else if (section === 'new') {
         queue = newQueue(ctx, 60);
       } else if (section === 'mistakes') {

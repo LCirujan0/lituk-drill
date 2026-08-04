@@ -30,10 +30,11 @@ type View =
   | { kind: 'timeline' };
 
 const EMPTY_MESSAGE: Record<SectionKey, string> = {
-  due: 'Nothing is due. That is the schedule working, not a gap — come back tomorrow, or meet some new material.',
-  new: 'You have now seen every phrasing in the deck at least once. Which is the whole 1,327 of them.',
+  due: 'That is your thirty for today. Anything else you drill now is a bonus — the other sections are unlimited.',
+  new: 'You have now met every phrasing in the deck at least once — all 1,327 of them.',
   mistakes: 'Nothing outstanding. Every fact you have missed has since been answered correctly on three different phrasings.',
   chapter: 'Nothing left to drill in this chapter right now.',
+  random: 'Nothing to draw from, which should be impossible.',
 };
 
 export default function App() {
@@ -96,6 +97,7 @@ export default function App() {
     if (view.section === 'due') return drill.counts.due;
     if (view.section === 'new') return drill.counts.newForms;
     if (view.section === 'mistakes') return drill.counts.mistakes;
+    if (view.section === 'random') return drill.counts.totalForms;
     return drill.counts.byChapter.get(view.chapter ?? 1)?.total ?? 0;
   }, [view, drill.counts]);
 
@@ -178,5 +180,6 @@ function titleFor(view: Extract<View, { kind: 'drill' }>): string {
   if (view.section === 'due') return 'Due today';
   if (view.section === 'new') return 'Not tried yet';
   if (view.section === 'mistakes') return 'Your mistakes';
+  if (view.section === 'random') return 'Random';
   return CHAPTER_NAMES[view.chapter ?? 1];
 }

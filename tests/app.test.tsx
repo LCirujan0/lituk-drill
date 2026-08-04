@@ -27,6 +27,28 @@ beforeEach(() => {
   reloadFromStorage();
 });
 
+
+/** The correct and a wrong option for whatever card is currently on screen. */
+function currentOptions() {
+  const heading = screen.getByRole('heading', { level: 1 }).textContent;
+  const fact = DECK.find((f) => f.forms.some((x) => x.question === heading))!;
+  const form = fact.forms.find((x) => x.question === heading)!;
+  const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹']);
+  const shown = screen
+    .getAllByRole('button')
+    .map((b) => b.textContent ?? '')
+    .filter((t) => t && !chrome.has(t) && !/^(Correct|Not quite)/.test(t));
+  return { fact, correct: form.answers.correct, wrong: shown.find((t) => t !== form.answers.correct)! };
+}
+
+/** Open a section and wait for its first card. */
+async function open(user: ReturnType<typeof userEvent.setup>, name: RegExp) {
+  render(<App />);
+  await screen.findByText(/phrasings proven/);
+  await user.click(screen.getByRole('button', { name }));
+  await screen.findByRole('heading', { level: 1 });
+}
+
 const stored = (): ReviewEvent[] => JSON.parse(window.localStorage.getItem(EVENTS_KEY) ?? '[]');
 
 /** Click whichever option is currently rendered at `index`. */
@@ -79,7 +101,7 @@ describe('the card holds after answering — regression', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(screen.getByText(/^Correct\.$/)).toBeTruthy();
   });
 
@@ -90,7 +112,7 @@ describe('the card holds after answering — regression', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Seven');
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(screen.getByText(/^Not quite\.$/)).toBeTruthy();
   });
 });
@@ -202,8 +224,9 @@ describe('explanations', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
-    expect(screen.getByText(/backbone of the whole first chapter/)).toBeTruthy();
+    const { fact } = currentOptions();
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    expect(screen.getByText(fact.explanation!.slice(0, 40), { exact: false })).toBeTruthy();
   });
 });
 
@@ -216,7 +239,7 @@ describe('recording a review', () => {
     await screen.findByRole('heading', { level: 1 });
 
     expect(stored()).toHaveLength(0);
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(stored()).toHaveLength(1);
 
     // Pressing Next must not record a second review.
@@ -231,13 +254,14 @@ describe('recording a review', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     expect(stored()[0].grade).toBe(4);
     expect(stored()[0].mode).toBe('scheduled'); // first contact is always scheduled
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
-    await answerOption(user, (t) => t === 'The rule of law' || t === 'Individual liberty');
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(stored()).toHaveLength(2);
+    expect(stored()[1].grade).toBe(0);
   });
 });
 
@@ -256,7 +280,7 @@ describe('the home screen', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Seven'); // wrong
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     await user.click(screen.getByRole('button', { name: 'Back' }));
 
     const mistakes = await screen.findByRole('button', { name: /Your mistakes/ });
@@ -270,7 +294,7 @@ describe('the home screen', () => {
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     await user.click(screen.getByRole('button', { name: 'Back' }));
 
     await waitFor(() => expect(screen.getByText('1')).toBeTruthy());
@@ -357,7 +381,7 @@ describe('persistence', () => {
     await screen.findByText(/phrasings proven/);
     await user.click(screen.getByRole('button', { name: /The values and principles of the UK/ }));
     await screen.findByRole('heading', { level: 1 });
-    await answerOption(user, (t) => t === 'Five');
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
     unmount();
 
     reloadFromStorage();
