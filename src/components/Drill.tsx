@@ -42,6 +42,8 @@ interface Props {
   readonly onExit: () => void;
   readonly stateFor: (factId: string) => FactState | undefined;
   readonly remaining: number;
+  /** Changes only when a new card is dealt. Seeds the shuffle. See page.tsx. */
+  readonly nonce: number;
   readonly emptyMessage: string;
 }
 
@@ -64,7 +66,7 @@ function resolveForm(item: DrillItem, mode: DrillMode, seed: number): number {
 }
 
 export function Drill({
-  title, item, mode, onModeChange, onGrade, onNext, onExit, stateFor, remaining, emptyMessage,
+  title, item, mode, onModeChange, onGrade, onNext, onExit, stateFor, remaining, nonce, emptyMessage,
 }: Props) {
   // Reset on a new card is handled by the caller giving this component a `key` tied to the
   // card's identity, so React discards this state rather than an effect clearing it. A new
@@ -77,16 +79,18 @@ export function Drill({
 
   const fact = item ? factById(item.factId) : undefined;
   const formIndex = useMemo(
-    () => (item && fact ? resolveForm(item, mode, item.factId.length + remaining) : 0),
-    [item, fact, mode, remaining],
+    () => (item && fact ? resolveForm(item, mode, item.factId.length + nonce) : 0),
+    [item, fact, mode, nonce],
   );
 
   const presented = useMemo(() => {
     if (!fact) return null;
-    // Seeded from the card's identity so the same card looks the same if re-rendered,
-    // and different the next time it comes round.
-    return presentForm(fact.forms[formIndex], mulberry32(hash(`${fact.id}:${formIndex}:${remaining}`)));
-  }, [fact, formIndex, remaining]);
+    // Seeded ONLY from things that change when the card changes. `remaining` used to be in
+    // here, and it is derived from the event log — so answering re-shuffled the options
+    // mid-click and the verdict was computed against an arrangement that no longer existed.
+    // Nothing log-derived may enter this seed.
+    return presentForm(fact.forms[formIndex], mulberry32(hash(`${fact.id}:${formIndex}:${nonce}`)));
+  }, [fact, formIndex, nonce]);
 
   const commit = useCallback(
     (grade: Grade) => {

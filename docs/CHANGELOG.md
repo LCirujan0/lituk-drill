@@ -2,6 +2,36 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — the options moved under your finger
+
+**L-021, High.** Reported from real use: clicking an answer re-shuffled the four options as
+the click landed, so a correct answer could be marked wrong.
+
+The shuffle seed included `remaining` — a per-section count derived from the review-event
+log. Answering appended an event, the count moved, the memo recomputed, and the options
+re-ordered. `chosen` then indexed the old arrangement while `correctIndex` came from the new
+one. The *recorded grade* was right throughout, because the click handler closed over the
+pre-answer arrangement, so no schedule was corrupted — but the screen lied, which for a
+learning tool is the worse half.
+
+Fixed with a `cardNonce` that advances only when a card is dealt. Nothing log-derived may
+seed presentation.
+
+**Two things about how this was found and fixed are worth keeping:**
+
+- **The first regression test passed against broken code.** It opened a *chapter* drill — the
+  one section whose count does not move when you answer. Written before the fix and run
+  before the fix, as it should be, and it still said the code was fine. The test now
+  enumerates the sections rather than sampling one.
+- **The revert check was also wrong the first time.** Reverting only the seed string left the
+  dependency array pointing at the nonce, so the memo never recomputed and the "broken" build
+  passed. Reverting properly failed all three.
+
+**Postmortem filed** (LEDGER) — same bug class twice, which the BRIEF pre-declares as a
+trigger. The class is now RULES R-11: nothing derived from the review log may drive what is
+on screen mid-card. The first fix held the *card* still and treated the symptom; the option
+shuffle was seeded from a live count three lines away and looked solved.
+
 ## 2026-08-04 — explanations, second batch
 
 **174 of 443 facts now carry context** (was 53). Chapters 1 and 2 complete, chapter 5 at

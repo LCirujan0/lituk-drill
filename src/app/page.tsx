@@ -51,10 +51,25 @@ export default function App() {
    */
   const [current, setCurrent] = useState<DrillItem | null>(null);
 
+  /**
+   * Changes once per card, and only when a new card is dealt.
+   *
+   * This is what seeds the option shuffle. It exists because the seed used to include a
+   * live count taken from the event log: answering appended an event, the count moved, and
+   * the four options re-shuffled under your finger — so the index you clicked pointed into
+   * one arrangement while the correct index came from another, and the verdict was reported
+   * against a layout that had already gone.
+   *
+   * Nothing derived from the review log may ever seed presentation. A counter that advances
+   * with the card is the whole fix.
+   */
+  const [cardNonce, setCardNonce] = useState(0);
+
   const advance = useCallback(
     (v: View = view) => {
       if (v.kind !== 'drill') return;
       setCurrent(drill.nextItem(v.section, v.chapter));
+      setCardNonce((n) => n + 1);
     },
     [drill, view],
   );
@@ -64,6 +79,7 @@ export default function App() {
       const next: View = { kind: 'drill', section, chapter };
       setView(next);
       setCurrent(drill.nextItem(section, chapter));
+      setCardNonce((n) => n + 1);
     },
     [drill],
   );
@@ -120,8 +136,9 @@ export default function App() {
         <Drill
           // Identity of the card, not of the screen. A new card remounts, which discards
           // the revealed/chosen state — so an answer can never be on screen before its
-          // question has been read.
-          key={`${item?.factId ?? 'none'}:${item?.formIndex ?? -1}:${mode}`}
+          // question has been read. The nonce is in here as well as in the seed, so that
+          // holds even when the same fact is dealt twice running.
+          key={`${item?.factId ?? 'none'}:${item?.formIndex ?? -1}:${mode}:${cardNonce}`}
           title={titleFor(view)}
           item={item}
           mode={mode}
@@ -131,6 +148,7 @@ export default function App() {
           onExit={home}
           stateFor={(factId) => drill.states.get(factId)}
           remaining={remaining}
+          nonce={cardNonce}
           emptyMessage={EMPTY_MESSAGE[view.section]}
         />
       )}

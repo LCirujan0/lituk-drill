@@ -54,3 +54,11 @@ Components reference semantic tokens. A token system without its check is decora
 ### R-10 · Every bug fix ships with a regression test in the same commit
 The fix without the test is half a fix. The same bug twice is a postmortem trigger.
 **Enforced by:** review. *(The one rule here with no machine check — which is itself worth noticing.)*
+
+### R-11 · Nothing derived from the review log may drive what is on screen mid-card
+The card, its phrasing, its option order and its verdict are fixed when the card is dealt and
+do not move until the reader asks for the next one. Answering appends to the log, so anything
+computed from the log changes underfoot at the exact moment it is being acted on. This has
+caused two separate bugs (L-019, L-021).
+**Enforced by:** `app.test.tsx` — option order and card identity asserted stable across
+answering, enumerated over every section, and both assertions verified by reverting the fix.
