@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
-| Tests | 93 passing across 4 files |
+| Tests | 122 passing across 5 files |
 | Deck | **443 facts · 1,327 forms** · 5 chapters (410/1,228 migrated from v0 + 33 added) |
 | Migration frontier | none — no database provisioned yet |
 | Next decision id | D-025 |
