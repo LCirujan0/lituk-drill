@@ -601,3 +601,51 @@ cannot be generated.
   permanently shows a 91.4% middle-value rate that no reader ever meets, so anyone reading
   `numericMiddleRankRate` without reading `effectiveNumericMiddleRankRate` will draw the wrong
   conclusion.
+
+---
+
+## D-022 — v0 is deployed at the repository project; v1 gets its own
+
+**Date:** 4 August 2026 · **Status:** accepted
+**Supersedes** the deployment arrangement in D-020 · **Amends BRIEF §Appetite and §Outcome**
+
+**Context.** The kickoff input stated as settled fact that "a working v0 is already deployed and in
+daily use", and that it "carries him to 25 September on its own", so that "if v1 is not ready by 20
+September he sits the test on v0 and loses nothing". The entire appetite arrangement — six weeks,
+fixed time, and an explicit instruction not to let the exam date pull scope or quality — was built on
+that sentence. It was never checked, by me or by anyone.
+
+It was not true. There was no v0 deployment and no accumulated schedule; the owner had been using
+commercial apps. Everything resting on the premise was resting on nothing, and had v1 slipped, the
+fallback would simply not have existed.
+
+Separately, importing the repository into Vercel created a project whose Root Directory is the
+repository root. With the framework preset at "Other", it serves the root `index.html` — which is v0.
+Raised as a High finding on the assumption that it was a *second* copy competing with a real one
+(L-013). With no real one, it is not a collision. It is the missing deployment.
+
+**Decision.** Keep it. The `lituk-drill` Vercel project stays rooted at the repository root and **is
+the v0 deployment**. v1 gets a **separate** Vercel project rooted at `v1/` when there is something
+worth deploying — which is not yet, since v1 has no interface.
+
+The premise is corrected rather than quietly dropped. The deadline is neutralised **from today, and
+only if daily use actually begins** — the arrangement is now conditional on an action rather than
+describing an existing state.
+
+**Consequences.**
+- *Positive.* The owner has a working drill tool today, at a stable origin, which is the single most
+  valuable thing available in the remaining seven weeks — and it is the tool §A argues is better than
+  the commercial apps he has been using. The origin is stable by construction rather than by promise:
+  R-1 and the `v0 is untouched` CI job forbid any change to the three files it serves, so a push can
+  never alter it. No deploy step, no drag-and-drop, no second account. D-020's *fence* survives intact
+  — v0 and v1 remain separate projects at separate origins — only the assignment is swapped.
+- *Negative.* A project named `lituk-drill`, connected to the v1 repository, serves v0; that will read
+  as a mistake to anyone who finds it without this entry, including a future me. v1's eventual project
+  needs creating and naming carefully. And the appetite is now genuinely at risk in a way the BRIEF
+  said it was not: if daily use does not start, there is no fallback on 20 September, and the
+  instruction to ignore the exam date stops being safe. **That is the owner's call to make, not
+  mine** — it is flagged, not decided.
+- *Process consequence.* A premise handed over as settled was carried into the anchor document and
+  into a pre-mortem without verification, and it took an unrelated infrastructure change to expose it.
+  Recorded as L-014 with a tripwire: `/jorge-drift-check` treats §B's premise as a claim to re-verify,
+  not a given.

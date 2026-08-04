@@ -12,13 +12,13 @@ restates one. A hand-copied live number drifts within a session.
 | Tests | 90 passing across 4 files |
 | Deck | 410 facts · 1,228 forms · 5 chapters · 82 tags |
 | Migration frontier | none — no database provisioned yet |
-| Next decision id | D-022 |
-| Next ledger id | L-014 |
-| Open ledger rows | 10; 2 verified-fixed; L-002 fixed-unverified |
-| Open Critical | 0. **One open High: L-013** — the Vercel project serves v0, not v1 |
+| Next decision id | D-023 |
+| Next ledger id | L-015 |
+| Open ledger rows | 9; 3 verified-fixed; L-002 and L-014 fixed-unverified |
+| Open Critical | 0. No open High |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
-| CI | Green — 3 required checks, all passing on first push |
-| Deployed | v0 only. v1 not yet deployed |
+| CI | Green — 3 required checks |
+| Deployed | **v0 at https://lituk-drill.vercel.app** (D-022). v1 has no project yet |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
 
 ## What exists
@@ -49,13 +49,14 @@ skipped; it needs a schema and an `.env.example` to check against first.
 
 ## Next, in order
 
-1. **L-013 — set the Vercel project's Root Directory to `v1`.** Owner action, cannot be
-   done from the repo. Until it is, `lituk-drill.vercel.app` serves a second copy of v0 at
-   a new origin with an empty schedule.
-2. Persistence: schema for the review-event log, and sync endpoints. The Neon database is
+0. **Owner: start using https://lituk-drill.vercel.app daily.** Not a build task, and the
+   highest-value item on this list. It is what makes the deadline neutral (D-022), and it
+   is what gives S6 something to import in September.
+1. Persistence: schema for the review-event log, and sync endpoints. The Neon database is
    provisioned and `DATABASE_URL` is present on Production and Preview.
-3. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
-4. L-004 (the inherited amber contrast pairing) before any component uses it.
+2. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
+3. L-004 (the inherited amber contrast pairing) before any component uses it.
+4. A separate Vercel project rooted at `v1/` — only once v1 has an interface worth opening.
 
 ## Gotchas
 
