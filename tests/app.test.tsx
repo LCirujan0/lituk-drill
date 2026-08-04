@@ -425,6 +425,136 @@ describe('navigation', () => {
   });
 });
 
+describe('stepping back through the session — regression', () => {
+  /**
+   * The reported bug: "Back returns to Home, so once I press Next the card is gone." The
+   * answer and the explanation were destroyed by the only control that moved you on, which
+   * makes the explanation unreadable in practice — you get one glance at it, while still
+   * thinking about the question.
+   */
+  const optionButtons = () => {
+    const chrome = new Set(['Back', 'Quiz', 'Recall', 'Next', 'Show answer', 'Again', 'Hard', 'Good', 'Easy', '‹', 'Got lucky — I guessed', 'Sync now', '‹ Previous', 'Next ›']);
+    return screen
+      .getAllByRole('button')
+      .map((b) => b.textContent ?? '')
+      .filter((t) => t && !chrome.has(t) && !/^(Correct|Not quite|Recorded|‹)/.test(t));
+  };
+
+  /** Answer the card on screen and move on, returning what was asked and what was pressed. */
+  async function answerAndAdvance(user: ReturnType<typeof userEvent.setup>) {
+    const question = screen.getByRole('heading', { level: 1 }).textContent!;
+    const options = optionButtons();
+    const pressed = options[0];
+    await user.click(screen.getByRole('button', { name: pressed }));
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    return { question, pressed, options };
+  }
+
+  async function openDrill(user: ReturnType<typeof userEvent.setup>) {
+    render(<App />);
+    await screen.findByText(/facts known every way/);
+    await user.click(screen.getByRole('button', { name: /Not tried yet/ }));
+    await screen.findByRole('heading', { level: 1 });
+  }
+
+  it('brings back the question, the option pressed and the explanation', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    const first = await answerAndAdvance(user);
+    // A second card is now on screen and the first is gone.
+    expect(screen.getByRole('heading', { level: 1 }).textContent).not.toBe(first.question);
+
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(first.question);
+    // The option pressed is still marked, and the explanation is on screen to be re-read.
+    const fact = DECK.find((f) => f.forms.some((x) => x.question === first.question))!;
+    expect(screen.getByText(fact.explanation!.slice(0, 40), { exact: false })).toBeTruthy();
+    expect(screen.getByRole('button', { name: first.pressed })).toBeTruthy();
+  });
+
+  it('shows the same four options in the same order it showed them', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    const first = await answerAndAdvance(user);
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+
+    // Reproduced from the card's own nonce, not re-shuffled. A different order would be a
+    // record of something that never happened.
+    expect(optionButtons()).toEqual(first.options);
+  });
+
+  it('records no second review for a card being re-read', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    await answerAndAdvance(user);
+    const after = stored().length;
+    expect(after).toBe(1);
+
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    // Every option is inert. Pressing one must not grade anything a second time.
+    await user.click(screen.getByRole('button', { name: optionButtons()[1] }));
+
+    expect(stored()).toHaveLength(after);
+    expect(screen.queryByRole('button', { name: 'Got lucky — I guessed' })).toBeNull();
+  });
+
+  it('returns to the live card without re-dealing it — R-11', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    await answerAndAdvance(user);
+    const liveQuestion = screen.getByRole('heading', { level: 1 }).textContent;
+    const liveOptions = optionButtons();
+
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
+
+    // The same card, not another one drawn from the queue, and the same option order.
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(liveQuestion);
+    expect(optionButtons()).toEqual(liveOptions);
+    // Still answerable — it was never answered.
+    expect(stored()).toHaveLength(1);
+    await user.click(screen.getByRole('button', { name: liveOptions[0] }));
+    expect(stored()).toHaveLength(2);
+  });
+
+  it('keeps an answered live card answered when you come back to it', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    await answerAndAdvance(user);
+    await user.click(screen.getByRole('button', { name: optionButtons()[0] }));
+    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    await user.click(screen.getByRole('button', { name: 'Next ›' }));
+
+    // Its verdict and its Next button survive the round trip; nothing was regraded.
+    expect(screen.getByRole('button', { name: 'Next' })).toBeTruthy();
+    expect(stored()).toHaveLength(2);
+  });
+
+  it('counts the position through the session', async () => {
+    const user = userEvent.setup();
+    await openDrill(user);
+
+    // One card only — nothing to page through yet.
+    expect(screen.queryByRole('button', { name: '‹ Previous' })).toBeNull();
+
+    await answerAndAdvance(user);
+    expect(screen.getByText('2 of 2')).toBeTruthy();
+
+    await user.click(screen.getByRole('button', { name: '‹ Previous' }));
+    expect(screen.getByText('1 of 2')).toBeTruthy();
+    // Nowhere further back to go.
+    expect((screen.getByRole('button', { name: '‹ Previous' }) as HTMLButtonElement).disabled).toBe(true);
+  });
+});
+
 describe('a sync landing mid-card does not move it — R-11', () => {
   /**
    * The rule R-11 exists for: nothing derived from the review log may drive what is on
