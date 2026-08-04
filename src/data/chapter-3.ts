@@ -235,7 +235,7 @@ export const CHAPTER_3: readonly Fact[] = [
     id: "f006",
     tag: "Prehistory",
     chapter: 3,
-    verify: false,
+    verify: true,
     source: 'Handbook 3rd ed., ch.3 — corroborated against the handbook text',
     question: "To which prehistoric age is Stonehenge usually assigned?",
     answer: "The Bronze Age",

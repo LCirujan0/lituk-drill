@@ -132,11 +132,35 @@ export interface VocabularyFinding extends VocabularyFlags {
 }
 
 /** Every explanation in the deck that names something the handbook does not. */
+/**
+ * Years this fact's own ANSWER already asserts.
+ *
+ * Exempt, and the reason is worth stating because it looks like a loophole. The handbook this
+ * project can read is a PDF standing in for the owner's 2026 printed edition (D-031), and it
+ * is known-wrong in named places. Where the deck's answer IS a year — 1651 for Worcester,
+ * 1666 for the Great Fire, 1985 for the FGM Act, each confirmed by him against his own copy —
+ * that year is established for this deck whatever the proxy says. An explanation repeating it
+ * teaches nothing the card is not already teaching, so flagging it reports a fact-level
+ * question as an explanation defect and buries the real ones.
+ *
+ * What is still caught is a year appearing NOWHERE: not in the handbook, not in the answer.
+ * That is where an invented date lands, and it is the whole point of the check.
+ */
+const yearsInAnswer = (fact: Deck[number]): ReadonlySet<string> => {
+  const out = new Set<string>();
+  for (const text of [fact.answer, ...fact.forms.map((f) => f.answers.correct)]) {
+    for (const y of normalise(text).match(YEAR) ?? []) out.add(y);
+  }
+  return out;
+};
+
 export function vocabularyReport(deck: Deck): readonly VocabularyFinding[] {
   const findings: VocabularyFinding[] = [];
   for (const fact of deck) {
     if (!fact.explanation) continue;
-    const flags = scanText(explanationText(fact.explanation));
+    const raw = scanText(explanationText(fact.explanation));
+    const own = yearsInAnswer(fact);
+    const flags = { ...raw, years: raw.years.filter((y) => !own.has(y)) };
     // `prose` alone is not worth a row — that tier exists to be counted, not read.
     if (flags.years.length || flags.names.length) {
       findings.push({ factId: fact.id, ...flags });

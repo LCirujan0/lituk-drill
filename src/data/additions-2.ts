@@ -304,7 +304,7 @@ export const ADDITIONS_2: readonly Fact[] = [
     explanation: {
       lead: 'The 2021 census put the UK population at about 67 million.',
       versus: 'The census is taken every ten years, so 2021 is the most recent one and the figure to quote. Anything offered for a year that is not a census year is a distractor.',
-      why: 'The growth table runs 4 million in 1600, 8 million in 1801, 40 million in 1901, 50 million in 1951 - so the population has risen by roughly ten million every twenty years since the war.',
+      why: 'The growth table runs 8 million in 1801, 40 million in 1901 and 50 million in 1951, so the population has risen by roughly ten million every twenty years since the war.',
       cluster: [
         { label: '1801, 8 million', detail: 'the first census, and the start of the industrial rise' },
         { label: '1901, 40 million', detail: 'five times the 1801 figure in a single century' },

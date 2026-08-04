@@ -207,14 +207,16 @@ describe('explanations', () => {
     // Now at 528/528. The whole point of the feature is that answering teaches something,
     // so a fact without context is a card that says "Not quite." and nothing else. Adding a
     // fact without an explanation should fail the build rather than quietly leave a hole.
-    const missing = DECK.filter((f) => !f.explanation).map((f) => f.id);
+    // ACTIVE, not DECK: a retired fact is never served, so it needs no panel. Asserting over
+    // the id space would demand explanations for questions nobody will ever be asked.
+    const missing = ACTIVE.filter((f) => !f.explanation).map((f) => f.id);
     expect(missing, `facts with no explanation: ${missing.join(', ')}`).toEqual([]);
   });
 
   it('writes context rather than restating the answer', () => {
     // An explanation that just repeats the answer teaches nothing that the card did not
     // already show, and would make the extra reading feel pointless.
-    for (const fact of DECK) {
+    for (const fact of ACTIVE) {
       if (!fact.explanation) continue;
       const text = explanationText(fact.explanation);
       expect(text.length, `${fact.id} explanation is too short to be context`).toBeGreaterThan(60);
