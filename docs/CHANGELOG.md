@@ -2,6 +2,37 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — deck to 528 facts (D-029)
+
+**443 → 528 facts, 1,327 → 1,582 forms.** 85 added across topics measured thin against the
+handbook: pubs and licensing, money and banknotes, and the environment had **zero facts
+between them**; education, the Empire and decolonisation, media, film and the interwar years
+were covered at a fraction of the space the book gives them. Every new fact carries a source
+citation and an explanation.
+
+The method for choosing what to add is worth stating, since "more facts" is a BRIEF non-goal:
+measure how much of the handbook a topic occupies against how many facts we hold on it. That
+ratio is the best available proxy for what gets asked, so the expansion follows the book's own
+weighting rather than anyone's instinct.
+
+**Six defects caught before merge, each verified independently rather than taken on trust:**
+
+- `fH14` duplicated `fF04` — both the TV licence and separate tenancy agreements.
+- `CH1` was referenced but never defined: a compile error, not a style point.
+- Four forms marked recall-usable were bare "which of these" stems, unanswerable without
+  options on screen.
+- Two forms carried dangling references — "in this period", "that government" — with no
+  anchor once the card is seen alone.
+- One distractor was arguably correct: Monty Python (1969) offered against a stem asking for
+  1960s satire.
+- One explanation asserted Baird demonstrated television in **1924**. The handbook says only
+  "in the 1920s" and 1924 appears nowhere in it — confirmed by searching the source.
+
+**The first fix for the four bad stems was itself wrong.** Flagging them `mcqOnly` removed the
+defect and cost each fact a recall-usable form, pushing four facts below the breadth gate — a
+straight trade of one defect for another, caught by the ratchet. Rewriting the stems as real
+questions fixed both.
+
 ## 2026-08-04 — facts as the metric, and sync built but not switched on
 
 **D-028: the headline counts facts, not questions.** Was "phrasings proven, X of 1,327"; now

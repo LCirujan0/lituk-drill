@@ -31,7 +31,7 @@ type View =
 
 const EMPTY_MESSAGE: Record<SectionKey, string> = {
   due: 'That is your thirty for today. Anything else you drill now is a bonus — the other sections are unlimited.',
-  new: 'You have now met every phrasing in the deck at least once — all 1,327 of them.',
+  new: 'You have now met every phrasing in the deck at least once — all 1,582 of them.',
   mistakes: 'Nothing outstanding. Every fact you have missed has since been answered correctly on three different phrasings.',
   chapter: 'Nothing left to drill in this chapter right now.',
   random: 'Nothing to draw from, which should be impossible.',

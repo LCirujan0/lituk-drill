@@ -252,10 +252,10 @@ describe('recording a review', () => {
 describe('the home screen', () => {
   it('shows the deck size and a zeroed count on a fresh install', async () => {
     render(<App />);
-    expect(await screen.findByText(/443 facts/)).toBeTruthy();
+    expect(await screen.findByText(/528 facts/)).toBeTruthy();
     // The headline counts FACTS, not phrasings — questions are how the app checks you know
     // a fact, not the thing being learned (D-028).
-    expect(screen.getByText(/of 443/)).toBeTruthy();
+    expect(screen.getByText(/of 528/)).toBeTruthy();
     expect(screen.getByRole('button', { name: /Not tried yet/ })).toBeTruthy();
   });
 
@@ -285,7 +285,7 @@ describe('the home screen', () => {
 
     // One phrasing answered is not a known fact — a fact counts only once every phrasing
     // has been proved, so the headline is still 0 and the phrasing count moved instead.
-    await waitFor(() => expect(screen.getByText(/of 443/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/of 528/)).toBeTruthy());
     expect(stored()).toHaveLength(1);
   });
 });
@@ -378,7 +378,10 @@ describe('persistence', () => {
     await screen.findByText(/facts known every way/);
 
     // The review survived, so the "not tried yet" count is one lower than the full deck.
-    expect(screen.queryByText('1327')).toBeNull();
-    expect(screen.getByText('1326')).toBeTruthy();
+    // Derived rather than hardcoded — the deck grows, and a literal here would need
+    // changing every time without asserting anything more.
+    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
+    expect(screen.queryByText(String(total))).toBeNull();
+    expect(screen.getByText(String(total - 1))).toBeTruthy();
   });
 });
