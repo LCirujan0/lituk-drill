@@ -7,7 +7,7 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | App usable end to end. Explanations: 53 of 443 facts |
+| Phase | App usable end to end. Explanations: 174 of 443 facts |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
 | Tests | 137 passing across 6 files (120 domain, 17 component) |
 | Deck | **443 facts · 1,327 forms** · 5 chapters |
