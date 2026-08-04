@@ -728,3 +728,55 @@ round-trip proof still compares only what actually came from v0.
   duplicated existing ones and were caught by the deck's own duplicate check rather than by review.
   Corrected in L-017; the lesson is that a probe over a subset of the data reads exactly like a probe
   over all of it.
+
+---
+
+## D-025 — One version. v0 is deleted and v1 becomes the repository
+
+**Date:** 4 August 2026 · **Status:** accepted
+**Supersedes D-001, D-020 and D-022** · **Retires BRIEF S6 and RULES R-1**
+
+**Context.** The owner asked why there were two versions at all, and the honest answer is that
+there was no longer a reason.
+
+The split came from one line in the kickoff document: *"v0 stays deployed and in daily use while
+you build. Do not modify it."* Everything followed from it — R-1, a CI job enforcing it, v1 in a
+subdirectory, fact ids reproducing v0's array positions, a round-trip proof pinning the deck to
+`facts.js`, `divergences.ts` to permit deliberate differences, a guard on the migration script,
+and scope line S6 to import the accumulated schedule.
+
+**That premise was false and we knew it.** D-022 and L-014 recorded, hours earlier, that there
+was no deployment and no accumulated schedule. The apparatus was left standing anyway, and worse:
+when an accidental Vercel import began serving v0, it was *preserved* and a decision written to
+justify keeping it. The result was a fallback protecting nothing, an import migrating nothing, and
+a proof enforcing sameness with a file that had stopped being a live artifact.
+
+Meanwhile v1's deck had become strictly better than v0's: three corrected answers including one
+that was simply wrong, 33 added facts, generated distractors that took the numeric tell from 91.4%
+to ~53%, and a source citation on every checked fact.
+
+**Decision.** One version. `index.html`, `facts.js` and the old README are deleted; v1 moves to the
+repository root; the `lituk-drill` Vercel project serves it. Deleted with them: the round-trip test,
+`divergences.ts`, `migrated.ts`, the migration script and its guard, the `v0 is untouched` CI job,
+the `v0CorrectIndex` field on all 1,228 original forms, and `maxAnswerPositionRate` (which measured
+stored option order that presentation randomises anyway).
+
+**Kept:** `source` on every corrected or confirmed fact. That was the load-bearing part — the record
+of *why* the deck says £5,000 where the printed book says £3,000 — and it survives independently of
+anything to compare against.
+
+**Consequences.**
+- *Positive.* One app, one URL, one place to look. Roughly 900 lines of scaffolding removed along
+  with a field repeated 1,228 times. The repository root README now describes the repository rather
+  than a superseded version, which matters on a public repo. Tooling paths are at their defaults.
+- *Negative.* The fallback is genuinely gone, and it goes at a moment when the interface has no
+  automated tests — the domain has 117, the UI has a hand smoke-check. If v1 breaks badly there is
+  nothing to fall back to but a previous deployment. The round-trip proof also went, and it had real
+  value while it lasted: it caught two duplicate facts and a batch of badly-balanced option sets
+  during the deck expansion. Nothing now guards against an accidental mass edit of the deck beyond
+  the structural and statistical checks.
+- *Process consequence.* The failure worth naming is not that the premise was wrong — it came from
+  the handover and was reasonable to accept. It is that **the machinery was not dismantled when the
+  premise was falsified.** D-022 corrected the premise and then explicitly preserved the structure
+  built on it. Sunk structure is harder to see than a sunk cost, because it keeps passing its own
+  tests. It took the owner asking to surface it.

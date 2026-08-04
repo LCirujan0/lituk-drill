@@ -55,8 +55,6 @@ export interface DeckBaseline {
    * longest. Chance is 0.25. Today 301/749 = 0.4019. Target 0.30.
    */
   readonly longestOptionCorrectRate: number;
-  /** Max share of any single answer position. Chance is 0.25. Today 0.2964 (position 0) — already close. */
-  readonly maxAnswerPositionRate: number;
   /** Facts still carrying an unresolved verify flag. R3. Must reach 0 before the launch gate. */
   readonly unresolvedVerifyFlags: number;
 }
@@ -94,7 +92,6 @@ export const DECK_BASELINE: DeckBaseline = {
   // length-balanced (one distractor per form extended so the answer is never uniquely
   // longest), which pulled the deck-wide figure down from 40.7% to 38.8%.
   longestOptionCorrectRate: 0.39,
-  maxAnswerPositionRate: 0.297,
   // Was 12. Eleven resolved against the handbook on 4 August 2026 — eight confirmed correct,
   // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
   // Office rule and does not appear in the handbook, so this source cannot settle it.

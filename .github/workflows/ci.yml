@@ -19,10 +19,6 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    working-directory: v1
-
 jobs:
   verify:
     name: typecheck · lint · test · build
@@ -33,7 +29,6 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: v1/package-lock.json
 
       - run: npm ci
 
@@ -49,8 +44,8 @@ jobs:
         run: npm run lint:css
 
       - name: Tests
-        # Includes the deck round-trip against v0's facts.js, the deck statistical
-        # ratchet (R1), and the 60-day scheduler simulation with invariant assertions (R4).
+        # Includes the deck's structural and statistical ratchet, the scheduler invariants,
+        # and the 60-day simulation over simulated time.
         run: npm test
 
       - name: Build
@@ -59,9 +54,6 @@ jobs:
   secrets:
     name: gitleaks
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -69,31 +61,3 @@ jobs:
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  v0-untouched:
-    name: v0 is untouched
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: .
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-      - name: Refuse any change to the deployed v0
-        # v0 stays deployed and in daily use for the whole build, and the entire
-        # "the exam deadline is neutralised" arrangement depends on it staying alive
-        # and identical (D-001, D-006, D-020). A written rule would decay; this won't.
-        run: |
-          base='${{ github.event.pull_request.base.sha || github.event.before }}'
-          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
-            echo "No base commit to diff against — first push. Skipping."
-            exit 0
-          fi
-          changed=$(git diff --name-only "$base" HEAD -- index.html facts.js README.md)
-          if [ -n "$changed" ]; then
-            echo "::error::v0 files modified: $changed"
-            echo "v0 is reference, not a base to build on. See DECISIONS D-001 and D-020."
-            exit 1
-          fi
-          echo "v0 untouched."

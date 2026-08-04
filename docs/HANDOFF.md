@@ -7,19 +7,19 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | Milestone 1 (D-019) — deck pipeline, scheduler, simulation. Core complete |
-| Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected |
-| Tests | 122 passing across 5 files (domain only — no UI tests yet) |
-| Deck | **443 facts · 1,327 forms** · 5 chapters (410/1,228 migrated from v0 + 33 added) |
-| Migration frontier | none — no database provisioned yet |
-| Next decision id | D-025 |
+| Phase | App usable end to end. Adding per-fact explanations |
+| Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
+| Tests | 117 passing across 5 files (domain only — no UI tests yet) |
+| Deck | **443 facts · 1,327 forms** · 5 chapters |
+| Migration frontier | none — Neon provisioned, no schema yet |
+| Next decision id | D-026 |
 | Next ledger id | L-019 |
 | Open ledger rows | 10; 3 verified-fixed; L-002, L-005, L-014, L-015 fixed-unverified |
 | Open Critical | 0. No open High |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | Amber facts | 1 unresolved (was 12) |
-| CI | Green — 3 required checks |
-| Deployed | **v0** → https://lituk-drill.vercel.app (D-022)<br>**v1 preview** → https://lituk-v1-d7ql6f0ic-lcirujano.vercel.app |
+| CI | Green — 2 required checks |
+| Deployed | https://lituk-drill.vercel.app |
 | Appetite expires | ~18 September 2026 · go/no-go on v0 vs v1: 20 September |
 
 ## What exists

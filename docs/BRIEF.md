@@ -56,10 +56,8 @@ Every build task must trace back to a line here. A task with no parent line is d
   and that is checked against measurement rather than only modelled.
 - **S5 — The same schedule on both devices.** Studying on the phone and later opening the laptop must
   never lose a grade. No sign-in, no account, nothing to remember.
-- **S6 — Carry forward existing progress.** The schedule accumulated in v0 transfers into v1 intact.
-  Shipping a reset in mid-September would be worse than shipping nothing. *(4 August 2026: there was no
-  accumulated progress when this was written — see D-022. The line stands and becomes load-bearing the
-  moment daily use of the deployed v0 begins, since by mid-September that is six weeks of schedule.)*
+- **S6 — ~~Carry forward existing progress~~.** *(Retired 4 August 2026 by D-025. There was never
+  any accumulated progress to carry — see D-022 — and the previous version has now been deleted.)*
 - **S7 — Question forms that resist being memorised as forms.** More ways to ask each fact, weighted
   toward the facts that keep being missed. See R2 — this is the hardest open problem in the project.
 - **S10 — Coverage matches the material.** The deck covers the handbook in roughly its own proportions.

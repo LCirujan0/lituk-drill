@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "lituk-v1",
+      "name": "lituk",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "v1", "run", "dev"],
+      "runtimeArgs": ["run", "dev"],
       "port": 3000
     }
   ]
