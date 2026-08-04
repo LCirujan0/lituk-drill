@@ -14,7 +14,9 @@
     "deck:report": "tsx scripts/deck-report.ts",
     "deck:numeric": "tsx scripts/numeric-preview.ts",
     "verify": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
-    "hooks:install": "git config core.hooksPath .githooks"
+    "hooks:install": "git config core.hooksPath .githooks",
+    "deck:vocab": "tsx scripts/vocab-report.ts",
+    "deck:vocab:build": "tsx scripts/handbook-vocab.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

@@ -2,6 +2,71 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — the explanation standard, and a check that reads the handbook
+
+Two pieces that exist to make the explanation rewrite honest before any of it is written.
+
+### `npm run deck:vocab` — does an explanation name anything the book does not?
+
+The defect this is for already happened: an explanation asserted Baird demonstrated television
+in **1924**, and 1924 appears nowhere in the handbook. It was caught by someone thinking to
+look, which is not a mechanism.
+
+It matters more than it sounds. A drill app installs whatever is put in front of it, faithfully,
+including things that are not examinable and things that are not true. An off-source date is not
+merely wasted — it is learned as reliably as the answer and then competes with it.
+
+The handbook is Crown copyright and never committed, so a check that only runs on the one machine
+holding the PDF is not a check. The vocabulary is committed as **195 years in the clear and about
+7,000 one-way hashes**: exact membership testing, no readable text, and the copyright question
+does not arise rather than being argued about.
+
+Two tiers, because the first version drowned. A capitalised word absent from the handbook *in any
+case* is worth reading — Wessex, Runnymede, Norseman, Jacobus, Puritan. One that is merely
+capitalised here and lowercase there is ordinary prose. That split took the report from 239 flags
+to 116 and made it usable.
+
+Years are ratcheted; names are a report. A year is in the book or it is not. Names over-flag —
+plurals and adjectives of real handbook words land in them — and a ceiling on noise is a ceiling
+that gets raised, which is how a ratchet stops meaning anything.
+
+**The first run found something worse than what it was built for.** Seven flagged facts, each then
+grepped against the handbook by hand rather than taken on the report's word. Three are explanations
+teaching off-source material. **Four are answers the handbook does not contain**: the start of the
+Hundred Years War (the book gives no start year, only that it lasted 116 years), the expulsion of
+the Jews in 1290 (no expulsion is mentioned at all), and both FGM dates (the book gives none).
+Logged as L-023.
+
+### `docs/EXPLANATIONS.md` — the authoring standard
+
+Written from four independent research passes: the retention evidence base, mnemonic technique by
+fact type, how expert practitioners actually write spaced-repetition material, and a deeper dig
+into memory palaces and chunking. It is written to be argued with, and several of its rules are
+there because the evidence went **against** the intuition:
+
+- **The strongest study on our exact question is a null.** Butler, Godbole & Marsh (2013): explanation
+  feedback and plain correct-answer feedback performed *equivalently* on repeated questions.
+  Explanation only won on **new** ones. So the warrant for this work is not "explanations aid
+  retention" — it is that this app's whole outcome measure is answering phrasings not seen before.
+- **Interesting-but-inessential detail measures negative**, around d = −0.3 to −0.5 across two
+  meta-analyses. A panel whose story is more memorable than its fact has failed.
+- **Memory palaces are contraindicated, not merely expensive.** Written presentation interferes with
+  the imagery the method needs; the closest study to this format found no transfer.
+- **First-letter acronyms have a prominent null** — one paper is titled *DAM (Don't Aid Memory)*.
+  They cue order, not identity, which is exactly backwards for someone meeting five principles for
+  the first time.
+- **Do not cite Miller or Cowan to justify splitting a list.** Both numbers come from tasks
+  engineered to *block* long-term memory; applying them to a panel re-read over weeks is a category
+  error. Four countries and five principles need no splitting.
+- **A cluster only helps if every line carries a discriminator.** "Caesar 55 BC, Claudius AD 43" is
+  the interference case. "Caesar raided and left; Claudius conquered and stayed" is the
+  discrimination case. That distinction is the difference between the technique working and
+  backfiring, and it is why the owner's own worked example is the specification.
+
+Logged L-024 while writing it: teaching a cluster is a second way to inflate the readiness number,
+since a fact met inside another card's panel can later be answered by recognition. Same class as
+L-002, different door. Bounded by the standard's cluster conditions, not removed.
+
 ## 2026-08-04 — stepping back through a session
 
 **Reported: "Back returns to Home, so once I press Next the card is gone."** The only control

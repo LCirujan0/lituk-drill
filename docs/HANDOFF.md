@@ -7,16 +7,16 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | App usable end to end. **Cross-device sync live** (D-030) |
+| Phase | App usable end to end. Sync live (D-030); cards can be stepped back through |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **198 passing across 9 files** — 159 domain, 39 in jsdom (`app` 28, `store-sync` 11) |
+| Tests | **206 passing across 9 files** — 161 domain, 45 in jsdom (`app` 34, `store-sync` 11) |
 | Deck | **528 facts · 1,582 forms** · 5 chapters · every fact carries an explanation |
 | Deck sourcing | **129 of 528 facts carry a `source`. 399 do not** — ch1 18 · ch2 33 · ch3 201 · ch4 74 · ch5 73, covering 1,195 forms |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-031 (D-026 never issued, D-029 never written — L-022) |
-| Next ledger id | L-023 (L-019 and L-020 never written — L-022) |
-| Open ledger rows | 10 open · 6 fixed-unverified · 4 verified-fixed |
-| Open Critical | 0. No open High |
+| Next ledger id | L-025 (L-019 and L-020 never written — L-022) |
+| Open ledger rows | 12 open · 6 fixed-unverified · 4 verified-fixed |
+| Open Critical | 0. **One open High — L-023**, four facts the handbook cannot answer |
 | On-screen numeric tell | 52.7% (was 91.4%; chance 50%) |
 | Amber facts | 1 unresolved (f213 — L-016) |
 | CI | Green — 2 required checks |
@@ -52,14 +52,14 @@ deck grew to 528; the shape holds, the absolute numbers are now optimistic.
 No readiness model (S4) and no mocks (D-017). **No docs-consistency test** — deferred, not
 skipped, and L-022 is what its absence costs. No end-to-end tests against a real browser:
 component tests run in jsdom, so anything depending on real layout, touch targets or Safari
-behaviour is unverified. No PWA manifest or icons — `public/` is empty. No way to look back
-at a card once answered.
+behaviour is unverified. No PWA manifest or icons — `public/` is empty.
 
 ## Next, in order
 
 1. **Owner: drill daily.** Not a build task and still the highest-value item here.
 2. Verify the 399 unsourced facts against the handbook and rebuild the explanations as
    memorisation clusters — one pass, fact by fact, because both need the same passage.
+   `docs/EXPLANATIONS.md` is the standard; L-023's four unanswerable facts are resolved here.
 3. PWA polish: fit 393×852, safe areas, icons, manifest, offline.
 4. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
 5. L-004 (the inherited amber contrast pairing) — live in the grading buttons, so this has
@@ -83,6 +83,8 @@ at a card once answered.
 - `vitest.config.mts` must keep the `.mts` extension; as `.ts` it loads as CommonJS and warns.
 - The chapter files are large. Never reformat them by hand.
 - `npm run deck:report` prints every deck measurement without running the suite.
+- `npm run deck:vocab` reports explanations naming years or people the handbook does not.
+  Rebuild its vocabulary with `npm run deck:vocab:build` after re-extracting the handbook.
 - The handbook text lives in `.work/` — gitignored, Crown copyright, never committed.
   Re-download from
   `https://storage.googleapis.com/britizen-public/static/study-guide/document.pdf`

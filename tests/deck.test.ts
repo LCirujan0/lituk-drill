@@ -20,6 +20,7 @@ import { describe, expect, it } from 'vitest';
 import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
+import { strayYears, vocabularyReport, vocabularyTotals } from '@/domain/deck/vocabulary';
 import { EXPLANATIONS } from '@/data/explanations';
 import {
   ambiguousSharedStems,
@@ -199,6 +200,37 @@ describe('explanations', () => {
       expect(fact.explanation.length, `${fact.id} explanation is too short to be context`).toBeGreaterThan(60);
       expect(fact.explanation.trim().toLowerCase()).not.toBe(fact.answer.trim().toLowerCase());
     }
+  });
+
+  it('names no year the handbook does not contain', () => {
+    // The defect this exists for: an explanation asserted Baird demonstrated television in
+    // 1924. The handbook says only "in the 1920s" and 1924 is nowhere in it. It was caught by
+    // someone thinking to look, which is not a mechanism.
+    //
+    // A drill app installs whatever is put in front of it. An off-source date is not merely
+    // wasted — it is learned as reliably as the answer, and then competes with it.
+    //
+    // Ratcheted, unlike the companion NAME check, because a four-digit year is in the book or
+    // it is not. `npm run deck:vocab` prints both halves.
+    const years = strayYears(vocabularyReport(DECK));
+    expect(
+      years.length,
+      `years named in explanations but absent from the handbook: ${years.join(', ')}`,
+    ).toBeLessThanOrEqual(DECK_BASELINE.explanationYearsOffSource);
+  });
+
+  it('reports capitalised names the handbook does not contain, without gating on them', () => {
+    // Deliberately NOT a ratchet. The name half over-flags — plurals and adjectives of real
+    // handbook words ("Romans" for "Roman") land in it — so a ceiling here would encode
+    // today's noise and then have to be raised, which is how a ratchet stops meaning
+    // anything. It is a report a human reads, and this test exists to keep it runnable and
+    // to put the number in front of anyone watching CI.
+    const totals = vocabularyTotals(vocabularyReport(DECK));
+    expect(totals.names).toBeTypeOf('number');
+    console.log(
+      `[vocabulary] ${totals.names} capitalised names in explanations are absent from the ` +
+        `handbook, across ${totals.facts} facts. Read them: npm run deck:vocab`,
+    );
   });
 
   // A check for "opens by repeating the answer verbatim" was written here and removed.
