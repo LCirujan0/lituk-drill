@@ -2,6 +2,25 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-04 — component tests
+
+**17 component tests, closing the gap that let the card-advance bug through.** The domain had
+120 tests and the interface had hand smoke-checks; the bug that shipped explanations
+unreadable was invisible to every one of them.
+
+- The first block is that regression, written the way it should have existed first: the card
+  must stay on screen once answered, must show a verdict, and must advance only on Next.
+- **Verified the regression test actually catches it.** Temporarily reverting the fix fails 8
+  tests including the specific one. A regression test that has never failed is not yet known
+  to be a regression test.
+- Also covered: explanations hidden before answering and shown after, one event written per
+  answer and none on Next, correct answers recorded as Good and wrong as Again, first contact
+  always `scheduled`, a missed fact appearing in the mistakes count, recall mode's
+  reveal-then-grade flow, navigation to progress and the chronology, empty states, and
+  survival across a remount.
+- jsdom is opted into per file with a docblock rather than configured by glob, so the 60-day
+  simulation does not pay for a DOM it never touches.
+
 ## 2026-08-04 — explanations, and a bug found by using the app
 
 **Per-fact context, shown after you answer.** The owner asked for a paragraph on each card so

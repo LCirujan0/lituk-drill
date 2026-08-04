@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | App usable end to end. Explanations: 53 of 443 facts |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | 120 passing across 5 files (domain only — no UI tests yet) |
+| Tests | 137 passing across 6 files (120 domain, 17 component) |
 | Deck | **443 facts · 1,327 forms** · 5 chapters |
 | Migration frontier | none — Neon provisioned, no schema yet |
 | Next decision id | D-026 |
@@ -46,8 +46,8 @@ model is harsher in the tail, which is stated rather than tuned away.
 No database and no sync endpoint — the app is local-only, so the two devices do not yet
 share a schedule. No readiness model (S4) and no mocks (D-017). **No docs-consistency
 test** — deferred, not skipped; it needs a schema and an `.env.example` to check against.
-No component or end-to-end tests: the UI was smoke-checked by hand in a mobile viewport,
-which is weaker than the domain's coverage and should not stay that way.
+No end-to-end tests against a real browser — component tests run in jsdom, so anything that
+depends on real layout, touch targets or Safari behaviour is still unverified.
 
 ## Next, in order
 
