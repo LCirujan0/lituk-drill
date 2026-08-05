@@ -101,12 +101,17 @@ describe('not tried yet — one fact at a time until they are all done', () => {
     }
   });
 
-  it('comes back for a second phrasing only once every fact has had a first', () => {
-    // Exhaust the deck's first pass, then check the next card is a second phrasing.
+  it('goes empty once every fact has been answered once, rather than starting a second pass', () => {
+    // It used to come back for each fact's remaining phrasings, which is why the New count
+    // read 1,575 on a deck of 537 facts. New means never answered now (D-032), so the section
+    // and its count empty together. The other phrasings still come round — through Due today,
+    // Mastered and the chapter drills, where rotation serves the one seen least.
     const events: ReviewEvent[] = DECK.map((f) => ev(f.id, 0, 4));
-    const next = newQueue(context(events), 5);
-    expect(next.length).toBeGreaterThan(0);
-    expect(next.every((i) => i.formIndex !== 0)).toBe(true);
+    expect(newQueue(context(events), 5)).toEqual([]);
+
+    // And one unanswered fact left behind is the only thing it offers.
+    const allButOne = DECK.slice(1).map((f) => ev(f.id, 0, 4));
+    expect(newQueue(context(allButOne), 5).map((i) => i.factId)).toEqual([DECK[0].id]);
   });
 });
 
@@ -275,15 +280,29 @@ describe('due today — the mix, and what happens when a bucket is empty', () =>
 });
 
 describe('random — no memory, no order', () => {
-  it('draws from every phrasing in the deck', () => {
-    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
+  it('draws from every fact in the deck, and varies the phrasing', () => {
     const seen = new Set<string>();
+    const facts = new Set<string>();
     for (let s = 0; s < 40; s++) {
       const ctx: SectionContext = { ...context([]), rng: mulberry32(s) };
-      for (const i of randomQueue(ctx, 40)) seen.add(`${i.factId}:${i.formIndex}`);
+      for (const i of randomQueue(ctx, 40)) {
+        seen.add(`${i.factId}:${i.formIndex}`);
+        facts.add(i.factId);
+      }
     }
-    // Not exhaustive, but wide enough to prove it is not drawing from a fixed slice.
-    expect(seen.size).toBeGreaterThan(total / 4);
+    // Not exhaustive, but wide enough to prove it is not drawing from a fixed slice — and
+    // that a fact met twice was not asked the same way both times.
+    expect(facts.size).toBeGreaterThan(DECK.length / 4);
+    expect(seen.size).toBeGreaterThan(facts.size);
+  });
+
+  it('draws one card per fact, not one per phrasing', () => {
+    // It used to shuffle the flat list of every (fact, phrasing) pair, which made a
+    // three-phrasing fact 50% likelier to come up than a two-phrasing one — "random" weighted
+    // by how many ways a fact happens to be written. The unit here is the fact (D-032).
+    const pool = randomQueue(context([]), DECK.length + 50);
+    expect(pool).toHaveLength(DECK.length);
+    expect(new Set(pool.map((i) => i.factId)).size).toBe(DECK.length);
   });
 
   it('is the one section that may repeat, because it has no memory', () => {
@@ -296,13 +315,12 @@ describe('random — no memory, no order', () => {
     // a lottery dressed as a test: it passed at 1,228 forms, and adding facts quietly pushed
     // the odds under the line until it failed on a change that had nothing to do with it.
     // The property is "drilled facts stay eligible", so ask the pool that question directly.
-    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
-    const pool = randomQueue(context(events), total);
+    const pool = randomQueue(context(events), DECK.length);
     const ids = new Set(pool.map((i) => i.factId));
     for (const fact of drilled) {
       expect(ids.has(fact.id), `${fact.id} was drilled and then dropped from random`).toBe(true);
     }
-    expect(pool).toHaveLength(total);
+    expect(pool).toHaveLength(DECK.length);
   });
 
   it('varies between draws', () => {

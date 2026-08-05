@@ -8,12 +8,16 @@
  * the output most likely to flatter, and keeping the counting apart from the modelling
  * means the counting stays trustworthy whatever the model turns out to be worth.
  *
- * There is no percentage here that only ever rises. "Phrasings proven" can fall, because a
- * lapse clears that phrasing's credit.
+ * **Every figure here is a count of facts** (D-032). The top three partition the deck — mastered
+ * plus in-your-mistakes plus not-tried is the whole of it — so this screen and the home screen
+ * cannot tell different stories. "Phrasings proven, X of 1,609" used to lead this list; it
+ * measured how many ways the app can ask things, which is machinery rather than knowledge.
+ *
+ * There is no percentage here that only ever rises. Mastered falls the moment a fact is missed.
  */
 
 import { factById } from '@/domain/deck';
-import type { DeckProgress } from '@/domain/drill/stats';
+import type { DeckProgress, ProblemFact } from '@/domain/drill/stats';
 import type { Settings } from '@/adapters/local-store';
 import styles from './Progress.module.css';
 
@@ -21,7 +25,7 @@ interface Props {
   readonly progress: DeckProgress;
   readonly upcoming: number[];
   readonly activity: number[];
-  readonly problems: { factId: string; lapses: number; proven: number; forms: number }[];
+  readonly problems: readonly ProblemFact[];
   readonly settings: Settings;
   readonly onSettings: (settings: Settings) => void;
   readonly onErase: () => void;
@@ -39,12 +43,13 @@ export function Progress({
         <h1 className={styles.title}>Progress</h1>
       </header>
 
+      {/* The first three add up to the deck, and are the same three the home screen shows. */}
       <div className={styles.tiles}>
-        <Tile value={progress.provenAllForms} of={progress.facts} label="facts known every way" accent />
-        <Tile value={progress.started} of={progress.facts} label="facts met at least once" />
-        <Tile value={progress.provenForms} of={progress.forms} label="phrasings proven" />
-        <Tile value={progress.mature} label="solid (3 weeks+)" />
+        <Tile value={progress.mastered} of={progress.facts} label="facts mastered" accent />
         <Tile value={progress.inMistakes} label="in your mistakes" />
+        <Tile value={progress.notTried} label="facts not tried yet" />
+        <Tile value={progress.started} of={progress.facts} label="facts met at least once" />
+        <Tile value={progress.mature} label="solid (3 weeks+)" />
         <Tile value={progress.totalReviews} label="reviews answered" />
       </div>
 
@@ -90,7 +95,7 @@ export function Progress({
                   <span className={styles.problemQ}>{fact?.question ?? p.factId}</span>
                   <span className={styles.problemA}>{fact?.answer}</span>
                   <span className={styles.problemMeta}>
-                    missed {p.lapses}× · {p.proven}/{p.forms} phrasings proven
+                    missed {p.lapses}× · {p.recovered ? 'back on track' : 'still in your mistakes'}
                   </span>
                 </li>
               );

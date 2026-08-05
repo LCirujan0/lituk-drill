@@ -2,6 +2,54 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-05 — every number in the app is a count of facts (D-032)
+
+The owner's correction, and it is the whole change: *"the several phrasings per fact are a hidden
+mechanism, not a measure of knowledge."*
+
+The home screen was carrying four numbers built on four different rules. The headline required
+**every phrasing** of a fact proven, so it read 0 after weeks of correct answers. "New" counted
+unseen **phrasings** — 1,575 of them, on a deck of 537 facts. Mastered counted facts on a
+last-three-attempts window. Mistakes counted facts on a three-distinct-phrasings rule. Every one
+was internally correct; together they were meaningless, and no test could say so, because nothing
+asserted any relationship *between* them.
+
+Five definitions now, all per fact, the first three partitioning the deck exactly:
+
+- **New** — never answered.
+- **Mastered** — answered, no wrong answer in its last three attempts. One correct answer is
+  enough; it stays until you miss it.
+- **Mistakes** — a wrong answer inside its last three attempts.
+- **Random** — any fact at all.
+- **Due today** — unchanged, thirty facts a day.
+
+The headline is Mastered over the deck. Chapter rows carry `mastered/total` as a number as well
+as a bar, because a 3% bar is indistinguishable from an empty one and 3% is where every chapter
+starts. The progress screen leads with the same partition and has lost "facts known every way"
+and "phrasings proven" entirely; its problem-facts list says where each fact stands today instead
+of "2/3 phrasings proven". Rotation is untouched — every reappearance still wears the phrasing
+seen least — and it is now completely invisible, which is what it was always for.
+
+**The partition holds by construction.** One function walks the deck once and gives each fact
+exactly one standing; every count, both screens and the chapter bars are projections of that
+walk. Three functions that happen to agree is what was there before.
+
+Measured on the owner's own log after the change: **10/537 mastered · 2%**, New **503**, Mistakes
+**24**, Mastered **10** — and 503 + 24 + 10 = 537, the deck exactly. It read "0 of 543 known" and
+"New 1,575" before.
+
+**Two losses, written down rather than found later.** The mistakes rule gives up its
+distinct-phrasing guarantee: three correct answers can now clear a fact even if they repeat one
+phrasing, where before three *different* phrasings were required. And the scheduler's breadth gate
+(R-6) still measures phrasings, so a fact can be Mastered on screen while the scheduler holds it
+at six days because it has only been asked one way. Both are in D-032 in full.
+
+**Both halves of the bug were reintroduced deliberately and watched to fail** — the phrasing
+count into `sectionCounts`, and the old distinct-phrasings clearing rule into `mistakesFrom`. The
+first takes down 11 assertions including "keeps every coverage figure inside the fact total"; the
+second takes down "never puts a fact in both Mastered and Mistakes" on all six seeds. Added as
+RULES R-12.
+
 ## 2026-08-05 — the bottom edge belongs to the bar
 
 The dead strip along the bottom was measured rather than guessed, on all four screens at

@@ -45,7 +45,7 @@ interface Served {
 
 const EMPTY_MESSAGE: Record<SectionKey, string> = {
   due: 'That is your thirty for today.',
-  new: 'Every phrasing in the deck has been served at least once.',
+  new: 'Every fact in the deck has been answered at least once.',
   mistakes: 'Nothing outstanding.',
   chapter: 'Nothing left in this chapter right now.',
   random: 'Nothing to draw from, which should be impossible.',
@@ -178,12 +178,15 @@ export default function App() {
 
   const item = view.kind === 'drill' ? (shown?.item ?? null) : null;
 
+  /** The "N to go" on a drill screen. Facts, like everything else (D-032). */
   const remaining = useMemo(() => {
     if (view.kind !== 'drill') return 0;
     if (view.section === 'due') return drill.counts.due;
-    if (view.section === 'new') return drill.counts.newForms;
+    if (view.section === 'new') return drill.counts.newFacts;
     if (view.section === 'mistakes') return drill.counts.mistakes;
-    if (view.section === 'random') return drill.counts.totalForms;
+    if (view.section === 'mastered') return drill.counts.mastered;
+    // Random draws from the whole deck and never runs out, so this is the pool, not a remainder.
+    if (view.section === 'random') return drill.counts.totalFacts;
     return drill.counts.byChapter.get(view.chapter ?? 1)?.total ?? 0;
   }, [view, drill.counts]);
 
@@ -211,7 +214,6 @@ export default function App() {
       {view.kind === 'tab' && view.tab === 'drill' && (
         <Home
           counts={drill.counts}
-          progress={drill.progress}
           streak={drill.streak()}
           persistent={drill.persistent}
           syncPhase={drill.syncPhase}

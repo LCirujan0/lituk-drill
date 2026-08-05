@@ -316,12 +316,101 @@ describe('recording a review', () => {
 });
 
 describe('the home screen', () => {
-  it('shows the deck size and a zeroed count on a fresh install', async () => {
+  /**
+   * The headline, as `mastered` and `total`. Every number on this screen counts facts (D-032).
+   *
+   * Read off the whole `<p>` rather than the matched element: the "/537 mastered · 0%" span is
+   * a child, and matching it alone loses the count in front of it.
+   */
+  const headline = () => {
+    const suffix = screen.getByText(/mastered · \d+%$/);
+    const text = (suffix.closest('p') ?? suffix).textContent ?? '';
+    const [, mastered, total] = text.match(/^(\d[\d,]*)\/(\d[\d,]*) mastered/) ?? [];
+    const n = (v?: string) => Number((v ?? '').replace(/,/g, ''));
+    return { mastered: n(mastered), total: n(total) };
+  };
+
+  /** A tile's count. The icon is `aria-hidden`, so the name starts at the tile's own label. */
+  const tile = (name: RegExp) =>
+    Number(
+      (screen.getByRole('button', { name }).textContent ?? '').replace(/[^\d]/g, '') || '0',
+    );
+
+  it('counts facts everywhere, and none of the numbers is a phrasing count', async () => {
     render(<App />);
-    // The headline counts FACTS, not phrasings — questions are how the app checks you know
-    // a fact, not the thing being learned (D-028).
-    expect(await screen.findByText(/\/537 known/)).toBeTruthy();
-    expect(screen.getByRole('button', { name: /^New/ })).toBeTruthy();
+    await screen.findByRole('button', { name: /Due today/ });
+
+    const forms = ACTIVE.reduce((n, f) => n + f.forms.length, 0);
+    expect(forms, 'this test is vacuous unless the two totals differ').toBeGreaterThan(ACTIVE.length);
+
+    // On a fresh install: nothing mastered, nothing missed, and every fact is New.
+    expect(headline()).toEqual({ mastered: 0, total: ACTIVE.length });
+    expect(tile(/^New/)).toBe(ACTIVE.length);
+    expect(tile(/^Mistakes/)).toBe(0);
+    expect(tile(/^Mastered/)).toBe(0);
+
+    // The bug this replaces: New showed the unseen PHRASING count, 1,575 against 537 facts.
+    expect(screen.queryByText(forms.toLocaleString('en-GB'))).toBeNull();
+  });
+
+  it('adds up: New + Mistakes + Mastered is the deck, before and after answering', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    expect(tile(/^New/) + tile(/^Mistakes/) + tile(/^Mastered/)).toBe(ACTIVE.length);
+
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
+    await screen.findByRole('heading', { level: 1 });
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+
+    await screen.findByRole('button', { name: /Due today/ });
+    expect(tile(/^New/) + tile(/^Mistakes/) + tile(/^Mastered/)).toBe(ACTIVE.length);
+  });
+
+  it('takes the headline UP by exactly one on a single correct answer', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
+    await screen.findByRole('heading', { level: 1 });
+
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+
+    // One correct answer masters a fact. It used to require every phrasing proven, so the
+    // headline read 0 after a fortnight of correct answers (D-032 supersedes D-028).
+    await waitFor(() => expect(headline().mastered).toBe(1));
+    expect(tile(/^New/)).toBe(ACTIVE.length - 1);
+    expect(tile(/^Mastered/)).toBe(1);
+    expect(stored()).toHaveLength(1);
+  });
+
+  it('takes the headline DOWN by one when a mastered fact is then missed', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+
+    // Correct first, so the headline has somewhere to fall from.
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
+    await screen.findByRole('heading', { level: 1 });
+    const { fact } = currentOptions();
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+    await waitFor(() => expect(headline().mastered).toBe(1));
+
+    // Then miss it. Opening Mastered is what makes this deterministic: that section serves
+    // exactly the mastered facts, and there is exactly one.
+    await user.click(screen.getByRole('button', { name: /^Mastered/ }));
+    await screen.findByRole('heading', { level: 1 });
+    expect(currentOptions().fact.id).toBe(fact.id);
+    await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
+    await user.click(screen.getByRole('button', { name: 'Close' }));
+
+    await waitFor(() => expect(headline().mastered).toBe(0));
+    expect(tile(/^Mistakes/)).toBeGreaterThan(0);
+    // Answered, so never New again however it went.
+    expect(tile(/^New/)).toBeLessThan(ACTIVE.length);
   });
 
   it('moves a missed fact into the mistakes section', async () => {
@@ -336,22 +425,6 @@ describe('the home screen', () => {
 
     const mistakes = await screen.findByRole('button', { name: /^Mistakes/ });
     expect(within(mistakes).getByText('1')).toBeTruthy();
-  });
-
-  it('counts a proven phrasing after a correct answer', async () => {
-    const user = userEvent.setup();
-    render(<App />);
-    await screen.findByRole('button', { name: /Due today/ });
-    await user.click(screen.getByRole('button', { name: /^Values/ }));
-    await screen.findByRole('heading', { level: 1 });
-
-    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
-    await user.click(screen.getByRole('button', { name: 'Close' }));
-
-    // One phrasing answered is not a known fact — a fact counts only once every phrasing
-    // has been proved, so the headline is still 0 and the phrasing count moved instead.
-    await waitFor(() => expect(screen.getByText(/\/537 known/)).toBeTruthy());
-    expect(stored()).toHaveLength(1);
   });
 });
 
@@ -691,14 +764,13 @@ describe('persistence', () => {
     render(<App />);
     await screen.findByRole('button', { name: /Due today/ });
 
-    // The review survived, so the "not tried yet" count is one lower than the full deck.
-    // Derived rather than hardcoded — the deck grows, and a literal here would need
+    // The review survived, so New is one lower than the full deck — facts, not phrasings
+    // (D-032). Derived rather than hardcoded: the deck changes, and a literal here would need
     // changing every time without asserting anything more.
     // Formatted, because the home screen groups thousands — asserting the raw digits would
     // pass today and break the first time a count crosses 1,000.
-    const total = ACTIVE.reduce((n, f) => n + f.forms.length, 0);
     const shown = (n: number) => n.toLocaleString('en-GB');
-    expect(screen.queryByText(shown(total))).toBeNull();
-    expect(screen.getByText(shown(total - 1))).toBeTruthy();
+    expect(screen.queryByText(shown(ACTIVE.length))).toBeNull();
+    expect(screen.getByText(shown(ACTIVE.length - 1))).toBeTruthy();
   });
 });

@@ -7,30 +7,35 @@
  * (R6), and keeping the counting apart from the modelling means the counting stays
  * trustworthy whatever happens to the model.
  *
- * The one number the BRIEF actually cares about is **phrasings proven** — not facts
- * started, not questions answered. A fact proven on one phrasing is a memorised sentence;
- * proven on all of them, it is knowledge. That distinction is the entire reason the deck
- * is built the way it is, so it gets top billing.
+ * **Every figure here counts facts** (D-032). "Phrasings proven, X of 1,609" used to have top
+ * billing on this screen; it measured the apparatus rather than the material, and it sat beside
+ * fact counts with nothing marking which was which. The phrasings still do their job — the app
+ * asks a fact several ways so it can tell knowing the fact from knowing one sentence — and they
+ * are not a number the reader is asked to look at.
+ *
+ * `mastered + inMistakes + notTried === facts`, taken straight from the one classification, so
+ * this screen and the home screen cannot disagree.
  */
 
 import type { Deck } from '../deck/types';
 import type { ReviewEvent } from '../scheduler/events';
 import { dayNumber } from '../scheduler/events';
 import type { FactState } from '../scheduler/types';
+import { partition, type FactStanding } from './standing';
 
 export interface DeckProgress {
+  /** Facts drilled. The denominator. */
   readonly facts: number;
-  readonly forms: number;
-  /** Facts with at least one review of any kind. */
+  /** Facts with at least one review of any kind. `mastered + inMistakes`. */
   readonly started: number;
-  /** Facts where every phrasing has been answered correctly. The number that matters. */
-  readonly provenAllForms: number;
-  /** Individual phrasings answered correctly at least once, out of `forms`. */
-  readonly provenForms: number;
+  /** Facts never answered. */
+  readonly notTried: number;
+  /** Facts with no wrong answer in their last three attempts. */
+  readonly mastered: number;
+  /** Facts with a wrong answer inside their last three attempts. */
+  readonly inMistakes: number;
   /** Facts with an interval of three weeks or more. */
   readonly mature: number;
-  /** Facts missed at least once and not yet cleared. */
-  readonly inMistakes: number;
   readonly totalReviews: number;
   readonly totalLapses: number;
 }
@@ -39,36 +44,28 @@ export function deckProgress(
   deck: Deck,
   states: ReadonlyMap<string, FactState>,
   events: readonly ReviewEvent[],
-  mistakeCount: number,
 ): DeckProgress {
-  let started = 0;
-  let provenAllForms = 0;
-  let provenForms = 0;
+  const { fresh, mastered, mistakes } = partition(
+    deck.map((f) => f.id),
+    events,
+  );
+
   let mature = 0;
   let totalLapses = 0;
-  let forms = 0;
-
   for (const fact of deck) {
-    forms += fact.forms.length;
     const state = states.get(fact.id);
     if (!state || state.seen === 0) continue;
-
-    started++;
     totalLapses += state.lapses;
-    const proven = state.ok.filter((v) => v > 0).length;
-    provenForms += proven;
-    if (proven === fact.forms.length) provenAllForms++;
     if (state.ivl >= 21) mature++;
   }
 
   return {
     facts: deck.length,
-    forms,
-    started,
-    provenAllForms,
-    provenForms,
+    started: mastered.length + mistakes.length,
+    notTried: fresh.length,
+    mastered: mastered.length,
+    inMistakes: mistakes.length,
     mature,
-    inMistakes: mistakeCount,
     totalReviews: events.length,
     totalLapses,
   };
@@ -117,23 +114,34 @@ export function streak(events: readonly ReviewEvent[], today: number): number {
   return n;
 }
 
-/** Facts missed most often, worst first — the "problem facts" list. */
+export interface ProblemFact {
+  readonly factId: string;
+  readonly lapses: number;
+  /** Where it stands now — a fact can be missed six times and still be Mastered today. */
+  readonly recovered: boolean;
+}
+
+/**
+ * Facts missed most often, worst first — the "problem facts" list.
+ *
+ * It used to report "2/3 phrasings proven" beside each one, which is a phrasing count on screen
+ * and told the reader nothing they could act on. What replaces it is the fact's standing today,
+ * which is the question actually being asked of this list: is it still going wrong, or has it
+ * come back? Ordered by lapses, then by the ones still outstanding.
+ */
 export function problemFacts(
   deck: Deck,
   states: ReadonlyMap<string, FactState>,
+  standings: ReadonlyMap<string, FactStanding>,
   limit = 10,
-): { factId: string; lapses: number; proven: number; forms: number }[] {
+): ProblemFact[] {
   return deck
-    .map((fact) => {
-      const state = states.get(fact.id);
-      return {
-        factId: fact.id,
-        lapses: state?.lapses ?? 0,
-        proven: state ? state.ok.filter((v) => v > 0).length : 0,
-        forms: fact.forms.length,
-      };
-    })
+    .map((fact) => ({
+      factId: fact.id,
+      lapses: states.get(fact.id)?.lapses ?? 0,
+      recovered: standings.get(fact.id)?.standing !== 'mistakes',
+    }))
     .filter((f) => f.lapses > 0)
-    .sort((a, b) => b.lapses - a.lapses || a.proven - b.proven)
+    .sort((a, b) => b.lapses - a.lapses || Number(a.recovered) - Number(b.recovered))
     .slice(0, limit);
 }

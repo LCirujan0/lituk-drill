@@ -2,9 +2,10 @@
  * The five drill sections.
  *
  * The mistakes rule gets the most attention because it is the one the owner specified
- * precisely — wrong once, then three correct answers on three different phrasings, with a
- * fresh miss resetting the count — and because it is entirely derived from the event log,
- * which means the tests here are also the proof that no separate counter is needed.
+ * precisely — wrong once, and out again when three attempts have passed with no miss among
+ * them — and because it is entirely derived from the event log, which means the tests here are
+ * also the proof that no separate counter is needed. That the rule is the exact complement of
+ * Mastered is asserted in `counts.test.ts`, over the partition.
  */
 
 import { describe, expect, it } from 'vitest';
@@ -13,12 +14,12 @@ import { DECK } from '@/domain/deck';
 import { mistakesFrom, nextFormForMistake, CLEAR_STREAK } from '@/domain/drill/mistakes';
 import {
   chapterQueue,
-
+  newFacts,
   newQueue,
   sectionCounts,
-  unseenForms,
   type SectionContext,
 } from '@/domain/drill/sections';
+import { factStandings } from '@/domain/drill/standing';
 import { deckProgress, problemFacts, recentActivity, streak, upcomingLoad } from '@/domain/drill/stats';
 import { MS_PER_DAY, replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
@@ -47,7 +48,7 @@ function context(events: ReviewEvent[], today = 0): SectionContext {
   };
 }
 
-describe('mistakes — wrong once, three right on three phrasings to clear', () => {
+describe('mistakes — a wrong answer inside the last three attempts', () => {
   it('does not list a fact that has never been missed', () => {
     const events = [ev('f000', 0, 4), ev('f000', 1, 5), ev('f000', 2, 4)];
     expect(mistakesFrom(events, FORM_COUNTS)).toEqual([]);
@@ -56,30 +57,45 @@ describe('mistakes — wrong once, three right on three phrasings to clear', () 
   it('lists a fact as soon as it is missed', () => {
     const standings = mistakesFrom([ev('f000', 0, 0)], FORM_COUNTS);
     expect(standings).toHaveLength(1);
-    expect(standings[0]).toMatchObject({ factId: 'f000', proven: 0, needed: 3, misses: 1 });
+    expect(standings[0]).toMatchObject({ factId: 'f000', sinceMiss: 0, needed: 3, misses: 1 });
   });
 
-  it('clears only after three DIFFERENT phrasings are answered correctly', () => {
+  it('clears once three attempts have passed with no miss among them', () => {
     const base = [ev('f000', 0, 0)];
-    // Three correct answers, but all on the same phrasing: three correct answers to one
-    // memorised sentence must not clear a fact. This is the whole deck design in one test.
-    const sameForm = [...base, ev('f000', 1, 4, 1), ev('f000', 1, 4, 2), ev('f000', 1, 4, 3)];
-    expect(mistakesFrom(sameForm, FORM_COUNTS)).toHaveLength(1);
-    expect(mistakesFrom(sameForm, FORM_COUNTS)[0].proven).toBe(1);
 
-    const threeForms = [...base, ev('f000', 0, 4, 1), ev('f000', 1, 4, 2), ev('f000', 2, 4, 3)];
-    expect(mistakesFrom(threeForms, FORM_COUNTS)).toEqual([]);
+    // Two correct answers still leave the miss inside the window of three.
+    const two = [...base, ev('f000', 0, 4, 1), ev('f000', 1, 4, 2)];
+    expect(mistakesFrom(two, FORM_COUNTS)).toHaveLength(1);
+    expect(mistakesFrom(two, FORM_COUNTS)[0].sinceMiss).toBe(2);
+
+    const three = [...two, ev('f000', 2, 4, 3)];
+    expect(mistakesFrom(three, FORM_COUNTS)).toEqual([]);
   });
 
-  it('resets the count to zero on a fresh miss', () => {
+  it('clears on three correct answers even if they repeat one phrasing', () => {
+    // This is the cost of the rule, asserted rather than left implicit. The old rule needed
+    // three DIFFERENT phrasings and could not be the complement of Mastered, which uses the
+    // last three attempts (D-032). Rotation still serves the least-seen phrasing, and the
+    // mistakes drill still skips one already answered since the miss — so this is what the
+    // rule permits, not what the app does.
+    const sameForm = [
+      ev('f000', 0, 0),
+      ev('f000', 1, 4, 1),
+      ev('f000', 1, 4, 2),
+      ev('f000', 1, 4, 3),
+    ];
+    expect(mistakesFrom(sameForm, FORM_COUNTS)).toEqual([]);
+  });
+
+  it('resets to zero on a fresh miss', () => {
     const events = [
       ev('f000', 0, 0),
       ev('f000', 0, 4, 1),
-      ev('f000', 1, 4, 2), // two of three proven
+      ev('f000', 1, 4, 2), // two of three
       ev('f000', 2, 0, 3), // missed again — back to nothing
     ];
     const standings = mistakesFrom(events, FORM_COUNTS);
-    expect(standings[0].proven).toBe(0);
+    expect(standings[0].sinceMiss).toBe(0);
     expect(standings[0].misses).toBe(2);
   });
 
@@ -91,7 +107,7 @@ describe('mistakes — wrong once, three right on three phrasings to clear', () 
       ev('f000', 1, 4, 3),
       ev('f000', 2, 4, 4),
     ];
-    expect(mistakesFrom(events, FORM_COUNTS)[0].proven).toBe(2);
+    expect(mistakesFrom(events, FORM_COUNTS)[0].sinceMiss).toBe(2);
   });
 
   it('treats a Hard grade as correct and Again as a miss', () => {
@@ -99,16 +115,20 @@ describe('mistakes — wrong once, three right on three phrasings to clear', () 
     expect(mistakesFrom(hard, FORM_COUNTS)).toEqual([]);
   });
 
-  it('needs only as many phrasings as a fact actually has', () => {
-    // Two facts in the deck carry two phrasings. A flat three would strand them for ever.
+  it('needs three attempts whatever the phrasing count', () => {
+    // Two facts in the deck carry two phrasings. Under the old rule they needed only two
+    // correct answers, capped by what they had; counting attempts retires the special case
+    // without stranding them, because attempts are always available.
     const twoFormFact = DECK.find((f) => f.forms.length === 2)!;
-    const events = [
+    const twoCorrect = [
       ev(twoFormFact.id, 0, 0),
       ev(twoFormFact.id, 0, 4, 1),
       ev(twoFormFact.id, 1, 4, 2),
     ];
-    expect(mistakesFrom(events, FORM_COUNTS)[0]?.needed ?? 2).toBe(2);
-    expect(mistakesFrom(events, FORM_COUNTS)).toEqual([]);
+    expect(mistakesFrom(twoCorrect, FORM_COUNTS)[0].needed).toBe(3);
+    expect(mistakesFrom(twoCorrect, FORM_COUNTS)).toHaveLength(1);
+
+    expect(mistakesFrom([...twoCorrect, ev(twoFormFact.id, 0, 4, 3)], FORM_COUNTS)).toEqual([]);
   });
 
   it('counts practice and mock failures too', () => {
@@ -126,6 +146,16 @@ describe('mistakes — wrong once, three right on three phrasings to clear', () 
     expect(mistakesFrom(events, FORM_COUNTS).map((s) => s.factId)).toEqual(['f000', 'f002', 'f001']);
   });
 
+  it('keeps a fact whose miss is four attempts back out of the list', () => {
+    // The window rolls: a fact missed long ago and answered since is not a mistake, however
+    // many times it was missed before that.
+    const events = [
+      ev('f000', 0, 0), ev('f000', 1, 0, 1),
+      ev('f000', 0, 4, 2), ev('f000', 1, 4, 3), ev('f000', 2, 4, 4), ev('f000', 0, 4, 5),
+    ];
+    expect(mistakesFrom(events, FORM_COUNTS)).toEqual([]);
+  });
+
   it('serves a phrasing that has not yet been proven since the miss', () => {
     const events = [ev('f000', 0, 0), ev('f000', 1, 4, 1)];
     const standing = mistakesFrom(events, FORM_COUNTS)[0];
@@ -140,32 +170,34 @@ describe('mistakes — wrong once, three right on three phrasings to clear', () 
   });
 });
 
-describe('not tried yet — counts phrasings, not facts', () => {
-  it('starts at the full form count', () => {
-    const total = DECK.reduce((n, f) => n + f.forms.length, 0);
-    expect(unseenForms(DECK, []).length).toBe(total);
+describe('new — facts never answered, not phrasings never served', () => {
+  it('starts at the full fact count, which is not the form count', () => {
+    // The bug this replaces: New reported unseen PHRASINGS, so it read 1,575 on a deck of 537
+    // facts. The second assertion is what gives the first one teeth.
+    expect(newFacts(context([])).length).toBe(DECK.length);
+    expect(DECK.reduce((n, f) => n + f.forms.length, 0)).toBeGreaterThan(DECK.length);
   });
 
-  it('removes only the phrasing actually served', () => {
-    // The owner's choice: meeting a fact once leaves its other ways of being asked unseen,
-    // which is exactly what the breadth gate cares about.
-    const unseen = unseenForms(DECK, [ev('f000', 1, 4)]);
-    expect(unseen.filter((i) => i.factId === 'f000')).toEqual([
-      { factId: 'f000', formIndex: 0 },
-      { factId: 'f000', formIndex: 2 },
-    ]);
+  it('drops a fact from New the moment it is answered once', () => {
+    // Even though two of its three phrasings have never been served. Those come back through
+    // the other sections, where rotation serves the one seen least.
+    const fresh = newFacts(context([ev('f000', 1, 4)]));
+    expect(fresh).not.toContain('f000');
+    expect(fresh).toHaveLength(DECK.length - 1);
   });
 
-  it('does NOT bring a started fact straight back for its other phrasings', () => {
-    // This test used to assert the opposite, and that assertion was the bug: unseen
-    // phrasings of already-started facts jumped ahead of untouched ones, so four facts
-    // cycled through all three forms before anything new appeared. See rotation.test.ts.
-    const events = [ev('f000', 0, 4)];
-    const queue = newQueue(context(events), 10);
-    expect(queue.slice(0, 5).map((i) => i.factId)).not.toContain('f000');
+  it('drops a fact answered WRONGLY too — it is answered either way', () => {
+    expect(newFacts(context([ev('f000', 0, 0)]))).not.toContain('f000');
   });
 
-  it('serves only one phrasing per untouched fact in a pass', () => {
+  it('never serves a fact that has been answered', () => {
+    const events = DECK.slice(0, 5).map((f) => ev(f.id, 0, 4));
+    const queue = newQueue(context(events), 100);
+    const answered = new Set(events.map((e) => e.factId));
+    expect(queue.every((i) => !answered.has(i.factId))).toBe(true);
+  });
+
+  it('serves one card per fact in a pass', () => {
     // Meeting a fact three ways in ninety seconds teaches the wording, not the fact.
     const queue = newQueue(context([]), 40);
     const perFact = new Map<string, number>();
@@ -173,11 +205,12 @@ describe('not tried yet — counts phrasings, not facts', () => {
     expect([...perFact.values()].every((n) => n === 1)).toBe(true);
   });
 
-  it('never serves a phrasing already in the log', () => {
-    const events = DECK.slice(0, 5).flatMap((f) => f.forms.map((_, j) => ev(f.id, j, 4)));
-    const queue = newQueue(context(events), 100);
-    const served = new Set(events.map((e) => `${e.factId}:${e.formIndex}`));
-    expect(queue.every((i) => !served.has(`${i.factId}:${i.formIndex}`))).toBe(true);
+  it('offers a valid phrasing for every fact it serves', () => {
+    for (const item of newQueue(context([]), 40)) {
+      const fact = DECK.find((f) => f.id === item.factId)!;
+      expect(item.formIndex).toBeGreaterThanOrEqual(0);
+      expect(item.formIndex).toBeLessThan(fact.forms.length);
+    }
   });
 });
 
@@ -220,8 +253,11 @@ describe('section counts', () => {
     // install the whole day is still ahead of you.
     expect(counts.due).toBe(30);
     expect(counts.mistakes).toBe(0);
-    expect(counts.newForms).toBe(DECK.reduce((n, f) => n + f.forms.length, 0));
+    expect(counts.mastered).toBe(0);
+    expect(counts.newFacts).toBe(DECK.length);
+    expect(counts.totalFacts).toBe(DECK.length);
     expect([...counts.byChapter.values()].reduce((n, c) => n + c.total, 0)).toBe(DECK.length);
+    expect([...counts.byChapter.values()].reduce((n, c) => n + c.mastered, 0)).toBe(0);
   });
 
   it('counts a missed fact into the mistakes badge', () => {
@@ -230,21 +266,23 @@ describe('section counts', () => {
 });
 
 describe('progress', () => {
-  it('counts phrasings proven, not just facts started', () => {
-    const events = [ev('f000', 0, 4), ev('f000', 1, 4, 1)];
+  it('counts facts, and its three standings add up to the deck', () => {
+    const events = [ev('f000', 0, 4), ev('f000', 1, 4, 1), ev('f001', 0, 0, 2)];
     const ctx = context(events);
-    const progress = deckProgress(DECK, ctx.states, events, 0);
+    const progress = deckProgress(DECK, ctx.states, events);
 
-    expect(progress.started).toBe(1);
-    expect(progress.provenForms).toBe(2);
-    expect(progress.provenAllForms).toBe(0); // f000 has three phrasings
     expect(progress.facts).toBe(DECK.length);
+    expect(progress.started).toBe(2);
+    expect(progress.mastered).toBe(1); // f000, answered twice, no miss
+    expect(progress.inMistakes).toBe(1); // f001
+    expect(progress.notTried).toBe(DECK.length - 2);
+    expect(progress.mastered + progress.inMistakes + progress.notTried).toBe(progress.facts);
   });
 
-  it('counts a fact proven on every phrasing', () => {
-    const events = [ev('f000', 0, 4), ev('f000', 1, 4, 1), ev('f000', 2, 4, 2)];
+  it('masters a fact on one correct answer, without needing its other phrasings', () => {
+    const events = [ev('f000', 0, 4)];
     const ctx = context(events);
-    expect(deckProgress(DECK, ctx.states, events, 0).provenAllForms).toBe(1);
+    expect(deckProgress(DECK, ctx.states, events).mastered).toBe(1);
   });
 
   it('counts a streak only while today has a review', () => {
@@ -269,16 +307,23 @@ describe('progress', () => {
     expect(activity[activity.length - 1]).toBe(2); // two reviews "today"
   });
 
-  it('lists problem facts worst first', () => {
+  it('lists problem facts worst first, and says where each one stands now', () => {
     const events = [
       ev('f000', 0, 0), ev('f000', 1, 0, 1),
       ev('f001', 0, 0, 2),
+      // f002 was missed once and has since been answered three times: still a problem fact by
+      // history, but not in the mistakes list any more.
+      ev('f002', 0, 0, 3), ev('f002', 1, 4, 4), ev('f002', 2, 4, 5), ev('f002', 0, 4, 6),
     ];
     const ctx = context(events);
-    const problems = problemFacts(DECK, ctx.states, 5);
+    const standings = factStandings(DECK.map((f) => f.id), events);
+    const problems = problemFacts(DECK, ctx.states, standings, 5);
+
     expect(problems[0].factId).toBe('f000');
     expect(problems[0].lapses).toBe(2);
     expect(problems.every((p) => p.lapses > 0)).toBe(true);
+    expect(problems.find((p) => p.factId === 'f002')?.recovered).toBe(true);
+    expect(problems.find((p) => p.factId === 'f001')?.recovered).toBe(false);
   });
 });
 
@@ -292,15 +337,15 @@ describe('everything is derived — no stored section state', () => {
     const reversed = mistakesFrom([...events].reverse(), FORM_COUNTS);
     expect(reversed).toEqual(forward);
 
-    expect(unseenForms(DECK, [...events].reverse())).toEqual(unseenForms(DECK, events));
+    expect(newFacts(context([...events].reverse()))).toEqual(newFacts(context(events)));
   });
 
   it('recomputes correctly when history is added retrospectively', () => {
     // A late-arriving event from another device must change the sections, not be ignored.
     const base = [ev('f000', 0, 0), ev('f000', 1, 4, 5), ev('f000', 2, 4, 6)];
-    expect(mistakesFrom(base, FORM_COUNTS)[0].proven).toBe(2);
+    expect(mistakesFrom(base, FORM_COUNTS)[0].sinceMiss).toBe(2);
 
     const late = [...base, ev('f000', 0, 4, 4)];
-    expect(mistakesFrom(late, FORM_COUNTS)).toEqual([]); // three phrasings now proven
+    expect(mistakesFrom(late, FORM_COUNTS)).toEqual([]); // three attempts have now passed
   });
 });

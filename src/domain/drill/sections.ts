@@ -15,23 +15,31 @@
  *     come round again until every other fact in that pool has had its turn.
  *   · **Every reappearance wears a different phrasing** — the least-seen form, counted from
  *     the log rather than from scheduler credit, which resets on a lapse.
- *   · **Random** serves one uniformly-chosen phrasing out of all 1,327.
+ *   · **Random** serves any fact at all: no memory, no order.
+ *
+ * **Everything counted here is a fact** (D-032). The phrasings are the mechanism that lets the
+ * app tell knowing a fact from knowing one sentence; rotation still gives a different question
+ * every time a fact comes round, and it is invisible. New, Mastered and Mistakes partition the
+ * deck, which `standing.ts` guarantees by construction.
  */
 
 import type { Deck, Fact } from '../deck/types';
-import { compareEvents, type ReviewEvent } from '../scheduler/events';
+import type { ReviewEvent } from '../scheduler/events';
 import { shuffle, type Rng } from '../scheduler/rng';
 import type { FactState } from '../scheduler/types';
 import { mistakesFrom, nextFormForMistake, type MistakeStanding } from './mistakes';
+import { factStandings, partition, type FactStanding } from './standing';
 import {
   factsWithUnseenForms,
   leastSeenForm,
   rotate,
   servedCounts,
   servedToday,
-  unseenForm,
   type ServedCounts,
 } from './rotation';
+
+/** Re-exported so callers reach one definition of the window, wherever they came in. */
+export { MASTERY_WINDOW, type FactStanding, type Standing } from './standing';
 
 export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
@@ -64,6 +72,12 @@ export interface SectionContext {
 
 const countsFor = (ctx: SectionContext): ServedCounts => servedCounts(ctx.events);
 
+const factIds = (ctx: SectionContext): string[] => ctx.deck.map((f) => f.id);
+
+/** Every fact's standing, from the one classification. */
+export const standingsFor = (ctx: SectionContext): Map<string, FactStanding> =>
+  factStandings(factIds(ctx), ctx.events);
+
 function factById(deck: Deck, id: string): Fact {
   const fact = deck.find((f) => f.id === id);
   if (!fact) throw new Error(`unknown fact ${id}`);
@@ -83,7 +97,17 @@ export interface DueBuckets {
   readonly correct: string[];
 }
 
-/** Split the deck into the three buckets a day is built from, skipping anything excluded. */
+/**
+ * Split the deck into the three buckets a day is built from, skipping anything excluded.
+ *
+ * **`fresh` here is deliberately not the New section.** New means never answered (D-032); this
+ * bucket means "has a phrasing not yet served", so a fact met once still supplies new material
+ * to the day. That is a scheduling decision rather than a displayed number — nothing on screen
+ * counts this bucket — and narrowing it would change the shape of the daily load, which the
+ * 60-day simulation is the only thing qualified to judge. Due today was to be left alone.
+ *
+ * The `mistakes` bucket does move with the new rule, because it reads the one mistakes list.
+ */
 export function dueBuckets(ctx: SectionContext, exclude: ReadonlySet<string>): DueBuckets {
   const counts = countsFor(ctx);
   const formCounts = new Map(ctx.deck.map((f) => [f.id, f.forms.length]));
@@ -168,47 +192,35 @@ export const dueRemaining = (ctx: SectionContext): number =>
   Math.max(0, DAILY_TARGET - servedToday(ctx.events, ctx.today).size);
 
 // ===========================================================================
-// Not tried yet
+// New — facts never answered
 // ===========================================================================
 
-/** Every (fact, form) pair the log has never seen. */
-export function unseenForms(deck: Deck, events: readonly ReviewEvent[]): DrillItem[] {
-  const counts = servedCounts(events);
-  const out: DrillItem[] = [];
-  for (const fact of deck) {
-    fact.forms.forEach((_, formIndex) => {
-      if ((counts.byForm.get(`${fact.id}:${formIndex}`) ?? 0) === 0) {
-        out.push({ factId: fact.id, formIndex });
-      }
-    });
-  }
-  return out;
-}
+/** Facts with no review event of any kind. The section, and the count, are the same set. */
+export const newFacts = (ctx: SectionContext): string[] => partition(factIds(ctx), ctx.events).fresh;
 
 /**
- * One unseen phrasing per fact, rotated so every fact gets a turn before any repeats.
+ * Facts never answered, one card each, shuffled.
  *
- * The previous version put unseen phrasings of *already-started* facts first, which meant a
- * fact was served, then served again with its second phrasing, then its third — 20 cards
- * yielded 8 distinct facts. Rotation by served-count fixes it at the root: a fact seen once
- * sits behind every fact seen zero times.
+ * **This used to serve facts with an unseen PHRASING**, which is why the New tile read 1,575 on
+ * a deck of 537 facts: a fact answered once was still New, and stayed New until every one of its
+ * questions had been served. The count measured the apparatus and the section agreed with it, so
+ * neither looked wrong. New now means what it says — never answered — and a fact leaves it the
+ * moment it is answered once, which is the same moment it becomes Mastered (D-032). Its other
+ * phrasings still come round, through Due today, Mastered and the chapter drills, where rotation
+ * serves the one seen least.
+ *
+ * Every candidate has zero events, so `rotate` is a shuffle here and `leastSeenForm` picks
+ * uniformly among all of the fact's phrasings. Both are still used rather than inlined, so this
+ * stays correct if the definition of the pool ever widens again.
  */
 export function newQueue(ctx: SectionContext, limit = 40): DrillItem[] {
   const counts = countsFor(ctx);
-  const candidates = factsWithUnseenForms(ctx.deck, counts);
-  const order = rotate(
-    candidates.map((f) => f.id),
-    counts,
-    ctx.rng,
-  );
+  const order = rotate(newFacts(ctx), counts, ctx.rng);
 
-  const out: DrillItem[] = [];
-  for (const factId of order) {
-    if (out.length >= limit) break;
-    const form = unseenForm(factById(ctx.deck, factId), counts, ctx.rng);
-    if (form !== null) out.push({ factId, formIndex: form });
-  }
-  return out;
+  return order.slice(0, limit).map((factId) => ({
+    factId,
+    formIndex: leastSeenForm(factById(ctx.deck, factId), counts, ctx.rng),
+  }));
 }
 
 // ===========================================================================
@@ -222,8 +234,8 @@ export function mistakeStandings(ctx: SectionContext): MistakeStanding[] {
 /**
  * The mistakes drill, rotated within equal standing.
  *
- * Clearing a fact needs three correct answers on three different phrasings, so this section
- * must be able to return to a fact — but not before its peers have had a turn.
+ * Clearing a fact needs three correct answers, so this section must be able to return to a fact
+ * — but not before its peers have had a turn.
  */
 export function mistakesQueue(ctx: SectionContext, limit = 40): DrillItem[] {
   const formCounts = new Map(ctx.deck.map((f) => [f.id, f.forms.length]));
@@ -275,52 +287,40 @@ export function chapterQueue(ctx: SectionContext, chapter: number, limit = 40): 
 // ===========================================================================
 
 /**
- * One phrasing, chosen uniformly from all of them.
+ * Any fact at all, in any order, wearing any of its phrasings.
  *
  * Deliberately not rotated and not weighted: no least-seen preference, no bucket, no memory.
  * It is the only section that can hand you the same card twice running, and that is the
  * point — it is the honest sample of the deck, which the others are all designed not to be.
+ *
+ * The draw is over facts and then over that fact's phrasings, rather than over the flat list of
+ * every phrasing. Flat, a three-phrasing fact was 50% likelier to appear than a two-phrasing
+ * one, which made "random" a sample weighted by how many ways a fact happens to be written —
+ * and the fact is the unit here, so that was a quiet bias rather than a choice.
  */
 export function randomQueue(ctx: SectionContext, limit = 40): DrillItem[] {
-  const all: DrillItem[] = [];
-  for (const fact of ctx.deck) {
-    fact.forms.forEach((_, formIndex) => all.push({ factId: fact.id, formIndex }));
-  }
-  return shuffle(all, ctx.rng).slice(0, limit);
+  return shuffle(
+    ctx.deck.map((f) => f.id),
+    ctx.rng,
+  )
+    .slice(0, limit)
+    .map((factId) => {
+      const fact = factById(ctx.deck, factId);
+      return { factId, formIndex: shuffle(fact.forms.map((_, i) => i), ctx.rng)[0] };
+    });
 }
 
 /**
- * Facts currently being got right: **tried at least once, with no miss in the last three
- * attempts.**
+ * Facts currently being got right: **answered at least once, with no wrong answer in the last
+ * three attempts.**
  *
- * The owner's definition, and it is a deliberately different thing from the headline. The
- * headline ("known every way") asks whether every phrasing has ever been proved, which is a
- * measure of coverage and only ever rises. This asks whether the fact is being answered
- * correctly *now*, which is a measure of current form and falls the moment one is missed.
- *
- * Three attempts rather than one, so a single lucky answer does not qualify a fact and a
- * single bad day does not disqualify one for ever — the window rolls forward, so a fact
- * returns to mastered as soon as three clean attempts have pushed the miss out of it.
+ * The owner's definition, and now the headline as well as the section (D-032). It is a measure
+ * of current form rather than of coverage: one correct answer puts a fact here, and it leaves
+ * the moment it is missed. It is the only number on the home screen that can fall, which is what
+ * makes it worth looking at — everything else there only ever rises.
  */
-export const MASTERY_WINDOW = 3;
-
-export function masteredFacts(ctx: SectionContext): string[] {
-  const byFact = new Map<string, ReviewEvent[]>();
-  for (const e of ctx.events) {
-    const list = byFact.get(e.factId);
-    if (list) list.push(e);
-    else byFact.set(e.factId, [e]);
-  }
-
-  const out: string[] = [];
-  for (const fact of ctx.deck) {
-    const attempts = byFact.get(fact.id);
-    if (!attempts || attempts.length === 0) continue;
-    const recent = [...attempts].sort(compareEvents).slice(-MASTERY_WINDOW);
-    if (recent.every((e) => e.grade > 0)) out.push(fact.id);
-  }
-  return out;
-}
+export const masteredFacts = (ctx: SectionContext): string[] =>
+  partition(factIds(ctx), ctx.events).mastered;
 
 /**
  * Drill what is currently being got right, to find out whether it still is.
@@ -350,37 +350,46 @@ export function masteredQueue(ctx: SectionContext, limit = 40): DrillItem[] {
 // Counts for the home screen
 // ===========================================================================
 
+/**
+ * Every number the home screen shows. All of them are facts (D-032).
+ *
+ * `newFacts + mastered + mistakes === totalFacts`, always — the three come from one walk of the
+ * deck in `standing.ts`, so they cannot drift apart. `due` is the one that is not part of that
+ * partition, and it is not a coverage figure: it is cards left in today's thirty, each of them a
+ * distinct fact, and it falls to zero every evening rather than describing the deck.
+ */
 export interface SectionCounts {
-  /** Cards left in today's 30. */
+  /** Cards left in today's 30. Each is a distinct fact; a fact appears at most once a day. */
   readonly due: number;
-  /** Phrasings never served, across the whole deck. */
-  readonly newForms: number;
+  /** Facts never answered. */
+  readonly newFacts: number;
+  /** Facts with a wrong answer inside their last three attempts. */
   readonly mistakes: number;
-  /** Facts tried at least once with no miss in the last three attempts. Falls on a miss. */
+  /** Facts with no wrong answer in their last three attempts. Falls on a miss. */
   readonly mastered: number;
-  readonly totalForms: number;
-  readonly byChapter: ReadonlyMap<number, { total: number; proven: number }>;
+  /** Facts drilled, i.e. `ACTIVE.length`. The denominator on every screen. */
+  readonly totalFacts: number;
+  readonly byChapter: ReadonlyMap<number, { total: number; mastered: number }>;
 }
 
 export function sectionCounts(ctx: SectionContext): SectionCounts {
-  const byChapter = new Map<number, { total: number; proven: number }>();
-  let totalForms = 0;
+  const { fresh, mastered, mistakes } = partition(factIds(ctx), ctx.events);
+  const isMastered = new Set(mastered);
 
+  const byChapter = new Map<number, { total: number; mastered: number }>();
   for (const fact of ctx.deck) {
-    totalForms += fact.forms.length;
-    const entry = byChapter.get(fact.chapter) ?? { total: 0, proven: 0 };
+    const entry = byChapter.get(fact.chapter) ?? { total: 0, mastered: 0 };
     entry.total++;
-    const state = ctx.states.get(fact.id);
-    if (state && state.ok.length > 0 && state.ok.every((v) => v > 0)) entry.proven++;
+    if (isMastered.has(fact.id)) entry.mastered++;
     byChapter.set(fact.chapter, entry);
   }
 
   return {
     due: dueRemaining(ctx),
-    newForms: unseenForms(ctx.deck, ctx.events).length,
-    mistakes: mistakeStandings(ctx).length,
-    mastered: masteredFacts(ctx).length,
-    totalForms,
+    newFacts: fresh.length,
+    mistakes: mistakes.length,
+    mastered: mastered.length,
+    totalFacts: ctx.deck.length,
     byChapter,
   };
 }
