@@ -42,8 +42,17 @@ body {
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
 
-  /* Home Screen launch: keep content clear of the notch and the home indicator (§F). */
-  padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+  /**
+   * Home Screen launch: keep content clear of the notch (§F).
+   *
+   * The BOTTOM inset is deliberately not here. Applied to the body it becomes a strip of page
+   * colour *below* the bottom-most bar — dead space on the drill screen and under the tab bar,
+   * and in dark mode a black band against a near-black page. It now sits on the two elements
+   * that can actually be the bottom-most box (`TabBar .bar` and `Drill .actions`), so their own
+   * box reaches the physical bottom edge and the inset is internal clearance for the home
+   * indicator rather than a margin outside the app. `tests/layout.test.ts` holds that split.
+   */
+  padding-block-start: env(safe-area-inset-top);
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 }
 
@@ -62,6 +71,16 @@ body {
   margin-inline: auto;
   padding: var(--space-4);
   overflow: hidden;
+
+  /**
+   * Nothing below the last bar.
+   *
+   * Measured at 393x852 on every screen: the deepest box ended at 836 and the viewport is 852,
+   * and those 16px were this padding. They read as dead space because they are — the bar above
+   * them is the end of the interface. The bottom bars take over both this and the safe-area
+   * inset, so the space under the tabs is inside the tab bar rather than beneath it.
+   */
+  padding-block-end: 0;
 }
 
 /**

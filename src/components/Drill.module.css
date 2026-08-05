@@ -325,13 +325,19 @@
    auto` inside the flex column is what pins it: the card and its options take what they need
    and this takes the rest, so it sits in the same place on every card regardless of how long
    the question is. Reading the explanation is a scroll INSIDE the panel; acting never is. */
+
+/**
+ * On a drill screen the tab bar is hidden, so this is what owns the bottom edge — and it carries
+ * the safe-area inset for the same reason the tab bar does. Without it the card's buttons would
+ * sit under the home indicator. See `tests/layout.test.ts`.
+ */
 .actions {
   display: flex;
   flex: none;
   align-items: center;
   gap: var(--space-2);
   margin-block-start: auto;
-  padding-block-start: var(--space-3);
+  padding-block: var(--space-3) env(safe-area-inset-bottom);
   border-block-start: 1px solid var(--c-rule);
 }
 

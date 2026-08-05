@@ -2,6 +2,33 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-05 — the bottom edge belongs to the bar
+
+The dead strip along the bottom was measured rather than guessed, on all four screens at
+393×852: the deepest box ended at **836** against a viewport of **852** every time — drill tab,
+progress, chronology, and a drill card with the tab bar hidden. Those 16px were `.wrap`'s own
+`padding: var(--space-4)`, exactly as suspected. `env(safe-area-inset-bottom)` resolves to
+**0px** in a browser, so it contributes nothing there and around **34px** on the phone: the band
+the owner sees is those two added together, roughly 50px of `--c-page` (#0d0d0d in dark, hence
+"black") below the last thing on screen.
+
+The fix is a change of ownership rather than a deletion. `.wrap` loses its bottom padding
+outright, and the **bottom inset moves off the body onto the two elements that can be the
+bottom-most box** — the tab bar on every tab, the card's action bar on every drill. On the body
+the inset is unreachable: no element can paint into it, so it is always a strip below the app.
+On the bars it is clearance *inside* the interface, which is the ordinary iOS pattern.
+
+Measured after: the bottom bar's box ends at **852** on every screen, no page scroll anywhere.
+With a 34px inset simulated on the same declaration, the bar's box still reaches 852 while its
+buttons stop at 818 — clear of the home indicator — and every one is still 44px.
+
+**A regression test that reads CSS source**, which needs justifying. jsdom does no layout, so
+`getBoundingClientRect` returns zeros and a rendered assertion would prove nothing; this bug was
+found in a real browser and nothing in the suite could have said so. `tests/layout.test.ts`
+instead holds the invariant that produced the fix — *exactly the two bottom-most bars carry the
+bottom inset, and the frame carries no bottom padding* — and it was run against the old CSS
+first, where all four of its assertions fail.
+
 ## 2026-08-05 — six facts retired, because the year is not in the book
 
 f073 (1536, Wales united with England), f074 (1541, King of Ireland), f078 (1558, Elizabeth I
