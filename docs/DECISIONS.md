@@ -824,7 +824,15 @@ that recoverable rather than destructive.
 
 ## D-028 — Completion is measured in facts, not questions
 
-**Date:** 4 August 2026 · **Status:** accepted · **Amends the BRIEF's outcome wording**
+**Date:** 4 August 2026 · **Status:** **superseded by D-032, 5 August 2026** ·
+**Amended the BRIEF's outcome wording**
+
+> D-032 keeps this entry's principle — completion is measured in facts — and replaces its
+> definition. "Known every way" required every phrasing of a fact proven, which put a phrasing
+> count inside a fact count and left the headline reading 0 after weeks of correct answers. The
+> reasoning below is kept rather than edited, because the *negative* it predicted is exactly what
+> happened: *"it moves more slowly, especially early, and a number that barely moves in week one
+> is discouraging exactly when encouragement matters."*
 
 **Context.** The headline read "phrasings proven, X of 1,327". The owner's correction: the
 questions are the mechanism, not the goal — several phrasings per fact exist so the app can
@@ -949,3 +957,90 @@ because the deltas are enumerated rather than unknown.
   unanswerable that his edition may well answer. Confirming each with him before pulling
   anything was what stopped that becoming sixteen wrong deletions — and confirming, rather
   than asking him to re-derive, is what made it cheap enough to actually happen.
+
+---
+
+## D-032 — Every number in the app is a count of facts
+
+**Date:** 5 August 2026 · **Status:** accepted
+**Supersedes D-028**, which set the headline as "facts known every way, out of 443"
+
+**Context.** D-028 was right that the goal is facts and wrong about what counts as knowing one.
+It kept the rigour by requiring **every phrasing** of a fact to have been answered correctly,
+which is a coverage measure and only ever rises. Beside it the screen carried numbers built on
+three other rules: "New" counted unseen **phrasings** (1,575 of them, on a deck of 537 facts),
+Mastered counted facts on a last-three-attempts window, and Mistakes counted facts on a
+three-distinct-phrasings rule. Each figure was internally correct. Together they were
+incoherent, and the incoherence was visible from the sofa: the headline read **0** after weeks
+of correct answers, and the New tile was three times the size of the deck.
+
+The owner's correction, and it is the whole of this entry: *"the several phrasings per fact are
+a hidden mechanism, not a measure of knowledge."* They exist so the app can tell knowing a fact
+from knowing one sentence. That is a reason to **ask** several ways. It is not a reason to
+**count** them.
+
+**Decision.** Five definitions, all per fact, and the first three partition the deck:
+
+| | |
+|---|---|
+| **New** | never answered — no review event for it, ever |
+| **Mastered** | answered, with no wrong answer in its last three attempts |
+| **Mistakes** | a wrong answer inside its last three attempts |
+| **Random** | any fact at all; no memory, no order |
+| **Due today** | unchanged — thirty facts a day, each fact at most once |
+
+`New + Mastered + Mistakes = every fact, always, with no overlap.` The **headline is Mastered
+over the deck.** One correct answer masters a fact; one wrong answer un-masters it. Chapter bars
+are mastered-in-chapter over facts-in-chapter, and carry the numbers as well as the bar.
+
+Rotation is untouched: every time a fact comes round it wears a phrasing it has seen least. That
+is now entirely invisible, which is what it was always for.
+
+**The partition holds by construction, not by agreement.** One function (`domain/drill/standing.ts`)
+walks the deck once and gives each fact exactly one standing; Mastered, Mistakes, New, both
+screens and the chapter bars are all projections of that walk. Three functions that happen to
+agree is what the last version had.
+
+**Two consequences that are losses, stated rather than discovered later.**
+
+1. **The mistakes rule gives up its distinct-phrasing guarantee.** It used to need three correct
+   answers on three *different* phrasings; it now needs three attempts. Under the old rule three
+   correct answers to one memorised sentence could not clear a fact, and under this one they can.
+   Rotation makes it unlikely rather than impossible — the section serves the least-seen phrasing
+   and skips one already answered since the miss. That guarantee was bought at the price of
+   Mistakes and Mastered being different rules, which is exactly what made the screen incoherent.
+   It is a real loss and it is the price of the partition.
+
+2. **The displayed numbers and the scheduler now use different notions of "known", deliberately.**
+   The breadth gate (R-6) still caps an interval at 6 days until a *second phrasing* is proven and
+   at 30 until *every* phrasing is, and it was not asked to change. So a fact can be Mastered on
+   screen — answered once, correctly — while the scheduler still refuses to push it past six days
+   because it has only ever been asked one way. Both are right for their own job: the screen
+   reports current form, the scheduler withholds long intervals until it has evidence of breadth.
+   But they are two meanings of one English word living in one app, and this is written down here
+   rather than left to be found the first time a number and a due date seem to disagree.
+
+**Also settled here, and smaller.**
+
+- **Random draws over facts, not over the flat list of phrasings.** Flat, a three-phrasing fact
+  was 50% likelier to come up than a two-phrasing one — "random" weighted by how many ways a fact
+  happens to be written. Nearly uniform on this deck, and a quiet bias rather than a choice.
+- **The progress screen loses "facts known every way" and "phrasings proven"** and leads with the
+  same partition the home screen shows. Its problem-facts list reports each fact's standing today
+  instead of "2/3 phrasings proven".
+- **`newQueue` serves only facts never answered**, so the section and its count empty together.
+  It used to return for each fact's remaining phrasings, which is what made New larger than the
+  deck.
+
+**Consequences.**
+- *Positive.* The number answers the question actually being asked — *how much of this do I know
+  right now* — and it moves on the first day. It can also fall, which nothing on that screen
+  could do before except Mastered, and a number that only rises is not a measure of knowledge.
+- *Positive.* The three sections cannot disagree, and that is asserted over generated logs rather
+  than argued. Both halves of the old bug were reintroduced deliberately and watched to fail.
+- *Negative.* Mastered is a much softer claim than "known every way". One correct multiple-choice
+  answer masters a fact, and L-002's option-shape tell means some of those answers are worth less
+  than they look. This number must never become the readiness figure (S4) without that being
+  reckoned with — R-7 still stands, and it is doing more work now than it was.
+- *Negative.* The headline jumped from 0 to 10 with no learning taking place. Any figure like this
+  is a definition, and a definition that flatters is the failure mode R6 named.

@@ -35,6 +35,11 @@ leave it alone, never delay it.
 Not "usually", not "before fuzz". `interval <= cap` holds after every review.
 **Enforced by:** `scheduler.test.ts` at fuzz extremes, and per-review in the 60-day simulation.
 
+*The cap is keyed to phrasings proven, and R-12's counts are keyed to facts answered — so the
+scheduler and the screen use two different notions of "known", deliberately. A fact can be
+Mastered on screen and still be held at six days here. Stated in full in D-032 rather than left
+to be discovered when a number and a due date seem to disagree.*
+
 ### R-7 · Readiness is never computed from data with a known tell
 While L-002 and L-003 are open, multiple-choice performance does not feed any readiness figure.
 **Enforced by:** the deck ratchet in `baseline.ts`; the exam-format number ships only when the
@@ -62,3 +67,14 @@ computed from the log changes underfoot at the exact moment it is being acted on
 caused two separate bugs (L-019, L-021).
 **Enforced by:** `app.test.tsx` — option order and card identity asserted stable across
 answering, enumerated over every section, and both assertions verified by reverting the fix.
+
+### R-12 · Every number on screen counts facts, and New + Mastered + Mistakes is the deck
+No count, headline, section label or progress bar is a count of phrasings. The several phrasings
+per fact are the mechanism that lets the app tell knowing a fact from knowing one sentence, and
+they are never the measure (D-032). The three standings partition the deck exactly — that is what
+stops four numbers on one screen from each being right and jointly meaningless, which is what they
+were. It holds by construction: one function classifies each fact once and everything else is a
+projection of it.
+**Enforced by:** `counts.test.ts` — the partition over generated logs, the transitions on a single
+answer, and an assertion that no coverage figure exceeds the fact total. Both halves of the
+original defect were reintroduced and watched to fail it.

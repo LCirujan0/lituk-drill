@@ -7,13 +7,13 @@ restates one. A hand-copied live number drifts within a session.
 
 | | |
 |---|---|
-| Phase | Explanations rewritten as memorisation clusters, 537/537 |
+| Phase | Every number in the app counts facts (D-032). New + Mastered + Mistakes = the deck |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **220 passing across 10 files** — 169 domain, 47 in jsdom (`app` 36, `store-sync` 11), 4 over CSS source (`layout`) |
+| Tests | **264 passing across 11 files** — 209 domain (`counts` 38), 51 in jsdom (`app` 40, `store-sync` 11), 4 over CSS source (`layout`) |
 | Deck | **537 drilled · 1,609 forms**. 559 ids in use; 22 retired, ids kept (R-4) |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
-| Next decision id | D-032 (D-026 never issued, D-029 never written — L-022) |
+| Next decision id | D-033 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-032 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 14 open · 7 fixed-unverified · 5 verified-fixed |
 | Open Critical | 0. No open High — L-023 and L-025 closed by the owner’s edition check |
@@ -30,8 +30,9 @@ restates one. A hand-copied live number drifts within a session.
   Deck content in `src/data/chapter-{1..5}.ts` plus `additions.ts` and `explanations.ts`.
 - `src/domain/scheduler` — SM-2 with v0's five additions, seeded RNG, queue building, and
   the append-only event log with replay/merge.
-- `src/domain/drill` — the five sections, the mistakes queue, rotation and the stats the
-  home and progress screens project.
+- `src/domain/drill` — `standing.ts` classifies every fact as New, Mastered or Mistakes in one
+  walk (D-032, R-12) and everything else projects it: the five sections, the mistakes queue,
+  rotation, and the stats the home and progress screens show.
 - `src/adapters` — `local-store` (localStorage, degrades rather than throws), `db` (Neon,
   server-only), `sync` (pull/push/union), `store` (the one subscribable snapshot; **owns
   the two sync guarantees in D-030**).
@@ -58,11 +59,15 @@ which pins the invariant a browser measurement established but cannot re-measure
 ## Next, in order
 
 1. **Owner: drill daily.** Not a build task and still the highest-value item here.
-2. Verify the 399 unsourced facts against the handbook and rebuild the explanations as
-   memorisation clusters — one pass, fact by fact, because both need the same passage.
-   `docs/EXPLANATIONS.md` is the standard; L-023's four unanswerable facts are resolved here.
-3. PWA polish: fit 393×852, safe areas, icons, manifest, offline.
-4. Mini-spec then build S4, the readiness model. S7 landed, so L-002 no longer poisons it.
+2. **Owner: f015 and f194** — the year check, run over *answers* for the first time, says the
+   handbook holds neither `AD 122` for Hadrian's Wall nor `1924` for Baird. Both are still
+   drilled. Retire or correct is his call under D-031 (L-031).
+3. Extend the year check over `fact.answer` and every `answers.correct`, ratcheted like
+   `explanationYearsOffSource`. It has only ever read explanations, which is how six facts with
+   unanswerable years survived a whole sourcing pass (L-031).
+4. Mini-spec then build S4, the readiness model. **R-7 is doing more work than it was:** Mastered
+   is now a much softer claim than "known every way", and L-002's option-shape tell sits directly
+   under it (D-032).
 5. L-004 (the inherited amber contrast pairing) — live in the grading buttons, so this has
    stopped being theoretical.
 

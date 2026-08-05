@@ -21,8 +21,8 @@ import { useCallback, useMemo, useSyncExternalStore } from 'react';
 // answering (R-4). Anything deciding what to serve, or counting what is left to learn, reads
 // ACTIVE. A retired fact's past events simply fall out of the replay, which is correct — its
 // schedule is no longer anybody's business.
-import { ACTIVE, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
-import { dayNumber, replay, type ReviewEvent } from '@/domain/scheduler/events';
+import { ACTIVE, TOTAL_FACTS } from '@/domain/deck';
+import { replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
 import { DEFAULT_CONFIG, type Grade, type ReviewMode } from '@/domain/scheduler/types';
 import {
@@ -34,6 +34,7 @@ import {
   newQueue,
   randomQueue,
   sectionCounts,
+  standingsFor,
   type DrillItem,
   type SectionContext,
 } from '@/domain/drill/sections';
@@ -52,7 +53,6 @@ import {
 export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
 const FORM_COUNTS = new Map(ACTIVE.map((f) => [f.id, f.forms.length]));
-const FACT_IDS = ACTIVE.map((f) => f.id);
 
 /**
  * Whether a review counts toward the spaced-repetition schedule.
@@ -90,10 +90,10 @@ export function useDrill() {
 
   const counts = useMemo(() => sectionCounts(ctx), [ctx]);
 
-  const progress = useMemo(
-    () => deckProgress(ACTIVE, states, events, counts.mistakes),
-    [states, events, counts.mistakes],
-  );
+  // Not given `counts` to copy from: it derives the same partition from the same log, so the
+  // two screens agree because they compute the same thing, not because one was handed the
+  // other's answer (D-032).
+  const progress = useMemo(() => deckProgress(ACTIVE, states, events), [states, events]);
 
   /**
    * Facts served in the last few cards, so a self-directed drill does not hand back the
@@ -153,12 +153,12 @@ export function useDrill() {
     counts,
     progress,
     config: DEFAULT_CONFIG,
-    totals: { facts: TOTAL_FACTS, forms: TOTAL_FORMS },
+    totals: { facts: TOTAL_FACTS },
     standings: () => mistakeStandings(ctx),
     upcoming: () => upcomingLoad(ACTIVE, states, today, 7),
     activity: () => recentActivity(events, today, 14),
     streak: () => streak(events, today),
-    problems: () => problemFacts(ACTIVE, states, 8),
+    problems: () => problemFacts(ACTIVE, states, standingsFor(ctx), 8),
     nextItem,
     grade,
     updateSettings,

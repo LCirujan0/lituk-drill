@@ -205,6 +205,24 @@
   overflow: hidden;
 }
 
+/* Mastered over total, for the chapter. A 3% bar is indistinguishable from an empty one, and
+   3% is where every chapter starts — so the number carries the early weeks and the bar carries
+   the shape. Fixed width and tabular figures so five rows line up. */
+.chapterCount {
+  flex: none;
+  width: 3.75rem;
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.chapterOf {
+  color: var(--c-text-muted);
+  font-weight: 400;
+}
+
 .barFill {
   display: block;
   height: 100%;
