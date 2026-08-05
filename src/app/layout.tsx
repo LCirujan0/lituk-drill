@@ -9,7 +9,9 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Life in the UK — drill',
-  description: '528 facts, asked several ways. The fact is the scheduling unit, not the question.',
+  // No deck size here. HANDOFF owns every live number, and a count restated in shipped
+  // metadata is a count that goes stale silently — this one had been wrong since 528.
+  description: 'The Life in the UK handbook, asked several ways. The fact is the scheduling unit, not the question.',
   manifest: '/manifest.webmanifest',
   applicationName: 'LITK',
   // Must survive Add to Home Screen: full screen, no address bar (§F). `black-translucent`

@@ -2,6 +2,33 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-05 — six facts retired, because the year is not in the book
+
+f073 (1536, Wales united with England), f074 (1541, King of Ireland), f078 (1558, Elizabeth I
+becomes queen), f086 (1587, Mary Queen of Scots executed), f091 (1611, the King James Bible)
+and f163 (1926, the General Strike). The owner checked all six against his 2026 printed
+edition and none of the years is in it. Each was then grepped against the PDF proxy as well:
+**zero hits for every one of the six years.** The handbook covers all six events — Wales
+united under Henry VIII, Henry VIII taking the title King of Ireland, Elizabeth I at length,
+Mary eventually executed, the King James Bible in its own box — and dates none of them. The
+General Strike is not there at all.
+
+Retired, not deleted. Ids are the handle the review log points at and they are contiguous by
+contract (R-4), so a deletion would renumber every fact after it and silently re-point every
+past event at the wrong question. `retired?: string` carries the reason and drops the fact out
+of `ACTIVE` while it keeps its place in `DECK`. Their explanations went with them.
+
+Deck 543 → **537** drilled, 1,627 → **1,609** phrasings, 16 → **22** retired.
+
+**The part worth keeping is how they survived.** All six carried
+`source: 'corroborated against the handbook text'` from the mechanical pass over the 399
+inherited facts. That pass matched on topic, not on the answer — the handbook talks about the
+King James Bible, so the fact corroborated, and the fact's answer is a year the book never
+gives. The vocabulary check could not catch it either: it reads explanations, and it
+deliberately exempts a year the fact's own answer already asserts (D-031, because where the
+answer IS a year the owner has confirmed it). That exemption is sound only when the answer has
+actually been checked. Recorded as L-031, with the two facts the same probe still flags.
+
 ## 2026-08-04 — tabs, a pinned action bar, and the copy cut back
 
 The owner's note: *"I'm the only user, so explanations are unnecessary most of the time."*
