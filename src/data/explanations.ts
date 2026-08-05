@@ -354,16 +354,6 @@ export const EXPLANATIONS: Readonly<Record<string, Explanation>> = {
     versus: "The Church of Scotland is the other national church and a separate story: there the break came from Parliament in 1560, and unlike the Church of England it was never a state Church.",
     why: "In the new Church the king, not the Pope, held the power to appoint bishops and to order how people should worship.",
   },
-  f073: {
-    lead: "Wales was formally united with England in 1536, by the Act for the Government of Wales.",
-    versus: "1284 is the Statute of Rhuddlan, which annexed Wales to the Crown of England under Edward I. That one is the conquest; this one is the union.",
-    why: "It happened in the reign of Henry VIII. Welsh representatives were sent to the House of Commons and the Welsh legal system was reformed.",
-  },
-  f074: {
-    lead: "Henry VIII took the title King of Ireland in 1541.",
-    versus: "Wales was formally united with England by an Act of Parliament. Ireland was not united; Henry simply took the title of king there.",
-    why: "Henry VII and Henry VIII had already extended English control beyond the Pale and established English authority over the whole country, so the title named control that had already been taken. English laws came with it.",
-  },
   f075: {
     lead: "Edward VI became king at the age of nine.",
     versus: "Fifteen is the age he died at, not the age he came to the throne.",
@@ -378,11 +368,6 @@ export const EXPLANATIONS: Readonly<Record<string, Explanation>> = {
     lead: "Mary I is remembered as 'Bloody Mary', because she persecuted Protestants.",
     versus: "Mary I is Henry VIII's daughter and queen of England. Mary, Queen of Scots is her Scottish contemporary and Elizabeth I's cousin, the one kept prisoner and executed.",
     why: "She was a devout Catholic between two Protestant monarchs, her half-brother Edward VI before her and her half-sister Elizabeth I after, so the official religion changed with each of the three.",
-  },
-  f078: {
-    lead: "Elizabeth I became queen in 1558.",
-    versus: "1558 is her accession; 1588 is the defeat of the Spanish Armada. One digit apart, and the Armada comes late in the reign rather than at its start.",
-    why: "Hold the reign as a span rather than a single date: it ends in 1603, when her cousin James VI of Scotland succeeded her.",
   },
   f079: {
     lead: "Elizabeth I's reign ended in 1603, when she died.",
@@ -419,11 +404,6 @@ export const EXPLANATIONS: Readonly<Record<string, Explanation>> = {
     versus: "Edward VI is the other child monarch in this part of the story, and he was nine. A week means Mary; nine means Edward.",
     why: "Much of her childhood was spent in France, and she was at the centre of a power struggle between different groups when she returned to Scotland.",
   },
-  f086: {
-    lead: "Mary, Queen of Scots was executed in 1587, accused of plotting against Elizabeth I.",
-    versus: "1588 is the Spanish Armada, the year after. A fleet in the question means 1588; Mary means the year before it.",
-    why: "She fled to England after her husband was murdered, and Elizabeth kept her prisoner for twenty years, so the execution comes long after her arrival rather than soon after it.",
-  },
   f087: {
     lead: "James VI of Scotland became King of England in 1603, on the death of Elizabeth I.",
     versus: "1603 joined the crowns; it did not join the countries. Scotland remained a separate country until the Act of Union in 1707 created the Kingdom of Great Britain.",
@@ -446,12 +426,6 @@ export const EXPLANATIONS: Readonly<Record<string, Explanation>> = {
       { label: "The plot, 1605", detail: "the year the group failed; it falls in James I's reign" },
       { label: "Bonfire Night, 5 November", detail: "the fireworks every year are the anniversary of that failure" },
     ],
-  },
-  f091: {
-    lead: "The King James Bible was published in 1611.",
-    versus: "The Authorised Version is the same book under a second name, not a rival translation. Either name means this Bible.",
-    why: "It was not the first English Bible, but it is the version that continues to be used in many Protestant churches today, which is why it is the one singled out.",
-    note: "The handbook gives no year for it. It says only that the translation was an achievement of King James' reign, which began in 1603.",
   },
   f092: {
     lead: "Civil war between King Charles I and Parliament began in 1642.",
@@ -887,10 +861,6 @@ export const EXPLANATIONS: Readonly<Record<string, Explanation>> = {
     lead: "Emmeline Pankhurst founded the Women's Franchise League and led the militant suffragettes.",
     versus: "The Women's Franchise League came first, in 1889, and fought for the vote in local elections for married women. The militancy belongs to the Women's Social and Political Union, founded in 1903 — the first group whose members were called suffragettes.",
     why: "Militant here means civil disobedience: chaining themselves to railings, smashing windows, arson, and hunger strikes in prison.",
-  },
-  f163: {
-    lead: "The General Strike took place in 1926.",
-    note: "The handbook does not mention the General Strike or the year 1926. Its account of the inter-war years covers improving living conditions and housing in the 1920s, then the Great Depression of 1929.",
   },
   f164: {
     lead: "Alexander Fleming discovered penicillin in 1928.",

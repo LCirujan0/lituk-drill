@@ -320,7 +320,7 @@ describe('the home screen', () => {
     render(<App />);
     // The headline counts FACTS, not phrasings — questions are how the app checks you know
     // a fact, not the thing being learned (D-028).
-    expect(await screen.findByText(/\/543 known/)).toBeTruthy();
+    expect(await screen.findByText(/\/537 known/)).toBeTruthy();
     expect(screen.getByRole('button', { name: /^New/ })).toBeTruthy();
   });
 
@@ -350,7 +350,7 @@ describe('the home screen', () => {
 
     // One phrasing answered is not a known fact — a fact counts only once every phrasing
     // has been proved, so the headline is still 0 and the phrasing count moved instead.
-    await waitFor(() => expect(screen.getByText(/\/543 known/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/\/537 known/)).toBeTruthy());
     expect(stored()).toHaveLength(1);
   });
 });

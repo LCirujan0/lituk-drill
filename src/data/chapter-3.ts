@@ -2779,6 +2779,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f073",
+    retired: 'The handbook says Wales was united with England under Henry VIII, and separately that Edward I annexed Wales by the Statute of Rhuddlan — but it gives no year for either. 1536 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Tudors",
     chapter: 3,
     verify: false,
@@ -2817,6 +2818,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f074",
+    retired: 'The handbook says Henry VIII took the title King of Ireland and never dates it. 1541 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Tudors",
     chapter: 3,
     verify: false,
@@ -2969,6 +2971,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f078",
+    retired: 'The handbook covers Elizabeth I at length and dates her death to 1603, but never gives the year she became queen. 1558 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Tudors",
     chapter: 3,
     verify: false,
@@ -3271,6 +3274,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f086",
+    retired: 'The handbook says Mary Queen of Scots was eventually executed, accused of plotting against Elizabeth I, with no year attached. 1587 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Tudors",
     chapter: 3,
     verify: false,
@@ -3460,6 +3464,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f091",
+    retired: 'The handbook gives the King James Bible its own box, names it and describes it, and never dates it. 1611 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Stuarts",
     chapter: 3,
     verify: false,
@@ -6193,6 +6198,7 @@ export const CHAPTER_3: readonly Fact[] = [
   },
   {
     id: "f163",
+    retired: 'The General Strike is not in the handbook at all — the only strikes it names are the suffragette hunger strikes and the 1970s disputes. 1926 appears nowhere in the text. Confirmed by the owner against the 2026 edition, 5 Aug 2026.',
     tag: "Interwar",
     chapter: 3,
     verify: false,
