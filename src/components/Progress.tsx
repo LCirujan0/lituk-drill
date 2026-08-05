@@ -19,6 +19,7 @@
 import { factById } from '@/domain/deck';
 import type { DeckProgress, ProblemFact } from '@/domain/drill/stats';
 import type { Settings } from '@/adapters/local-store';
+import type { DrillMode } from './Drill';
 import styles from './Progress.module.css';
 
 interface Props {
@@ -27,13 +28,16 @@ interface Props {
   readonly activity: number[];
   readonly problems: readonly ProblemFact[];
   readonly settings: Settings;
+  /** Quiz or recall. It lives here rather than on the card — see the Settings block below. */
+  readonly mode: DrillMode;
+  readonly onMode: (mode: DrillMode) => void;
   readonly onSettings: (settings: Settings) => void;
   readonly onErase: () => void;
   readonly onExit: () => void;
 }
 
 export function Progress({
-  progress, upcoming, activity, problems, settings, onSettings, onErase, onExit,
+  progress, upcoming, activity, problems, settings, mode, onMode, onSettings, onErase, onExit,
 }: Props) {
   const peak = Math.max(1, ...activity);
 
@@ -110,6 +114,30 @@ export function Progress({
 
       <section className={styles.block} aria-labelledby="settings-heading">
         <h2 id="settings-heading" className={styles.blockTitle}>Settings</h2>
+
+        {/* Moved off the card. Which mode you drill in is a preference set once, not a decision
+            taken per question, and as a toggle above every card it cost 40px of the one screen
+            with none to spare. Recall is the harder mode and the only evidence the recall
+            readiness number will accept (D-013), so it keeps a home rather than being deleted. */}
+        <span className={styles.label} id="mode-label">Drill mode</span>
+        <div className={styles.modes} role="group" aria-labelledby="mode-label">
+          {(['quiz', 'recall'] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              className={mode === m ? styles.modeOn : styles.mode}
+              onClick={() => onMode(m)}
+              aria-pressed={mode === m}
+            >
+              {m === 'quiz' ? 'Quiz' : 'Recall'}
+            </button>
+          ))}
+        </div>
+        <p className={styles.note}>
+          Quiz gives you four options, which is the exam&rsquo;s format. Recall shows the question
+          alone and asks you to grade yourself — harder, and the only mode whose successes a
+          readiness number will be allowed to believe.
+        </p>
 
         <label className={styles.label} htmlFor="newPerDay">
           New facts per day — {settings.newPerDay}

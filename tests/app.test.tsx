@@ -17,6 +17,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '@/app/page';
 import { ACTIVE, DECK } from '@/domain/deck';
+import { CHAPTER_NAMES } from '@/domain/deck/types';
 import { reloadFromStorage } from '@/adapters/store';
 import { EVENTS_KEY } from '@/adapters/local-store';
 import type { ReviewEvent } from '@/domain/scheduler/events';
@@ -102,6 +103,51 @@ describe('the card holds after answering — regression', () => {
 
     await user.click(screen.getByRole('button', { name: currentOptions().wrong }));
     expect(screen.getByText(/^Not quite\.$/)).toBeTruthy();
+  });
+});
+
+describe('the card carries nothing it does not need', () => {
+  const openCard = async (user: ReturnType<typeof userEvent.setup>) => {
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
+    return screen.findByRole('heading', { level: 1 });
+  };
+
+  it('shows only a cross above the question', async () => {
+    const user = userEvent.setup();
+    const heading = await openCard(user);
+
+    // The section title, the "N to go" counter and the mode toggle are gone. Everything still
+    // on screen above the question is the one button that leaves.
+    const above = [...document.querySelectorAll('button')].filter(
+      (b) => heading.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_PRECEDING,
+    );
+    expect(above.map((b) => b.getAttribute('aria-label'))).toEqual(['Close']);
+  });
+
+  it('shows no chapter or tag chip on the card', async () => {
+    const user = userEvent.setup();
+    const heading = await openCard(user);
+    const fact = DECK.find((f) => f.forms.some((x) => x.question === heading.textContent))!;
+
+    // The chips said the chapter and the tag, and neither is anything the reader acts on
+    // mid-card. The phrasings-proven dots went with them: that was a phrasing count rendered
+    // as a progress bar, which R-12 forbids outright.
+    expect(screen.queryByText(CHAPTER_NAMES[fact.chapter])).toBeNull();
+    expect(screen.queryByText(fact.tag)).toBeNull();
+  });
+
+  it('does not print a verdict — the option colour carries it, and the live region does', async () => {
+    const user = userEvent.setup();
+    await openCard(user);
+    await user.click(screen.getByRole('button', { name: currentOptions().correct }));
+
+    // The text is still in the accessibility tree (WCAG 1.4.1: colour must not be the only
+    // carrier) and is not laid out. `role="status"` is what a screen reader announces.
+    const verdict = screen.getByText(/^Correct\.$/);
+    expect(verdict.getAttribute('role')).toBe('status');
+    expect(verdict.className).toMatch(/srOnly/);
   });
 });
 
@@ -429,14 +475,37 @@ describe('the home screen', () => {
 });
 
 describe('recall mode', () => {
-  it('hides the answer until it is revealed, then offers four grades', async () => {
+  /**
+   * Turn recall on. The toggle used to sit above every card and now lives in Settings on the
+   * Progress tab — a preference set once rather than a per-card decision, and 40px reclaimed
+   * from the one screen with none to spare.
+   */
+  const chooseRecall = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByRole('button', { name: /Progress/ }));
+    await user.click(screen.getByRole('button', { name: 'Recall' }));
+    await user.click(screen.getByRole('button', { name: /Drill/ }));
+  };
+
+  it('is reachable from Settings, not from the card', async () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByRole('button', { name: /Due today/ });
     await user.click(screen.getByRole('button', { name: /^Values/ }));
     await screen.findByRole('heading', { level: 1 });
 
-    await user.click(screen.getByRole('button', { name: 'Recall' }));
+    // Nothing above the question but the cross.
+    expect(screen.queryByRole('button', { name: 'Recall' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Quiz' })).toBeNull();
+    expect(screen.getByRole('button', { name: 'Close' })).toBeTruthy();
+  });
+
+  it('hides the answer until it is revealed, then offers four grades', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+    await chooseRecall(user);
+    await user.click(screen.getByRole('button', { name: /^Values/ }));
+    await screen.findByRole('heading', { level: 1 });
 
     expect(screen.getByRole('button', { name: 'Show answer' })).toBeTruthy();
     await user.click(screen.getByRole('button', { name: 'Show answer' }));
@@ -450,10 +519,9 @@ describe('recall mode', () => {
     const user = userEvent.setup();
     render(<App />);
     await screen.findByRole('button', { name: /Due today/ });
+    await chooseRecall(user);
     await user.click(screen.getByRole('button', { name: /^Values/ }));
-    await screen.findByRole('heading', { level: 1 });
 
-    await user.click(screen.getByRole('button', { name: 'Recall' }));
     const question = (await screen.findByRole('heading', { level: 1 })).textContent;
     await user.click(screen.getByRole('button', { name: 'Show answer' }));
     await user.click(screen.getByRole('button', { name: 'Good' }));

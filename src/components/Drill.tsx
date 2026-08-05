@@ -15,13 +15,20 @@
  *
  * Grading buttons are ≥44px and reachable one-handed at the bottom of the screen, because
  * the phone is the primary device and this is the screen used most (§F, §G).
+ *
+ * ## Nothing above the question but a cross
+ *
+ * The title, the "N to go" counter, the mode toggle, the chapter and tag chips and the
+ * phrasings-proven dots are all gone. On a 402×874 iPhone 16 Pro they cost about 100px that the
+ * explanation panel then had to be scrolled to recover, and none of them was ever acted on
+ * mid-card. The mode switch lives in Settings on the Progress tab; it is a preference, set once,
+ * not a per-card decision.
  */
 
 import { useCallback, useMemo, useState } from 'react';
 
 import { factById } from '@/domain/deck';
 import { presentForm } from '@/domain/deck/presentation';
-import { CHAPTER_NAMES } from '@/domain/deck/types';
 import { previewInterval } from '@/domain/scheduler/sm2';
 import { mulberry32 } from '@/domain/scheduler/rng';
 import { DEFAULT_CONFIG as CONFIG, initialState, type FactState, type Grade } from '@/domain/scheduler/types';
@@ -48,17 +55,14 @@ export interface CardAnswer {
 }
 
 interface Props {
-
-  readonly title: string;
   readonly item: DrillItem | null;
+  /** Set in Settings, not here. A card being re-read keeps the mode it was answered in. */
   readonly mode: DrillMode;
-  readonly onModeChange: (mode: DrillMode) => void;
   readonly onGrade: (factId: string, formIndex: number, grade: Grade) => void;
   readonly onAnswer: (answer: CardAnswer) => void;
   readonly onNext: () => void;
   readonly onExit: () => void;
   readonly stateFor: (factId: string) => FactState | undefined;
-  readonly remaining: number;
   /** Changes only when a new card is dealt. Seeds the shuffle. See page.tsx. */
   readonly nonce: number;
   readonly emptyMessage: string;
@@ -97,7 +101,7 @@ function resolveForm(item: DrillItem, mode: DrillMode, seed: number): number {
 }
 
 export function Drill({
-  title, item, mode, onModeChange, onGrade, onAnswer, onNext, onExit, stateFor, remaining,
+  item, mode, onGrade, onAnswer, onNext, onExit, stateFor,
   nonce, emptyMessage, restore, readOnly, onPrevious, onForward, canPrevious, canForward, position,
 }: Props) {
   // Reset on a new card is handled by the caller giving this component a `key` tied to the
@@ -174,62 +178,29 @@ export function Drill({
   }
 
   const state = stateFor(fact.id) ?? initialState(fact.forms.length);
-  const proven = state.ok.filter((v) => v > 0).length;
   const answer = fact.forms[formIndex].answers.correct;
   const answered = mode === 'quiz' ? chosen !== null : graded !== null;
 
   return (
     <div className={styles.wrap}>
+      {/*
+        One cross, and nothing else above the question.
+
+        The section title, the "N to go" counter, the mode toggle, the chapter and tag chips and
+        the phrasings-proven dots all used to live up here — about 100px of chrome on a 874px
+        screen, every pixel of which was competing with the explanation panel for the part of the
+        card the reader actually has to read. None of it was ever acted on mid-card. The mode
+        switch moved to Settings; the dots were a phrasing count on screen and had no business
+        being there at all (R-12).
+      */}
       <header className={styles.bar}>
-        {/* A cross, not a back arrow. `‹` now means "the previous card" in the action bar,
-            and one glyph cannot mean two things on the same screen. Leaving a drill is
-            closing it, which is what a cross says. */}
+        {/* A cross, not a back arrow. `‹` means "the previous card" in the action bar, and one
+            glyph cannot mean two things on the same screen. Leaving a drill is closing it. */}
         <button type="button" className={styles.back} onClick={onExit} aria-label="Close">✕</button>
-        <div className={styles.barTitle}>
-          {title}
-          <span className={styles.remaining}>
-            {readOnly ? 'Already answered' : `${remaining} to go`}
-          </span>
-        </div>
-        {readOnly ? (
-          // Switching mode would re-resolve the phrasing and re-shuffle the options, which
-          // for a card being re-read means showing something that was never on screen.
-          <span className={styles.modeLocked}>{mode === 'quiz' ? 'Quiz' : 'Recall'}</span>
-        ) : (
-          <div className={styles.modes} role="group" aria-label="Drill mode">
-            <button
-              type="button"
-              className={mode === 'quiz' ? styles.modeOn : styles.mode}
-              onClick={() => onModeChange('quiz')}
-              aria-pressed={mode === 'quiz'}
-            >
-              Quiz
-            </button>
-            <button
-              type="button"
-              className={mode === 'recall' ? styles.modeOn : styles.mode}
-              onClick={() => onModeChange('recall')}
-              aria-pressed={mode === 'recall'}
-            >
-              Recall
-            </button>
-          </div>
-        )}
       </header>
 
       <div className={styles.body}>
       <div className={styles.card}>
-        <div className={styles.chips}>
-          <span className={styles.chip}>{CHAPTER_NAMES[fact.chapter]}</span>
-          <span className={styles.chip}>{fact.tag}</span>
-          {fact.verify && <span className={styles.chipWarn}>check the book</span>}
-          <span className={styles.dots} title={`${proven} of ${fact.forms.length} phrasings proven`}>
-            {fact.forms.map((_, i) => (
-              <i key={i} className={state.ok[i] > 0 ? styles.dotOn : styles.dot} />
-            ))}
-          </span>
-        </div>
-
         <h1 className={styles.question}>{fact.forms[formIndex].question}</h1>
 
         {mode === 'recall' && revealed && <p className={styles.answer}>{answer}</p>}
@@ -276,6 +247,14 @@ export function Drill({
           </div>
         )}
 
+        {/* The "check the book" flag was a chip above the question and went with the rest of
+            them — but it is a caveat about the answer, not a tag, so it belongs beside the
+            answer. Two facts carry it (L-016, L-028) and both are unresolved against the 2026
+            edition, so this is the one thing up there that could not simply be deleted. */}
+        {answered && fact.verify && (
+          <p className={styles.caution}>Check this one in the book — the handbook does not settle it.</p>
+        )}
+
         {answered && state.lapses >= 3 && (
           <p className={styles.note}>Missed {state.lapses}× — intervals on this one are permanently cut by 40%.</p>
         )}
@@ -303,15 +282,23 @@ export function Drill({
               </button>
             );
           })}
+          {/*
+            No "Correct." / "Not quite." line. The option turns green or red and the others dim,
+            which says it faster than a sentence does and costs no vertical space.
+
+            The announcement survives for anyone not reading the colour: WCAG 1.4.1 is that
+            colour is never the ONLY carrier of information, and a live region satisfies it
+            without putting a line back on the screen.
+          */}
           {chosen !== null && (
-            <p className={chosen === presented.correctIndex ? styles.verdictRight : styles.verdictWrong}>
-              {downgraded
-                ? 'Recorded as a miss.'
-                : chosen === presented.correctIndex
-                  ? 'Correct.'
-                  : 'Not quite.'}
+            <p className={styles.srOnly} role="status">
+              {chosen === presented.correctIndex ? 'Correct.' : 'Not quite.'}
             </p>
           )}
+          {/* This one stays visible: nothing about the colours says a right answer has just
+              been recorded as a miss, so removing it would leave the reader guessing whether
+              "Got lucky" did anything. */}
+          {downgraded && <p className={styles.downgraded}>Recorded as a miss.</p>}
         </div>
       ) : !revealed ? (
         <button type="button" className={styles.reveal} onClick={() => setRevealed(true)}>

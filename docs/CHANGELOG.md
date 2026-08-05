@@ -2,6 +2,38 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-05 — the card loses its chrome, and the black band turns out to be 360px (D-033)
+
+**I had been measuring the wrong screen.** Every layout claim in this repo says "fits 393×852";
+the owner uses an **iPhone 16 Pro, 402×874**. Re-measured at his size, an unanswered card's
+content ended at **445** while the action bar sat pinned at **817** — **360px** of page colour
+between them, near-black in dark mode. The safe-area fix earlier today was 16px of a 360px
+problem, and it is why he could still see the band after it shipped.
+
+The action bar is pinned by decision, so the slack has to go somewhere. It now goes **above** the
+options rather than below them: the bottom of the screen is options-then-actions on every card,
+and the breathing room sits under the question where it reads as spacing. Gap between the options
+and the action bar: **12px**, from 360.
+
+Above the question there is now a cross and nothing else. Gone: the section title, the "N to go"
+counter, the chapter and tag chips, and the phrasings-proven dots — which should not have
+survived D-032 at all, being a phrasing count rendered as a progress bar, exactly what R-12
+forbids. The mode toggle moved to Settings on the Progress tab; recall is the harder mode and the
+only evidence a recall readiness figure may accept (D-013), so it keeps a home rather than going
+out with the chrome.
+
+**"Correct." / "Not quite." is no longer printed.** The option turns green or red and the others
+dim, which says it faster and costs no height. The sentence stays in the accessibility tree as a
+visually-hidden live region: WCAG 1.4.1 is that colour must not be the *only* carrier, and
+deleting it outright would have been an accessibility regression dressed up as tidying.
+"Recorded as a miss." stays visible, because nothing about the colours says a right answer has
+just been downgraded. The "check the book" flag moved below the answer, where it is a caveat
+about the answer rather than a label on the card.
+
+**What it bought, measured at 402×874:** seven of eight consecutive answered cards now fit with
+**no scrolling at all**, where the header and chips previously pushed most of them over. The
+eighth, a long cluster, needs 203px of scroll and the action bar stays pinned throughout.
+
 ## 2026-08-05 — every number in the app is a count of facts (D-032)
 
 The owner's correction, and it is the whole change: *"the several phrasings per fact are a hidden
