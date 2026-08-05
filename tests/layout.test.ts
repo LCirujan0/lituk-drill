@@ -93,3 +93,33 @@ describe('the bottom edge belongs to the bottom-most bar', () => {
     expect(block(css(GLOBALS), '.wrap')).toMatch(/padding-block-end:\s*0/);
   });
 });
+
+describe('no dead space above the action bar on a drill card', () => {
+  /**
+   * The second half of the same report, and the larger half by an order of magnitude.
+   *
+   * Measured at **402×874** — the owner's iPhone 16 Pro, not the 393×852 this project had been
+   * checking — an unanswered card's content ended at **445** while the action bar was pinned at
+   * **817**. That is **360px** of page colour in between: in dark mode, a black band above the
+   * buttons, and the thing actually being reported. The safe-area inset was never more than a
+   * tenth of it.
+   *
+   * The action bar is pinned to the bottom by decision, so the slack has to go somewhere. An
+   * auto top margin on the options puts it ABOVE them: the bottom of the screen is
+   * options-then-actions on every card, and the breathing room lands under the question where it
+   * reads as spacing. On a card long enough to scroll, an auto margin in a flex column resolves
+   * to zero, so it costs nothing where the room is needed.
+   */
+  it.each(['.options', '.reveal,\n.grades'])(
+    'pushes %s to the bottom of the free space',
+    (selector) => {
+      expect(block(css(DRILL), selector)).toMatch(/margin-block-start:\s*auto/);
+    },
+  );
+
+  it('still pins the action bar itself', () => {
+    // If this ever stops holding, the options' auto margin has nothing to push against and the
+    // hole comes back in a different place.
+    expect(block(css(DRILL), '.actions')).toMatch(/margin-block-start:\s*auto/);
+  });
+});

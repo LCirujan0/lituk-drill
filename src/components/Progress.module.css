@@ -172,6 +172,38 @@
   accent-color: var(--c-accent);
 }
 
+/* The quiz/recall switch, moved here off the drill card. A segmented control rather than a
+   checkbox, because the two are peers and neither is "off". */
+.modes {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--c-fill);
+  border-radius: var(--radius-md);
+}
+
+.mode,
+.modeOn {
+  flex: 1;
+  min-height: var(--target-min);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  border: 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.mode {
+  background: none;
+  color: var(--c-text-soft);
+}
+
+.modeOn {
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+
 .danger {
   width: 100%;
   min-height: var(--target-min);

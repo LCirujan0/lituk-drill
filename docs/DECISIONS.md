@@ -1044,3 +1044,61 @@ agree is what the last version had.
   reckoned with — R-7 still stands, and it is doing more work now than it was.
 - *Negative.* The headline jumped from 0 to 10 with no learning taking place. Any figure like this
   is a definition, and a definition that flatters is the failure mode R6 named.
+
+---
+
+## D-033 — The drill card carries nothing above the question but a cross
+
+**Date:** 5 August 2026 · **Status:** accepted · **Narrows D-013's placement, not its substance**
+
+**Context.** The owner, on his phone: *"remove everything on top of the question and just leave a
+little cross to be able to leave, trying to save vertical space as it's a bit annoying."* And
+separately, twice: there is still black space at the bottom of the screen.
+
+The second one had been mis-diagnosed, by me, because **every layout claim in this project was
+measured at 393×852 and he uses an iPhone 16 Pro, which is 402×874.** Re-measured at his size, an
+unanswered card's content ended at **445** while the action bar sat pinned at **817** — 360px of
+page colour between them, near-black in dark mode. The safe-area inset fixed the day before was
+16px of a 360px problem. The frame was never the issue; the card was too short for the screen.
+
+**Decision.** Above the question there is a cross, and nothing else.
+
+- **Gone:** the section title, the "N to go" counter, the chapter chip, the tag chip, and the
+  phrasings-proven dots. About 100px, none of it ever acted on mid-card.
+- **The dots should not have survived D-032 at all.** They were a phrasing count rendered as a
+  progress bar, which R-12 forbids in the same words. Removing them closes that.
+- **The mode toggle moves to Settings** on the Progress tab. Which mode you drill in is a
+  preference set once, not a decision taken per question — and recall is the harder mode and the
+  only evidence a recall readiness number may accept (D-013), so it keeps a home rather than
+  being deleted with the chrome around it.
+- **"Correct." / "Not quite." is no longer printed.** The chosen option turns green or red and
+  the rest dim, which says it faster and costs no height. The sentence stays in the accessibility
+  tree as a visually-hidden live region, because WCAG 1.4.1 is that colour must not be the *only*
+  carrier — removing it outright would have been an accessibility regression dressed as tidying.
+- **"Recorded as a miss." stays visible.** Nothing about the colours says a right answer has just
+  been downgraded, so removing that one would leave "Got lucky" looking like it did nothing.
+- **The "check the book" flag moves below the answer**, where it is a caveat about the answer
+  rather than a label on the card. Two facts carry it (L-016, L-028) and both are live.
+- **The options are anchored to the bottom of the free space** (`margin-block-start: auto`). The
+  action bar is pinned by decision, so slack has to go somewhere; above the options it reads as
+  breathing room under the question, below them it read as a black band.
+
+**Measured at 402×874, after.** Gap between the options and the action bar: **12px**, from 360.
+Gap below the action bar: **0**, and with a 34px home-indicator inset simulated the bar's box
+still reaches 874 while its buttons stop at 840. Seven of eight consecutive answered cards now
+fit with **no scrolling at all**; the eighth, a long cluster, needs 203px and the action bar stays
+put throughout.
+
+**Consequences.**
+- *Positive.* The screen that gets used every day is now almost entirely question, options and
+  actions. The explanation panel — the thing D-020 added because it is what makes a fact survive
+  to September — usually fits without a scroll.
+- *Negative.* Which section you are in is no longer on screen. Leaving is one tap, so the cost is
+  small, but "how many left" is genuinely gone rather than moved.
+- *Negative.* Recall mode is now two taps and a tab away instead of one tap. If it turns out never
+  to be used from there, that is evidence about the mode, not about the placement, and it should
+  be faced rather than solved by putting the toggle back.
+- *Process consequence.* **Every "fits 393×852" claim in this repo was checked against the wrong
+  screen.** They are conservative rather than wrong — his is bigger in both directions — but the
+  numbers in the CHANGELOG and in several code comments describe a device nobody uses. The size is
+  now recorded in HANDOFF; the stale comments are a follow-up, not a silent correction.

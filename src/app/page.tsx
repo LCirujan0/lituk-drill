@@ -12,7 +12,7 @@
  * events. Grading appends one event and everything on screen recomputes.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useDrill, type SectionKey } from './_lib/use-drill';
 import { Home } from '@/components/Home';
@@ -20,7 +20,7 @@ import { Drill, type CardAnswer, type DrillMode } from '@/components/Drill';
 import { Progress } from '@/components/Progress';
 import { TabBar, type Tab } from '@/components/TabBar';
 import { Timeline } from '@/components/Timeline';
-import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
+import type { Chapter } from '@/domain/deck/types';
 import type { Grade } from '@/domain/scheduler/types';
 import type { DrillItem } from '@/domain/drill/sections';
 
@@ -178,18 +178,6 @@ export default function App() {
 
   const item = view.kind === 'drill' ? (shown?.item ?? null) : null;
 
-  /** The "N to go" on a drill screen. Facts, like everything else (D-032). */
-  const remaining = useMemo(() => {
-    if (view.kind !== 'drill') return 0;
-    if (view.section === 'due') return drill.counts.due;
-    if (view.section === 'new') return drill.counts.newFacts;
-    if (view.section === 'mistakes') return drill.counts.mistakes;
-    if (view.section === 'mastered') return drill.counts.mastered;
-    // Random draws from the whole deck and never runs out, so this is the pool, not a remainder.
-    if (view.section === 'random') return drill.counts.totalFacts;
-    return drill.counts.byChapter.get(view.chapter ?? 1)?.total ?? 0;
-  }, [view, drill.counts]);
-
   const onGrade = useCallback(
     (factId: string, formIndex: number, grade: Grade) => {
       if (view.kind !== 'drill') return;
@@ -233,16 +221,13 @@ export default function App() {
           // stepping between cards restore each one's own answer rather than inherit the
           // last one's.
           key={`${item?.factId ?? 'none'}:${item?.formIndex ?? -1}:${shownMode}:${shown?.nonce ?? cardNonce}`}
-          title={titleFor(view)}
           item={item}
           mode={shownMode}
-          onModeChange={setMode}
           onGrade={onGrade}
           onAnswer={setAnswer}
           onNext={() => advance()}
           onExit={home}
           stateFor={(factId) => drill.states.get(factId)}
-          remaining={remaining}
           nonce={shown?.nonce ?? cardNonce}
           emptyMessage={EMPTY_MESSAGE[view.section]}
           restore={shown?.answer ?? null}
@@ -262,6 +247,11 @@ export default function App() {
           activity={drill.activity()}
           problems={drill.problems()}
           settings={drill.settings}
+          // The drill screen no longer carries the toggle: which mode you drill in is a
+          // preference set once, not a decision taken per card, and up there it cost 40px of
+          // the one screen that has none to spare.
+          mode={mode}
+          onMode={setMode}
           onSettings={drill.updateSettings}
           onErase={() => {
             drill.eraseEverything();
@@ -283,10 +273,3 @@ export default function App() {
   );
 }
 
-function titleFor(view: Extract<View, { kind: 'drill' }>): string {
-  if (view.section === 'due') return 'Due today';
-  if (view.section === 'new') return 'Not tried yet';
-  if (view.section === 'mistakes') return 'Your mistakes';
-  if (view.section === 'random') return 'Random';
-  return CHAPTER_NAMES[view.chapter ?? 1];
-}
