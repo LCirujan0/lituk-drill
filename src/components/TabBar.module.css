@@ -1,9 +1,17 @@
+/**
+ * The bar owns the bottom edge of the app.
+ *
+ * `env(safe-area-inset-bottom)` is here rather than on the body so that this element reaches the
+ * physical bottom of the screen and the inset is clearance *inside* it. On the body it produced a
+ * strip of page colour below the bar — dead space in a browser and a black band on the phone,
+ * where the inset is around 34px. Nothing is on screen below this. See `tests/layout.test.ts`.
+ */
 .bar {
   display: flex;
   flex: none;
   gap: var(--space-1);
   margin-block-start: var(--space-2);
-  padding-block-start: var(--space-2);
+  padding-block: var(--space-2) env(safe-area-inset-bottom);
   border-block-start: 1px solid var(--c-rule);
 }
 

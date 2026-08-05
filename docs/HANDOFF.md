@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | Explanations rewritten as memorisation clusters, 537/537 |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **216 passing across 9 files** — 169 domain, 47 in jsdom (`app` 36, `store-sync` 11) |
+| Tests | **220 passing across 10 files** — 169 domain, 47 in jsdom (`app` 36, `store-sync` 11), 4 over CSS source (`layout`) |
 | Deck | **537 drilled · 1,609 forms**. 559 ids in use; 22 retired, ids kept (R-4) |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
@@ -52,7 +52,8 @@ deck grew to 528; the shape holds, the absolute numbers are now optimistic.
 No readiness model (S4) and no mocks (D-017). **No docs-consistency test** — deferred, not
 skipped, and L-022 is what its absence costs. No end-to-end tests against a real browser:
 component tests run in jsdom, so anything depending on real layout, touch targets or Safari
-behaviour is unverified. 
+behaviour is unverified. `tests/layout.test.ts` is not that — it asserts over CSS *source*,
+which pins the invariant a browser measurement established but cannot re-measure it.
 
 ## Next, in order
 
