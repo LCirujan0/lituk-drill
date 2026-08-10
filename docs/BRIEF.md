@@ -274,6 +274,270 @@ A postmortem without an action item is no postmortem.
 
 Practice on demand (S3) and the readiness signal (S4) still need theirs before any code is written.
 
+### C1 — the option and form audit · *approved 10 Aug 2026*
+
+**Problem.** Nothing in this build has ever read what a distractor *says*. There are statistical
+checks over option **shape** — length rank, numeric rank, answer position — and none whatever over
+option **content**. A census run on 10 August found, in a deck that has been green on every check
+for a week: **12 forms offering as a wrong answer a string another form of the same fact marks
+correct** (f454 has Gertrude Jekyll both ways; f511 treats "12 noon" as wrong), **2 offering the
+fact's own canonical answer as a distractor**, **90 facts whose two forms present an identical set
+of four options**, and **614 repeated distractor strings across the forms of one fact**. The first
+two teach that a true thing is false. The third means "proven on two phrasings" is a weaker claim
+than it reads — same four options, only the stem moved. The fourth is R2's memorisable surface
+living inside the mechanism built to prevent it.
+
+**Appetite.** Two weeks, ending well before the deck must stop moving. It sits in front of C2,
+which cannot start until it finishes.
+
+**Solution sketch.** A mechanical census first — nine checks, deterministic, no agent involved —
+because before a human or an agent is asked to read 6,436 options, how much of the list a machine
+can settle should be known (L-027). Then a full agent census over all 1,597 forms, batched at ~22
+facts, each agent grounded in the handbook text, judging five things: every distractor is
+genuinely wrong; every distractor is plausible and the same category as the answer; the four are
+mutually exclusive; the question asks this fact; the forms differ in more than wording. Every
+proposed change then goes to an adversarial reviewer whose brief is to refute it, with special
+attention to the one failure that matters most — **a replacement distractor that is accidentally
+true is worse than the defect it fixes.**
+
+**Rabbit holes.** Rewriting the 56 as-written numeric forms into a shared shape (L-011) — that is
+its own authoring job and does not belong inside this one. Driving `distractor-reuse` to zero:
+614 hits across 288 facts is a scale that would consume the whole appetite for the smallest of the
+four defects. Generating distractors mechanically — rejected under D-014's reasoning; text
+generation produces accidentally-correct options.
+
+**No-gos.** **No fact answer changes.** Where an answer looks wrong it goes to the owner as a
+decision under D-031 and does not land. **No form is reworded in place** — breadth credit is keyed
+by form *position* (`ok[formIndex]`), so editing form N keeps credit earned on a sentence that no
+longer exists. Replacements are appended. No form is deleted or reordered: that is a migration.
+No year, name or figure enters the deck that the handbook does not contain.
+
+**Acceptance criteria + verification.**
+- `self-contradiction` and `contradicts-canonical` reach **0**, promoted from probe to build check
+  and ratcheted as assertions.
+- `identical-option-set` falls from 90 toward 0, ratcheted at whatever it reaches.
+- `longestOptionCorrectRate` reaches its 0.30 target from 0.309 (closes L-003).
+- L-006, L-007 and L-008 closed; L-033 closed.
+- Every landed change was upheld by an adversarial reviewer that had the handbook and was
+  instructed to refute. Rejections are counted and reported, not discarded silently.
+- `npm run verify` green. Ledger rows go to `fixed-unverified`; the fixer does not close them.
+
+### C2 — the explanation rewrite · *approved 10 Aug 2026*
+
+**Problem.** The panels are complete and follow the standard, but the `versus` line — the one with
+direct multiple-choice evidence behind it — is ad hoc. It discriminates against whatever the writer
+happened to think of, not against what the card actually offers. The owner's ask is explicit: a
+panel should carry the context and the key figures, and should say **who the other people were and
+how not to mix them up**.
+
+**Appetite.** Two weeks after C1 lands. All 533 panels; the owner chose a full rewrite over
+augmenting, with the cost stated and accepted.
+
+**Solution sketch.** Skeleton unchanged — `lead · versus · why · cluster · note`, in that order,
+dropping from the bottom. `versus` becomes systematic: derived from C1's pooled distractor set for
+that fact, one directional rule per genuine confusion. `why` carries the handbook's own figure,
+date or comparison where the handbook gives one. `cluster` is extended where the "who were the
+others" case applies, every member carrying its own discriminator.
+
+**Rabbit holes.** Writing to the *on-screen* options. They are generated per presentation and
+shuffled (D-014, D-021), so "the answer is the larger figure" is wrong on the next draw — six
+panels already did this and one would have steered the reader to a wrong option. The panel
+discriminates against the **distractor space**, never the instance.
+
+**No-gos.** No year, person, body or figure the handbook does not contain. No cluster member
+without its own card. No line that is there because it is interesting: interesting-but-inessential
+measures **negative** (Rey 2012, d = −0.30 retention, −0.48 transfer).
+
+**Acceptance criteria + verification.**
+- `explanationYearsOffSource` stays at **0**. It is an assertion, not a ratchet, and the merge
+  guard refuses any year not in the handbook or the fact's own answer — **an instruction in a
+  prompt is not a control, and L-029 is what that costs.**
+- New build checks: no panel names a fact without a card; no panel references option position.
+- `npm run deck:vocab` read, not merely run.
+- Verbatim stability resumes the day the rewrite lands: from then, a panel's wording is fixed.
+
+### C4 — sub-categories you can drill on their own · *requested 10 Aug 2026 · within S1/S2*
+
+**Problem.** "History" is 220 facts. Drilling it means drilling all of it, so there is no way to
+work the Tudors on a day when the Tudors are the problem.
+
+**The raw material is already there, but it is the wrong size.** Measured 10 August: every fact
+carries a `tag`, and there are **87 of them** — none over 50 facts, but 37 in chapter 3 alone. The
+owner's correction, same day: *"87 tags is way too much — maybe expand from the current 5 to 10 or
+so."* Right. 87 rows is a picker, not a study aid; the point of a section is that you can decide
+to drill it, and nobody decides between 87 things.
+
+**Appetite.** Days. The cheapest item on this list and probably the most useful per hour.
+
+**Solution sketch.** Keep the 87 tags as the data. Add a **band** above them — about a dozen
+groups of roughly 30–55 facts, each a drillable section with its own counts. Chapters stay as the
+handbook's own structure (they are how the source is organised and how sourcing is cited); bands
+become the thing you drill. A first cut, summing to 533 exactly:
+
+| Band | Facts | Built from |
+|---|---|---|
+| Values and the UK | 51 | ch.1 entire, plus saints, flags, capitals, languages |
+| Early Britain, to 1485 | 53 | Prehistory, Romans, Anglo-Saxons, Vikings, Norman Conquest, Middle Ages |
+| Tudors and Stuarts, 1485–1714 | 47 | Tudors, Reformation, Civil War, Restoration, Glorious Revolution, Stuarts, Union |
+| Empire and industry, 1714–1901 | 54 | Empire, Industrial Revolution, Victorians, Inventors, Napoleonic Wars, Jacobites, Enlightenment, Slavery |
+| War and aftermath, 1914–1945 | 30 | WWI, Interwar, WWII, Suffrage |
+| Modern Britain, 1945– | 36 | Post-war, Welfare State, Modern Britain, Immigration, Ireland, Northern Ireland, Education, Politics, Europe, Devolution |
+| Sport and leisure | 37 | Sport, Leisure, Pubs, National parks |
+| Arts and culture | 51 | Music, Cinema, Literature, Comedy, Theatre, Art, Architecture, Design, Media |
+| Everyday life | 53 | Religion, Festivals, Traditions, Currency, The UK today, Landmarks, Demographics, Food |
+| Government and elections | 50 | Elections, Parliament, Government, Monarchy, Devolution, Local government, Constitution, Civil service |
+| The law and your rights | 41 | Courts, Law, Rights, Police, Driving, Tax |
+| Community and the wider world | 30 | Community, Environment, International, Europe |
+
+Twelve bands, 30–54 facts, mean 44. The mapping is one table from tag to band, checked by a test
+that every tag has exactly one band and the bands partition the deck.
+
+**Rabbit holes.** Re-tagging the deck to make prettier bands. The tags came from the handbook's own
+structure; re-cutting them is content work wearing a UI costume. Also: making bands a *third*
+navigation level on top of chapters and tags. Two levels is the budget.
+
+**No-gos.** No tag becomes a new denominator on the home screen without obeying R-12 — every
+number counts facts, and New + Mastered + Mistakes must still partition each tag exactly.
+
+**No-gos.** No band becomes a new denominator without obeying R-12 — every number counts facts, and
+New + Mastered + Mistakes must partition each band exactly. No fact belongs to two bands.
+
+**Acceptance criteria + verification.** Every tag maps to exactly one band and the bands partition
+the deck, asserted as a test so the property cannot rot as facts are added. **No band exceeds 55
+facts** — also a test, because C6 is about to add facts and bands drift silently. Measured on the
+real screen at 402×874, where twelve rows have to fit the way eleven eras now do.
+
+### C5 — the progress bar says which kind of progress · *requested 10 Aug 2026 · within R-12*
+
+**Problem.** A chapter row shows one bar. Three different states — mastered, mistakes, untouched —
+collapse into one number, so a chapter that is half mastered looks like a chapter that is half
+attempted-and-failing.
+
+**Appetite.** A day, and it should ship with C4 since both touch the same rows.
+
+**Solution sketch.** Each row shows the three-way split as percentages and as one segmented bar.
+The partition already exists and is already asserted (`standing.ts`, R-12, `counts.test.ts`), so
+this is a rendering of a number the domain already computes.
+
+**Rabbit holes.** Adding a fourth state. Three partition the deck; a fourth would not.
+
+**No-gos.** No phrasing counts (R-12). Colour must not be the only carrier of which segment is
+which — see L-004 and L-034, both open contrast findings.
+
+**Acceptance criteria + verification.** The three percentages sum to 100 for every chapter and
+every tag, asserted over generated logs; contrast measured, not eyeballed.
+
+### C6 — a full extraction sweep of the handbook · *requested 10 Aug 2026 · needs D-035*
+
+**Problem.** The owner's instruction: every name, date and location the handbook mentions is
+potentially examinable and worth a card. Today's deck is 533 facts built from an inherited bank
+plus two targeted gap-filling passes.
+
+**This amends a non-goal and cannot start without the DECISIONS entry.** The BRIEF says facts may
+be added only to fill a *measured* coverage gap (D-024's amendment). A systematic sweep is a
+different rule, and "volume feels like progress" is the exact failure the original non-goal names.
+The counter-argument is the owner's and it is good: a fact the handbook asserts and the deck never
+asks is a question that can appear on the exam and has never been drilled.
+
+**Rabbit holes.** Extracting every proper noun mechanically and generating a card per hit. That
+produces cards for "Wednesday" and for every county named in passing. The sweep needs a judgement
+of examinability, which is what makes it expensive.
+
+**No-gos.** Nothing enters that the handbook does not contain — the year gate and `deck:vocab`
+apply unchanged. Every new fact carries a `source`. Ids append only (R-4). No new fact may
+introduce a duplicate canonical question or a shared form.
+
+**Open, and the reason this is a roadmap item rather than a task:** how large the deck should get.
+533 facts at 30/day is already more than the appetite has room for, and doubling it without
+raising daily volume means each fact is seen half as often. That is a scheduling question, not a
+content one, and it is question 1 below.
+
+### C7 — mock tests, and their history · *requested 10 Aug 2026 · D-017 already decides most of it*
+
+**Problem.** No way to sit a full test, and no record of having done so.
+
+**Mostly already decided, and the request differs from the decision in one way that matters.**
+D-017 (accepted, 4 Aug) says: 24 questions on the exam's format, **drawn from forms not previously
+served**, each spent form recorded so no later mock reuses it, available on demand, score stored
+beside the model's prediction. The BRIEF's data inventory already carries readiness history.
+
+The ask is for **20 fixed, pre-built tests**. That conflicts with "not previously served", which is
+dynamic and depends on what has been drilled. Twenty fixed tests is 480 forms nailed down in
+advance, and any of them may be a form already drilled twenty times — which measures memory of the
+form rather than knowledge of the fact, the exact circularity D-017 exists to prevent.
+
+**R-7 constrains what a score may be shown as.** Mock scores are multiple-choice data. While L-002
+and L-003 are `fixed-unverified` rather than `verified-fixed`, a mock score may be **recorded and
+displayed as a score**, but must not be presented as readiness or as a probability of passing.
+
+**Acceptance criteria + verification.** Test history persists across devices on the existing event
+log; no form is spent twice; the 24 are drawn across chapters in the exam's own proportions or the
+sample is stated to be uniform — whichever, it is written down rather than emergent.
+
+### C8 — an AI layer · *requested 10 Aug 2026 · **BLOCKED: needs D-034 before any code***
+
+**Stated plainly because this project's rules require it:** this crosses three lines that are
+currently written as absolutes.
+
+1. **BRIEF non-goal:** "LLM-generated questions — Not in v1. If it ever changes, KICKOFF-APP §G
+   applies in full."
+2. **R-8 — no personal data, ever**, and no third party. An API key means review history leaves
+   the device for a service the data inventory does not list. The DPIA screening concluded UK GDPR
+   does not engage *because nothing leaves and nothing identifies anyone*; that conclusion would
+   need re-running, not assuming.
+3. **R-3 and the whole R3 risk.** A model that writes questions or explanations will produce
+   fluent, plausible, off-source content. This project has already measured that happening at
+   scale (L-029: fourteen agents invented seven years against an explicit instruction not to). A
+   generated card is the single most efficient way to drill a wrong fact to permanence.
+
+**None of that is a refusal — it is the price list.** The owner asked, and the owner sets scope.
+But the shape has to be settled before it can be specified, and "a useful AI learning layer" spans
+at least four different features with four different risk profiles: explaining a wrong answer on
+demand; generating new phrasings of an existing fact; a tutor that answers free questions about
+the material; and choosing what to drill next. The first is cheap and safe. The third leaves the
+handbook entirely. That is question 3 below.
+
+**No-gos that will hold whatever the shape:** nothing generated is ever stored into the deck
+without passing the same gates as hand-written content; no generated content is ever served as an
+*answer* without a source; and the app keeps working with no network and no key.
+
+### C3 — the chronology, restructured · *approved 10 Aug 2026 · within S9*
+
+**Problem.** The timeline is 11 eras, 80 events and 44 figures, and it is lopsided against the
+handbook's own weighting: the twentieth century has 21 events, the Victorians have **3**, and
+prehistory has **no figures at all**. One flat list per era means an era is either shut or entirely
+open, so detail cannot be reached without taking all of it. People and dates render as the same
+kind of row, when they are different things used differently.
+
+**Appetite.** One week, in parallel with C1 — it touches no deck data and shares no files.
+
+**Solution sketch.** Two halves. *Structure:* a second level, `Era → Section → Event`, so each era
+carries 2–4 named groupings that expand independently; figures get their own visual treatment,
+distinct from the chronology. Nested `<details>`, keeping the existing no-React-state design —
+that is what makes keyboard support, screen-reader semantics and find-in-page free. *Content:*
+harvest what the handbook holds and the timeline has not taken, era by era, each item carrying the
+handbook sentence it rests on.
+
+**Rabbit holes.** Narrative connective tissue that makes the story read better. Explicitly
+rejected by the owner on 10 August: handbook-only. A richer story is a study aid competing with
+its own answers.
+
+**No-gos.** No person, date or event the handbook does not contain — where the book gives no date,
+the entry says "no date given" rather than inventing one. Not scheduled and not scored; it stays a
+static reference, which is what keeps it inside S9 and out of DECISIONS.
+
+**Acceptance criteria + verification.**
+- Roughly 160–180 events and 80+ figures, every one traceable to a handbook sentence.
+- The vocabulary year check **extended over `timeline.ts`** — it currently reads explanations
+  only, which is exactly how six facts with unanswerable years survived a full sourcing pass
+  (L-031) and how f194 kept 1924 in its own stem until 10 August.
+- Measured at 402×874, not eyeballed. **Result: 1.43 screens collapsed, not one** — 99px per
+  era, 1,093px of arc. First measurement was 2,574px (three screens) because the rewritten
+  summaries run to two sentences; clamping the collapsed blurb to two lines closed most of it.
+  The one-screen target was an estimate that had never been checked against a browser, and it
+  is recorded as missed rather than quietly restated.
+- Keyboard and screen-reader behaviour preserved — asserted, since `<details>` is load-bearing.
+
 ### S7 — question forms that resist memorisation · *approved 4 Aug 2026, built*
 
 **Problem.** Two failures share one cause. R1: the correct answer is a middle value in 91.4% of 373

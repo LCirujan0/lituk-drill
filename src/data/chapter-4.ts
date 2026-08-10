@@ -96,7 +96,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "People are living longer, so there are more elderly people",
-        distractors: ["Fewer migrants are arriving each year", "The birth rate is rising sharply", "More young people are moving to cities"],
+        distractors: ["Fewer migrants are arriving each year", "The birth rate is rising sharply, so there are many more children", "More young people are moving to cities"],
       },
     },
     {
@@ -105,7 +105,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "People are living longer, so there are more elderly people",
-        distractors: ["Deaths now outnumber births every year", "The population has fallen since the 1970s", "Most people now live in rural areas"],
+        distractors: ["Deaths now outnumber births every year", "The population has fallen since the 1970s", "Most people in the UK now live in rural areas rather than towns"],
       },
     },
     {
@@ -266,7 +266,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Presbyterian",
-        distractors: ["Episcopal", "Evangelical", "Congregational"],
+        distractors: ["Episcopal", "Baptist", "Quaker"],
       },
     },
     ],
@@ -295,7 +295,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Christmas Day and Boxing Day",
-        distractors: ["Christmas Eve and Christmas Day", "Christmas Day and New Year's Day", "Boxing Day and New Year's Eve"],
+        distractors: ["Christmas Eve and Christmas Day", "Christmas Eve and New Year's Eve", "Boxing Day and New Year's Eve"],
       },
     },
     {
@@ -531,7 +531,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Eid al-Fitr",
-        distractors: ["Ashura", "Mawlid", "Eid ul Adha"],
+        distractors: ["Eid ul Adha", "Hanukkah", "Vaisakhi"],
       },
     },
     ],
@@ -559,7 +559,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Ibrahim's willingness to sacrifice his son for God",
-        distractors: ["The end of a month of daytime fasting", "The journey of the Prophet to Medina", "The revealing of the Qur'an to the Prophet"],
+        distractors: ["The end of Ramadan, when Muslims have fasted for a whole month", "The journey of the Prophet to Medina", "The revealing of the Qur'an to the Prophet"],
       },
     },
     {
@@ -568,7 +568,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Ibrahim's willingness to sacrifice his son for God",
-        distractors: ["The birth of the Prophet Muhammad", "The first pilgrimage made to Mecca", "The night of power during Ramadan"],
+        distractors: ["The birth of the Prophet Muhammad", "The first pilgrimage that Muslims made to the city of Mecca", "The night of power during Ramadan"],
       },
     },
     ],
@@ -644,7 +644,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Hogmanay",
-        distractors: ["Beltane", "Up Helly Aa", "A ceilidh"],
+        distractors: ["St Andrew's Day", "Auld Lang Syne", "Up Helly Aa"],
       },
     },
     ],
@@ -682,7 +682,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "midday",
-        distractors: ["11am", "6pm", "midnight"],
+        distractors: ["11am", "1pm", "2pm"],
       },
     },
     ],
@@ -711,7 +711,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Sunday three weeks before Easter",
-        distractors: ["The last Sunday in March", "The first Sunday in May", "The Sunday after Easter Sunday"],
+        distractors: ["The Sunday four weeks before Easter", "The first Sunday in May", "The Sunday after Easter Sunday"],
       },
     },
     {
@@ -787,7 +787,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "31 October",
-        distractors: ["1 November", "30 October", "5 November"],
+        distractors: ["11 November", "1 November", "30 November"],
       },
     },
     {
@@ -825,7 +825,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "5 November",
-        distractors: ["31 October", "11 November", "1 November"],
+        distractors: ["1 November", "11 November", "30 November"],
       },
     },
     {
@@ -939,7 +939,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "three",
-        distractors: ["two", "one", "five"],
+        distractors: ["four", "five", "six"],
       },
     },
     {
@@ -948,7 +948,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Jackie Stewart won three Formula 1 world championships",
-        distractors: ["Sir Jackie Stewart won three Wimbledon titles", "Sir Jackie Stewart won three Olympic gold medals", "Sir Jackie Stewart won the Tour de France three times"],
+        distractors: ["Damon Hill won three Formula 1 world championships", "Jenson Button won three Formula 1 world championships", "Sir Jackie Stewart won five Formula 1 world championships"],
       },
     },
     ],
@@ -1433,7 +1433,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "15th",
-        distractors: ["13th", "17th", "18th"],
+        distractors: ["16th", "17th", "18th"],
       },
     },
     {
@@ -1509,7 +1509,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Berkshire",
-        distractors: ["Surrey", "Kent", "Hampshire"],
+        distractors: ["Kent", "Oxfordshire", "Hertfordshire"],
       },
     },
     {
@@ -1594,7 +1594,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1727",
-        distractors: ["1707", "1714", "1750"],
+        distractors: ["1695", "1707", "1714"],
       },
     },
     ],
@@ -1652,7 +1652,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Benjamin Britten",
-        distractors: ["Michael Tippett", "Ralph Vaughan Williams", "Frederick Delius"],
+        distractors: ["Sir William Walton", "Ralph Vaughan Williams", "George Frederick Handel"],
       },
     },
     {
@@ -1746,7 +1746,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "the British Phonographic Industry",
-        distractors: ["the Royal Academy of Music", "the Society of London Theatre", "the British Academy of Film and Television Arts"],
+        distractors: ["the British Broadcasting Corporation", "the British Academy of Film and Television Arts", "the Royal Academy of Music"],
       },
     },
     ],
@@ -1775,7 +1775,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Edinburgh",
-        distractors: ["Manchester", "Cardiff", "Glasgow"],
+        distractors: ["London", "Belfast", "Cardiff"],
       },
     },
     {
@@ -1813,7 +1813,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Laurence Olivier Awards",
-        distractors: ["The Turner Prize", "The Mercury Awards", "The BAFTA Awards"],
+        distractors: ["The British Academy Film Awards", "The Mercury Music Prize", "The Man Booker Prize for Fiction"],
       },
     },
     {
@@ -1822,7 +1822,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Laurence Olivier Awards",
-        distractors: ["The Man Booker Prize", "The Brit Awards", "The Royal Television Awards"],
+        distractors: ["The Man Booker Prize", "The Brit Awards", "The British Academy Film Awards"],
       },
     },
     ],
@@ -1889,7 +1889,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Andrew Lloyd Webber",
-        distractors: ["Tim Rice", "Noel Coward", "Lionel Bart"],
+        distractors: ["Tim Rice", "Gilbert and Sullivan", "Sir Edward Elgar"],
       },
     },
     {
@@ -1994,7 +1994,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1984",
-        distractors: ["1974", "1994", "1968"],
+        distractors: ["1968", "1974", "1978"],
       },
     },
     {
@@ -2050,7 +2050,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Edwin Lutyens",
-        distractors: ["Sir Christopher Wren", "Robert Adam", "Sir Norman Foster"],
+        distractors: ["Inigo Jones", "Lord (Richard) Rogers", "Dame Zaha Hadid"],
       },
     },
     ],
@@ -2070,7 +2070,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Thomas Chippendale",
-        distractors: ["Josiah Wedgwood", "Sir Terence Conran", "Thomas Sheraton Brown"],
+        distractors: ["Josiah Wedgwood", "Sir Terence Conran", "Clarice Cliff"],
       },
     },
     {
@@ -2164,7 +2164,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1968",
-        distractors: ["1948", "1978", "1988"],
+        distractors: ["1928", "1948", "1958"],
       },
     },
     ],
@@ -2193,7 +2193,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Pride and Prejudice",
-        distractors: ["Jane Eyre", "Middlemarch", "Wuthering Heights"],
+        distractors: ["Oliver Twist", "Treasure Island", "Far from the Madding Crowd"],
       },
     },
     {
@@ -2278,7 +2278,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Arthur Conan Doyle",
-        distractors: ["Bram Stoker", "G.K. Chesterton", "Dorothy L. Sayers"],
+        distractors: ["Agatha Christie", "Robert Louis Stevenson", "Graham Greene"],
       },
     },
     ],
@@ -2307,7 +2307,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Geoffrey Chaucer",
-        distractors: ["William Langland", "Thomas Malory", "John Bunyan"],
+        distractors: ["John Milton", "William Wordsworth", "William Blake"],
       },
     },
     {
@@ -2316,7 +2316,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Canterbury Tales",
-        distractors: ["Paradise Lost", "Le Morte d'Arthur", "The Faerie Queene"],
+        distractors: ["Paradise Lost", "Beowulf", "Sir Gawain and the Green Knight"],
       },
     },
     ],
@@ -2383,7 +2383,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Alfred Hitchcock",
-        distractors: ["Sir David Lean", "Sir Ridley Scott", "Sir Charles Chaplin"],
+        distractors: ["Sir David Lean", "Ridley Scott", "Ken Russell"],
       },
     },
     {
@@ -2392,7 +2392,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Alfred Hitchcock",
-        distractors: ["Nick Park", "Danny Boyle", "Sir Alexander Korda"],
+        distractors: ["Nick Park", "Nicolas Roeg", "Sir Alexander Korda"],
       },
     },
     ],
@@ -2429,7 +2429,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Ian Fleming, with Dr No in 1962",
-        distractors: ["Frederick Forsyth, with Dr No in 1959", "Len Deighton, with Casino Royale in 1958", "Ian Fleming, with Thunderball in 1965"],
+        distractors: ["Ian Fleming, with Dr No in 1959", "Agatha Christie, with Dr No in 1962", "Ian Fleming, with Goldfinger in 1962"],
       },
     },
     ],
@@ -2449,7 +2449,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Monty Python's Flying Circus",
-        distractors: ["Spitting Image", "The Goon Show", "Fawlty Towers"],
+        distractors: ["That Was The Week That Was", "Spitting Image", "Coronation Street"],
       },
     },
     {
@@ -2458,7 +2458,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1969",
-        distractors: ["1959", "1975", "1982"],
+        distractors: ["1975", "1979", "1984"],
       },
     },
     {
@@ -2496,7 +2496,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Punch",
-        distractors: ["The Spectator", "Private Eye", "The Illustrated London News"],
+        distractors: ["Private Eye", "The Tatler", "The Strand Magazine"],
       },
     },
     {
@@ -2656,7 +2656,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Haggis",
-        distractors: ["Black pudding", "Ulster fry", "Welsh cakes"],
+        distractors: ["White pudding", "Fish and chips", "Roast beef with Yorkshire puddings"],
       },
     },
     ],
@@ -2722,7 +2722,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The great bell of the Parliament clock",
-        distractors: ["The clock tower at Westminster", "The name of the whole building", "The clock face above the Thames"],
+        distractors: ["The Elizabeth Tower", "The largest of the clock's four faces", "The bell tower of Westminster Abbey"],
       },
     },
     {
@@ -2769,7 +2769,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Elizabeth Tower",
-        distractors: ["The Victoria Tower", "The Jubilee Tower", "The Westminster Tower"],
+        distractors: ["St Stephen's Tower", "The Queen's Tower", "The Victoria Tower"],
       },
     },
     ],
@@ -2807,7 +2807,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Cornwall",
-        distractors: ["Devon", "Dorset", "Somerset"],
+        distractors: ["Devon", "Wiltshire", "Gloucestershire"],
       },
     },
     ],
@@ -2836,7 +2836,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "On the north-east coast of Northern Ireland",
-        distractors: ["On the west coast of Scotland", "On the south coast of England", "On the north coast of Wales"],
+        distractors: ["On the coast of the Isle of Man", "On the north-west coast of England", "On the east coast of Scotland"],
       },
     },
     {
@@ -2845,7 +2845,7 @@ export const CHAPTER_4: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "On the north-east coast of Northern Ireland",
-        distractors: ["On the Isle of Man", "In the Lake District", "In the Scottish Highlands"],
+        distractors: ["On the south-west coast of England, in Cornwall", "On the west coast of Scotland, near Loch Lomond", "On the north-west coast of the Republic of Ireland"],
       },
     },
     ],

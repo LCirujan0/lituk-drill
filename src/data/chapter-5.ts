@@ -38,7 +38,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The UK is a constitutional monarchy",
-        distractors: ["The UK is an absolute monarchy", "The UK is an elective monarchy", "The UK is a federal monarchy"],
+        distractors: ["The Prime Minister is the head of state", "The monarch rules the country directly", "The UK is a republic"],
       },
     },
     ],
@@ -150,7 +150,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Delivers a speech setting out the government's programme",
-        distractors: ["Votes on the first bill of the session", "Appoints the Speaker of the Commons", "Approves the annual budget"],
+        distractors: ["Reads out the opposition's alternative policies for the year ahead", "Appoints the members of the cabinet", "Answers questions from MPs about policy"],
       },
     },
     ],
@@ -217,7 +217,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A constituency",
-        distractors: ["A borough", "A ward", "A county"],
+        distractors: ["A parish", "A region", "A district"],
       },
     },
     {
@@ -264,7 +264,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Five",
-        distractors: ["Six", "Two", "Ten"],
+        distractors: ["Four", "Three", "Two"],
       },
     },
     ],
@@ -302,7 +302,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1958",
-        distractors: ["1911", "1948", "1999"],
+        distractors: ["1969", "1999", "2005"],
       },
     },
     ],
@@ -322,7 +322,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1999",
-        distractors: ["2005", "1958", "1911"],
+        distractors: ["1958", "1997", "2005"],
       },
     },
     {
@@ -331,7 +331,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1999",
-        distractors: ["1911", "1958", "2005"],
+        distractors: ["1958", "1969", "1972"],
       },
     },
     {
@@ -407,7 +407,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Speaker",
-        distractors: ["The Chief Whip", "The Prime Minister", "The Lord Chancellor"],
+        distractors: ["The leader of the opposition", "The Home Secretary", "The Chancellor of the Exchequer"],
       },
     },
     {
@@ -473,7 +473,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "To organise party business and make sure members vote with the party",
-        distractors: ["To count votes in the polling stations", "To advise the monarch on legislation", "To represent the civil service in Parliament"],
+        distractors: ["To count the votes in polling stations and declare the result", "To advise the monarch on which bills to approve each session", "To represent the civil service in Parliament and answer for its decisions"],
       },
     },
     {
@@ -491,7 +491,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "They organise party business and make sure members vote with the party",
-        distractors: ["They chair debates in the Commons", "They count ballots at general elections", "They advise the monarch on new laws"],
+        distractors: ["They chair debates in the Commons and keep order during votes", "They count the ballot papers at general elections and declare the result", "They advise the monarch on which new laws to approve each session"],
       },
     },
     ],
@@ -520,7 +520,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Chancellor of the Exchequer",
-        distractors: ["The Foreign Secretary", "The Lord Chancellor", "The Home Secretary"],
+        distractors: ["The Education Secretary", "The Health Secretary", "The Defence Secretary"],
       },
     },
     {
@@ -757,7 +757,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Central government grants and council tax",
-        distractors: ["VAT and income tax", "National Insurance and stamp duty", "Lottery funds and donations"],
+        distractors: ["Income tax and National Insurance", "Parking fines and charitable donations", "The National Lottery and TV licence fees"],
       },
     },
     ],
@@ -833,7 +833,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1999",
-        distractors: ["2001", "1972", "1985"],
+        distractors: ["1972", "2002", "2007"],
       },
     },
     ],
@@ -984,7 +984,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Good Friday Agreement",
-        distractors: ["The Ulster Covenant", "The Belfast Treaty of 1922", "The Sunningdale Accord"],
+        distractors: ["The Ulster Covenant", "The St Andrews Agreement", "The Sunningdale Accord"],
       },
     },
     ],
@@ -1042,7 +1042,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A form of proportional representation",
-        distractors: ["Exhaustive ballot", "Approval voting", "First past the post"],
+        distractors: ["A first-past-the-post system", "An alternative vote system", "An approval voting system"],
       },
     },
     {
@@ -1051,7 +1051,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "a form of proportional representation",
-        distractors: ["first past the post", "an exhaustive ballot", "approval voting"],
+        distractors: ["a first-past-the-post system", "an exhaustive ballot system", "a two-round run-off system"],
       },
     },
     {
@@ -1060,7 +1060,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A form of proportional representation",
-        distractors: ["First past the post", "Approval voting", "An exhaustive ballot"],
+        distractors: ["A first-past-the-post system", "An approval voting system", "An exhaustive ballot system"],
       },
     },
     ],
@@ -1098,7 +1098,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Hansard",
-        distractors: ["The Gazette", "The Order Paper", "The Journal"],
+        distractors: ["The Order Paper", "The Votes and Proceedings", "The Division List"],
       },
     },
     ],
@@ -1194,7 +1194,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "British, Irish and qualifying Commonwealth citizens resident in the UK",
-        distractors: ["Anyone paying council tax", "All UK residents over 18", "British citizens only"],
+        distractors: ["Adult citizens of other EU states resident in the UK", "All adults resident in the UK, whatever their citizenship", "British citizens only, wherever in the world they live"],
       },
     },
     {
@@ -1203,7 +1203,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "British, Irish and qualifying Commonwealth citizens resident in the UK",
-        distractors: ["Anyone who pays council tax", "All UK residents aged 18 or over", "British citizens only"],
+        distractors: ["Adult citizens of any other EU state who are resident in the UK", "Anyone aged 18 or over who pays council tax in the UK", "British and Irish citizens, but not Commonwealth citizens"],
       },
     },
     {
@@ -1250,7 +1250,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "MPs to the House of Commons",
-        distractors: ["Members of the House of Lords", "Members of the Scottish Parliament", "Members of the Welsh Assembly"],
+        distractors: ["Members of the Northern Ireland Assembly", "Members of the Scottish Parliament", "Members of the Welsh Assembly"],
       },
     },
     ],
@@ -1532,7 +1532,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Mutual defence among European and North American member states",
-        distractors: ["Protecting human rights", "Coordinating development aid", "Regulating international trade"],
+        distractors: ["Protection and promotion of human rights in member countries", "Coordinating development aid between member countries", "Regulating trade and the movement of goods between members"],
       },
     },
     {
@@ -1550,7 +1550,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "It is a group of European and North American countries that agree to defend each other",
-        distractors: ["It regulates international trade", "It coordinates development aid", "It enforces human rights law"],
+        distractors: ["It is an organisation of countries that protects and promotes human rights", "It is an association of countries that were once part of the British Empire", "It is a union of countries that trade freely with each other"],
       },
     },
     ],
@@ -1626,7 +1626,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The European Convention on Human Rights",
-        distractors: ["The English Bill of Rights of 1689", "The Charter of the United Nations", "The Universal Declaration of Rights"],
+        distractors: ["The English Bill of Rights of 1689", "The Charter of the United Nations", "The Habeas Corpus Act"],
       },
     },
     ],
@@ -1655,7 +1655,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Civil law",
-        distractors: ["Criminal law", "Constitutional law", "Canon law"],
+        distractors: ["Criminal law", "Constitutional law", "European law"],
       },
     },
     {
@@ -1664,7 +1664,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Disputes between individuals, such as debt",
-        distractors: ["Crimes such as theft", "The powers of Parliament", "The rules of the Church"],
+        distractors: ["Crimes such as murder, theft and assault", "The powers of Parliament and the devolved bodies", "The rules of the Church"],
       },
     },
     ],
@@ -1769,7 +1769,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Magistrates' courts",
-        distractors: ["The Crown Court", "County Courts", "The High Court"],
+        distractors: ["The Crown Court", "The Justice of the Peace Court", "The Court of Session"],
       },
     },
     {
@@ -1854,7 +1854,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Three",
-        distractors: ["One", "Twelve", "Five"],
+        distractors: ["Four", "Six", "Twelve"],
       },
     },
     ],
@@ -1873,7 +1873,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "No - they are unpaid volunteers",
-        distractors: ["Yes, a full salary", "Yes, a daily fee", "Only in Scotland"],
+        distractors: ["Yes, a full salary", "Yes, they are paid a fee for each day they sit", "Only in Scotland"],
       },
     },
     {
@@ -1920,7 +1920,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Crown Court",
-        distractors: ["A Youth Court", "A County Court", "A magistrates' court"],
+        distractors: ["A Youth Court", "The High Court", "A Sheriff Court"],
       },
     },
     {
@@ -1958,7 +1958,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "12",
-        distractors: ["9", "10", "15"],
+        distractors: ["6", "8", "11"],
       },
     },
     {
@@ -1967,7 +1967,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "12",
-        distractors: ["9", "10", "15"],
+        distractors: ["13", "15", "20"],
       },
     },
     ],
@@ -2072,7 +2072,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "County Courts",
-        distractors: ["Youth Courts", "Magistrates' courts", "Crown Courts"],
+        distractors: ["Youth Courts", "Justice of the Peace Courts", "Crown Courts"],
       },
     },
     {
@@ -2101,7 +2101,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "£10,000",
-        distractors: ["£3,000", "£5,000", "£1,000"],
+        distractors: ["£5,000", "£12,000", "£20,000"],
       },
     },
     {
@@ -2148,7 +2148,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "£5,000",
-        distractors: ["£500", "£3,000", "£10,000"],
+        distractors: ["£1,000", "£10,000", "£15,000"],
       },
     },
     {
@@ -2186,7 +2186,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "10 to 17",
-        distractors: ["14 to 20", "8 to 15", "12 to 18"],
+        distractors: ["9 to 17", "11 to 18", "16 to 21"],
       },
     },
     {
@@ -2441,7 +2441,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "HM Revenue and Customs (HMRC)",
-        distractors: ["The Department for Work and Pensions", "The Office for Budget Responsibility", "The Treasury Board"],
+        distractors: ["The Department for Work and Pensions", "The Office for Budget Responsibility", "HM Treasury"],
       },
     },
     {
@@ -2459,7 +2459,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "HM Revenue and Customs (HMRC)",
-        distractors: ["The Treasury Board", "The Department for Work and Pensions", "The Office for Budget Responsibility"],
+        distractors: ["HM Treasury", "The local council", "The Department for Work and Pensions"],
       },
     },
     ],
@@ -2525,7 +2525,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "31 January",
-        distractors: ["31 October", "30 June", "5 April"],
+        distractors: ["31 December", "30 September", "6 April"],
       },
     },
     {
@@ -2554,7 +2554,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Just before their 16th birthday",
-        distractors: ["At birth", "At 18", "At 21"],
+        distractors: ["Just before their 18th birthday", "When they start their first job", "Just before their 21st birthday"],
       },
     },
     {
@@ -2572,7 +2572,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "just before a person's 16th birthday",
-        distractors: ["at birth", "on a person's 18th birthday", "on a person's 21st birthday"],
+        distractors: ["when a person starts their first job", "on a person's 18th birthday", "on a person's 21st birthday"],
       },
     },
     ],
@@ -2715,7 +2715,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Every three years",
-        distractors: ["Every year", "Every five years", "Every ten years"],
+        distractors: ["Every four years", "Every five years", "Every ten years"],
       },
     },
     {
@@ -2865,7 +2865,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "18 to 70",
-        distractors: ["21 to 65", "16 to 70", "18 to 65"],
+        distractors: ["21 to 70", "18 to 75", "16 to 65"],
       },
     },
     {
@@ -2874,7 +2874,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Anyone aged 18 to 70",
-        distractors: ["Anyone aged 16 to 70", "Anyone aged over 21", "Anyone aged 18 to 60"],
+        distractors: ["Anyone aged 16 to 70", "Anyone aged 21 to 70", "Anyone aged 18 to 60"],
       },
     },
     ],
@@ -2950,7 +2950,7 @@ export const CHAPTER_5: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "18",
-        distractors: ["20", "23", "30"],
+        distractors: ["16", "17", "21"],
       },
     },
     ],

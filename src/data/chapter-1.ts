@@ -38,7 +38,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Five",
-        distractors: ["Eight", "Seven", "Two"],
+        distractors: ["Eight", "Seven", "Six"],
       },
     },
     ],
@@ -76,7 +76,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A system in which the government is chosen by the people through elections",
-        distractors: ["A system in which judges make the laws", "A system in which the monarch governs directly", "A system in which officials are appointed for life"],
+        distractors: ["A system in which senior judges decide what the laws should be", "A system in which the monarch governs the country without Parliament", "A system in which officials are appointed to their posts for life"],
       },
     },
     ],
@@ -219,7 +219,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Participation in community life",
-        distractors: ["Loyalty to the monarch", "The rule of law", "Individual liberty"],
+        distractors: ["Democracy", "Tolerance of those with different faiths and beliefs", "Individual liberty"],
       },
     },
     {
@@ -248,7 +248,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Freedom of belief and religion",
-        distractors: ["Freedom from unfair treatment", "Freedom of speech and thought", "Freedom of assembly and worship"],
+        distractors: ["Freedom from unfair treatment", "Freedom of speech and thought", "Freedom from slavery and forced labour"],
       },
     },
     {
@@ -266,7 +266,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Practise any religion, or none at all",
-        distractors: ["Join any political party", "Travel without a passport", "Refuse to pay local taxes"],
+        distractors: ["Practise only an officially recognised religion", "Practise any religion, if you register it first", "Practise a religion only in private"],
       },
     },
     ],
@@ -324,7 +324,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A right to a fair trial",
-        distractors: ["A right to a trial by judge", "A right to free legal advice", "A right to appeal to Parliament"],
+        distractors: ["A right to a trial by judge", "A right to be released on bail", "A right to appeal to Parliament"],
       },
     },
     {
@@ -380,7 +380,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "English ability and knowledge of life in the UK",
-        distractors: ["Knowledge of UK law and British history", "English ability and full-time employment", "Knowledge of the monarchy and of Parliament"],
+        distractors: ["English ability and a good character reference", "English ability and a permanent job offer", "Knowledge of the monarchy and of Parliament"],
       },
     },
     ],
@@ -409,7 +409,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Life in the UK test",
-        distractors: ["The British Citizenship test", "The UK Residents test", "The Life and Values test"],
+        distractors: ["The British Values test", "The Permanent Residence test", "The Citizenship and Language test"],
       },
     },
     {
@@ -447,7 +447,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "B1",
-        distractors: ["A1", "B2", "C1"],
+        distractors: ["C2", "B2", "C1"],
       },
     },
     {
@@ -465,7 +465,8 @@ export const CHAPTER_1: readonly Fact[] = [
     id: "f213",
     tag: "Citizenship",
     chapter: 1,
-    verify: true,
+    verify: false,
+    retired: 'The KoLL age exemption is a Home Office rule, not handbook content, so the source this deck is checked against cannot settle it either way (L-016). It was the last amber fact and the only thing holding an unresolved verify flag open. Retired 10 Aug 2026.',
     source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "On grounds of age, which applicants are normally excused from the KoLL requirements?",
     answer: "Those under 18 or aged 65 and over",
@@ -523,7 +524,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A citizenship ceremony",
-        distractors: ["A naturalisation hearing", "A residency assessment", "A registration interview"],
+        distractors: ["A UK Border Agency interview", "A swearing-in before a judge", "A passport office appointment"],
       },
     },
     {
@@ -664,7 +665,7 @@ export const CHAPTER_1: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "An affirmation of allegiance",
-        distractors: ["A written declaration", "A silent oath", "A civil undertaking"],
+        distractors: ["An oath of allegiance to the King", "A pledge of loyalty instead of the oath", "A written declaration of loyalty"],
       },
     },
     {

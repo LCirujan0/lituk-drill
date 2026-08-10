@@ -24,11 +24,15 @@ import { explanationText, strayYears, vocabularyReport, vocabularyTotals } from 
 import { EXPLANATIONS } from '@/data/explanations';
 import {
   ambiguousSharedStems,
+  distractorsContradictingCanonical,
   duplicateCanonicalQuestions,
   effectiveNumericMiddleRankRate,
   factsBelowRecallBreadth,
   factsWithNoRecallForm,
+  identicalOptionSetsWithinFact,
   longestOptionCorrectRate,
+  repeatedDistractorsWithinFact,
+  selfContradictingForms,
   sharedFormsAcrossFacts,
   structuralFaults,
   unresolvedVerifyFlags,
@@ -42,10 +46,10 @@ describe('shape', () => {
     // Two numbers, because there are now two. ACTIVE is what is drilled; DECK is the id
     // space and keeps the retired facts, so that every historical review event still points
     // at the question it was answering (R-4).
-    expect(TOTAL_FACTS, 'facts drilled').toBe(537);
-    expect(TOTAL_FORMS, 'phrasings drilled').toBe(1609);
+    expect(TOTAL_FACTS, 'facts drilled').toBe(533);
+    expect(TOTAL_FORMS, 'phrasings drilled').toBe(1597);
     expect(ALL_FACTS, 'ids in use, retired included').toBe(559);
-    expect(RETIRED).toHaveLength(22);
+    expect(RETIRED).toHaveLength(26);
   });
 
   it('gives every retired fact a reason, and keeps it out of the deck that is drilled', () => {
@@ -76,16 +80,16 @@ describe('shape', () => {
 
 describe('structure — never acceptable at any baseline', () => {
   it('has no structural faults', () => {
-    expect(structuralFaults(DECK)).toEqual([]);
+    expect(structuralFaults(ACTIVE)).toEqual([]);
   });
 
   it('gives every fact at least one recall-usable form', () => {
     // Zero recall forms means the fact is unreachable outside multiple choice.
-    expect(factsWithNoRecallForm(DECK)).toEqual([]);
+    expect(factsWithNoRecallForm(ACTIVE)).toEqual([]);
   });
 
   it('never lets the correct answer appear among its own distractors', () => {
-    for (const fact of DECK) {
+    for (const fact of ACTIVE) {
       for (const form of fact.forms) {
         expect(form.answers.distractors).not.toContain(form.answers.correct);
       }
@@ -129,23 +133,35 @@ describe('sourcing — R3', () => {
   });
 
   it('does not add unresolved verify flags', () => {
-    const unresolved = unresolvedVerifyFlags(DECK);
+    const unresolved = unresolvedVerifyFlags(ACTIVE);
     expect(unresolved.length, `unresolved: ${unresolved.join(', ')}`).toBeLessThanOrEqual(
       DECK_BASELINE.unresolvedVerifyFlags,
     );
   });
 });
 
+/**
+ * Every measurement below runs over ACTIVE, never DECK.
+ *
+ * A ratchet exists to describe what a reader meets. Twenty-six retired facts are never
+ * served, so measuring them reports a deck nobody is drilling — and they skew the numbers in
+ * the flattering direction, because most were retired for being bad. Switching the source
+ * moved the longest-option tell 0.3124 -> 0.3092 and the on-screen numeric tell
+ * 0.5277 -> 0.5249: small, but in the direction that says the old figures were wrong.
+ *
+ * The id-space contracts (contiguity, uniqueness, orphaned explanations) stay on DECK,
+ * because those are properties of the id space itself.
+ */
 describe('statistics — the ratchet (see baseline.ts)', () => {
   it('does not add duplicate canonical questions', () => {
-    const dupes = duplicateCanonicalQuestions(DECK);
+    const dupes = duplicateCanonicalQuestions(ACTIVE);
     expect(dupes.length, `duplicates: ${JSON.stringify(dupes)}`).toBeLessThanOrEqual(
       DECK_BASELINE.duplicateCanonicalQuestions,
     );
   });
 
   it('does not add ambiguous shared stems served as free recall', () => {
-    const ambiguous = ambiguousSharedStems(DECK);
+    const ambiguous = ambiguousSharedStems(ACTIVE);
     expect(ambiguous.length, `ambiguous: ${JSON.stringify(ambiguous)}`).toBeLessThanOrEqual(
       DECK_BASELINE.ambiguousSharedStems,
     );
@@ -153,7 +169,7 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
 
   it('does not add identical forms shared across facts', () => {
     // One memorised sentence must not earn breadth credit on two different facts.
-    const shared = sharedFormsAcrossFacts(DECK);
+    const shared = sharedFormsAcrossFacts(ACTIVE);
     expect(
       shared.length,
       `shared: ${shared.map((s) => s.factIds.join('=')).join(', ')}`,
@@ -161,7 +177,7 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
   });
 
   it('does not add facts pinned below the recall breadth gate', () => {
-    const pinned = factsBelowRecallBreadth(DECK);
+    const pinned = factsBelowRecallBreadth(ACTIVE);
     expect(pinned.length, `facts with <2 recall forms: ${pinned.join(', ')}`).toBeLessThanOrEqual(
       DECK_BASELINE.factsBelowRecallBreadth,
     );
@@ -171,7 +187,7 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     // The worst measurement this deck ever had: the correct answer was a middle value in
     // 91.4% of numeric forms against 50% by chance, so "pick a middle number" scored ~91%
     // knowing nothing. Generated distractors brought what a reader meets down to ~53%.
-    const { rate, generatedForms, writtenForms } = effectiveNumericMiddleRankRate(DECK);
+    const { rate, generatedForms, writtenForms } = effectiveNumericMiddleRankRate(ACTIVE);
     expect(
       rate,
       `middle-value ${(rate * 100).toFixed(1)}% (${generatedForms} generated, ${writtenForms} as written)`,
@@ -179,8 +195,44 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     expect(rate, 'below chance would be a tell in the other direction').toBeGreaterThan(0.45);
   });
 
+  // ── option CONTENT (L-033) ────────────────────────────────────────────────────────────
+  // Everything above measures option shape. For a week the deck was green on all of it while
+  // eight facts offered, as a wrong answer, something another phrasing of the same fact marked
+  // correct. Nothing had ever read what a distractor says.
+
+  it('never offers as wrong an answer another form of the same fact marks right', () => {
+    // The worst defect available: the card asserts a true thing is false, and the schedule
+    // then installs that as faithfully as it installs the answer.
+    const bad = selfContradictingForms(ACTIVE);
+    expect(bad.length, `self-contradicting: ${bad.join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.selfContradictingForms,
+    );
+  });
+
+  it("never offers the fact's own canonical answer as a distractor", () => {
+    const bad = distractorsContradictingCanonical(ACTIVE);
+    expect(bad.length, `contradicts canonical: ${bad.join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.distractorsContradictingCanonical,
+    );
+  });
+
+  it('does not add facts whose forms present identical option sets', () => {
+    // Only the stem moved, so "proven on two phrasings" is a weaker claim than it reads.
+    const bad = identicalOptionSetsWithinFact(ACTIVE);
+    expect(bad.length, `identical option sets: ${bad.slice(0, 20).join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.identicalOptionSetsWithinFact,
+    );
+  });
+
+  it('does not add repeated distractors across the forms of one fact', () => {
+    const bad = repeatedDistractorsWithinFact(ACTIVE);
+    expect(bad.length, `repeated distractors: ${bad.length}`).toBeLessThanOrEqual(
+      DECK_BASELINE.repeatedDistractorsWithinFact,
+    );
+  });
+
   it('does not worsen the longest-option tell', () => {
-    const { rate, longest, total } = longestOptionCorrectRate(DECK);
+    const { rate, longest, total } = longestOptionCorrectRate(ACTIVE);
     expect(rate, `longest option correct in ${longest}/${total} forms`).toBeLessThanOrEqual(
       DECK_BASELINE.longestOptionCorrectRate,
     );

@@ -1102,3 +1102,78 @@ put throughout.
   screen.** They are conservative rather than wrong — his is bigger in both directions — but the
   numbers in the CHANGELOG and in several code comments describe a device nobody uses. The size is
   now recorded in HANDOFF; the stale comments are a follow-up, not a silent correction.
+
+---
+
+## D-034 — An AI layer is admitted to the roadmap, and nothing about its shape is decided yet
+
+**Date:** 10 August 2026 · **Status:** **proposed — no code may be written against this entry**
+
+**Context.** The owner asked for "a useful AI learning layer" and offered an API key. That is a
+scope change and it collides with three things written as absolutes, so it gets an entry before it
+gets a line of code — which is the rule, not caution.
+
+1. **A BRIEF non-goal, verbatim:** *"LLM-generated questions — Powerful, and would help R2 — Not in
+   v1. If it ever changes, KICKOFF-APP §G applies in full."*
+2. **R-8, no personal data, ever, and no third party.** The DPIA screening concluded UK GDPR does
+   not engage *because nothing leaves the device and nothing identifies anyone.* Sending review
+   history to an API invalidates the premise of that conclusion. It very likely still comes out the
+   same way — a list of which citizenship facts were missed, with no identifier attached, processed
+   for a purely personal activity — but it has to be re-run, not assumed.
+3. **R3, the risk this project fears most.** A model produces fluent, plausible, off-source
+   content. This deck has already measured that at scale: L-029, fourteen agents inventing seven
+   years against an explicit instruction not to, caught only by a check that ran on the way in. A
+   generated card is the most efficient way ever devised to drill a wrong fact to permanence.
+
+**What is decided.** Only that it is on the roadmap and that it is blocked. **"A useful AI learning
+layer" is at least four features with four different risk profiles**, and specifying it requires
+picking:
+
+- **(a) Explain on demand** — a "why is this wrong?" button on a card just answered. Cheapest,
+  safest, nothing stored, nothing generated into the deck, and the handbook can be given as
+  context. Fails safe: if the key is missing the button is absent.
+- **(b) Generate new phrasings** of an existing fact, to attack R2. Directly against the non-goal.
+  Every output would need the same gates as hand-written content plus a human read.
+- **(c) A tutor** answering free questions about the material. Leaves the handbook entirely, which
+  makes it the option most likely to teach something the exam will mark wrong.
+- **(d) Choose what to drill next.** Replaces a scheduler that is verified by simulation with one
+  that cannot be. R4 exists because an interval that quietly clamps has no symptom.
+
+**Consequences.**
+- *Positive.* (a) is genuinely useful and could ship behind a key without touching the deck, the
+  scheduler or the readiness model.
+- *Negative.* (b) and (d) touch the two things this project has verified hardest — the deck's
+  sourcing and the scheduler — and would put both back into "unverified".
+- *Deliberate.* The app must keep working with no network and no key, whatever is chosen. That is
+  not negotiable and is already a governance declaration in the BRIEF.
+
+---
+
+## D-035 — Facts may be added by systematic extraction, not only to fill a measured gap
+
+**Date:** 10 August 2026 · **Status:** accepted · **Amends:** the BRIEF non-goal "More facts for
+their own sake", previously amended by D-024
+
+**Context.** D-024 opened the door narrowly: facts may be added to fill a *measured* coverage gap
+against the handbook, with a source citation. The owner now wants the door wider — *"any name
+mentioned, any date, any location could be subject of a question and is worth adding."*
+
+**Decision.** Accepted. The reasoning is sound and it is his call: a fact the handbook asserts and
+the deck never asks is a question that can appear on the exam and has never once been drilled. The
+original non-goal was guarding against *volume as a proxy for progress*; extraction from the source
+is not that, because the source is finite and the exam is drawn from it.
+
+**What does not change.** Every gate stays exactly as it is. Nothing enters that the handbook does
+not contain; the year check and `deck:vocab` apply unchanged; every fact carries a `source`; ids
+append only (R-4); no duplicate canonical question and no shared form; and the option-content
+ratchets (L-033) apply to every new option.
+
+**Consequences.**
+- *Positive.* Closes the class of failure where the exam asks something the deck never mentioned.
+- *Negative, and unresolved.* **Deck size is now a scheduling problem.** 533 facts at 30 new a day
+  already exceeds what six weeks has room for. Doubling the deck without raising daily volume means
+  every fact is seen half as often, and the breadth gate needs two proven phrasings before an
+  interval can grow. More facts can therefore make readiness *worse* while making coverage better.
+  That trade is not decided here and must be settled before the sweep runs at scale.
+- *Negative.* Mechanical extraction of every proper noun produces cards for "Wednesday" and for
+  every county named in passing. Examinability is a judgement, and it is what makes this expensive.

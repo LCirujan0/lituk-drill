@@ -130,7 +130,7 @@ export const ADDITIONS_2: readonly Fact[] = [
       { question: 'Population growth has been faster in recent years. What does the handbook say has played a part?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Migration into the UK and longer life expectancy', distractors: ['Fewer people leaving the UK to live abroad', 'Larger families and improved housing supply', 'A rising birth rate and better maternity care'] } },
       { question: 'Which of these is NOT a reason the handbook gives for UK population growth?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'A rising birth rate', distractors: ['Migration into the UK', 'Longer life expectancy', 'Better health care and living standards'] } },
+        answers: { kind: 'fixed', correct: 'A rising birth rate', distractors: ['Migration into the UK', 'Longer life expectancy', 'People in the UK living longer'] } },
     ],
   },
   {

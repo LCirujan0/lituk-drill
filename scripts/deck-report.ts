@@ -6,13 +6,13 @@
  * cheap. Read-only.
  */
 
-import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+import { ACTIVE, DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { analyseDeck } from '@/domain/deck/analysis';
 import { DECK_BASELINE, DECK_TARGETS } from '@/domain/deck/baseline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 import { EXPLANATIONS } from '@/data/explanations';
 
-const a = analyseDeck(DECK);
+const a = analyseDeck(ACTIVE);
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 const row = (label: string, value: string, note = '') =>
   console.log(`  ${label.padEnd(34)}${value.padStart(12)}  ${note}`);
@@ -64,6 +64,28 @@ row(
   'unresolved verify flags',
   `${a.unresolvedVerifyFlags.length}/${DECK_BASELINE.unresolvedVerifyFlags}`,
   'R3 — must reach 0 before the launch gate',
+);
+
+console.log('\nOption content — what a distractor SAYS (L-033)');
+row(
+  'self-contradicting forms',
+  `${a.selfContradictingForms.length}/${DECK_BASELINE.selfContradictingForms}`,
+  'a distractor another form of the same fact marks CORRECT · target 0',
+);
+row(
+  "distractor is the fact's own answer",
+  `${a.distractorsContradictingCanonical.length}/${DECK_BASELINE.distractorsContradictingCanonical}`,
+  'target 0',
+);
+row(
+  'identical option sets in one fact',
+  `${a.identicalOptionSetsWithinFact.length}/${DECK_BASELINE.identicalOptionSetsWithinFact}`,
+  'two forms, same four options — only the stem moved',
+);
+row(
+  'repeated distractors in one fact',
+  `${a.repeatedDistractorsWithinFact.length}/${DECK_BASELINE.repeatedDistractorsWithinFact}`,
+  `target ${DECK_TARGETS.repeatedDistractorsWithinFact ?? 0} · smallest of the four defects`,
 );
 
 console.log('\nAnswer leakage — the measurements that produced R1');
