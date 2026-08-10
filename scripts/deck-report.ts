@@ -66,6 +66,28 @@ row(
   'R3 — must reach 0 before the launch gate',
 );
 
+console.log('\nOption content — what a distractor SAYS (L-033)');
+row(
+  'self-contradicting forms',
+  `${a.selfContradictingForms.length}/${DECK_BASELINE.selfContradictingForms}`,
+  'a distractor another form of the same fact marks CORRECT · target 0',
+);
+row(
+  "distractor is the fact's own answer",
+  `${a.distractorsContradictingCanonical.length}/${DECK_BASELINE.distractorsContradictingCanonical}`,
+  'target 0',
+);
+row(
+  'identical option sets in one fact',
+  `${a.identicalOptionSetsWithinFact.length}/${DECK_BASELINE.identicalOptionSetsWithinFact}`,
+  'two forms, same four options — only the stem moved',
+);
+row(
+  'repeated distractors in one fact',
+  `${a.repeatedDistractorsWithinFact.length}/${DECK_BASELINE.repeatedDistractorsWithinFact}`,
+  `target ${DECK_TARGETS.repeatedDistractorsWithinFact ?? 0} · smallest of the four defects`,
+);
+
 console.log('\nAnswer leakage — the measurements that produced R1');
 row(
   'ON SCREEN: answer is a middle value',

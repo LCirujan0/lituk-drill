@@ -274,6 +274,121 @@ A postmortem without an action item is no postmortem.
 
 Practice on demand (S3) and the readiness signal (S4) still need theirs before any code is written.
 
+### C1 — the option and form audit · *approved 10 Aug 2026*
+
+**Problem.** Nothing in this build has ever read what a distractor *says*. There are statistical
+checks over option **shape** — length rank, numeric rank, answer position — and none whatever over
+option **content**. A census run on 10 August found, in a deck that has been green on every check
+for a week: **12 forms offering as a wrong answer a string another form of the same fact marks
+correct** (f454 has Gertrude Jekyll both ways; f511 treats "12 noon" as wrong), **2 offering the
+fact's own canonical answer as a distractor**, **90 facts whose two forms present an identical set
+of four options**, and **614 repeated distractor strings across the forms of one fact**. The first
+two teach that a true thing is false. The third means "proven on two phrasings" is a weaker claim
+than it reads — same four options, only the stem moved. The fourth is R2's memorisable surface
+living inside the mechanism built to prevent it.
+
+**Appetite.** Two weeks, ending well before the deck must stop moving. It sits in front of C2,
+which cannot start until it finishes.
+
+**Solution sketch.** A mechanical census first — nine checks, deterministic, no agent involved —
+because before a human or an agent is asked to read 6,436 options, how much of the list a machine
+can settle should be known (L-027). Then a full agent census over all 1,597 forms, batched at ~22
+facts, each agent grounded in the handbook text, judging five things: every distractor is
+genuinely wrong; every distractor is plausible and the same category as the answer; the four are
+mutually exclusive; the question asks this fact; the forms differ in more than wording. Every
+proposed change then goes to an adversarial reviewer whose brief is to refute it, with special
+attention to the one failure that matters most — **a replacement distractor that is accidentally
+true is worse than the defect it fixes.**
+
+**Rabbit holes.** Rewriting the 56 as-written numeric forms into a shared shape (L-011) — that is
+its own authoring job and does not belong inside this one. Driving `distractor-reuse` to zero:
+614 hits across 288 facts is a scale that would consume the whole appetite for the smallest of the
+four defects. Generating distractors mechanically — rejected under D-014's reasoning; text
+generation produces accidentally-correct options.
+
+**No-gos.** **No fact answer changes.** Where an answer looks wrong it goes to the owner as a
+decision under D-031 and does not land. **No form is reworded in place** — breadth credit is keyed
+by form *position* (`ok[formIndex]`), so editing form N keeps credit earned on a sentence that no
+longer exists. Replacements are appended. No form is deleted or reordered: that is a migration.
+No year, name or figure enters the deck that the handbook does not contain.
+
+**Acceptance criteria + verification.**
+- `self-contradiction` and `contradicts-canonical` reach **0**, promoted from probe to build check
+  and ratcheted as assertions.
+- `identical-option-set` falls from 90 toward 0, ratcheted at whatever it reaches.
+- `longestOptionCorrectRate` reaches its 0.30 target from 0.309 (closes L-003).
+- L-006, L-007 and L-008 closed; L-033 closed.
+- Every landed change was upheld by an adversarial reviewer that had the handbook and was
+  instructed to refute. Rejections are counted and reported, not discarded silently.
+- `npm run verify` green. Ledger rows go to `fixed-unverified`; the fixer does not close them.
+
+### C2 — the explanation rewrite · *approved 10 Aug 2026*
+
+**Problem.** The panels are complete and follow the standard, but the `versus` line — the one with
+direct multiple-choice evidence behind it — is ad hoc. It discriminates against whatever the writer
+happened to think of, not against what the card actually offers. The owner's ask is explicit: a
+panel should carry the context and the key figures, and should say **who the other people were and
+how not to mix them up**.
+
+**Appetite.** Two weeks after C1 lands. All 533 panels; the owner chose a full rewrite over
+augmenting, with the cost stated and accepted.
+
+**Solution sketch.** Skeleton unchanged — `lead · versus · why · cluster · note`, in that order,
+dropping from the bottom. `versus` becomes systematic: derived from C1's pooled distractor set for
+that fact, one directional rule per genuine confusion. `why` carries the handbook's own figure,
+date or comparison where the handbook gives one. `cluster` is extended where the "who were the
+others" case applies, every member carrying its own discriminator.
+
+**Rabbit holes.** Writing to the *on-screen* options. They are generated per presentation and
+shuffled (D-014, D-021), so "the answer is the larger figure" is wrong on the next draw — six
+panels already did this and one would have steered the reader to a wrong option. The panel
+discriminates against the **distractor space**, never the instance.
+
+**No-gos.** No year, person, body or figure the handbook does not contain. No cluster member
+without its own card. No line that is there because it is interesting: interesting-but-inessential
+measures **negative** (Rey 2012, d = −0.30 retention, −0.48 transfer).
+
+**Acceptance criteria + verification.**
+- `explanationYearsOffSource` stays at **0**. It is an assertion, not a ratchet, and the merge
+  guard refuses any year not in the handbook or the fact's own answer — **an instruction in a
+  prompt is not a control, and L-029 is what that costs.**
+- New build checks: no panel names a fact without a card; no panel references option position.
+- `npm run deck:vocab` read, not merely run.
+- Verbatim stability resumes the day the rewrite lands: from then, a panel's wording is fixed.
+
+### C3 — the chronology, restructured · *approved 10 Aug 2026 · within S9*
+
+**Problem.** The timeline is 11 eras, 80 events and 44 figures, and it is lopsided against the
+handbook's own weighting: the twentieth century has 21 events, the Victorians have **3**, and
+prehistory has **no figures at all**. One flat list per era means an era is either shut or entirely
+open, so detail cannot be reached without taking all of it. People and dates render as the same
+kind of row, when they are different things used differently.
+
+**Appetite.** One week, in parallel with C1 — it touches no deck data and shares no files.
+
+**Solution sketch.** Two halves. *Structure:* a second level, `Era → Section → Event`, so each era
+carries 2–4 named groupings that expand independently; figures get their own visual treatment,
+distinct from the chronology. Nested `<details>`, keeping the existing no-React-state design —
+that is what makes keyboard support, screen-reader semantics and find-in-page free. *Content:*
+harvest what the handbook holds and the timeline has not taken, era by era, each item carrying the
+handbook sentence it rests on.
+
+**Rabbit holes.** Narrative connective tissue that makes the story read better. Explicitly
+rejected by the owner on 10 August: handbook-only. A richer story is a study aid competing with
+its own answers.
+
+**No-gos.** No person, date or event the handbook does not contain — where the book gives no date,
+the entry says "no date given" rather than inventing one. Not scheduled and not scored; it stays a
+static reference, which is what keeps it inside S9 and out of DECISIONS.
+
+**Acceptance criteria + verification.**
+- Roughly 160–180 events and 80+ figures, every one traceable to a handbook sentence.
+- The vocabulary year check **extended over `timeline.ts`** — it currently reads explanations
+  only, which is exactly how six facts with unanswerable years survived a full sourcing pass
+  (L-031) and how f194 kept 1924 in its own stem until 10 August.
+- Measured at 402×874, not eyeballed: collapsed, the whole arc still fits one screen.
+- Keyboard and screen-reader behaviour preserved — asserted, since `<details>` is load-bearing.
+
 ### S7 — question forms that resist memorisation · *approved 4 Aug 2026, built*
 
 **Problem.** Two failures share one cause. R1: the correct answer is a middle value in 91.4% of 373

@@ -24,11 +24,15 @@ import { explanationText, strayYears, vocabularyReport, vocabularyTotals } from 
 import { EXPLANATIONS } from '@/data/explanations';
 import {
   ambiguousSharedStems,
+  distractorsContradictingCanonical,
   duplicateCanonicalQuestions,
   effectiveNumericMiddleRankRate,
   factsBelowRecallBreadth,
   factsWithNoRecallForm,
+  identicalOptionSetsWithinFact,
   longestOptionCorrectRate,
+  repeatedDistractorsWithinFact,
+  selfContradictingForms,
   sharedFormsAcrossFacts,
   structuralFaults,
   unresolvedVerifyFlags,
@@ -189,6 +193,42 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
       `middle-value ${(rate * 100).toFixed(1)}% (${generatedForms} generated, ${writtenForms} as written)`,
     ).toBeLessThanOrEqual(DECK_BASELINE.effectiveNumericMiddleRankRate);
     expect(rate, 'below chance would be a tell in the other direction').toBeGreaterThan(0.45);
+  });
+
+  // ── option CONTENT (L-033) ────────────────────────────────────────────────────────────
+  // Everything above measures option shape. For a week the deck was green on all of it while
+  // eight facts offered, as a wrong answer, something another phrasing of the same fact marked
+  // correct. Nothing had ever read what a distractor says.
+
+  it('never offers as wrong an answer another form of the same fact marks right', () => {
+    // The worst defect available: the card asserts a true thing is false, and the schedule
+    // then installs that as faithfully as it installs the answer.
+    const bad = selfContradictingForms(ACTIVE);
+    expect(bad.length, `self-contradicting: ${bad.join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.selfContradictingForms,
+    );
+  });
+
+  it("never offers the fact's own canonical answer as a distractor", () => {
+    const bad = distractorsContradictingCanonical(ACTIVE);
+    expect(bad.length, `contradicts canonical: ${bad.join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.distractorsContradictingCanonical,
+    );
+  });
+
+  it('does not add facts whose forms present identical option sets', () => {
+    // Only the stem moved, so "proven on two phrasings" is a weaker claim than it reads.
+    const bad = identicalOptionSetsWithinFact(ACTIVE);
+    expect(bad.length, `identical option sets: ${bad.slice(0, 20).join(', ')}`).toBeLessThanOrEqual(
+      DECK_BASELINE.identicalOptionSetsWithinFact,
+    );
+  });
+
+  it('does not add repeated distractors across the forms of one fact', () => {
+    const bad = repeatedDistractorsWithinFact(ACTIVE);
+    expect(bad.length, `repeated distractors: ${bad.length}`).toBeLessThanOrEqual(
+      DECK_BASELINE.repeatedDistractorsWithinFact,
+    );
   });
 
   it('does not worsen the longest-option tell', () => {

@@ -134,6 +134,100 @@ export const factsWithNoRecallForm = (deck: Deck): string[] =>
 export const unresolvedVerifyFlags = (deck: Deck): string[] =>
   deck.filter((f) => f.verify && !f.source).map((f) => f.id);
 
+/* ────────────────────────────────────────────────────────────────────────────────────────
+ * Option CONTENT.
+ *
+ * Everything above this line measures option *shape* — how long an option is, where the
+ * true value sits among four numbers, which position the answer takes. None of it has ever
+ * read what a distractor actually SAYS, and for a week the deck was green on every check
+ * while offering, on eight facts, a wrong answer that another phrasing of the same fact
+ * marked correct (L-033).
+ *
+ * Two checks from the census earned promotion and two did not, which is worth recording so
+ * nobody re-derives the rejected pair. `cross-fact-collision` — a distractor that is some
+ * other fact's answer — flagged 210 forms and was almost entirely correct design: the six
+ * wives of Henry VIII are each the answer to one question and the right distractor for the
+ * others, and that IS the discrimination the deck teaches. `nested-option` was mostly regnal
+ * numbering, "Edward I" inside "Edward III". Both need judgement, so both stay out of the
+ * build; a check that cries wolf on good design is a check that gets ignored.
+ * ──────────────────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * A distractor on one form that another form of the SAME fact marks correct.
+ *
+ * The worst defect the deck can carry. The card asserts a true thing is false, and spaced
+ * repetition installs that as faithfully as it installs the answer — so the mechanism meant
+ * to teach the fact teaches its negation instead, on a schedule.
+ */
+export function selfContradictingForms(deck: Deck): string[] {
+  const out: string[] = [];
+  for (const fact of deck) {
+    const corrects = new Map<string, number[]>();
+    fact.forms.forEach((f, i) => {
+      const k = normalise(f.answers.correct);
+      corrects.set(k, [...(corrects.get(k) ?? []), i]);
+    });
+    fact.forms.forEach((f, i) => {
+      for (const d of f.answers.distractors) {
+        const where = corrects.get(normalise(d));
+        if (where?.some((j) => j !== i)) out.push(`${fact.id}[${i}] "${d}"`);
+      }
+    });
+  }
+  return out;
+}
+
+/** A distractor that is the fact's own canonical answer. The same defect, one step blunter. */
+export function distractorsContradictingCanonical(deck: Deck): string[] {
+  const out: string[] = [];
+  for (const fact of deck)
+    fact.forms.forEach((f, i) => {
+      for (const d of f.answers.distractors)
+        if (normalise(d) === normalise(fact.answer)) out.push(`${fact.id}[${i}] "${d}"`);
+    });
+  return out;
+}
+
+/**
+ * Facts where two forms present the identical set of four options.
+ *
+ * Only the stem moved. The breadth gate exists so a long interval cannot be banked on one
+ * memorised sentence (R-6), and it counts these as two proven phrasings — but a reader who
+ * recognises the option set does not need to read the stem at all. So "proven on two
+ * phrasings" is a materially weaker claim on these facts than the number suggests, and the
+ * gate is measuring something closer to one phrasing seen twice.
+ */
+export function identicalOptionSetsWithinFact(deck: Deck): string[] {
+  const out: string[] = [];
+  for (const fact of deck) {
+    const sets = new Map<string, number[]>();
+    fact.forms.forEach((f, i) => {
+      const key = fixedOptions(f.answers).map(normalise).sort().join('|');
+      sets.set(key, [...(sets.get(key) ?? []), i]);
+    });
+    for (const idx of sets.values()) if (idx.length > 1) out.push(`${fact.id}[${idx.join('/')}]`);
+  }
+  return out;
+}
+
+/**
+ * Distractor strings appearing on more than one form of the same fact.
+ *
+ * Not wrong, but it shrinks the pool of wrong answers a reader ever meets, so the same three
+ * lures come round again and again. That is R2 — a memorisable surface — sitting inside the
+ * several-phrasings mechanism built to defeat it. Counted per repeated string, not per form.
+ */
+export function repeatedDistractorsWithinFact(deck: Deck): string[] {
+  const out: string[] = [];
+  for (const fact of deck) {
+    const seen = new Map<string, number>();
+    for (const f of fact.forms)
+      for (const d of f.answers.distractors) seen.set(normalise(d), (seen.get(normalise(d)) ?? 0) + 1);
+    for (const [d, n] of seen) if (n > 1) out.push(`${fact.id} "${d}" ×${n}`);
+  }
+  return out;
+}
+
 /** Forms whose four options are all distinct numbers — where the bracketing tell lives. */
 function numericSets(deck: Deck): { correct: number; all: number[] }[] {
   const out: { correct: number; all: number[] }[] = [];
@@ -312,6 +406,10 @@ export function analyseDeck(deck: Deck) {
     factsBelowRecallBreadth: factsBelowRecallBreadth(deck),
     factsWithNoRecallForm: factsWithNoRecallForm(deck),
     unresolvedVerifyFlags: unresolvedVerifyFlags(deck),
+    selfContradictingForms: selfContradictingForms(deck),
+    distractorsContradictingCanonical: distractorsContradictingCanonical(deck),
+    identicalOptionSetsWithinFact: identicalOptionSetsWithinFact(deck),
+    repeatedDistractorsWithinFact: repeatedDistractorsWithinFact(deck),
     numericMiddleRank: numericMiddleRankRate(deck),
     effectiveNumericMiddleRank: effectiveNumericMiddleRankRate(deck),
     restrictedRankForms: formsWithRestrictedRanks(deck),

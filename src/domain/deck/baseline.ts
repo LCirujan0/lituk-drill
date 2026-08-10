@@ -66,6 +66,17 @@ export interface DeckBaseline {
    * exists at all, and L-023 for what the first run found.
    */
   readonly explanationYearsOffSource: number;
+  /**
+   * Forms offering as a distractor something another form of the same fact marks correct.
+   * The deck asserting that a true thing is false. Target 0 and nothing else is defensible.
+   */
+  readonly selfContradictingForms: number;
+  /** Distractors that are the fact's own canonical answer. Same defect, blunter. Target 0. */
+  readonly distractorsContradictingCanonical: number;
+  /** Facts where two forms present the identical four options — only the stem moved. */
+  readonly identicalOptionSetsWithinFact: number;
+  /** Distractor strings repeated across forms of one fact. R2's surface, inside the mechanism. */
+  readonly repeatedDistractorsWithinFact: number;
 }
 
 export const DECK_BASELINE: DeckBaseline = {
@@ -130,6 +141,20 @@ export const DECK_BASELINE: DeckBaseline = {
   // At zero this stops being a ratchet and becomes an assertion, which is the point: from
   // here, ANY invented year fails the build.
   explanationYearsOffSource: 0,
+  // The option-content ceilings, measured 10 Aug 2026 on the first pass that ever read what a
+  // distractor SAYS (L-033). All four start at their measured value rather than at zero: a red
+  // build on day one teaches everyone to ignore red builds, and driving these down is the work.
+  //
+  // The first two are the ones that matter. A form offering as wrong an answer that another
+  // phrasing of the same fact marks right is the deck teaching its own negation, on a schedule.
+  selfContradictingForms: 12,
+  distractorsContradictingCanonical: 2,
+  // 90 facts whose two forms present the identical four options. The breadth gate counts those
+  // as two proven phrasings; a reader who recognises the option set never reads the stem.
+  identicalOptionSetsWithinFact: 90,
+  // 614 repeated distractor strings across 288 facts. The largest number here and the smallest
+  // defect — nothing is wrong, the pool of lures a reader ever meets is just smaller than it looks.
+  repeatedDistractorsWithinFact: 614,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */
@@ -145,4 +170,10 @@ export const DECK_TARGETS: Partial<DeckBaseline> = {
   longestOptionCorrectRate: 0.3,
   unresolvedVerifyFlags: 0,
   explanationYearsOffSource: 0,
+  selfContradictingForms: 0,
+  distractorsContradictingCanonical: 0,
+  identicalOptionSetsWithinFact: 0,
+  // Not zero. Some repetition is unavoidable where a fact has few plausible wrong answers,
+  // and chasing it to nothing would consume the appetite for the least of the four defects.
+  repeatedDistractorsWithinFact: 300,
 };
