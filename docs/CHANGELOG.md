@@ -2,6 +2,40 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (night) — the DPIA screening re-run, and a disclosure only the owner can accept
+
+**D-034's own terms require this before any C8 code**, and it is the kind of prerequisite that
+gets skipped because the answer looks obvious. The original screening concludes UK GDPR does not
+engage *because nothing leaves the device and nothing identifies anyone*. C8(a) breaks the first
+half of that sentence, so the conclusion was re-derived rather than assumed.
+
+**It comes out the same way, and not for the same reasons.** The domestic-purposes exemption
+survives the change untouched — processing by a natural person in a purely personal activity, sole
+data subject and sole controller, no second data subject at any point. No DPIA arises, and none of
+the ICO's high-risk criteria are met.
+
+**But the honest version has a second half.** In isolation the request is a citizenship-test
+question and a wrong answer, with nothing to single anyone out by. At the provider it arrives with
+an API key belonging to an identifiable account holder — so the provider holds a pairing this app
+never had. And the content discloses, by inference, that the account holder is studying the Life
+in the UK test, which almost always means applying for settlement or citizenship. **That is the
+one subject D-007 closed a one-way door on.** D-007 governs storage and this is disclosure, so it
+is not a breach of that decision; it lands on the fenced topic all the same, and filing it under
+"no personal data" would be true and misleading at once. **Raised as L-040, and it is not mine to
+close** — `risk-accepted` is the owner's alone.
+
+**Five conditions, and the screening is void if any stops holding:** no review history leaves; no
+identifier is added; nothing generated is stored into the deck, the schedule or the readiness
+model; provider training and retention are turned off where the account offers it, and checked
+rather than assumed; and the app works with no network and no key.
+
+**R-8 is narrowed rather than quietly ignored**, which is the entire reason a rule change needs a
+decision first. It read "no personal data, ever" *and no third party*, flatly. One third party is
+now permitted — a model API, for explanation only, under those five conditions. Any other third
+party, or any condition failing, still needs its own entry.
+
+The data inventory gains its row. Code for C8(a) is unblocked; the disclosure is not.
+
 ## 2026-08-11 (evening) — the referred answers become a list he can finish
 
 **24 answers, written up as `docs/REFERRED-ANSWERS.md`.** They were sitting in a `.work` JSON file
