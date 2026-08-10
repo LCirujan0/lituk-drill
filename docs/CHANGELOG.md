@@ -34,7 +34,18 @@ decision first. It read "no personal data, ever" *and no third party*, flatly. O
 now permitted — a model API, for explanation only, under those five conditions. Any other third
 party, or any condition failing, still needs its own entry.
 
-The data inventory gains its row. Code for C8(a) is unblocked; the disclosure is not.
+**One thing the screening did not cover and the build would have hit on day one.** D-034 says the
+model must be given *the handbook passage* and told the handbook wins. The handbook lives in
+`.work/`, gitignored, Crown copyright — and a server route needs it at runtime, which means
+shipping it. That is a licensing decision, not an implementation detail, and it is not one to make
+in passing. The alternative needing no new permission: ground the model on **the deck's own answer
+and explanation panel**, which is our text, and tell it that answer is authoritative. That keeps
+"the handbook wins" in substance, which is the part that matters — the Council of Europe has 46
+members, the book says 47, the deck says 47, and an explainer that "corrects" that is worse than
+no explainer.
+
+The data inventory gains its row. Code for C8(a) is unblocked; the disclosure and the
+grounding choice are not.
 
 ## 2026-08-11 (evening) — the referred answers become a list he can finish
 
