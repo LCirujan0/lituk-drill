@@ -14,6 +14,7 @@ import { DECK } from '@/domain/deck';
 import { mistakesFrom, nextFormForMistake, CLEAR_STREAK } from '@/domain/drill/mistakes';
 import {
   chapterQueue,
+  DAILY_TARGET,
   newFacts,
   newQueue,
   sectionCounts,
@@ -249,9 +250,11 @@ describe('by chapter', () => {
 describe('section counts', () => {
   it('reports an empty log honestly', () => {
     const counts = sectionCounts(context([]));
-    // Due today is a daily budget of 30, not "what SM-2 says is overdue" — on a fresh
-    // install the whole day is still ahead of you.
-    expect(counts.due).toBe(30);
+    // Due today is a daily BUDGET, not "what SM-2 says is overdue" — on a fresh install the
+    // whole day is still ahead of you. Asserted against the constant rather than a literal:
+    // the number moved 30 → 50 on 10 August and a hardcoded 30 here was the only thing that
+    // failed, which is the good outcome but only because it was one place and not thirty.
+    expect(counts.due).toBe(DAILY_TARGET);
     expect(counts.mistakes).toBe(0);
     expect(counts.mastered).toBe(0);
     expect(counts.newFacts).toBe(DECK.length);

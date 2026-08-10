@@ -2,6 +2,41 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-10 (later) — the roadmap gets its answers, and a near-miss on two facts
+
+Ten questions answered, so the roadmap stops being conditional. **50 facts a day, up from 30**
+(D-035), because a ~700-fact deck at 30/day needs 24 days just to show every fact once. The
+60-day simulation was run at 40 and its numbers are now stale in the wrong direction — flagged in
+HANDOFF rather than quietly left.
+
+**The AI layer is (a) only** (D-034 accepted): explain why the option you picked is wrong, given
+the handbook passage. Free-form testing was named and rejected by the owner, not merely left
+unbuilt. Two things must happen before it ships — the DPIA screening is re-run, because its
+conclusion rests on nothing leaving the device, and the model is told **the handbook wins**. The
+book says the Council of Europe has 47 members; it has 46; the deck says 47. An explainer that
+"corrects" that is worse than no explainer.
+
+**Mocks are both kinds** (D-036): 20 fixed tests meant to be retaken, plus custom ones drawn from
+unseen forms. The distinction is load-bearing — a retaken fixed test is contaminated by
+definition, so fixed scores may be trended and **may never calibrate readiness**.
+
+**And the near-miss.** The audit referred 36 answers to the owner. He said remove. An independent
+word-presence check found exactly two whose answers share no distinctive word with the handbook —
+`f098` (1651) and `f391` (1985) — which reads as an open-and-shut retire. **Both are facts the
+owner personally confirmed against his own 2026 edition**, recorded in L-031 as settled D-031
+deltas where the extracted proxy text is known to be wrong. Retiring them would have deleted two
+correct facts *because the proxy disagrees with the authority* — R3 running exactly backwards.
+
+The audit agents were never told the D-031 delta list exists. Logged as **L-037**, and the
+tripwire it wants is that the settled-deltas list should be data in the deck rather than prose in
+a ledger row.
+
+**So three facts were retired, not 36**: f215, f216 and f219, the citizenship-ceremony trio, each
+re-grepped by hand first. The handbook gives no ceremony deadline ("months" appears once, about
+driving licences), never says who organises one, and describes nothing being handed over
+("certificate" appears twice, for test centres and an MOT). Two of the three carried no `source`
+field at all. Deck **533 → 530**. The other 33 are a review list, not an action.
+
 ## 2026-08-10 — the other four chapters, and one instruction worth 0.5 of a percentage point
 
 313 facts, 32 agents, every proposal adversarially refuted. **194 upheld, 104 rejected, 131

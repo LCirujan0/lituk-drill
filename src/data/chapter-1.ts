@@ -543,6 +543,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    retired: 'The handbook never says who organises a citizenship ceremony. "Local authority" appears only about council structure, the electoral register and reporting environmental problems, none within a thousand lines of either ceremony passage; the book directs all citizenship business to the UK Border Agency. Its `source` said "corroborated against the handbook text", which was not supportable. Retired 10 Aug 2026.',
     source: 'Handbook 3rd ed., ch.1 — corroborated against the handbook text',
     question: "Who normally organises a citizenship ceremony?",
     answer: "The local authority",
@@ -581,6 +582,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    retired: 'The handbook gives no deadline of any kind for the ceremony. Checked by hand: "months" occurs exactly once in the whole 232KB, at "use it in the UK for up to 12 months", about driving licences. The entire ceremony content is the pledge and the oath/affirmation. This fact also carried no `source` field at all, unlike its neighbours. Retired 10 Aug 2026.',
     question: "How soon after the decision is a citizenship ceremony normally held?",
     answer: "Within three months",
     forms: [
@@ -693,6 +695,7 @@ export const CHAPTER_1: readonly Fact[] = [
     tag: "Ceremony",
     chapter: 1,
     verify: false,
+    retired: 'The handbook describes nothing being handed over at the ceremony — only that new citizens pledge, and swear or affirm loyalty. Checked by hand: "certificate" occurs twice, for test-centre certificates and for an MOT. This fact also carried no `source` field. Retired 10 Aug 2026.',
     question: "What document is presented to a new citizen at the ceremony?",
     answer: "A certificate of British citizenship",
     forms: [

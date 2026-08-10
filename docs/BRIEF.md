@@ -369,6 +369,13 @@ to drill it, and nobody decides between 87 things.
 
 **Appetite.** Days. The cheapest item on this list and probably the most useful per hour.
 
+**Both axes stay drillable.** The owner's requirement, 10 August: *"ideally chapters can be
+expanded into multiple bands, but I can still practise either chapters or bands and measure
+progress for each."* So a chapter is not replaced by its bands — it remains a thing you can drill
+and a thing that has a progress figure, and a band is a second, finer way in. Every fact therefore
+belongs to exactly one chapter *and* exactly one band, and both partitions must satisfy R-12
+independently.
+
 **Solution sketch.** Keep the 87 tags as the data. Add a **band** above them — about a dozen
 groups of roughly 30–55 facts, each a drillable section with its own counts. Chapters stay as the
 handbook's own structure (they are how the source is organised and how sourcing is cited); bands
@@ -447,10 +454,10 @@ of examinability, which is what makes it expensive.
 apply unchanged. Every new fact carries a `source`. Ids append only (R-4). No new fact may
 introduce a duplicate canonical question or a shared form.
 
-**Open, and the reason this is a roadmap item rather than a task:** how large the deck should get.
-533 facts at 30/day is already more than the appetite has room for, and doubling it without
-raising daily volume means each fact is seen half as often. That is a scheduling question, not a
-content one, and it is question 1 below.
+**Settled 10 August (D-035):** ceiling about **700 facts**, daily target raised **30 → 50**. The
+owner's framing was quality-first — *"in order to keep a high standard of questions (not dumb ones
+or something that repeats)"* — so 700 is a cap on the sweep, not a target. About 170 facts of
+headroom from 530. Every candidate competes for those slots against the ones already there.
 
 ### C7 — mock tests, and their history · *requested 10 Aug 2026 · D-017 already decides most of it*
 
@@ -470,9 +477,20 @@ form rather than knowledge of the fact, the exact circularity D-017 exists to pr
 and L-003 are `fixed-unverified` rather than `verified-fixed`, a mock score may be **recorded and
 displayed as a score**, but must not be presented as readiness or as a probability of passing.
 
+**Settled 10 August (D-036): both kinds.** Twenty **fixed** tests, stable and numbered and meant to
+be retaken — their value is comparability, the same 24 questions now and in September. Plus
+**custom** tests generated on demand from unseen forms per D-017. Every attempt recorded: which
+test, when, score, forms served. Percentage correct over time is the headline number.
+
+**The distinction is load-bearing.** A retaken fixed test is contaminated by definition — the
+second sitting measures memory of those 24 questions. So fixed-test scores may be shown and
+trended and **may never calibrate the readiness model**; only custom tests drawn from unseen forms
+may, and D-017's spent-form ledger applies to those alone.
+
 **Acceptance criteria + verification.** Test history persists across devices on the existing event
-log; no form is spent twice; the 24 are drawn across chapters in the exam's own proportions or the
-sample is stated to be uniform — whichever, it is written down rather than emergent.
+log; no unseen form is spent twice; the 24 are drawn across chapters in the exam's own proportions
+or the sample is stated to be uniform — whichever, written down rather than emergent. A fixed test
+is byte-identical on every sitting, asserted as a test.
 
 ### C8 — an AI layer · *requested 10 Aug 2026 · **BLOCKED: needs D-034 before any code***
 
