@@ -289,6 +289,45 @@ export function repeatedDistractorsWithinFact(deck: Deck): string[] {
   return out;
 }
 
+/**
+ * Measured numeric sets whose leading number is not the quantity a reader perceives.
+ *
+ * **L-036's defect, surviving under a second name.** That row was about calendar dates: "8 May
+ * 1945" reads as 8, which is a day number and not a magnitude. Re-deriving it independently on
+ * 11 August found the same failure in **clock times**, and the exclusion did not cover it —
+ * "1 pm" reads as 1 and therefore ranks *below* "11 am", when it is two hours later.
+ *
+ * The direction matters and it is the flattering one. `f154[1]` offered `11 am | 9 am | 10 am |
+ * 1 pm`: the parser ranked the answer largest of four, so the form was recorded as **not** a
+ * middle value — while a reader sees 9, 10, 11, 1pm and the answer sits third of four, which is
+ * exactly the tell the metric exists to detect. The measurement was understating itself.
+ *
+ * **This is asserted rather than excluded, and that is the whole point.** Excluding these forms
+ * would shrink the denominator again, which is the move L-036 is under review for. Fixing the
+ * options instead removes the artefact and keeps the form measured: putting every option in the
+ * same half of the day makes the parsed rank and the perceived rank the same number. Applied to
+ * `f154[1]`, `f511[0]` and `f511[1]`, and **the headline did not move** — the record was already
+ * "not middle" and is now true rather than lucky.
+ *
+ * Only sets that actually ENTER the measurement are checked. `f271[2]` mixes "midday" with "1pm"
+ * and is not caught, correctly: "midday" parses to no number at all, so the form never reaches
+ * the rank calculation and carries no artefact into it.
+ */
+export function mixedMeridiemNumericSets(deck: Deck): string[] {
+  const CLOCK = /^\s*\d{1,2}([.:]\d{2})?\s*(am|pm)\b/i;
+  const out: string[] = [];
+  for (const fact of deck)
+    fact.forms.forEach((form, i) => {
+      const options = fixedOptions(form.answers);
+      // Only whole-set clock times, and only where every option yields a number — which is
+      // what "enters the measurement" means.
+      if (!options.every((o) => CLOCK.test(o))) return;
+      const meridiems = new Set(options.map((o) => (/pm\b/i.test(o) ? 'pm' : 'am')));
+      if (meridiems.size > 1) out.push(`${fact.id}[${i}]`);
+    });
+  return out;
+}
+
 /** Forms whose four options are all distinct numbers — where the bracketing tell lives. */
 function numericSets(deck: Deck): { correct: number; all: number[] }[] {
   const out: { correct: number; all: number[] }[] = [];
@@ -476,6 +515,7 @@ export function analyseDeck(deck: Deck) {
     staleContradictionDeclarations: stale(selfContradictingForms(deck)),
     distractorsContradictingCanonical: distractorsContradictingCanonical(deck),
     recallPromptsNeedingOptions: recallPromptsNeedingOptions(deck),
+    mixedMeridiemNumericSets: mixedMeridiemNumericSets(deck),
     identicalOptionSetsWithinFact: identicalOptionSetsWithinFact(deck),
     repeatedDistractorsWithinFact: repeatedDistractorsWithinFact(deck),
     numericMiddleRank: numericMiddleRankRate(deck),

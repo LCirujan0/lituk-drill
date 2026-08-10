@@ -18,7 +18,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { stale, undeclared } from '@/domain/deck/contradictions';
-import { recallPromptsNeedingOptions } from '@/domain/deck/analysis';
+import { mixedMeridiemNumericSets, recallPromptsNeedingOptions } from '@/domain/deck/analysis';
 import { ACTIVE, ALL_FACTS, DECK, RETIRED, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
@@ -222,6 +222,18 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     // fact could then land under a key that reads as already reviewed.
     const dead = stale(selfContradictingForms(ACTIVE));
     expect(dead.length, `stale declaration: ${dead.join(', ')}`).toBe(0);
+  });
+
+  it('never measures a numeric set that mixes am and pm', () => {
+    // L-036's defect under a second name, found by re-deriving that row independently. "1 pm"
+    // parses to 1 and therefore ranks BELOW "11 am", which is two hours earlier — so f154[1]
+    // was recorded as "not a middle value" while a reader sees the answer third of four. The
+    // measurement was understating itself, which is the flattering direction.
+    //
+    // Asserted, not excluded: excluding would shrink the denominator again, which is the move
+    // L-036 is under review for. The options were fixed instead, and the headline did not move.
+    const bad = mixedMeridiemNumericSets(ACTIVE);
+    expect(bad, `numeric set mixing am and pm: ${bad.join(', ')}`).toEqual([]);
   });
 
   it('never serves a stem that needs options on screen as a free-recall prompt', () => {

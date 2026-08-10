@@ -5895,7 +5895,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "11 am",
-        distractors: ["9 am", "10 am", "1 pm"],
+        distractors: ["9 am", "10 am", "8 am"],
       },
     },
     {

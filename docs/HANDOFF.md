@@ -9,15 +9,15 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **311 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
+| Tests | **312 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 36 answers referred, 3 retired, 33 still to read |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
-| Next ledger id | L-039 (L-019 and L-020 never written — L-022) |
-| Open ledger rows | 14 open · 15 fixed-unverified · 5 verified-fixed (L-038 is new and is both) |
+| Next ledger id | L-040 (L-019 and L-020 never written — L-022) |
+| Open ledger rows | 14 open · 16 fixed-unverified · 6 verified-fixed (L-038 and L-039 are new) |
 | Open Critical | 0. **Two open High — L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
 | Recall prompts | **7 of 37 still need options on screen**, held deliberately: flipping them would leave two facts with no recall form and require raising a ceiling to pass. The **exact set** is asserted, not a count |
 | Self-contradiction | **0 undeclared, 0 stale — asserted, not ratcheted.** The 11 legitimate hits are declared with reasons in `deck/contradictions.ts`; anything else fails the build |
@@ -110,10 +110,12 @@ which pins the invariant a browser measurement established but cannot re-measure
    **Recommendation: reword in place**, for the seven where the stem is off-source. An off-source
    stem is R3, the risk this project ranks highest, and it is permanent; the falsified breadth
    credit is bounded, affects one form each, and cannot make a fact *look* worse than it is.
-3. **Independently re-derive L-036.** The numeric-tell measurement was excluding nothing and
-   ranking days of the month; it now excludes calendar-date sets. That change was made while
-   the ratchet was failing and is what turned the build green, so it wants a check by someone
-   who did not make it. Both figures are in the row.
+3. ~~**Independently re-derive L-036.**~~ **Done 11 August and upheld** — re-derived from the
+   definition in a standalone script importing nothing from `analysis.ts`. The exclusion is not
+   over-inclusive, the narrow rule beats the obvious looser one (which wrongly catches *"You
+   **may** drive a car from the age of 17"*), and it makes the *stored* figure worse, which is
+   not how a self-serving change behaves. The probe for other unit mismatches found the same
+   defect in clock times — L-039, now asserted rather than excluded.
 4. **The explanation rewrite (C2)** — all 533 panels, after the audit, because a discriminator
    cannot be written before the thing it discriminates against is known.
 5. Extend the year check over `fact.answer` and every `answers.correct`. It has only ever read

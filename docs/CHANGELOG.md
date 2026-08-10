@@ -2,6 +2,51 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (evening) — L-036 upheld, and the same defect found under a second name
+
+**L-036 re-derived independently and upheld.** The row asks for this in unusually strong terms:
+the calendar-date exclusion was written while the numeric ratchet was failing, and fixing it is
+what turned the build green — *"a measurement change that unblocks its author's own commit
+deserves the most scrutiny available."* So it was re-derived from the definition in a standalone
+script importing nothing from `analysis.ts`, because re-running the author's own code proves
+nothing about the author's own judgement.
+
+**Three questions, all answered in the change's favour.**
+
+1. **Over-exclusion?** No. All 22 excluded sets were read individually and every one is genuinely
+   four `<day> <Month>` strings. Nothing legitimate was removed.
+2. **Would a looser rule read differently?** Yes, and worse. A rule matching a month name
+   anywhere wrongly catches `f399[2]` — *"You may drive a car from the age of 17"* — because
+   **May** is a month. The narrow leading-`<day> <Month>` test is the better rule, not merely an
+   adequate one.
+3. **Did the exclusion do the work that turned the build green?** On the on-screen figure,
+   partly — the excluded sets are middle-ranked at 63.6% against roughly 50% for generated forms.
+   That is the honest reason and it is legitimate: a day number is not a magnitude, so those
+   forms could never carry the tell. Note the opposite sign on the **stored** figure, which the
+   exclusion moves 86.35% → 87.66% — it makes that number *worse*, which is not how a
+   self-serving change behaves.
+
+The row's count is one high: 22 excluded and 381 kept, against 23 and 382. The live report agrees
+with 381. **L-036 → `verified-fixed`**, by a session that did not make the change.
+
+**The probe for other unit mismatches is what earned the re-derivation.** Clock times have
+exactly the same defect and the exclusion never covered them: "1 pm" reads as **1** and ranks
+*below* "11 am", two hours earlier. `f154[1]` offered `11 am | 9 am | 10 am | 1 pm` and was
+recorded as **not** a middle value, while a reader sees the answer third of four — the metric
+understating itself, which is the flattering direction.
+
+**And this session had made it worse a few hours earlier.** The L-033 fix replaced `f511[0]`'s
+"12 noon" with "2.00 pm", creating a third instance and moving the headline 52.4% → 52.1%. That
+0.3 points was entirely artefact. Declining to tighten the ceiling on it was the right call for
+the wrong reason.
+
+**Asserted, not excluded — that distinction is the whole finding.** Excluding these forms would
+shrink the denominator again, which is the move L-036 is under review for. The options were fixed
+instead: all three sets now sit in one half of the day, so the parsed rank and the perceived rank
+are the same number, the forms stay measured, and **the headline returned to 52.4%**. The record
+was already "not middle" and is now true rather than lucky. `mixedMeridiemNumericSets` asserts
+zero and was run against broken code first. Raised as L-039.
+
 ## 2026-08-11 (later still) — the deferred list named two, the class had thirty-seven
 
 **Applying two `mcqOnly` items from `.work/apply-deferred.json` turned up a class of 37.** The
@@ -76,6 +121,13 @@ fires the first, a declaration for a contradiction that does not exist fires the
 because that form's answer stopped being a middle value. The ceiling was **not** tightened to
 match. This is the metric L-036 is under review for, and tightening it here would be precisely
 the move L-036 exists to flag.
+
+> **Corrected the same day.** That 0.3 points was **entirely an artefact I introduced.** The
+> replacement distractor was "2.00 pm", which the metric's parser reads as **2** — so the answer
+> "11.00 am" ranked largest of four and stopped counting as a middle value, while a reader sees
+> 9, 10, 11, 2pm and the answer sits third. Found by the independent L-036 re-derivation an hour
+> later, fixed by moving the distractor to "8.00 am", and **the headline returned to 52.4%**.
+> Declining to tighten the ceiling was the right call for the wrong reason. Raised as L-039.
 
 ## 2026-08-11 — twelve bands, and a bar that says which kind of progress (C4/C5)
 

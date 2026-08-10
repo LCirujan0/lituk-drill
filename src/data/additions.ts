@@ -1480,9 +1480,9 @@ export const ADDITIONS: readonly Fact[] = [
         // reader who has learned the parenthesis met their own knowledge marked wrong. The
         // distractor changed rather than the stem — breadth credit is keyed by form position, so
         // rewording in place would keep credit earned on a sentence that no longer exists.
-        answers: { kind: 'fixed', correct: '11.00 am', distractors: ['9.00 am', '10.00 am', '2.00 pm'] } },
+        answers: { kind: 'fixed', correct: '11.00 am', distractors: ['9.00 am', '10.00 am', '8.00 am'] } },
       { question: 'On Sundays, pubs usually open from what time?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '12 noon', distractors: ['10.00 am', '11.00 am', '1.00 pm'] } },
+        answers: { kind: 'fixed', correct: '12 noon', distractors: ['10.00 am', '11.00 am', '9.00 am'] } },
       { question: 'How do night club hours usually compare with pub hours?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'Night clubs usually open and close later', distractors: ['Night clubs usually open and close earlier', 'Night clubs must close at the same time as pubs', 'Night clubs may not open at all on a Sunday'] } },
     ],
