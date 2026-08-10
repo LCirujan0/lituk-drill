@@ -71,6 +71,14 @@ export interface DeckBaseline {
    * The deck asserting that a true thing is false. Target 0 and nothing else is defensible.
    */
   readonly selfContradictingForms: number;
+  /**
+   * Flagged pairs nobody has read. **Asserted at zero, not ratcheted** — eleven of the twelve
+   * original hits were correct design, so a ceiling of eleven would hide the twelfth real one
+   * inside a count that reads as no regression. See `contradictions.ts`.
+   */
+  readonly undeclaredSelfContradictions: number;
+  /** Declarations matching nothing the deck produces. Zero, or the exemption list is rotting. */
+  readonly staleContradictionDeclarations: number;
   /** Distractors that are the fact's own canonical answer. Same defect, blunter. Target 0. */
   readonly distractorsContradictingCanonical: number;
   /** Facts where two forms present the identical four options — only the stem moved. */
@@ -157,7 +165,13 @@ export const DECK_BASELINE: DeckBaseline = {
   //
   // The first two are the ones that matter. A form offering as wrong an answer that another
   // phrasing of the same fact marks right is the deck teaching its own negation, on a schedule.
-  selfContradictingForms: 12,
+  // 12 -> 11, and the one removed was the only real defect among them: f511[0] offered '12 noon'
+  // as wrong on a stem that did not exclude Sunday, while the handbook's own sentence reads
+  // "from 11.00 am (12 noon on Sundays)". The remaining 11 are declared and reasoned about in
+  // `contradictions.ts`; this raw number stays here so the declarations can be counted against it.
+  selfContradictingForms: 11,
+  undeclaredSelfContradictions: 0,
+  staleContradictionDeclarations: 0,
   distractorsContradictingCanonical: 2,
   // 90 facts whose two forms present the identical four options. The breadth gate counts those
   // as two proven phrasings; a reader who recognises the option set never reads the stem.
@@ -185,7 +199,10 @@ export const DECK_TARGETS: Partial<DeckBaseline> = {
   longestOptionCorrectRate: 0.285,
   unresolvedVerifyFlags: 0,
   explanationYearsOffSource: 0,
-  selfContradictingForms: 0,
+  // Not zero, and this is the one target that is deliberately NOT zero: eleven of these are the
+  // discrimination the deck exists to teach. The number that must be zero is the undeclared one.
+  undeclaredSelfContradictions: 0,
+  staleContradictionDeclarations: 0,
   distractorsContradictingCanonical: 0,
   identicalOptionSetsWithinFact: 0,
   // Not zero. Some repetition is unavoidable where a fact has few plausible wrong answers,

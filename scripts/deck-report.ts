@@ -70,7 +70,17 @@ console.log('\nOption content — what a distractor SAYS (L-033)');
 row(
   'self-contradicting forms',
   `${a.selfContradictingForms.length}/${DECK_BASELINE.selfContradictingForms}`,
-  'a distractor another form of the same fact marks CORRECT · target 0',
+  'a distractor another form of the same fact marks CORRECT · 11 are declared, not defects',
+);
+row(
+  '  of those, undeclared',
+  `${a.undeclaredSelfContradictions.length}/0`,
+  a.undeclaredSelfContradictions.join(' ') || 'ASSERTED at 0 — read them, do not ratchet them',
+);
+row(
+  '  stale declarations',
+  `${a.staleContradictionDeclarations.length}/0`,
+  a.staleContradictionDeclarations.join(' ') || 'an exemption for a contradiction that is gone',
 );
 row(
   "distractor is the fact's own answer",

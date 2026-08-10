@@ -16,6 +16,7 @@
  * dangerous one and the position measurement is mostly a historical check.
  */
 
+import { stale, undeclared } from './contradictions';
 import type { Deck, Fact } from './types';
 import { fixedOptions, recallForms } from './types';
 import { achievableRanks, deriveNumericAnswers, generateOptions } from './numeric';
@@ -180,6 +181,13 @@ export const unresolvedVerifyFlags = (deck: Deck): string[] =>
  * The worst defect the deck can carry. The card asserts a true thing is false, and spaced
  * repetition installs that as faithfully as it installs the answer — so the mechanism meant
  * to teach the fact teaches its negation instead, on a schedule.
+ */
+/**
+ * The raw flag. **Eleven of its twelve original hits were correct design, not defects** — two
+ * forms of one fact routinely ask different questions, and a negative stem ("which is NOT…")
+ * has true statements as its distractors by construction. See `contradictions.ts`, which holds
+ * the read-and-signed-off list and is what makes `undeclaredSelfContradictions` assertable at
+ * zero. This function stays raw on purpose: the exemptions belong where they can be read.
  */
 export function selfContradictingForms(deck: Deck): string[] {
   const out: string[] = [];
@@ -431,6 +439,10 @@ export function analyseDeck(deck: Deck) {
     factsWithNoRecallForm: factsWithNoRecallForm(deck),
     unresolvedVerifyFlags: unresolvedVerifyFlags(deck),
     selfContradictingForms: selfContradictingForms(deck),
+    // The two that are asserted rather than ratcheted. The raw count above stays visible so
+    // the declarations can be argued with; these are what the build actually holds to zero.
+    undeclaredSelfContradictions: undeclared(selfContradictingForms(deck)),
+    staleContradictionDeclarations: stale(selfContradictingForms(deck)),
     distractorsContradictingCanonical: distractorsContradictingCanonical(deck),
     identicalOptionSetsWithinFact: identicalOptionSetsWithinFact(deck),
     repeatedDistractorsWithinFact: repeatedDistractorsWithinFact(deck),

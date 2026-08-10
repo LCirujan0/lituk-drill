@@ -17,6 +17,7 @@
 
 import { describe, expect, it } from 'vitest';
 
+import { stale, undeclared } from '@/domain/deck/contradictions';
 import { ACTIVE, ALL_FACTS, DECK, RETIRED, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
@@ -203,10 +204,23 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
   it('never offers as wrong an answer another form of the same fact marks right', () => {
     // The worst defect available: the card asserts a true thing is false, and the schedule
     // then installs that as faithfully as it installs the answer.
-    const bad = selfContradictingForms(ACTIVE);
-    expect(bad.length, `self-contradicting: ${bad.join(', ')}`).toBeLessThanOrEqual(
-      DECK_BASELINE.selfContradictingForms,
-    );
+    //
+    // **Asserted at zero rather than ratcheted**, and the zero is over the UNDECLARED hits.
+    // Reading all twelve of the original flags found eleven that were correct design — two
+    // forms of a fact usually ask different questions, and a negative stem has true statements
+    // as its distractors by construction. A ceiling of eleven would let the twelfth real defect
+    // arrive as "no regression". So each legitimate pair is declared with its reason in
+    // `contradictions.ts`, and anything not on that list fails here.
+    const bad = undeclared(selfContradictingForms(ACTIVE));
+    expect(bad.length, `undeclared self-contradiction: ${bad.join(', ')}`).toBe(0);
+  });
+
+  it('carries no exemption for a contradiction the deck no longer produces', () => {
+    // The half that makes the list a control rather than a suppression. A form edited so its
+    // contradiction disappears leaves a declaration behind, and the next real defect on that
+    // fact could then land under a key that reads as already reviewed.
+    const dead = stale(selfContradictingForms(ACTIVE));
+    expect(dead.length, `stale declaration: ${dead.join(', ')}`).toBe(0);
   });
 
   it("never offers the fact's own canonical answer as a distractor", () => {

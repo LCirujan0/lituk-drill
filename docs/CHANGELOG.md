@@ -2,6 +2,44 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (later) — eleven of the twelve were not defects
+
+**The twelve self-contradicting forms were read, and the count was close to backwards.** L-033
+assumed most were the deck teaching its own negation. Eleven are correct design; one was real.
+
+**The real one: `f511[0]`.** It offered **"12 noon"** as a wrong answer to *"From what time do
+pubs usually open during the day?"* The handbook's sentence is *"usually open during the day from
+11.00 am (12 noon on Sundays)"* — the stem does not exclude Sunday, so a reader who had learned
+the parenthesis met their own knowledge marked wrong. Fixed by replacing the **distractor**, not
+the stem: breadth credit is keyed by form position, so rewording in place keeps credit earned on
+a sentence that no longer exists.
+
+**The other eleven split two ways.** Nine are two forms asking genuinely different questions —
+William is the heir apparent and not the 2022 monarch; 1922 is the BBC's radio year and 1936 its
+television one — where the flagged distractor is exactly the discrimination the fact exists to
+teach. Two are **negative stems**: *"which of these is NOT a UK coin?"* has true statements as its
+distractors by construction, so every one of them will be some other form's correct answer. The
+check reads strings and is structurally blind to the inversion.
+
+**Ratcheting at eleven was rejected, and that is the substance of this change.** A ceiling of
+eleven would let the twelfth real defect arrive as a count of twelve reading "no regression" —
+hidden inside the noise it was ratcheted against. So the eleven are declared one by one with
+their reasons in `src/domain/deck/contradictions.ts`, following the `divergences.ts` pattern
+D-023 established for the same shape of problem, and the build now **asserts zero in both
+directions**: nothing undeclared, and no declaration for a contradiction the deck no longer
+produces. The second half is what stops the list rotting into a suppression file.
+
+Auto-exempting negative stems was the tempting two-line version and was rejected: it would
+silently excuse a future NOT-form carrying a genuine defect, and nobody would look again.
+
+**Both assertions were run against broken code before being trusted** — reinstating "12 noon"
+fires the first, a declaration for a contradiction that does not exist fires the second.
+
+**A side effect, recorded rather than claimed:** the on-screen numeric tell moved 52.4% → 52.1%,
+because that form's answer stopped being a middle value. The ceiling was **not** tightened to
+match. This is the metric L-036 is under review for, and tightening it here would be precisely
+the move L-036 exists to flag.
+
 ## 2026-08-11 — twelve bands, and a bar that says which kind of progress (C4/C5)
 
 **Twelve bands over the 87 tags, and both cuts stay drillable.** "History" is 220 facts, so

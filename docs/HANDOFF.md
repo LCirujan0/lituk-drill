@@ -9,7 +9,7 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **309 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
+| Tests | **310 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 36 answers referred, 3 retired, 33 still to read |
@@ -17,10 +17,11 @@ restates one. A hand-copied live number drifts within a session.
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-038 (L-019 and L-020 never written — L-022) |
-| Open ledger rows | 14 open · 14 fixed-unverified · 5 verified-fixed |
-| Open Critical | 0. **Two open High — L-033** (12 self-contradicting forms remain) and **L-036** (the numeric metric, needs independent re-derivation) |
+| Open ledger rows | 13 open · 15 fixed-unverified · 5 verified-fixed |
+| Open Critical | 0. **One open High — L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
+| Self-contradiction | **0 undeclared, 0 stale — asserted, not ratcheted.** The 11 legitimate hits are declared with reasons in `deck/contradictions.ts`; anything else fails the build |
 | Ratchet source | **`ACTIVE`, not `DECK`** — quality measurements exclude retired facts (L-032). Id-space contracts stay on `DECK` |
-| On-screen numeric tell | **52.4%** over 381 forms (was 91.4%; chance 50%) · ceiling 0.526. **Calendar-date sets excluded — they ranked the day of the month (L-036)** |
+| On-screen numeric tell | **52.1%** over 381 forms (was 91.4%; chance 50%) · ceiling 0.526. **Calendar-date sets excluded — they ranked the day of the month (L-036)** |
 | Longest-option tell | **27.8%** — past its target, ceiling 0.285 (was a slack 0.39). L-003 closed |
 | Amber facts | **0** — f213 and f006 both retired, 10 Aug 2026 |
 | CI | Green — 2 required checks |
