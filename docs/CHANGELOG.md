@@ -2,6 +2,25 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (night) — the simulation reads the daily target instead of restating it
+
+**The 60-day run was hard-coded at 40 new facts a day.** `DAILY_TARGET` moved 30 → 50 on 10 August
+(D-035), and the published curve — peak 187 on day 9 — quietly stopped describing the app while
+every assertion in the file kept passing. HANDOFF had been carrying a note saying the numbers were
+stale, which is a documentation patch over a test that had stopped measuring the product.
+
+**Reading the constant is the fix**, so the next move takes the curve with it and the numbers are
+re-measured by the suite rather than by someone remembering to.
+
+**Re-run at 50: peak 242 on day 10**, means 161 / 112 / 56 / 43 across days 0–9, 10–19, 20–41,
+42–59, 4,751 reviews, 559/559 started, 551 proven on every phrasing, 469 mature. **The queue
+drains every single day**, which is asserted — so 50/day is sustainable on this deck rather than
+merely survivable.
+
+Against the 40/day run: the peak is up about 30% and lands a day later, and the first fortnight is
+the whole of the cost — days 20 onward are comparable. That is the trade D-035 accepted, now
+measured rather than predicted, and it is the number C6 has to be judged against.
+
 ## 2026-08-11 (night) — the DPIA screening re-run, and a disclosure only the owner can accept
 
 **D-034's own terms require this before any C8 code**, and it is the kind of prerequisite that

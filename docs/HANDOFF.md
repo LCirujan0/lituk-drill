@@ -27,7 +27,7 @@ restates one. A hand-copied live number drifts within a session.
 | Amber facts | **0** — f213 and f006 both retired, 10 Aug 2026 |
 | CI | Green — 2 required checks |
 | Deployed | https://lituk-drill.vercel.app |
-| Daily target | **50 facts/day**, raised from 30 on 10 Aug so a ~700-fact deck (D-035) can still be seen. **The 60-day simulation was run at 40 and is now stale** |
+| Daily target | **50 facts/day**, raised from 30 on 10 Aug so a ~700-fact deck (D-035) can still be seen. The 60-day simulation now reads `DAILY_TARGET` and was re-run at 50 on 11 Aug — peak 242 on day 10, queue drains daily |
 | Appetite expires | ~18 September 2026 · exam 25 September |
 
 ## What exists
@@ -49,11 +49,20 @@ restates one. A hand-copied live number drifts within a session.
 - CI: typecheck, eslint, token lint, tests, build, gitleaks. Same gate in
   `.githooks/pre-push`.
 
-## Simulated load — 40 new/day, 72% first-time recall, 60 days
+## Simulated load — 50 new/day, 72% first-time recall, 60 days
 
-Peak 187 on day 9 · means 133 / 79 / 47 / 41 across days 0–9, 10–19, 20–41, 42–59 ·
-410/410 facts started · 397 proven on every phrasing · 322 mature. Measured before the
-deck grew to 528; the shape holds, the absolute numbers are now optimistic.
+**Re-run 11 August at the live `DAILY_TARGET`, which the simulation now reads rather than
+restates.** Peak **242 on day 10** · means **161 / 112 / 56 / 43** across days 0–9, 10–19, 20–41,
+42–59 · 4,751 reviews total · 559/559 started · 551 proven on every phrasing · 469 mature.
+**The queue drains every single day**, asserted, so 50/day is sustainable on this deck rather than
+merely survivable.
+
+Against the 40/day run it replaces (peak 187 on day 9, means 133 / 79 / 47 / 41): the peak is up
+about 30% and lands a day later, and the first fortnight is the whole of the cost — days 20 onward
+are comparable. That is the trade D-035 accepted, and it is now measured rather than predicted.
+
+Hard-coding 40 is what let the published curve stop describing the app while every assertion kept
+passing, so the number is read from the constant now and moves with it.
 
 ## What does not exist yet
 

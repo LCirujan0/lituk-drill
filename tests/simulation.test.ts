@@ -32,6 +32,7 @@ import {
   type Grade,
 } from '@/domain/scheduler/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
+import { DAILY_TARGET } from '@/domain/drill/sections';
 
 const config = DEFAULT_CONFIG;
 const FACT_IDS = DECK.map((f) => f.id);
@@ -165,10 +166,21 @@ function simulate(opts: SimOptions): SimResult {
   return { states, reviewsPerDay, violations, totalReviews, daysQueueDidNotDrain };
 }
 
-describe('60-day simulation — 40 new facts/day, 72% first-time recall', () => {
+/**
+ * The headline run tracks `DAILY_TARGET` rather than restating it.
+ *
+ * It was hard-coded at 40. `DAILY_TARGET` moved 30 → 50 on 10 August (D-035, so a ~700-fact deck
+ * can still be seen), and the published curve — peak 187 on day 9 — silently stopped describing
+ * the app while every assertion here kept passing. HANDOFF had to carry a note saying the numbers
+ * were stale, which is a documentation patch over a test that had stopped measuring the product.
+ *
+ * Reading the constant is the fix. The next time the daily target moves, this run moves with it
+ * and its numbers are re-measured by the suite rather than by someone remembering to.
+ */
+describe(`60-day simulation — ${DAILY_TARGET} new facts/day, 72% first-time recall`, () => {
   const result = simulate({
     days: 60,
-    newPerDay: 40,
+    newPerDay: DAILY_TARGET,
     maxReviews: 300,
     firstTimeRecall: 0.72,
     mode: 'mixed',
