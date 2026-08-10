@@ -356,6 +356,151 @@ measures **negative** (Rey 2012, d = −0.30 retention, −0.48 transfer).
 - `npm run deck:vocab` read, not merely run.
 - Verbatim stability resumes the day the rewrite lands: from then, a panel's wording is fixed.
 
+### C4 — sub-categories you can drill on their own · *requested 10 Aug 2026 · within S1/S2*
+
+**Problem.** "History" is 220 facts. Drilling it means drilling all of it, so there is no way to
+work the Tudors on a day when the Tudors are the problem.
+
+**The raw material is already there, but it is the wrong size.** Measured 10 August: every fact
+carries a `tag`, and there are **87 of them** — none over 50 facts, but 37 in chapter 3 alone. The
+owner's correction, same day: *"87 tags is way too much — maybe expand from the current 5 to 10 or
+so."* Right. 87 rows is a picker, not a study aid; the point of a section is that you can decide
+to drill it, and nobody decides between 87 things.
+
+**Appetite.** Days. The cheapest item on this list and probably the most useful per hour.
+
+**Solution sketch.** Keep the 87 tags as the data. Add a **band** above them — about a dozen
+groups of roughly 30–55 facts, each a drillable section with its own counts. Chapters stay as the
+handbook's own structure (they are how the source is organised and how sourcing is cited); bands
+become the thing you drill. A first cut, summing to 533 exactly:
+
+| Band | Facts | Built from |
+|---|---|---|
+| Values and the UK | 51 | ch.1 entire, plus saints, flags, capitals, languages |
+| Early Britain, to 1485 | 53 | Prehistory, Romans, Anglo-Saxons, Vikings, Norman Conquest, Middle Ages |
+| Tudors and Stuarts, 1485–1714 | 47 | Tudors, Reformation, Civil War, Restoration, Glorious Revolution, Stuarts, Union |
+| Empire and industry, 1714–1901 | 54 | Empire, Industrial Revolution, Victorians, Inventors, Napoleonic Wars, Jacobites, Enlightenment, Slavery |
+| War and aftermath, 1914–1945 | 30 | WWI, Interwar, WWII, Suffrage |
+| Modern Britain, 1945– | 36 | Post-war, Welfare State, Modern Britain, Immigration, Ireland, Northern Ireland, Education, Politics, Europe, Devolution |
+| Sport and leisure | 37 | Sport, Leisure, Pubs, National parks |
+| Arts and culture | 51 | Music, Cinema, Literature, Comedy, Theatre, Art, Architecture, Design, Media |
+| Everyday life | 53 | Religion, Festivals, Traditions, Currency, The UK today, Landmarks, Demographics, Food |
+| Government and elections | 50 | Elections, Parliament, Government, Monarchy, Devolution, Local government, Constitution, Civil service |
+| The law and your rights | 41 | Courts, Law, Rights, Police, Driving, Tax |
+| Community and the wider world | 30 | Community, Environment, International, Europe |
+
+Twelve bands, 30–54 facts, mean 44. The mapping is one table from tag to band, checked by a test
+that every tag has exactly one band and the bands partition the deck.
+
+**Rabbit holes.** Re-tagging the deck to make prettier bands. The tags came from the handbook's own
+structure; re-cutting them is content work wearing a UI costume. Also: making bands a *third*
+navigation level on top of chapters and tags. Two levels is the budget.
+
+**No-gos.** No tag becomes a new denominator on the home screen without obeying R-12 — every
+number counts facts, and New + Mastered + Mistakes must still partition each tag exactly.
+
+**No-gos.** No band becomes a new denominator without obeying R-12 — every number counts facts, and
+New + Mastered + Mistakes must partition each band exactly. No fact belongs to two bands.
+
+**Acceptance criteria + verification.** Every tag maps to exactly one band and the bands partition
+the deck, asserted as a test so the property cannot rot as facts are added. **No band exceeds 55
+facts** — also a test, because C6 is about to add facts and bands drift silently. Measured on the
+real screen at 402×874, where twelve rows have to fit the way eleven eras now do.
+
+### C5 — the progress bar says which kind of progress · *requested 10 Aug 2026 · within R-12*
+
+**Problem.** A chapter row shows one bar. Three different states — mastered, mistakes, untouched —
+collapse into one number, so a chapter that is half mastered looks like a chapter that is half
+attempted-and-failing.
+
+**Appetite.** A day, and it should ship with C4 since both touch the same rows.
+
+**Solution sketch.** Each row shows the three-way split as percentages and as one segmented bar.
+The partition already exists and is already asserted (`standing.ts`, R-12, `counts.test.ts`), so
+this is a rendering of a number the domain already computes.
+
+**Rabbit holes.** Adding a fourth state. Three partition the deck; a fourth would not.
+
+**No-gos.** No phrasing counts (R-12). Colour must not be the only carrier of which segment is
+which — see L-004 and L-034, both open contrast findings.
+
+**Acceptance criteria + verification.** The three percentages sum to 100 for every chapter and
+every tag, asserted over generated logs; contrast measured, not eyeballed.
+
+### C6 — a full extraction sweep of the handbook · *requested 10 Aug 2026 · needs D-035*
+
+**Problem.** The owner's instruction: every name, date and location the handbook mentions is
+potentially examinable and worth a card. Today's deck is 533 facts built from an inherited bank
+plus two targeted gap-filling passes.
+
+**This amends a non-goal and cannot start without the DECISIONS entry.** The BRIEF says facts may
+be added only to fill a *measured* coverage gap (D-024's amendment). A systematic sweep is a
+different rule, and "volume feels like progress" is the exact failure the original non-goal names.
+The counter-argument is the owner's and it is good: a fact the handbook asserts and the deck never
+asks is a question that can appear on the exam and has never been drilled.
+
+**Rabbit holes.** Extracting every proper noun mechanically and generating a card per hit. That
+produces cards for "Wednesday" and for every county named in passing. The sweep needs a judgement
+of examinability, which is what makes it expensive.
+
+**No-gos.** Nothing enters that the handbook does not contain — the year gate and `deck:vocab`
+apply unchanged. Every new fact carries a `source`. Ids append only (R-4). No new fact may
+introduce a duplicate canonical question or a shared form.
+
+**Open, and the reason this is a roadmap item rather than a task:** how large the deck should get.
+533 facts at 30/day is already more than the appetite has room for, and doubling it without
+raising daily volume means each fact is seen half as often. That is a scheduling question, not a
+content one, and it is question 1 below.
+
+### C7 — mock tests, and their history · *requested 10 Aug 2026 · D-017 already decides most of it*
+
+**Problem.** No way to sit a full test, and no record of having done so.
+
+**Mostly already decided, and the request differs from the decision in one way that matters.**
+D-017 (accepted, 4 Aug) says: 24 questions on the exam's format, **drawn from forms not previously
+served**, each spent form recorded so no later mock reuses it, available on demand, score stored
+beside the model's prediction. The BRIEF's data inventory already carries readiness history.
+
+The ask is for **20 fixed, pre-built tests**. That conflicts with "not previously served", which is
+dynamic and depends on what has been drilled. Twenty fixed tests is 480 forms nailed down in
+advance, and any of them may be a form already drilled twenty times — which measures memory of the
+form rather than knowledge of the fact, the exact circularity D-017 exists to prevent.
+
+**R-7 constrains what a score may be shown as.** Mock scores are multiple-choice data. While L-002
+and L-003 are `fixed-unverified` rather than `verified-fixed`, a mock score may be **recorded and
+displayed as a score**, but must not be presented as readiness or as a probability of passing.
+
+**Acceptance criteria + verification.** Test history persists across devices on the existing event
+log; no form is spent twice; the 24 are drawn across chapters in the exam's own proportions or the
+sample is stated to be uniform — whichever, it is written down rather than emergent.
+
+### C8 — an AI layer · *requested 10 Aug 2026 · **BLOCKED: needs D-034 before any code***
+
+**Stated plainly because this project's rules require it:** this crosses three lines that are
+currently written as absolutes.
+
+1. **BRIEF non-goal:** "LLM-generated questions — Not in v1. If it ever changes, KICKOFF-APP §G
+   applies in full."
+2. **R-8 — no personal data, ever**, and no third party. An API key means review history leaves
+   the device for a service the data inventory does not list. The DPIA screening concluded UK GDPR
+   does not engage *because nothing leaves and nothing identifies anyone*; that conclusion would
+   need re-running, not assuming.
+3. **R-3 and the whole R3 risk.** A model that writes questions or explanations will produce
+   fluent, plausible, off-source content. This project has already measured that happening at
+   scale (L-029: fourteen agents invented seven years against an explicit instruction not to). A
+   generated card is the single most efficient way to drill a wrong fact to permanence.
+
+**None of that is a refusal — it is the price list.** The owner asked, and the owner sets scope.
+But the shape has to be settled before it can be specified, and "a useful AI learning layer" spans
+at least four different features with four different risk profiles: explaining a wrong answer on
+demand; generating new phrasings of an existing fact; a tutor that answers free questions about
+the material; and choosing what to drill next. The first is cheap and safe. The third leaves the
+handbook entirely. That is question 3 below.
+
+**No-gos that will hold whatever the shape:** nothing generated is ever stored into the deck
+without passing the same gates as hand-written content; no generated content is ever served as an
+*answer* without a source; and the app keeps working with no network and no key.
+
 ### C3 — the chronology, restructured · *approved 10 Aug 2026 · within S9*
 
 **Problem.** The timeline is 11 eras, 80 events and 44 figures, and it is lopsided against the

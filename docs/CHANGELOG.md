@@ -2,6 +2,46 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-10 — five new asks go on the roadmap, and two of them need a decision first
+
+The owner asked for five things at the end of the session. None were built; all are specced.
+
+**C4, drillable bands.** The ask was "break History into smaller categories, none over 50". The
+deck turned out to already carry a `tag` on every fact — **87 of them, and not one over 50**. His
+correction landed immediately: *"87 tags is way too much — maybe expand from the current 5 to 10 or
+so."* Right, and the reason is that a section exists to be *chosen*, and nobody chooses between 87
+things. So: keep the tags as data, add about a dozen bands of 30–55 facts above them. A first cut
+summing to 533 exactly is in the BRIEF.
+
+**C5, the three-way progress bar.** % mastered / % mistakes / % new per row. The partition already
+exists and is already asserted under R-12, so this is rendering rather than logic.
+
+**C7, mock tests.** Mostly already decided — D-017, accepted 4 August, specifies 24 questions drawn
+from *unseen* forms with each spent form recorded. The ask for **20 fixed pre-built tests**
+conflicts with that: 480 forms nailed down in advance, any of which may already have been drilled
+twenty times, which measures memory of the form rather than knowledge of the fact — the exact
+circularity D-017 exists to prevent. And **R-7 forbids presenting a mock score as readiness** while
+L-002 and L-003 are `fixed-unverified` rather than `verified-fixed`. Recorded and shown as a score:
+fine. Called a probability of passing: not yet.
+
+**C6, the full extraction sweep — D-035 accepted.** Every name, date and location in the handbook
+is potentially examinable, and the argument for it is his and is good: a fact the book asserts and
+the deck never asks is a question that can appear on the exam and has never been drilled. It amends
+the non-goal D-024 had already narrowed. Every gate stays. The unresolved part is not content but
+**scheduling**: 533 facts at 30 new a day already exceeds what the appetite has room for, so
+doubling the deck without raising daily volume means every fact is seen half as often — and the
+breadth gate needs two proven phrasings before an interval can grow. More facts can therefore make
+readiness *worse* while making coverage better.
+
+**C8, an AI layer — D-034 proposed, and blocked.** It crosses three things written as absolutes:
+the BRIEF's LLM non-goal, R-8 (no personal data, no third party — the DPIA screening concluded UK
+GDPR does not engage *because* nothing leaves the device), and R3. On the last: this project has
+already measured a model inventing seven years against an explicit instruction not to (L-029),
+caught only by a check that ran on the way in. A generated card is the most efficient way ever
+devised to drill a wrong fact to permanence. None of that is a refusal — it is the price list, and
+scope is the owner's. But "a useful AI learning layer" is at least four features with four
+different risk profiles, and it cannot be specified until one is picked.
+
 ## 2026-08-10 — chapter 3's options audited, and the numeric tell turns out to rank days of the month
 
 **220 facts, 660 forms, 2,640 options, read one at a time against the handbook.** Twenty agents

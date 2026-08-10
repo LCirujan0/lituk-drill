@@ -85,6 +85,22 @@ which pins the invariant a browser measurement established but cannot re-measure
 8. L-004 (the inherited amber contrast pairing), and L-034 — `--c-text-muted` on surface
    measures 3.50:1 in light mode, below AA for body text, and is live on every era blurb.
 
+## Roadmap — asked for 10 August 2026, specced in the BRIEF, not started
+
+Five requests from the owner. Full mini-specs are in `docs/BRIEF.md`; this is the order and the
+one-line reason.
+
+| | Item | Size | Status |
+|---|---|---|---|
+| **C4** | **~12 bands you can drill on their own.** The deck already carries 87 tags, none over 50 facts — but 87 is a picker, not a study aid, so they group into about a dozen bands of 30–55. A first cut summing to 533 exactly is in the BRIEF. | Days | Ready to build |
+| **C5** | **The progress bar says which kind.** Each row shows % mastered / % mistakes / % new instead of one number. The partition already exists and is already asserted (R-12), so this is rendering. Ships with C4. | A day | Ready to build |
+| **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | Needs one decision |
+| **C6** | **Full extraction sweep of the handbook** — every name, date and location. **D-035 accepted**, amending the non-goal. Blocked on one real question: 533 facts at 30/day already exceeds the appetite, so doubling the deck can make readiness *worse* while making coverage better. | Weeks | Blocked on volume |
+| **C8** | **An AI layer.** **D-034 is `proposed`, and no code may be written against it.** Crosses the LLM non-goal, R-8 (no third party) and R3. "A useful AI layer" is four features with four risk profiles — (a) explain-on-demand is cheap and safe, (d) choosing what to drill replaces a simulation-verified scheduler with one that cannot be verified. | Unknown | Blocked on shape |
+
+**C2, the explanation rewrite, is still the largest unstarted item from this session** and sits
+ahead of all of these: it needs the full distractor census, which chapters 1, 2, 4 and 5 complete.
+
 ## Gotchas
 
 - **`main` is protected and rejects direct pushes.** All required CI checks must pass, so
