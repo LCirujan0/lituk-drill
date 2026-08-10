@@ -17,6 +17,8 @@
 
 import { describe, expect, it } from 'vitest';
 
+import { stale, undeclared } from '@/domain/deck/contradictions';
+import { mixedMeridiemNumericSets, recallPromptsNeedingOptions } from '@/domain/deck/analysis';
 import { ACTIVE, ALL_FACTS, DECK, RETIRED, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
@@ -203,10 +205,49 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
   it('never offers as wrong an answer another form of the same fact marks right', () => {
     // The worst defect available: the card asserts a true thing is false, and the schedule
     // then installs that as faithfully as it installs the answer.
-    const bad = selfContradictingForms(ACTIVE);
-    expect(bad.length, `self-contradicting: ${bad.join(', ')}`).toBeLessThanOrEqual(
-      DECK_BASELINE.selfContradictingForms,
-    );
+    //
+    // **Asserted at zero rather than ratcheted**, and the zero is over the UNDECLARED hits.
+    // Reading all twelve of the original flags found eleven that were correct design — two
+    // forms of a fact usually ask different questions, and a negative stem has true statements
+    // as its distractors by construction. A ceiling of eleven would let the twelfth real defect
+    // arrive as "no regression". So each legitimate pair is declared with its reason in
+    // `contradictions.ts`, and anything not on that list fails here.
+    const bad = undeclared(selfContradictingForms(ACTIVE));
+    expect(bad.length, `undeclared self-contradiction: ${bad.join(', ')}`).toBe(0);
+  });
+
+  it('carries no exemption for a contradiction the deck no longer produces', () => {
+    // The half that makes the list a control rather than a suppression. A form edited so its
+    // contradiction disappears leaves a declaration behind, and the next real defect on that
+    // fact could then land under a key that reads as already reviewed.
+    const dead = stale(selfContradictingForms(ACTIVE));
+    expect(dead.length, `stale declaration: ${dead.join(', ')}`).toBe(0);
+  });
+
+  it('never measures a numeric set that mixes am and pm', () => {
+    // L-036's defect under a second name, found by re-deriving that row independently. "1 pm"
+    // parses to 1 and therefore ranks BELOW "11 am", which is two hours earlier — so f154[1]
+    // was recorded as "not a middle value" while a reader sees the answer third of four. The
+    // measurement was understating itself, which is the flattering direction.
+    //
+    // Asserted, not excluded: excluding would shrink the denominator again, which is the move
+    // L-036 is under review for. The options were fixed instead, and the headline did not move.
+    const bad = mixedMeridiemNumericSets(ACTIVE);
+    expect(bad, `numeric set mixing am and pm: ${bad.join(', ')}`).toEqual([]);
+  });
+
+  it('never serves a stem that needs options on screen as a free-recall prompt', () => {
+    // `mcqOnly` exists for exactly this, and 37 forms carried a dangling referent — "which of
+    // these", "which statement", "which set is correct" — while being served as recall. In
+    // recall mode the reader sees the stem alone, reveals, and self-grades; recall is the ONLY
+    // evidence D-013's recall figure accepts, so these fed noise into the one number designed
+    // to be clean. 30 were flipped at no cost to recall breadth.
+    //
+    // The EXACT SET is asserted, not a count. A count of seven would pass if one were fixed and
+    // a new one introduced the same day — the failure a bare ratchet always has.
+    expect(recallPromptsNeedingOptions(ACTIVE)).toEqual([
+      ...DECK_BASELINE.recallPromptsNeedingOptions,
+    ]);
   });
 
   it("never offers the fact's own canonical answer as a distractor", () => {

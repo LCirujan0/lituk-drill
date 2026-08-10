@@ -2,6 +2,133 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (evening) — L-036 upheld, and the same defect found under a second name
+
+**L-036 re-derived independently and upheld.** The row asks for this in unusually strong terms:
+the calendar-date exclusion was written while the numeric ratchet was failing, and fixing it is
+what turned the build green — *"a measurement change that unblocks its author's own commit
+deserves the most scrutiny available."* So it was re-derived from the definition in a standalone
+script importing nothing from `analysis.ts`, because re-running the author's own code proves
+nothing about the author's own judgement.
+
+**Three questions, all answered in the change's favour.**
+
+1. **Over-exclusion?** No. All 22 excluded sets were read individually and every one is genuinely
+   four `<day> <Month>` strings. Nothing legitimate was removed.
+2. **Would a looser rule read differently?** Yes, and worse. A rule matching a month name
+   anywhere wrongly catches `f399[2]` — *"You may drive a car from the age of 17"* — because
+   **May** is a month. The narrow leading-`<day> <Month>` test is the better rule, not merely an
+   adequate one.
+3. **Did the exclusion do the work that turned the build green?** On the on-screen figure,
+   partly — the excluded sets are middle-ranked at 63.6% against roughly 50% for generated forms.
+   That is the honest reason and it is legitimate: a day number is not a magnitude, so those
+   forms could never carry the tell. Note the opposite sign on the **stored** figure, which the
+   exclusion moves 86.35% → 87.66% — it makes that number *worse*, which is not how a
+   self-serving change behaves.
+
+The row's count is one high: 22 excluded and 381 kept, against 23 and 382. The live report agrees
+with 381. **L-036 → `verified-fixed`**, by a session that did not make the change.
+
+**The probe for other unit mismatches is what earned the re-derivation.** Clock times have
+exactly the same defect and the exclusion never covered them: "1 pm" reads as **1** and ranks
+*below* "11 am", two hours earlier. `f154[1]` offered `11 am | 9 am | 10 am | 1 pm` and was
+recorded as **not** a middle value, while a reader sees the answer third of four — the metric
+understating itself, which is the flattering direction.
+
+**And this session had made it worse a few hours earlier.** The L-033 fix replaced `f511[0]`'s
+"12 noon" with "2.00 pm", creating a third instance and moving the headline 52.4% → 52.1%. That
+0.3 points was entirely artefact. Declining to tighten the ceiling on it was the right call for
+the wrong reason.
+
+**Asserted, not excluded — that distinction is the whole finding.** Excluding these forms would
+shrink the denominator again, which is the move L-036 is under review for. The options were fixed
+instead: all three sets now sit in one half of the day, so the parsed rank and the perceived rank
+are the same number, the forms stay measured, and **the headline returned to 52.4%**. The record
+was already "not middle" and is now true rather than lucky. `mixedMeridiemNumericSets` asserts
+zero and was run against broken code first. Raised as L-039.
+
+## 2026-08-11 (later still) — the deferred list named two, the class had thirty-seven
+
+**Applying two `mcqOnly` items from `.work/apply-deferred.json` turned up a class of 37.** The
+file holds 15 entries; `mcqOnly` was the right treatment for two of them (`f206[2]`, `f355[2]`).
+Sweeping for the construction rather than fixing the two instances found **37 forms whose stem
+cannot resolve without options on screen while being served as free recall** — a dangling
+referent every time: "which of these", "which statement", "which set is correct".
+
+**This is not cosmetic.** In recall mode the reader sees the stem alone, reveals, and self-grades.
+*"Which of these took place in 1215?"* with nothing on screen is graded on whatever came to mind.
+Recall is the **only** evidence D-013's recall readiness figure accepts, so 37 forms were queued
+to feed noise into the one number designed to be clean — and it would have arrived silently the
+day S4 was built. Fixing the two named instances would have closed them and left the class, which
+is the L-034 mistake.
+
+**30 flipped at no cost.** Every one of those facts keeps at least two recall forms, so
+`factsWithNoRecallForm` and `factsBelowRecallBreadth` both held — no ceiling moved.
+
+**Seven deliberately not flipped, and this is the substance of the entry.** Flipping them buys a
+clean measurement by destroying the material it measures: f357 and f367 would be left with **no
+recall form at all**, and five more drop to one, taking `factsBelowRecallBreadth` from 6 to 10 and
+requiring its ceiling to be raised for the change to pass. **Raising a ceiling so your own commit
+goes green is precisely the move L-036 exists to flag.** They want a recall-usable form appended
+first, which is authoring work and belongs in the pass that adds forms.
+
+**The exact set is asserted, not a count** — seven would pass if one were fixed and a new one
+introduced the same day, which is the failure a bare number always has. Run against broken code
+first: un-flipping f037[2] fails it.
+
+**A defect in the deferred file itself, worth recording.** Its note on `f206[2]` says *"schedule
+keying is by Fact.id and form position, not question text, so rewording in place is safe."* That
+is true about crashes and false about the thing that matters: `ok[formIndex]` is keyed by
+position, so rewording form N keeps credit earned on a sentence that no longer exists. The BRIEF's
+C1 no-go says so in those words. Nothing here was reworded in place.
+
+**Nine entries in that file need the owner and were not applied** — see the note below.
+
+## 2026-08-11 (later) — eleven of the twelve were not defects
+
+**The twelve self-contradicting forms were read, and the count was close to backwards.** L-033
+assumed most were the deck teaching its own negation. Eleven are correct design; one was real.
+
+**The real one: `f511[0]`.** It offered **"12 noon"** as a wrong answer to *"From what time do
+pubs usually open during the day?"* The handbook's sentence is *"usually open during the day from
+11.00 am (12 noon on Sundays)"* — the stem does not exclude Sunday, so a reader who had learned
+the parenthesis met their own knowledge marked wrong. Fixed by replacing the **distractor**, not
+the stem: breadth credit is keyed by form position, so rewording in place keeps credit earned on
+a sentence that no longer exists.
+
+**The other eleven split two ways.** Nine are two forms asking genuinely different questions —
+William is the heir apparent and not the 2022 monarch; 1922 is the BBC's radio year and 1936 its
+television one — where the flagged distractor is exactly the discrimination the fact exists to
+teach. Two are **negative stems**: *"which of these is NOT a UK coin?"* has true statements as its
+distractors by construction, so every one of them will be some other form's correct answer. The
+check reads strings and is structurally blind to the inversion.
+
+**Ratcheting at eleven was rejected, and that is the substance of this change.** A ceiling of
+eleven would let the twelfth real defect arrive as a count of twelve reading "no regression" —
+hidden inside the noise it was ratcheted against. So the eleven are declared one by one with
+their reasons in `src/domain/deck/contradictions.ts`, following the `divergences.ts` pattern
+D-023 established for the same shape of problem, and the build now **asserts zero in both
+directions**: nothing undeclared, and no declaration for a contradiction the deck no longer
+produces. The second half is what stops the list rotting into a suppression file.
+
+Auto-exempting negative stems was the tempting two-line version and was rejected: it would
+silently excuse a future NOT-form carrying a genuine defect, and nobody would look again.
+
+**Both assertions were run against broken code before being trusted** — reinstating "12 noon"
+fires the first, a declaration for a contradiction that does not exist fires the second.
+
+**A side effect, recorded rather than claimed:** the on-screen numeric tell moved 52.4% → 52.1%,
+because that form's answer stopped being a middle value. The ceiling was **not** tightened to
+match. This is the metric L-036 is under review for, and tightening it here would be precisely
+the move L-036 exists to flag.
+
+> **Corrected the same day.** That 0.3 points was **entirely an artefact I introduced.** The
+> replacement distractor was "2.00 pm", which the metric's parser reads as **2** — so the answer
+> "11.00 am" ranked largest of four and stopped counting as a middle value, while a reader sees
+> 9, 10, 11, 2pm and the answer sits third. Found by the independent L-036 re-derivation an hour
+> later, fixed by moving the distractor to "8.00 am", and **the headline returned to 52.4%**.
+> Declining to tighten the ceiling was the right call for the wrong reason. Raised as L-039.
+
 ## 2026-08-11 — twelve bands, and a bar that says which kind of progress (C4/C5)
 
 **Twelve bands over the 87 tags, and both cuts stay drillable.** "History" is 220 facts, so

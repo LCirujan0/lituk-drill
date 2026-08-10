@@ -34,7 +34,7 @@ export const CHAPTER_5: readonly Fact[] = [
     },
     {
       question: "Which statement about the UK system of government is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "The UK is a constitutional monarchy",
@@ -487,7 +487,7 @@ export const CHAPTER_5: readonly Fact[] = [
     },
     {
       question: "Which statement describes the role of party whips?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "They organise party business and make sure members vote with the party",
@@ -942,7 +942,7 @@ export const CHAPTER_5: readonly Fact[] = [
     },
     {
       question: "Which statement about the Northern Ireland Assembly is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "It has 90 MLAs",
@@ -1887,7 +1887,7 @@ export const CHAPTER_5: readonly Fact[] = [
     },
     {
       question: "Which statement about magistrates in England and Wales is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "They are unpaid volunteers from the community",
@@ -2303,7 +2303,7 @@ export const CHAPTER_5: readonly Fact[] = [
     },
     {
       question: "Which statement about female genital mutilation in the UK is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "It has been illegal since 1985",

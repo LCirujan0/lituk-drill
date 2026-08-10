@@ -256,7 +256,7 @@ export const ADDITIONS: readonly Fact[] = [
     forms: [
       { question: 'What are the elected bodies governing towns and cities usually called?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Local authorities', distractors: ['Regional assemblies', 'County executives', 'Civic boards'] } },
-      { question: 'Some areas have two tiers of council. Which pair is correct?', mcqOnly: false,
+      { question: 'Some areas have two tiers of council. Which pair is correct?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'District and county councils', distractors: ['Parish and regional councils', 'Borough and national councils', 'Ward and provincial councils'] } },
       { question: 'Most large towns and cities are governed by how many local authorities?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'A single authority', distractors: ['Two separate authorities', 'Three separate authorities', 'Four separate authorities'] } },
@@ -1475,9 +1475,14 @@ export const ADDITIONS: readonly Fact[] = [
     explanation: { lead: 'The Sunday start is later than the rest of the week, and that difference is what a question is most likely to hinge on. These are customary hours rather than a legal ceiling — nothing fixes them nationally, which is why the next thing worth knowing is who actually sets them.' },
     forms: [
       { question: 'From what time do pubs in the UK usually open during the day?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '11.00 am', distractors: ['9.00 am', '10.00 am', '12 noon'] } },
+        // '12 noon' was here and had to go: the handbook's own sentence is "usually open during
+        // the day from 11.00 am (12 noon on Sundays)", and this stem does not exclude Sunday. A
+        // reader who has learned the parenthesis met their own knowledge marked wrong. The
+        // distractor changed rather than the stem — breadth credit is keyed by form position, so
+        // rewording in place would keep credit earned on a sentence that no longer exists.
+        answers: { kind: 'fixed', correct: '11.00 am', distractors: ['9.00 am', '10.00 am', '8.00 am'] } },
       { question: 'On Sundays, pubs usually open from what time?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: '12 noon', distractors: ['10.00 am', '11.00 am', '1.00 pm'] } },
+        answers: { kind: 'fixed', correct: '12 noon', distractors: ['10.00 am', '11.00 am', '9.00 am'] } },
       { question: 'How do night club hours usually compare with pub hours?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'Night clubs usually open and close later', distractors: ['Night clubs usually open and close earlier', 'Night clubs must close at the same time as pubs', 'Night clubs may not open at all on a Sunday'] } },
     ],

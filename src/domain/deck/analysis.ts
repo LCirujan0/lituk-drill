@@ -16,6 +16,7 @@
  * dangerous one and the position measurement is mostly a historical check.
  */
 
+import { stale, undeclared } from './contradictions';
 import type { Deck, Fact } from './types';
 import { fixedOptions, recallForms } from './types';
 import { achievableRanks, deriveNumericAnswers, generateOptions } from './numeric';
@@ -181,6 +182,13 @@ export const unresolvedVerifyFlags = (deck: Deck): string[] =>
  * repetition installs that as faithfully as it installs the answer — so the mechanism meant
  * to teach the fact teaches its negation instead, on a schedule.
  */
+/**
+ * The raw flag. **Eleven of its twelve original hits were correct design, not defects** — two
+ * forms of one fact routinely ask different questions, and a negative stem ("which is NOT…")
+ * has true statements as its distractors by construction. See `contradictions.ts`, which holds
+ * the read-and-signed-off list and is what makes `undeclaredSelfContradictions` assertable at
+ * zero. This function stays raw on purpose: the exemptions belong where they can be read.
+ */
 export function selfContradictingForms(deck: Deck): string[] {
   const out: string[] = [];
   for (const fact of deck) {
@@ -196,6 +204,37 @@ export function selfContradictingForms(deck: Deck): string[] {
       }
     });
   }
+  return out;
+}
+
+/**
+ * Stems that presuppose options on screen, served as free-recall prompts.
+ *
+ * `mcqOnly` exists for exactly this — "negative framings and bare 'which of these' stems are
+ * meaningless without options on screen" is `QuestionForm`'s own doc comment. **37 forms matched
+ * one of these constructions while carrying `mcqOnly: false`**, and nothing had ever checked.
+ *
+ * This is not cosmetic. In recall mode the reader is shown the stem alone, reveals the answer and
+ * self-grades — so "Which of these took place in 1215?" with nothing on screen is graded on
+ * whatever the reader happened to think of. **Recall is the only evidence D-013's recall
+ * readiness figure accepts**, so an unanswerable recall prompt does not merely annoy: it feeds
+ * noise straight into the one number that was designed to be clean.
+ *
+ * The patterns are deliberately narrow. Each is a construction with a **dangling referent** —
+ * "these", "which statement", "which set is correct" — that cannot resolve without a list in
+ * front of the reader. A stem that is merely hard is not caught, and should not be.
+ */
+export function recallPromptsNeedingOptions(deck: Deck): string[] {
+  const PATTERNS = [
+    /^which of (these|the following)\b/i,
+    /^which statement\b/i,
+    /\bis correct\?$/i,
+  ];
+  const out: string[] = [];
+  for (const fact of deck)
+    fact.forms.forEach((f, i) => {
+      if (!f.mcqOnly && PATTERNS.some((re) => re.test(f.question))) out.push(`${fact.id}[${i}]`);
+    });
   return out;
 }
 
@@ -247,6 +286,45 @@ export function repeatedDistractorsWithinFact(deck: Deck): string[] {
       for (const d of f.answers.distractors) seen.set(normalise(d), (seen.get(normalise(d)) ?? 0) + 1);
     for (const [d, n] of seen) if (n > 1) out.push(`${fact.id} "${d}" ×${n}`);
   }
+  return out;
+}
+
+/**
+ * Measured numeric sets whose leading number is not the quantity a reader perceives.
+ *
+ * **L-036's defect, surviving under a second name.** That row was about calendar dates: "8 May
+ * 1945" reads as 8, which is a day number and not a magnitude. Re-deriving it independently on
+ * 11 August found the same failure in **clock times**, and the exclusion did not cover it —
+ * "1 pm" reads as 1 and therefore ranks *below* "11 am", when it is two hours later.
+ *
+ * The direction matters and it is the flattering one. `f154[1]` offered `11 am | 9 am | 10 am |
+ * 1 pm`: the parser ranked the answer largest of four, so the form was recorded as **not** a
+ * middle value — while a reader sees 9, 10, 11, 1pm and the answer sits third of four, which is
+ * exactly the tell the metric exists to detect. The measurement was understating itself.
+ *
+ * **This is asserted rather than excluded, and that is the whole point.** Excluding these forms
+ * would shrink the denominator again, which is the move L-036 is under review for. Fixing the
+ * options instead removes the artefact and keeps the form measured: putting every option in the
+ * same half of the day makes the parsed rank and the perceived rank the same number. Applied to
+ * `f154[1]`, `f511[0]` and `f511[1]`, and **the headline did not move** — the record was already
+ * "not middle" and is now true rather than lucky.
+ *
+ * Only sets that actually ENTER the measurement are checked. `f271[2]` mixes "midday" with "1pm"
+ * and is not caught, correctly: "midday" parses to no number at all, so the form never reaches
+ * the rank calculation and carries no artefact into it.
+ */
+export function mixedMeridiemNumericSets(deck: Deck): string[] {
+  const CLOCK = /^\s*\d{1,2}([.:]\d{2})?\s*(am|pm)\b/i;
+  const out: string[] = [];
+  for (const fact of deck)
+    fact.forms.forEach((form, i) => {
+      const options = fixedOptions(form.answers);
+      // Only whole-set clock times, and only where every option yields a number — which is
+      // what "enters the measurement" means.
+      if (!options.every((o) => CLOCK.test(o))) return;
+      const meridiems = new Set(options.map((o) => (/pm\b/i.test(o) ? 'pm' : 'am')));
+      if (meridiems.size > 1) out.push(`${fact.id}[${i}]`);
+    });
   return out;
 }
 
@@ -431,7 +509,13 @@ export function analyseDeck(deck: Deck) {
     factsWithNoRecallForm: factsWithNoRecallForm(deck),
     unresolvedVerifyFlags: unresolvedVerifyFlags(deck),
     selfContradictingForms: selfContradictingForms(deck),
+    // The two that are asserted rather than ratcheted. The raw count above stays visible so
+    // the declarations can be argued with; these are what the build actually holds to zero.
+    undeclaredSelfContradictions: undeclared(selfContradictingForms(deck)),
+    staleContradictionDeclarations: stale(selfContradictingForms(deck)),
     distractorsContradictingCanonical: distractorsContradictingCanonical(deck),
+    recallPromptsNeedingOptions: recallPromptsNeedingOptions(deck),
+    mixedMeridiemNumericSets: mixedMeridiemNumericSets(deck),
     identicalOptionSetsWithinFact: identicalOptionSetsWithinFact(deck),
     repeatedDistractorsWithinFact: repeatedDistractorsWithinFact(deck),
     numericMiddleRank: numericMiddleRankRate(deck),

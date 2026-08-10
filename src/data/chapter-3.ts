@@ -328,7 +328,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these is an Iron Age hill fort in Dorset?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Maiden Castle",
@@ -756,7 +756,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which statement about the Roman occupation of Britain is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "It lasted about 400 years",
@@ -1440,7 +1440,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these took place in 1215?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "A charter limiting royal power was agreed",
@@ -1963,7 +1963,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which statement about the Black Death in England is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "About one third of the population died",
@@ -3873,7 +3873,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these events happened in 1666?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Much of London was destroyed by fire",
@@ -3911,7 +3911,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which statement about the rebuilt St Paul's Cathedral is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Sir Christopher Wren designed it",
@@ -4252,7 +4252,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these was passed in 1689?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "The Bill of Rights",
@@ -4813,7 +4813,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these events happened in 1776?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "The American colonies declared independence",
@@ -5895,7 +5895,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "11 am",
-        distractors: ["9 am", "10 am", "1 pm"],
+        distractors: ["9 am", "10 am", "8 am"],
       },
     },
     {
@@ -6014,7 +6014,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these took place in 1949?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Ireland became a republic",
@@ -6081,7 +6081,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which statement about the vote given to women in 1918 is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "It went to women over 30 who met a property qualification",
@@ -6811,7 +6811,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these was established in 1948?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "The National Health Service",
@@ -6924,7 +6924,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these took place in 1947?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Independence for India and Pakistan",
@@ -6991,7 +6991,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which statement about workers recruited to Britain after 1945 is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "They came especially from the West Indies",
@@ -7378,7 +7378,7 @@ export const CHAPTER_3: readonly Fact[] = [
     },
     {
       question: "Which of these happened in 1999?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Devolved bodies met for the first time",

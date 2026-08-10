@@ -253,7 +253,7 @@ export const CHAPTER_2: readonly Fact[] = [
     },
     {
       question: "Which of these is a Crown dependency?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "The Isle of Man",
@@ -747,7 +747,7 @@ export const CHAPTER_2: readonly Fact[] = [
     },
     {
       question: "Which explanation for the absence of a Welsh emblem on the Union Flag is correct?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Wales was already joined to England when the flag was created",
