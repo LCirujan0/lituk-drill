@@ -9,16 +9,17 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **310 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
+| Tests | **311 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 36 answers referred, 3 retired, 33 still to read |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
-| Next ledger id | L-038 (L-019 and L-020 never written — L-022) |
-| Open ledger rows | 13 open · 15 fixed-unverified · 5 verified-fixed |
-| Open Critical | 0. **One open High — L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
+| Next ledger id | L-039 (L-019 and L-020 never written — L-022) |
+| Open ledger rows | 14 open · 15 fixed-unverified · 5 verified-fixed (L-038 is new and is both) |
+| Open Critical | 0. **Two open High — L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
+| Recall prompts | **7 of 37 still need options on screen**, held deliberately: flipping them would leave two facts with no recall form and require raising a ceiling to pass. The **exact set** is asserted, not a count |
 | Self-contradiction | **0 undeclared, 0 stale — asserted, not ratcheted.** The 11 legitimate hits are declared with reasons in `deck/contradictions.ts`; anything else fails the build |
 | Ratchet source | **`ACTIVE`, not `DECK`** — quality measurements exclude retired facts (L-032). Id-space contracts stay on `DECK` |
 | On-screen numeric tell | **52.1%** over 381 forms (was 91.4%; chance 50%) · ceiling 0.526. **Calendar-date sets excluded — they ranked the day of the month (L-036)** |
@@ -71,8 +72,44 @@ which pins the invariant a browser measurement established but cannot re-measure
 2. **40 answers the audit believes are wrong**, waiting on the owner under D-031 — including
    f215, f216 and f219, whose answers (a ceremony deadline, the local authority, a certificate)
    appear nowhere in the handbook. Same class as the four retired on 10 August.
-   **31 question-level defects deferred**: rewording a stem in place falsifies breadth credit, so
-   each needs an appended replacement or an `mcqOnly` flag.
+   **The question-level defects, reconciled 11 Aug.** `.work/apply-deferred.json` holds **15
+   entries, not the 31 this line used to claim** — 31 is not reproducible from the file and was
+   probably a count of affected forms. Of the 15:
+   - **2 were `mcqOnly` fixes and are done** (`f206[2]`, `f355[2]`), inside a sweep that found the
+     class was 37 forms wide, not 2 (L-038).
+   - **4 are cosmetic rewordings** (`f277[2]`, `f300[2]`, `f336[2]`, `f551[2]`) that buy little and
+     cost a stem edit. Recommend dropping them rather than spending the no-go on them.
+   - **9 need the owner**, below.
+
+   **Nine stems the owner has to rule on, because every route to fixing them crosses a rule.**
+   These stems assert something the handbook does not contain, or ask a distinction the exam
+   cannot ask: `f284` (says Wiggins was the first *person* to win the Tour de France; the book and
+   the deck's own explanation both say first *Briton*), `f316` (a 1940 move to Hollywood and
+   *Psycho*, neither in the book), `f312` (*A Christmas Carol*, 0 hits), `f296` (*Enigma
+   Variations*, 0 hits), `f554` (asks Human Rights Act *versus* Equality Act; the book never names
+   the Equality Act), `f222[1]` (duplicates f223's stem *and* its four options), `f206[2]`'s stem
+   (now `mcqOnly`, so no longer served as recall, but still asks a five-answer question),
+   `f507[1]` (ambiguous with or without options — 16-year-olds may drink with a meal), and `f405`
+   (all three forms omit the EU/Iceland/Liechtenstein/Norway qualifier).
+
+   **There are exactly two legitimate routes and both are his**, which is why nothing was applied:
+   1. **Reword in place.** Amends the BRIEF's C1 no-go and needs a superseding DECISIONS entry.
+      The cost is real and permanent: `ok[formIndex]` is keyed by position, so the fact keeps
+      breadth credit earned on a sentence that no longer exists, and it is never re-earned because
+      it is never lost. Bounded to these facts, silent, and it lifts the interval cap on false
+      evidence.
+   2. **Retire the fact**, which is the f194/f015 precedent from 10 August — a stem carrying an
+      unsupportable claim went out whole, on his instruction. It over-corrects here: Wiggins,
+      Elgar, Dickens and Hitchcock are all genuine handbook material.
+
+   **Appending a replacement and leaving the original is NOT a third route**, and that is worth
+   stating because it looks like one. The deck has no way to retire a *form* — only facts carry
+   `retired` — so appending leaves the false stem in service beside its correction, and the reader
+   meets both. That structural gap is the reason this is a decision rather than a task.
+
+   **Recommendation: reword in place**, for the seven where the stem is off-source. An off-source
+   stem is R3, the risk this project ranks highest, and it is permanent; the falsified breadth
+   credit is bounded, affects one form each, and cannot make a fact *look* worse than it is.
 3. **Independently re-derive L-036.** The numeric-tell measurement was excluding nothing and
    ranking days of the month; it now excludes calendar-date sets. That change was made while
    the ratchet was failing and is what turned the build green, so it wants a check by someone

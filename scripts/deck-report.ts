@@ -83,6 +83,11 @@ row(
   a.staleContradictionDeclarations.join(' ') || 'an exemption for a contradiction that is gone',
 );
 row(
+  'recall prompts needing options',
+  `${a.recallPromptsNeedingOptions.length}/${DECK_BASELINE.recallPromptsNeedingOptions.length}`,
+  a.recallPromptsNeedingOptions.join(' ') || 'the EXACT set is asserted, not the count',
+);
+row(
   "distractor is the fact's own answer",
   `${a.distractorsContradictingCanonical.length}/${DECK_BASELINE.distractorsContradictingCanonical}`,
   'target 0',

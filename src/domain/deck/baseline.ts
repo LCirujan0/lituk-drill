@@ -76,6 +76,14 @@ export interface DeckBaseline {
    * original hits were correct design, so a ceiling of eleven would hide the twelfth real one
    * inside a count that reads as no regression. See `contradictions.ts`.
    */
+  /**
+   * Forms served as free-recall prompts whose stem cannot resolve without options on screen.
+   *
+   * **The exact set, not a count.** A ratchet at seven would pass if one were fixed and a new
+   * one added on the same day, which is the failure mode a bare number always has and the
+   * reason L-033's eleven are declared rather than counted.
+   */
+  readonly recallPromptsNeedingOptions: readonly string[];
   readonly undeclaredSelfContradictions: number;
   /** Declarations matching nothing the deck produces. Zero, or the exemption list is rotting. */
   readonly staleContradictionDeclarations: number;
@@ -169,6 +177,25 @@ export const DECK_BASELINE: DeckBaseline = {
   // as wrong on a stem that did not exclude Sunday, while the handbook's own sentence reads
   // "from 11.00 am (12 noon on Sundays)". The remaining 11 are declared and reasoned about in
   // `contradictions.ts`; this raw number stays here so the declarations can be counted against it.
+  // 37 forms carried a stem that cannot resolve without options — "which of these", "which
+  // statement", "which set is correct" — while being served as free recall. In recall mode the
+  // reader sees the stem alone, reveals, and self-grades, and recall is the ONLY evidence
+  // D-013's recall readiness figure accepts. So this was noise going straight into the one
+  // number designed to be clean.
+  //
+  // 30 were flipped to `mcqOnly: true` at no cost: every one of those facts keeps at least two
+  // recall forms, so neither `factsWithNoRecallForm` nor `factsBelowRecallBreadth` moved.
+  //
+  // These seven were NOT flipped, and the reason is the honest one: flipping them buys a clean
+  // measurement by destroying the material it measures. f357 and f367 would be left with no
+  // recall form at all, and the other five drop to one — which would take
+  // `factsBelowRecallBreadth` from 6 to 10 and require raising its ceiling to let the change
+  // pass. Raising a ceiling so your own commit goes green is exactly the move L-036 exists to
+  // flag. Each of these wants a recall-usable form APPENDED first, which is authoring work and
+  // belongs in the pass that adds forms (the ledger already says this of L-006/L-007/L-008).
+  recallPromptsNeedingOptions: [
+    'f224[2]', 'f230[0]', 'f230[2]', 'f357[1]', 'f367[1]', 'f414[1]', 'f480[1]',
+  ],
   selfContradictingForms: 11,
   undeclaredSelfContradictions: 0,
   staleContradictionDeclarations: 0,

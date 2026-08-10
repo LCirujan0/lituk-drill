@@ -207,6 +207,37 @@ export function selfContradictingForms(deck: Deck): string[] {
   return out;
 }
 
+/**
+ * Stems that presuppose options on screen, served as free-recall prompts.
+ *
+ * `mcqOnly` exists for exactly this — "negative framings and bare 'which of these' stems are
+ * meaningless without options on screen" is `QuestionForm`'s own doc comment. **37 forms matched
+ * one of these constructions while carrying `mcqOnly: false`**, and nothing had ever checked.
+ *
+ * This is not cosmetic. In recall mode the reader is shown the stem alone, reveals the answer and
+ * self-grades — so "Which of these took place in 1215?" with nothing on screen is graded on
+ * whatever the reader happened to think of. **Recall is the only evidence D-013's recall
+ * readiness figure accepts**, so an unanswerable recall prompt does not merely annoy: it feeds
+ * noise straight into the one number that was designed to be clean.
+ *
+ * The patterns are deliberately narrow. Each is a construction with a **dangling referent** —
+ * "these", "which statement", "which set is correct" — that cannot resolve without a list in
+ * front of the reader. A stem that is merely hard is not caught, and should not be.
+ */
+export function recallPromptsNeedingOptions(deck: Deck): string[] {
+  const PATTERNS = [
+    /^which of (these|the following)\b/i,
+    /^which statement\b/i,
+    /\bis correct\?$/i,
+  ];
+  const out: string[] = [];
+  for (const fact of deck)
+    fact.forms.forEach((f, i) => {
+      if (!f.mcqOnly && PATTERNS.some((re) => re.test(f.question))) out.push(`${fact.id}[${i}]`);
+    });
+  return out;
+}
+
 /** A distractor that is the fact's own canonical answer. The same defect, one step blunter. */
 export function distractorsContradictingCanonical(deck: Deck): string[] {
   const out: string[] = [];
@@ -444,6 +475,7 @@ export function analyseDeck(deck: Deck) {
     undeclaredSelfContradictions: undeclared(selfContradictingForms(deck)),
     staleContradictionDeclarations: stale(selfContradictingForms(deck)),
     distractorsContradictingCanonical: distractorsContradictingCanonical(deck),
+    recallPromptsNeedingOptions: recallPromptsNeedingOptions(deck),
     identicalOptionSetsWithinFact: identicalOptionSetsWithinFact(deck),
     repeatedDistractorsWithinFact: repeatedDistractorsWithinFact(deck),
     numericMiddleRank: numericMiddleRankRate(deck),

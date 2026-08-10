@@ -18,6 +18,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { stale, undeclared } from '@/domain/deck/contradictions';
+import { recallPromptsNeedingOptions } from '@/domain/deck/analysis';
 import { ACTIVE, ALL_FACTS, DECK, RETIRED, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { factId, fixedOptions, recallForms } from '@/domain/deck/types';
 import { DECK_BASELINE } from '@/domain/deck/baseline';
@@ -221,6 +222,20 @@ describe('statistics — the ratchet (see baseline.ts)', () => {
     // fact could then land under a key that reads as already reviewed.
     const dead = stale(selfContradictingForms(ACTIVE));
     expect(dead.length, `stale declaration: ${dead.join(', ')}`).toBe(0);
+  });
+
+  it('never serves a stem that needs options on screen as a free-recall prompt', () => {
+    // `mcqOnly` exists for exactly this, and 37 forms carried a dangling referent — "which of
+    // these", "which statement", "which set is correct" — while being served as recall. In
+    // recall mode the reader sees the stem alone, reveals, and self-grades; recall is the ONLY
+    // evidence D-013's recall figure accepts, so these fed noise into the one number designed
+    // to be clean. 30 were flipped at no cost to recall breadth.
+    //
+    // The EXACT SET is asserted, not a count. A count of seven would pass if one were fixed and
+    // a new one introduced the same day — the failure a bare ratchet always has.
+    expect(recallPromptsNeedingOptions(ACTIVE)).toEqual([
+      ...DECK_BASELINE.recallPromptsNeedingOptions,
+    ]);
   });
 
   it("never offers the fact's own canonical answer as a distractor", () => {

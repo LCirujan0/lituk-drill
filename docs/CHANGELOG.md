@@ -2,6 +2,43 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (later still) — the deferred list named two, the class had thirty-seven
+
+**Applying two `mcqOnly` items from `.work/apply-deferred.json` turned up a class of 37.** The
+file holds 15 entries; `mcqOnly` was the right treatment for two of them (`f206[2]`, `f355[2]`).
+Sweeping for the construction rather than fixing the two instances found **37 forms whose stem
+cannot resolve without options on screen while being served as free recall** — a dangling
+referent every time: "which of these", "which statement", "which set is correct".
+
+**This is not cosmetic.** In recall mode the reader sees the stem alone, reveals, and self-grades.
+*"Which of these took place in 1215?"* with nothing on screen is graded on whatever came to mind.
+Recall is the **only** evidence D-013's recall readiness figure accepts, so 37 forms were queued
+to feed noise into the one number designed to be clean — and it would have arrived silently the
+day S4 was built. Fixing the two named instances would have closed them and left the class, which
+is the L-034 mistake.
+
+**30 flipped at no cost.** Every one of those facts keeps at least two recall forms, so
+`factsWithNoRecallForm` and `factsBelowRecallBreadth` both held — no ceiling moved.
+
+**Seven deliberately not flipped, and this is the substance of the entry.** Flipping them buys a
+clean measurement by destroying the material it measures: f357 and f367 would be left with **no
+recall form at all**, and five more drop to one, taking `factsBelowRecallBreadth` from 6 to 10 and
+requiring its ceiling to be raised for the change to pass. **Raising a ceiling so your own commit
+goes green is precisely the move L-036 exists to flag.** They want a recall-usable form appended
+first, which is authoring work and belongs in the pass that adds forms.
+
+**The exact set is asserted, not a count** — seven would pass if one were fixed and a new one
+introduced the same day, which is the failure a bare number always has. Run against broken code
+first: un-flipping f037[2] fails it.
+
+**A defect in the deferred file itself, worth recording.** Its note on `f206[2]` says *"schedule
+keying is by Fact.id and form position, not question text, so rewording in place is safe."* That
+is true about crashes and false about the thing that matters: `ok[formIndex]` is keyed by
+position, so rewording form N keeps credit earned on a sentence that no longer exists. The BRIEF's
+C1 no-go says so in those words. Nothing here was reworded in place.
+
+**Nine entries in that file need the owner and were not applied** — see the note below.
+
 ## 2026-08-11 (later) — eleven of the twelve were not defects
 
 **The twelve self-contradicting forms were read, and the count was close to backwards.** L-033

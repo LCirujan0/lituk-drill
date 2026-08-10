@@ -792,7 +792,7 @@ export const CHAPTER_4: readonly Fact[] = [
     },
     {
       question: "Which of these is celebrated on 31 October?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Halloween",

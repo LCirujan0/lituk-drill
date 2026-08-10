@@ -72,7 +72,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these best describes democracy?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "A system in which the government is chosen by the people through elections",
@@ -139,7 +139,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these is listed among the fundamental principles of British life?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Individual liberty",
@@ -177,7 +177,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these is one of the fundamental principles of British life?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Tolerance of those with different faiths",
@@ -224,7 +224,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these is one of the fundamental principles of British life?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Participation in community life",
@@ -291,7 +291,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these is a fundamental right shared by everyone in the UK?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Freedom from unfair discrimination",
@@ -329,7 +329,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these is listed among the rights enjoyed by people in the UK?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "A right to a fair trial",
@@ -452,7 +452,7 @@ export const CHAPTER_1: readonly Fact[] = [
     },
     {
       question: "Which of these must an applicant show in order to naturalise as a British citizen?",
-      mcqOnly: false,
+      mcqOnly: true,
       answers: {
         kind: 'fixed',
         correct: "Speaking and listening at level B1",

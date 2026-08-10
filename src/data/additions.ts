@@ -256,7 +256,7 @@ export const ADDITIONS: readonly Fact[] = [
     forms: [
       { question: 'What are the elected bodies governing towns and cities usually called?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Local authorities', distractors: ['Regional assemblies', 'County executives', 'Civic boards'] } },
-      { question: 'Some areas have two tiers of council. Which pair is correct?', mcqOnly: false,
+      { question: 'Some areas have two tiers of council. Which pair is correct?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'District and county councils', distractors: ['Parish and regional councils', 'Borough and national councils', 'Ward and provincial councils'] } },
       { question: 'Most large towns and cities are governed by how many local authorities?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'A single authority', distractors: ['Two separate authorities', 'Three separate authorities', 'Four separate authorities'] } },
