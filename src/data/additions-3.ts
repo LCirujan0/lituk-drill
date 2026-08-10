@@ -314,7 +314,7 @@ export const ADDITIONS_3: readonly Fact[] = [
       { question: 'Whose deputy had Clement Attlee been during the war?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Winston Churchill', distractors: ['William Beveridge', 'Neville Chamberlain', 'David Lloyd George'] } },
       { question: 'Which of these did the Attlee government create?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'The National Health Service', distractors: ['The Bank of England', 'The Church of England', 'The Bill of Rights'] } },
+        answers: { kind: 'fixed', correct: 'The National Health Service', distractors: ['The Bank of England', 'The Education Act 1944', 'The Bill of Rights'] } },
     ],
   },
   {
@@ -350,7 +350,7 @@ export const ADDITIONS_3: readonly Fact[] = [
       { question: 'Which nationality was the poet Dylan Thomas?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Welsh', distractors: ['Scottish', 'Irish', 'English'] } },
       { question: 'Which work is by Dylan Thomas?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'Do not go gentle into that good night', distractors: ['Auld Lang Syne', 'The Planets', 'Land of Hope and Glory'] } },
+        answers: { kind: 'fixed', correct: 'Do not go gentle into that good night', distractors: ['Charlie and the Chocolate Factory', 'The Planets', 'Land of Hope and Glory'] } },
     ],
   },
 ];

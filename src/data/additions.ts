@@ -380,11 +380,11 @@ export const ADDITIONS: readonly Fact[] = [
     answer: 'The Bessemer process',
     forms: [
       { question: 'Which process allowed the mass production of steel?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'The Bessemer process', distractors: ['The Arkwright process', 'The Faraday process', 'The Watt process'] } },
+        answers: { kind: 'fixed', correct: 'The Bessemer process', distractors: ['The Arkwright process', 'The Stephenson process', 'The Watt process'] } },
       { question: 'The Bessemer process led to the growth of which two industries?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Shipbuilding and the railways', distractors: ['Textile weaving and coal mining', 'Pottery and glassmaking trades', 'Farming and food processing'] } },
       { question: 'Which development is associated with the mass production of steel?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'The Bessemer process', distractors: ['The spinning jenny', 'The steam locomotive', 'The power loom'] } },
+        answers: { kind: 'fixed', correct: 'The Bessemer process', distractors: ['The spinning jenny', 'The carding machine', 'The power loom'] } },
     ],
   },
   {
@@ -406,7 +406,7 @@ export const ADDITIONS: readonly Fact[] = [
     answer: 'Richard Arkwright',
     forms: [
       { question: 'Which industrialist improved the carding machine?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'Richard Arkwright', distractors: ['Isambard Brunel', 'George Stephenson', 'Henry Bessemer'] } },
+        answers: { kind: 'fixed', correct: 'Richard Arkwright', distractors: ['Isambard Kingdom Brunel', 'George Stephenson', 'Henry Bessemer'] } },
       { question: 'Richard Arkwright originally trained and worked in which trade?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'As a barber and wigmaker', distractors: ['As a blacksmith and farrier', 'As a carpenter and joiner', 'As a weaver and dyer'] } },
       { question: 'What is carding?', mcqOnly: false,
@@ -696,7 +696,7 @@ export const ADDITIONS: readonly Fact[] = [
     explanation: { lead: 'Schooling was reformed while the war was still being fought, ahead of the rest of the welfare state — the Beveridge Report came in 1942 and the health service not until 1948. The nickname this Act usually carries comes from the minister who steered it through, which is the other half of what questions ask.' },
     forms: [
       { question: 'Which Act introduced free secondary education in England and Wales?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'The Education Act 1944', distractors: ['The Education Act 1902', 'The Elementary Education Act 1870', 'The Welfare Reform Act 1948'] } },
+        answers: { kind: 'fixed', correct: 'The Education Act 1944', distractors: ['The Education Act 1902', 'The Elementary Education Act 1870', 'The Human Rights Act 1998'] } },
       { question: 'The Education Act often known as the Butler Act was passed in which year?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1944', distractors: ['1942', '1948', '1951'] } },
       { question: 'Which of these was introduced by the Education Act 1944?', mcqOnly: true,
@@ -936,11 +936,11 @@ export const ADDITIONS: readonly Fact[] = [
     explanation: { lead: 'Victoria’s reign of more than sixty years is when the empire reached its greatest extent, which is why the two sit in the same section of the book. Notice that Africa is qualified — large parts of it, not all — while India is not, and that asymmetry is exactly what a wrong option will flip.' },
     forms: [
       { question: 'During the Victorian period, which territories did the British Empire grow to cover?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'All of India, Australia and large parts of Africa', distractors: ['All of Brazil, Argentina and much of South America', 'All of Russia, Persia and large parts of Arabia', 'All of China, Japan and large parts of Asia'] } },
+        answers: { kind: 'fixed', correct: 'All of India, Australia and large parts of Africa', distractors: ['All of Brazil, Argentina and much of South America', 'All of Africa, India and large parts of Australia', 'All of China, Japan and large parts of Asia'] } },
       { question: 'At its Victorian height the empire included the whole of which South Asian country?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'India', distractors: ['Afghanistan', 'Thailand', 'Nepal'] } },
       { question: 'Which of these was part of the British Empire in the Victorian period?', mcqOnly: true,
-        answers: { kind: 'fixed', correct: 'Australia', distractors: ['Argentina', 'Indonesia', 'Norway'] } },
+        answers: { kind: 'fixed', correct: 'Australia', distractors: ['Argentina', 'Indonesia', 'China'] } },
     ],
   },
   {
@@ -1610,7 +1610,7 @@ export const ADDITIONS: readonly Fact[] = [
       { question: 'Which two novelists are named as prominent writers of the 1930s?', mcqOnly: false,
         answers: { kind: 'fixed', correct: 'Graham Greene and Evelyn Waugh', distractors: ['Charles Dickens and Thomas Hardy', 'Jane Austen and the Brontë sisters', 'Kingsley Amis and Ian McEwan'] } },
       { question: 'The 1930s were a time of cultural blossoming in Britain. Which writer belongs to that decade?', mcqOnly: false,
-        answers: { kind: 'fixed', correct: 'Evelyn Waugh', distractors: ['Robert Burns', 'William Blake', 'Emily Brontë'] } },
+        answers: { kind: 'fixed', correct: 'Evelyn Waugh', distractors: ['Roald Dahl', 'William Blake', 'Emily Brontë'] } },
       { question: 'Which of these writers was prominent in Britain during the 1930s?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'Graham Greene', distractors: ['Geoffrey Chaucer', 'William Wordsworth', 'Sir Walter Scott'] } },
     ],

@@ -26,6 +26,28 @@ const readNumber = (text: string): number | null => {
   return m ? Number.parseFloat(m[0]) : null;
 };
 
+const MONTH = /^\s*\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\b/i;
+
+/**
+ * A form whose four options are calendar dates has no magnitude to rank, and measuring one
+ * reports a tell that cannot exist.
+ *
+ * `readNumber` takes the first integer in the option text. For "8 May 1945" that is **8** — the
+ * day of the month. So a set like `8 May | 15 August | 11 November | 6 June` was being ranked
+ * 8/15/11/6 and scored as "the correct answer is a middle value", when the thing ranked is a
+ * day number that no reader perceives as a size and that has nothing to do with the answer.
+ *
+ * Found on 10 August 2026 while the numeric ratchet was failing, which is the worst possible
+ * moment to discover a measurement is wrong — a fix that unblocks one's own build deserves more
+ * scrutiny than one that does not. Stated plainly so it can be checked: this **removes** forms
+ * from the denominator and therefore moves the headline rate. Both figures are in the ledger
+ * under L-036, and the finding is `fixed-unverified` until someone else re-derives it.
+ *
+ * Date RANGES are deliberately not excluded. "1853-1856" reads as 1853, which genuinely is the
+ * magnitude being compared, and those forms keep their place in the measurement (L-011).
+ */
+const isCalendarDateSet = (options: readonly string[]): boolean => options.every((o) => MONTH.test(o));
+
 /**
  * A small deterministic generator, so measurements are reproducible without dragging the
  * scheduler's RNG into the deck layer (R-2). mulberry32, same algorithm, local copy.
@@ -234,6 +256,7 @@ function numericSets(deck: Deck): { correct: number; all: number[] }[] {
   for (const fact of deck) {
     for (const form of fact.forms) {
       const options = fixedOptions(form.answers);
+      if (isCalendarDateSet(options)) continue; // ranks the day of the month — see the note above
       const values = options.map((o) => {
         const m = o.replace(/,/g, '').match(/-?\d+(?:\.\d+)?/);
         return m ? Number.parseFloat(m[0]) : null;
@@ -316,6 +339,7 @@ export function effectiveNumericMiddleRankRate(
   for (const fact of deck) {
     for (const form of fact.forms) {
       const options = fixedOptions(form.answers);
+      if (isCalendarDateSet(options)) continue; // ranks the day of the month — see the note above
       const values = options.map(readNumber);
       if (values.some((v) => v === null)) continue;
       const nums = values as number[];

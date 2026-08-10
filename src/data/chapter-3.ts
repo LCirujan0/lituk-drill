@@ -66,7 +66,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Hunter-gatherers",
-        distractors: ["Metal traders", "Cattle herders", "Crop farmers"],
+        distractors: ["Metal traders", "Cattle herders", "Bronze metalworkers"],
       },
     },
     {
@@ -188,7 +188,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The best-preserved prehistoric village in northern Europe",
-        distractors: ["A Viking trading port rebuilt in stone", "The first stone cathedral raised in Scotland", "Britain's biggest Bronze Age burial mound"],
+        distractors: ["The oldest stone circle to survive in northern Europe", "The largest Stone Age burial mound found in Britain", "The best preserved Stone Age hill fort in Scotland"],
       },
     },
     ],
@@ -303,7 +303,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "People in Britain learned to make bronze about 4,000 years ago",
-        distractors: ["Bronze was first made in Britain about 1,000 years ago", "Bronze-making began in Britain about 500 years ago", "Bronze was first made in Britain about 200 years ago"],
+        distractors: ["People in Britain learned to make bronze about 10,000 years ago", "People in Britain learned to make bronze about 6,000 years ago", "People in Britain learned to make bronze about 5,000 years ago"],
       },
     },
     ],
@@ -437,7 +437,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "AD 43",
-        distractors: ["AD 122", "AD 410", "AD 61"],
+        distractors: ["AD 600", "AD 410", "AD 789"],
       },
     },
     {
@@ -446,7 +446,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "AD 43",
-        distractors: ["AD 27", "AD 61", "AD 122"],
+        distractors: ["AD 789", "AD 410", "AD 600"],
       },
     },
     {
@@ -704,7 +704,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "AD 410",
-        distractors: ["AD 43", "AD 122", "AD 597"],
+        distractors: ["AD 43", "AD 600", "AD 789"],
       },
     },
     {
@@ -751,7 +751,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "About 400 years",
-        distractors: ["About 150 years", "About 250 years", "About 700 years"],
+        distractors: ["About 100 years", "About 600 years", "About 1,000 years"],
       },
     },
     {
@@ -789,7 +789,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Jutes, Angles and Saxons",
-        distractors: ["Vikings, Danes and Norsemen", "Picts, Scots and Gaels", "Franks, Goths and Vandals"],
+        distractors: ["Gauls, Goths and Huns", "Picts, Scots and Gaels", "Franks, Goths and Vandals"],
       },
     },
     {
@@ -874,7 +874,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Suffolk",
-        distractors: ["Norfolk", "Kent", "Essex"],
+        distractors: ["Wiltshire", "Dorset", "Essex"],
       },
     },
     ],
@@ -1169,7 +1169,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Kenneth MacAlpin",
-        distractors: ["Macbeth", "Malcolm Canmore", "Robert the Bruce"],
+        distractors: ["Alfred the Great", "Robert the Bruce", "Cnut (Canute)"],
       },
     },
     {
@@ -1178,7 +1178,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Uniting the Pictish and Scottish kingdoms against the Vikings",
-        distractors: ["Defeating the Normans in battle", "Signing Magna Carta", "Founding the Church of England"],
+        distractors: ["Defeating the Vikings and uniting the Anglo-Saxon kingdoms of England", "Defeating the English at the Battle of Bannockburn", "Becoming the first Danish king to rule England"],
       },
     },
     ],
@@ -1198,7 +1198,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Cnut (Canute)",
-        distractors: ["Harold", "Sweyn Forkbeard", "Alfred"],
+        distractors: ["Harold", "William the Conqueror", "Alfred"],
       },
     },
     {
@@ -1587,7 +1587,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Pale",
-        distractors: ["The March", "The Marches", "The Danelaw"],
+        distractors: ["The Marches", "The Danelaw", "The Ulster Plantation"],
       },
     },
     {
@@ -1616,7 +1616,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1284",
-        distractors: ["1215", "1314", "1337"],
+        distractors: ["1215", "1314", "1415"],
       },
     },
     {
@@ -1672,7 +1672,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Statute of Rhuddlan",
-        distractors: ["The Statute of Westminster", "The Statute of Labourers", "The Statute of Winchester"],
+        distractors: ["The Act for the Government of Wales", "The Act of Union", "The Habeas Corpus Act"],
       },
     },
     ],
@@ -1853,7 +1853,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1415",
-        distractors: ["1471", "1381", "1453"],
+        distractors: ["1066", "1284", "1348"],
       },
     },
     {
@@ -2090,7 +2090,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A white rose",
-        distractors: ["A red dragon", "A golden lion", "A white lily"],
+        distractors: ["A red dragon", "A red rose", "A white lily"],
       },
     },
     ],
@@ -2385,7 +2385,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "six",
-        distractors: ["three", "four", "five"],
+        distractors: ["seven", "two", "five"],
       },
     },
     {
@@ -2508,7 +2508,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Anne Boleyn",
-        distractors: ["Catherine Howard", "Elizabeth Blount", "Catherine Parr"],
+        distractors: ["Catherine Howard", "Anne of Cleves", "Catherine Parr"],
       },
     },
     ],
@@ -2546,7 +2546,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "gave birth to his son Edward",
-        distractors: ["led a rebellion in the north", "outlived him", "was the mother of Elizabeth I"],
+        distractors: ["was a German princess", "outlived him", "was the mother of Elizabeth I"],
       },
     },
     ],
@@ -2613,7 +2613,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Catherine Howard",
-        distractors: ["Jane Seymour", "Anne of Cleves", "Anne Boleyn"],
+        distractors: ["Jane Seymour", "Anne of Cleves", "Catherine of Aragon"],
       },
     },
     {
@@ -2660,7 +2660,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Catherine Parr",
-        distractors: ["Elizabeth Blount", "Anne Boleyn", "Anne of Cleves"],
+        distractors: ["Catherine Howard", "Anne Boleyn", "Anne of Cleves"],
       },
     },
     ],
@@ -2756,7 +2756,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Church of England",
-        distractors: ["The Church of Scotland", "The Presbyterian Kirk", "The Anglican Church of Rome"],
+        distractors: ["The Church of Scotland", "The Presbyterian Kirk", "The Roman Catholic Church"],
       },
     },
     {
@@ -2928,7 +2928,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Book of Common Prayer",
-        distractors: ["The Act of Supremacy", "The Great Bible", "The Book of Homilies"],
+        distractors: ["The Authorised Version of the Bible", "The Great Bible", "The Book of Homilies"],
       },
     },
     ],
@@ -2957,7 +2957,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Bloody Mary",
-        distractors: ["Black Mary", "Mary the Cruel", "Mary the Devout"],
+        distractors: ["Mary the Faithful", "Mary the Cruel", "Mary the Devout"],
       },
     },
     {
@@ -3118,7 +3118,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Spanish Armada was defeated",
-        distractors: ["The first colony in Virginia failed", "Elizabeth I came to the throne", "Mary Queen of Scots was executed"],
+        distractors: ["Scotland abolished the authority of the Pope", "Elizabeth I came to the throne", "Mary Queen of Scots was executed"],
       },
     },
     ],
@@ -3147,7 +3147,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "William Shakespeare",
-        distractors: ["Christopher Marlowe", "Ben Jonson", "John Donne"],
+        distractors: ["Geoffrey Chaucer", "Robert Burns", "Harold Pinter"],
       },
     },
     {
@@ -3176,7 +3176,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1560",
-        distractors: ["1534", "1587", "1603"],
+        distractors: ["1485", "1588", "1603"],
       },
     },
     {
@@ -3194,7 +3194,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1560",
-        distractors: ["1534", "1587", "1603"],
+        distractors: ["1588", "1605", "1642"],
       },
     },
     ],
@@ -3346,7 +3346,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1603",
-        distractors: ["1587", "1625", "1649"],
+        distractors: ["1560", "1588", "1649"],
       },
     },
     ],
@@ -3404,7 +3404,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1605",
-        distractors: ["1603", "1611", "1649"],
+        distractors: ["1603", "1640", "1649"],
       },
     },
     {
@@ -3459,7 +3459,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "He guarded the explosives beneath Parliament",
-        distractors: ["He led the plotters from the start", "He warned the King by letter", "He financed the plot from abroad"],
+        distractors: ["He led a Protestant plot against a Catholic king", "He warned the King by letter", "He financed the plot from abroad"],
       },
     },
     ],
@@ -3574,7 +3574,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The king's supporters were called Cavaliers",
-        distractors: ["Parliament's supporters were called Cavaliers", "The king's supporters were called Roundheads", "Both sides were known as Cavaliers"],
+        distractors: ["Parliament's supporters were called Cavaliers", "The king's supporters were called Roundheads", "The king's supporters were called Puritans"],
       },
     },
     ],
@@ -3612,7 +3612,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Roundheads",
-        distractors: ["Cavaliers", "Whigs", "Jacobites"],
+        distractors: ["Cavaliers", "Tories", "Chartists"],
       },
     },
     ],
@@ -3792,7 +3792,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Charles II returned and the monarchy was restored",
-        distractors: ["Charles I was executed", "The Civil War began", "Parliament was abolished"],
+        distractors: ["Charles I was executed and England became a republic", "Civil war broke out between king and Parliament", "Cromwell was given the title of Lord Protector"],
       },
     },
     {
@@ -3897,7 +3897,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Christopher Wren",
-        distractors: ["Inigo Jones", "Robert Adam", "Nicholas Hawksmoor"],
+        distractors: ["Inigo Jones", "Robert Adam", "Sir Edwin Lutyens"],
       },
     },
     {
@@ -3915,7 +3915,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Christopher Wren designed it",
-        distractors: ["Inigo Jones designed it", "Robert Adam designed it", "Nicholas Hawksmoor designed it"],
+        distractors: ["Samuel Pepys designed it", "Robert Adam designed it", "It was designed before the fire destroyed the old cathedral"],
       },
     },
     ],
@@ -4171,7 +4171,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "James II",
-        distractors: ["Charles II", "James I", "Charles I"],
+        distractors: ["Charles I", "George I", "James I"],
       },
     },
     {
@@ -4180,7 +4180,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "James II",
-        distractors: ["William III", "George I", "Richard III"],
+        distractors: ["William III", "George I", "Charles I"],
       },
     },
     ],
@@ -4218,7 +4218,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1690",
-        distractors: ["1688", "1689", "1707"],
+        distractors: ["1660", "1685", "1689"],
       },
     },
     ],
@@ -4332,7 +4332,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Kingdom of Great Britain",
-        distractors: ["The Realm of Greater England", "The Union of the Crowns", "The British Republic"],
+        distractors: ["The United Kingdom of Great Britain and Ireland", "The Union of the Crowns", "The British Republic"],
       },
     },
     ],
@@ -4399,7 +4399,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1745",
-        distractors: ["1707", "1715", "1746"],
+        distractors: ["1714", "1721", "1746"],
       },
     },
     {
@@ -4428,7 +4428,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Charles Edward Stuart",
-        distractors: ["James Francis Stuart", "Charles James Stuart", "Edward Charles Hanover"],
+        distractors: ["James Francis Stuart", "Charles James Stuart", "Charles Francis Stuart"],
       },
     },
     {
@@ -4522,7 +4522,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1721",
-        distractors: ["1707", "1742", "1745"],
+        distractors: ["1714", "1742", "1746"],
       },
     },
     ],
@@ -4598,7 +4598,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "David Hume",
-        distractors: ["Isaac Newton", "Joseph Black", "Richard Arkwright"],
+        distractors: ["Isaac Newton", "Adam Smith", "Richard Arkwright"],
       },
     },
     ],
@@ -4674,7 +4674,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Improving the carding machine and running efficient factories",
-        distractors: ["Inventing the steam engine", "Building the Great Western Railway", "Writing The Wealth of Nations"],
+        distractors: ["Pioneering the railway engine and expanding the railway network", "Building the Great Western Railway from London to Wales", "Developing the process for the mass production of steel"],
       },
     },
     ],
@@ -4712,7 +4712,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Isambard Kingdom Brunel",
-        distractors: ["James Watt", "Thomas Telford", "George Stephenson"],
+        distractors: ["George Stephenson", "Robert Stephenson", "Richard Arkwright"],
       },
     },
     ],
@@ -4826,7 +4826,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1776",
-        distractors: ["1763", "1783", "1801"],
+        distractors: ["1783", "1789", "1807"],
       },
     },
     ],
@@ -4969,7 +4969,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Admiral Nelson",
-        distractors: ["Admiral Collingwood", "Admiral Howe", "Admiral Rodney"],
+        distractors: ["Admiral Collingwood", "Sir Francis Drake", "Admiral Rodney"],
       },
     },
     {
@@ -5016,7 +5016,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "HMS Victory",
-        distractors: ["HMS Royal Sovereign", "HMS Temeraire", "HMS Bellerophon"],
+        distractors: ["HMS Royal Sovereign", "HMS Temeraire", "The Golden Hind"],
       },
     },
     ],
@@ -5121,7 +5121,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1807",
-        distractors: ["1772", "1833", "1801"],
+        distractors: ["1776", "1833", "1801"],
       },
     },
     {
@@ -5206,7 +5206,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "William Wilberforce",
-        distractors: ["Isambard Brunel", "Emmeline Pankhurst", "Elizabeth Fry"],
+        distractors: ["Isambard Brunel", "Emmeline Pankhurst", "Charles Stuart Parnell"],
       },
     },
     ],
@@ -5226,7 +5226,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1832",
-        distractors: ["1801", "1815", "1867"],
+        distractors: ["1801", "1815", "1846"],
       },
     },
     {
@@ -5378,7 +5378,12 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "More than 400 million",
-        distractors: ["About 100 million", "About 1 billion", "About 250 million"],
+        // One shape across all four, so the form carries a generation rule (D-014) instead of
+        // being served exactly as written. The three "About …" options could not: mixed with a
+        // "More than …" answer they share no template, so the rule is refused and the form
+        // joins the 56 that keep their authored options — the set whose middle-value rate is
+        // ~68% and which is the entire residual between the deck's 52.9% and chance (L-011).
+        distractors: ["More than 950 million", "More than 700 million", "More than 550 million"],
       },
     },
     {
@@ -5387,7 +5392,14 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "More than 400 million",
-        distractors: ["More than 800 million", "More than 250 million", "More than 100 million"],
+        // All three sit ABOVE 400, so all three are false. "More than 250 million" was not:
+        // if the answer is more than 400 million it is also more than 250, so the deck was
+        // offering two true options and marking one wrong. The audit caught the same defect in
+        // "More than 100 million" and fixed it with "Fewer than 100 million" — which is false,
+        // but broke the shared "More than {v} million" template and so killed the form's
+        // generation rule (D-014), dropping it into the as-written set whose middle-value rate
+        // is ~68%. One form, and it pushed the whole deck's on-screen tell past its ceiling.
+        distractors: ["More than 800 million", "More than 600 million", "More than 500 million"],
       },
     },
     {
@@ -5396,7 +5408,10 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Over 400 million",
-        distractors: ["Around 50 million", "Under 200 million", "Around 1 billion"],
+        // Same reasoning as the two forms above, with "Over" as the shared word. "Around 50",
+        // "Under 200" and "Around 1 billion" were three different shapes, which is precisely
+        // what makes a form unable to carry a rule.
+        distractors: ["Over 900 million", "Over 750 million", "Over 600 million"],
       },
     },
     ],
@@ -5434,7 +5449,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1851",
-        distractors: ["1832", "1837", "1862"],
+        distractors: ["1832", "1837", "1846"],
       },
     },
     ],
@@ -5851,7 +5866,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "11 November 1918",
-        distractors: ["3 September 1939", "4 August 1914", "8 May 1945"],
+        distractors: ["3 September 1939", "28 June 1914", "8 May 1945"],
       },
     },
     ],
@@ -5927,7 +5942,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1916",
-        distractors: ["1912", "1914", "1922"],
+        distractors: ["1913", "1914", "1922"],
       },
     },
     ],
@@ -5947,7 +5962,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1922",
-        distractors: ["1916", "1919", "1949"],
+        distractors: ["1916", "1921", "1949"],
       },
     },
     {
@@ -6003,7 +6018,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Ireland became a republic",
-        distractors: ["Ireland joined the Commonwealth", "The Irish Free State was created", "Ireland was partitioned"],
+        distractors: ["Ireland joined the Commonwealth", "The Irish Free State was created", "The Northern Ireland Parliament was abolished"],
       },
     },
     ],
@@ -6032,7 +6047,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1918",
-        distractors: ["1903", "1914", "1928"],
+        distractors: ["1928", "1889", "1870"],
       },
     },
     {
@@ -6146,7 +6161,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "21",
-        distractors: ["30", "18", "25"],
+        distractors: ["30", "18", "22"],
       },
     },
     {
@@ -6184,7 +6199,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Emmeline Pankhurst",
-        distractors: ["Millicent Fawcett", "Emily Davison", "Annie Besant"],
+        distractors: ["Millicent Fawcett", "Emily Davison", "Florence Nightingale"],
       },
     },
     {
@@ -6193,7 +6208,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Founding the Women's Franchise League and leading the militant suffragettes",
-        distractors: ["Becoming the first woman to sit as an MP", "Founding the first women's trade union", "Leading the peaceful suffragist societies"],
+        distractors: ["Founding the Nightingale Training School and reforming nursing", "Becoming the first woman in Britain to be elected as an MP", "Leading the peaceful suffragist societies that rejected civil disobedience"],
       },
     },
     ],
@@ -6261,7 +6276,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1928",
-        distractors: ["1935", "1945", "1918"],
+        distractors: ["1918", "1948", "1955"],
       },
     },
     {
@@ -6345,7 +6360,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "3 September 1939",
-        distractors: ["1 September 1939", "8 May 1939", "10 May 1940"],
+        distractors: ["1 September 1939", "10 May 1940", "6 June 1944"],
       },
     },
     ],
@@ -6412,7 +6427,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1940",
-        distractors: ["1944", "1939", "1941"],
+        distractors: ["1939", "1941", "1945"],
       },
     },
     {
@@ -6516,7 +6531,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Blitz",
-        distractors: ["The Siege", "The Firestorm", "The Long Raid"],
+        distractors: ["The Battle of Britain", "The Blackout", "The Home Front"],
       },
     },
     {
@@ -6534,7 +6549,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The Blitz",
-        distractors: ["The Long Raid", "The Siege", "The Firestorm"],
+        distractors: ["The Battle of Britain", "The Evacuation", "The Blackout"],
       },
     },
     ],
@@ -6762,7 +6777,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Clement Attlee",
-        distractors: ["Anthony Eden", "Stanley Baldwin", "Ramsay MacDonald"],
+        distractors: ["Winston Churchill", "Harold Macmillan", "Aneurin Bevan"],
       },
     },
     ],
@@ -6820,7 +6835,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Aneurin Bevan",
-        distractors: ["William Beveridge", "Clement Attlee", "Herbert Morrison"],
+        distractors: ["William Beveridge", "Clement Attlee", "R A Butler"],
       },
     },
     {
@@ -6838,7 +6853,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Aneurin Bevan",
-        distractors: ["Clement Attlee", "William Beveridge", "Herbert Morrison"],
+        distractors: ["Harold Macmillan", "Winston Churchill", "William Beveridge"],
       },
     },
     ],
@@ -6951,7 +6966,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1948",
-        distractors: ["1945", "1952", "1962"],
+        distractors: ["1947", "1951", "1957"],
       },
     },
     ],
@@ -7426,7 +7441,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Robert Watson-Watt",
-        distractors: ["Sir Frank Whittle", "Sir Christopher Cockerell", "Sir Barnes Wallis"],
+        distractors: ["Sir Frank Whittle", "Sir Christopher Cockerell", "Sir Bernard Lovell"],
       },
     },
     {
@@ -7444,7 +7459,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Robert Watson-Watt",
-        distractors: ["Sir Frank Whittle", "Sir Barnes Wallis", "Sir Christopher Cockerell"],
+        distractors: ["John Logie Baird", "Alan Turing", "Alexander Fleming"],
       },
     },
     ],
@@ -7473,7 +7488,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Sir Frank Whittle",
-        distractors: ["John Logie Baird", "Sir Christopher Cockerell", "Sir Robert Watson-Watt"],
+        distractors: ["Sir Bernard Lovell", "Alan Turing", "Ernest Rutherford"],
       },
     },
     {
@@ -7549,7 +7564,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "Dolly the sheep",
-        distractors: ["Flossie the cow", "Bess the goat", "Alba the rabbit"],
+        distractors: ["Dolly the goat", "Dolly the cow", "Molly the sheep"],
       },
     },
     {
@@ -7558,7 +7573,7 @@ export const CHAPTER_3: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "1996",
-        distractors: ["1978", "1990", "2003"],
+        distractors: ["1976", "1998", "1999"],
       },
     },
     ],

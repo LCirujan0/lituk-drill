@@ -122,7 +122,11 @@ export const DECK_BASELINE: DeckBaseline = {
   // actual figure (0.312), which is a ratchet that cannot catch anything: two hundred forms
   // could have regressed without failing a build. Found by reading the report against the
   // baseline rather than by any check — the ratchet had no ratchet.
-  longestOptionCorrectRate: 0.315,
+  // Tightened 0.315 -> 0.30 on 10 Aug 2026: the chapter-3 audit brought the deck to 0.299 and
+  // it has therefore REACHED ITS TARGET, so the ceiling comes down in the same commit or the
+  // ratchet is decoration. This is L-003 closed. Chance is 0.25 and the remaining four points
+  // are the honest cost of writing a precise answer next to three shorter wrong ones.
+  longestOptionCorrectRate: 0.3,
   // Was 12, then 1. Eleven resolved against the handbook on 4 August 2026 — eight confirmed
   // correct, three corrected (see divergences.ts). The last, f213, was the KoLL age exemption:
   // a Home Office rule that does not appear in the handbook at all, so this source could never
@@ -151,10 +155,13 @@ export const DECK_BASELINE: DeckBaseline = {
   distractorsContradictingCanonical: 2,
   // 90 facts whose two forms present the identical four options. The breadth gate counts those
   // as two proven phrasings; a reader who recognises the option set never reads the stem.
-  identicalOptionSetsWithinFact: 90,
+  // 90 -> 63 in the chapter-3 audit. Every one closed was a second phrasing that presented the
+  // identical four options, so the breadth gate was counting it as a proven phrasing while a
+  // reader who recognised the option set never had to read the stem.
+  identicalOptionSetsWithinFact: 63,
   // 614 repeated distractor strings across 288 facts. The largest number here and the smallest
   // defect — nothing is wrong, the pool of lures a reader ever meets is just smaller than it looks.
-  repeatedDistractorsWithinFact: 614,
+  repeatedDistractorsWithinFact: 575,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */

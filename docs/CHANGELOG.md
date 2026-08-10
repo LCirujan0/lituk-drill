@@ -2,6 +2,45 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-10 — chapter 3's options audited, and the numeric tell turns out to rank days of the month
+
+**220 facts, 660 forms, 2,640 options, read one at a time against the handbook.** Twenty agents
+audited, and every proposed change went to a second agent briefed to *refute* it. That pass
+killed **68 of 191** — a third — on grounds like "the replacement risks accidental truth", "the
+fix does not do what it claims" and "the auditor's own confidence is low and it should be". One
+refuter corrected its own auditor's arithmetic; another spotted that a fix was a stem edit and
+had to go through the append path rather than land in place.
+
+**87 distractors rewritten.** The best catches were the ones no mechanical check could reach:
+`AD 122` and `AD 597` were still circulating as distractors on live cards **after the two facts
+that asserted them were retired that same morning** for being unanswerable. And f141 offered
+"More than 250 million" as a wrong answer to a question whose answer is "More than 400 million" —
+which is *also* more than 250 million, so the card marked a true statement false.
+
+What moved: **longest-option tell 30.9% → 29.9%, reaching its target**, so its ceiling comes down
+0.315 → 0.30 in the same commit and **L-003 closes**. Identical option sets within a fact
+90 → 63. Repeated distractors 614 → 575. Twelve answers the audit believes are wrong went to the
+owner rather than landing, under D-031.
+
+**Then the numeric ratchet went red, and chasing it found a worse problem than the one it was
+guarding.** `readNumber` takes the first integer in an option, so "8 May 1945" reads as **8** —
+the day of the month. A form offering `8 May | 15 August | 11 November | 6 June` was being ranked
+8/15/11/6 and scored as "the correct answer is a middle value". Twenty-three of the deck's 405
+measured numeric forms were calendar dates, and they were the biggest block in the residual that
+this metric exists to track — **the metric that gates R-7 and the entire readiness model**.
+
+Excluding them takes the deck from **0.5305 to 0.5249** on 382 forms instead of 405. Both numbers
+are recorded, because this fix was found while the ratchet was blocking a commit and fixing it is
+what turned the build green. That is the highest-scrutiny move available and it is logged as
+L-036 `fixed-unverified`, needing someone who did not make it to re-derive it. On the corrected
+definition the pre-audit deck also measured 0.5249, so **the audit is neutral on this metric, not
+an improvement** — said plainly rather than left to be inferred from a green tick.
+
+Along the way, two smaller things the ratchet surfaced: an agent's fix broke f141's shared
+`More than {v} million` template and so silently cost the form its generation rule, dropping it
+into the as-written set; and f011 mixed `AD {v}` with `{v} BC`, which cannot share a template at
+all. One form losing its rule was enough to move the deck-wide figure.
+
 ## 2026-08-10 — four questions the handbook cannot answer, and a ratchet that measured the wrong deck
 
 **Four facts retired, on the owner's instruction, without further adjudication.** Each had been
