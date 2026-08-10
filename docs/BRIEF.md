@@ -386,7 +386,11 @@ static reference, which is what keeps it inside S9 and out of DECISIONS.
 - The vocabulary year check **extended over `timeline.ts`** — it currently reads explanations
   only, which is exactly how six facts with unanswerable years survived a full sourcing pass
   (L-031) and how f194 kept 1924 in its own stem until 10 August.
-- Measured at 402×874, not eyeballed: collapsed, the whole arc still fits one screen.
+- Measured at 402×874, not eyeballed. **Result: 1.43 screens collapsed, not one** — 99px per
+  era, 1,093px of arc. First measurement was 2,574px (three screens) because the rewritten
+  summaries run to two sentences; clamping the collapsed blurb to two lines closed most of it.
+  The one-screen target was an estimate that had never been checked against a browser, and it
+  is recorded as missed rather than quietly restated.
 - Keyboard and screen-reader behaviour preserved — asserted, since `<details>` is load-bearing.
 
 ### S7 — question forms that resist memorisation · *approved 4 Aug 2026, built*

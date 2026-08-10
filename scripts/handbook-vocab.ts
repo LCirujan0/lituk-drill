@@ -41,7 +41,25 @@ try {
 
 const text = normalise(raw);
 
-const years = [...new Set(text.match(/\b(?:1\d{3}|20\d{2})\b/g) ?? [])].sort();
+/**
+ * Bounded by DIGITS, not by word boundaries, and the difference is eleven years.
+ *
+ * `\b` sits between a word character and a non-word character. A year followed by a letter has
+ * no boundary after it, so `\b` never fires — and the handbook is full of exactly that:
+ *
+ *   `1920s`  `1830s`  `1700s`  `1960s`   nine decade forms, the `s` glued to the digits
+ *   `2005Just under 60 million`          the population table, extracted with no column gap
+ *
+ * Both were invisible. `1920` in particular is the Baird case this whole check exists for —
+ * the handbook says television was demonstrated "in the 1920s", so an explanation writing that
+ * was flagged for inventing a year the book contains.
+ *
+ * L-030 raised the population-table half and was closed `verified-fixed`, but the fix is not in
+ * this file: both sides were still `\b` on 10 August 2026, and the decade forms were never in
+ * the finding at all. Re-derived here, and the ratchet is that `deck:vocab` must be re-run and
+ * this file regenerated together — the scanner in `vocabulary.ts` uses the same rule.
+ */
+const years = [...new Set(text.match(/(?<!\d)(?:1\d{3}|20\d{2})(?!\d)/g) ?? [])].sort();
 
 /**
  * Years written the ancient way — `AD 43`, `55 BC`.

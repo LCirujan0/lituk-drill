@@ -58,7 +58,13 @@ export function tokenHash(value: string): string {
 export const normalise = (text: string): string =>
   text.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/–|—/g, '-');
 
-const YEAR = /\b(?:1\d{3}|20\d{2})\b/g;
+/**
+ * Bounded by DIGITS, not word boundaries — the same rule the builder uses, and it must stay
+ * the same rule. `\b` does not fire between `1920` and the `s` of "the 1920s", nor between
+ * `2005` and the `Just` the population table glues to it, so eleven handbook years were
+ * invisible to both sides of this check until 10 August 2026 (L-030, reopened).
+ */
+const YEAR = /(?<!\d)(?:1\d{3}|20\d{2})(?!\d)/g;
 /**
  * Ancient-era years. Added after the four-digit rule missed one: `AD 122` for the start of
  * Hadrian's Wall is not in the handbook — the book says only that Hadrian built a wall — and
@@ -180,6 +186,33 @@ export const explanationText = (explanation: Explanation): string =>
   ]
     .filter(Boolean)
     .join(' ');
+
+/**
+ * The same scan over any body of authored text, keyed by whatever names each piece.
+ *
+ * It exists because this check has only ever read explanations, and that gap has now cost the
+ * project twice. Six facts asked for a year the handbook never gives and survived an entire
+ * sourcing pass (L-031); f194 carried "1924" inside its own canonical question stem until
+ * 10 August, which is the exact Baird defect this file was written for, sitting in the one
+ * place the check could not see. A rule enforced over one slot of the data is not enforced.
+ *
+ * The chronology is the next such gap: 80 events and 44 figures of hand-written prose, every
+ * one of them a place an invented date could live, none of it ever scanned.
+ */
+export interface TextFinding extends VocabularyFlags {
+  readonly id: string;
+}
+
+export function scanCorpus(
+  entries: readonly { readonly id: string; readonly text: string }[],
+): readonly TextFinding[] {
+  const findings: TextFinding[] = [];
+  for (const { id, text } of entries) {
+    const flags = scanText(text);
+    if (flags.years.length || flags.names.length) findings.push({ id, ...flags });
+  }
+  return findings;
+}
 
 /** Totals, for the ratchet and for the top of the report. */
 export function vocabularyTotals(findings: readonly VocabularyFinding[]) {

@@ -543,7 +543,10 @@ describe('navigation', () => {
 
     await user.click(screen.getByRole('button', { name: /Timeline/ }));
     expect(await screen.findByRole('heading', { name: 'The spine' })).toBeTruthy();
-    expect(screen.getByText(/Battle of Hastings/)).toBeTruthy();
+    // getAllBy, not getBy: Hastings is named four times across the expanded chronology — the
+    // event, the section it anchors, and both of the figures it turns on. This assertion is
+    // only here to prove the tab rendered the chronology at all.
+    expect(screen.getAllByText(/Battle of Hastings/).length).toBeGreaterThan(0);
 
     await user.click(screen.getByRole('button', { name: /Drill/ }));
     expect(await screen.findByRole('button', { name: /Due today/ })).toBeTruthy();
@@ -572,10 +575,13 @@ describe('navigation', () => {
     await user.click(screen.getByRole('button', { name: /Timeline/ }));
     await screen.findByRole('heading', { name: 'The spine' });
 
-    const eras = document.querySelectorAll('details');
-    expect(eras.length).toBeGreaterThan(8);
-    // One open to show the rows do something; the rest closed.
-    expect([...eras].filter((e) => (e as HTMLDetailsElement).open)).toHaveLength(1);
+    // Eras plus their sections, so this is now well over eleven.
+    expect(document.querySelectorAll('details').length).toBeGreaterThan(8);
+    // Two open, and it is deliberately two: the first ERA, and the first SECTION inside it.
+    // One of each level, because a reader who sees only the era open has no way of knowing the
+    // inner rows also do something — the same reasoning that opens the first era at all.
+    const open = [...document.querySelectorAll('details')].filter((e) => (e as HTMLDetailsElement).open);
+    expect(open).toHaveLength(2);
 
     await user.click(screen.getByRole('button', { name: 'Expand all' }));
     const opened = document.querySelectorAll('details');
@@ -593,10 +599,17 @@ describe('navigation', () => {
     await screen.findByRole('heading', { name: 'The spine' });
 
     // Caesar and Claudius are the discrimination the drill cards keep testing. Gathered here,
-    // side by side, with the thing that tells them apart.
-    expect(screen.getByText(/The invasion that failed/)).toBeTruthy();
-    expect(screen.getByText(/The invasion that succeeded/)).toBeTruthy();
-    expect(screen.getAllByRole('heading', { name: 'Who to know' }).length).toBeGreaterThan(4);
+    // side by side, with the thing that tells them apart — one invasion failed and one stuck,
+    // and the cast list is where that contrast is easiest to hold.
+    expect(screen.getByText('Julius Caesar')).toBeTruthy();
+    expect(screen.getByText(/invasion that was unsuccessful/)).toBeTruthy();
+    expect(screen.getByText('Emperor Claudius')).toBeTruthy();
+    expect(screen.getByText(/successful in occupying almost all of Britain/)).toBeTruthy();
+
+    // "Who to know" is a group heading at the same level as the sections, not an <h3> inside
+    // the era — people and events are siblings now, which is what lets the cast be reached
+    // without opening the chronology.
+    expect(screen.getAllByText('Who to know').length).toBeGreaterThan(4);
   });
 
   it('shows an empty state for a section with nothing in it', async () => {

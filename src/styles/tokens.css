@@ -101,6 +101,10 @@
   --radius-md: 11px;
   --radius-lg: 14px;
 
+  /* A circle, whatever the box. Used by the chronology's initial discs, which exist so that a
+     person is a different SHAPE from an event rather than a different colour of the same one. */
+  --radius-round: 50%;
+
   /* ---- targets: WCAG 2.2 AA minimum is 24px; 44px is the comfortable iOS size ---- */
   --target-min: 44px;
 
