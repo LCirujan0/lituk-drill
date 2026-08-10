@@ -45,12 +45,22 @@ While L-002 and L-003 are open, multiple-choice performance does not feed any re
 **Enforced by:** the deck ratchet in `baseline.ts`; the exam-format number ships only when the
 numeric-rank measurement reaches its target.
 
-### R-8 · No personal data, ever
+### R-8 · No personal data, ever · **narrowed by D-034, 11 Aug 2026**
 No email, name, date of birth, nationality, immigration case detail, exam booking reference, URN,
 exam date or time, IP address, device identifier, analytics or third-party tracker. Enforced in the
 schema, not the interface.
 **Enforced by:** the BRIEF data inventory, diffed against the live schema by the docs-consistency test
 once a schema exists.
+
+*This rule also read "and no third party", flatly. D-034 accepted explain-on-demand, so that clause
+is narrowed rather than quietly ignored — which is the whole reason a rule change needs a decision
+first. **One third party is permitted: a model API, for explanation only**, under the five
+conditions the re-run screening in the BRIEF names. It sends one card and the handbook passage; it
+sends no review history and no identifier; nothing it returns is stored into the deck, the schedule
+or the readiness model; and the app works with no network and no key. Any other third party, or any
+of those conditions failing, is still forbidden and needs its own entry. The disclosure this leaves
+— that the account holder is studying the citizenship test — is L-040, and only the owner can
+accept it.*
 
 ### R-9 · Raw colours and sizes appear only in `tokens.css`
 Components reference semantic tokens. A token system without its check is decoration.

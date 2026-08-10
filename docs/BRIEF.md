@@ -165,6 +165,7 @@ email address that the original inventory carried.)*
 | Derived schedule state — interval, ease, lapses, breadth, due date | No | Serving the right card at the right time | Life of the app; rebuildable from review events | As above |
 | Readiness history — date, modelled prediction, measured mock score | No | Calibration. Without the history, R6's mitigation cannot function | Life of the app | As above |
 | Deck content — facts, question forms, sources | No | The questions | Lives in the repository | n/a |
+| **Explain-on-demand request (C8a, D-034)** — the question text, the four options, which one was chosen, the correct answer, and the handbook passage. **Sent to a third-party model API.** | **See the re-run screening below** — no identifier is sent, but the API key identifies the account holder to the provider | Explaining why the chosen option is wrong | Not stored by this app at all; the provider's own retention applies and is outside our control | Absent with no API key; nothing to delete on our side |
 
 **Deliberately never stored — enforced in the schema and checked by the build, not by the interface:**
 email address, name, date of birth, nationality, anything concerning the citizenship application, exam
@@ -198,6 +199,55 @@ uninteresting. The second cannot destroy anything: the event log is append-only,
 own authoritative copy, and a corrupted remote log can be discarded and re-seeded from the phone. If it
 happens, it is a ledger row and a rotation of the endpoint path — not a breach notification, because
 there is no personal data to notify anyone about.
+
+### DPIA screening, re-run for the AI layer — 11 August 2026
+
+**Required before any C8 code, by D-034's own terms:** the screening above concludes UK GDPR does
+not engage *because nothing leaves the device and nothing identifies anyone*. C8(a) breaks the
+first half of that premise, so the conclusion has to be re-derived rather than assumed. It is
+re-derived here, and it comes out the same way — but not for the same reasons, and not without a
+finding.
+
+**What changes.** With an API key present, pressing "why is this wrong?" sends one request
+containing the question, its four options, which one was chosen, the correct answer, and the
+handbook passage. It sends **no review history, no fact ids, no timestamps, no schedule, and no
+device information**, and it sends one card at a time rather than a batch. Nothing is stored by
+this app.
+
+**Is what leaves personal data?** In isolation, no — it is a citizenship-test question and a wrong
+answer, with nothing to single anyone out by. But that analysis is incomplete, and the incomplete
+version is the one worth writing down so it cannot be reached for later: **at the provider, the
+request arrives with an API key and an IP address, and the key belongs to an identifiable account
+holder.** So the provider — not this app — holds the pairing. That is a real change from "nothing
+leaves the device" and it is the whole substance of this re-run.
+
+**Does UK GDPR engage for the owner's own processing?** Still no, and on the same ground as
+before, which survives the change untouched: the domestic-purposes exemption covers processing by
+a natural person in the course of a purely personal activity, and the sole data subject is also
+the sole controller and the only beneficiary. There is no second data subject at any point. The
+provider's own processing is governed by its terms and is its own controllership question, not
+ours. **No DPIA arises.** None of the ICO's high-risk criteria are met: no special-category data,
+no systematic monitoring, no large-scale processing, no vulnerable data subjects, no automated
+decision with legal or similarly significant effect.
+
+**The finding this re-run produced, which is not a GDPR point and matters more than one.** The
+content of the request discloses, by inference, that the account holder is studying for the Life
+in the UK test — and almost everyone who does that is applying for settlement or citizenship. So
+sending these requests tells a third party something about the owner's **immigration situation**,
+which is the exact subject D-007 closed a one-way door on: *"anything concerning the immigration
+case"* is on the never-stored list. D-007 is about storage and this is disclosure, so it is not a
+breach of that decision — but it lands on the one topic the project deliberately fenced, and it
+would be dishonest to file that under "no personal data" and move on. **Recorded as L-040, and
+only the owner can accept it** (`risk-accepted` is his alone).
+
+**Conditions this screening is conditional on.** If any of these stops being true, the screening
+is void and re-runs:
+1. **No review history leaves.** One card, the passage, and nothing about what else was answered.
+2. **No identifier is added** — no user id, no device id, no session id, no stable request id.
+3. **Nothing generated is stored** into the deck, the schedule or the readiness model (D-034).
+4. **Provider training and retention are turned off** where the account offers it, and the setting
+   is checked rather than assumed.
+5. **The app works with no network and no key.** The button is absent, not broken.
 
 **Migration rule, agreed now:** schema changes are additive and idempotent, applied to production as a
 deliberate step. A change that alters the shape of existing data decides that data's fate in the same
