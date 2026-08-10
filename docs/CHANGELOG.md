@@ -2,6 +2,56 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 — twelve bands, and a bar that says which kind of progress (C4/C5)
+
+**Twelve bands over the 87 tags, and both cuts stay drillable.** "History" is 220 facts, so
+drilling it means drilling all of it; 87 tags is a picker rather than a study aid. A band is a
+group of tags — twelve of them, 30–54 facts each, mean 44. The owner's requirement was explicit:
+a chapter is *not* replaced by its bands, so **every fact belongs to exactly one chapter and
+exactly one band, and both partitions satisfy R-12 independently**. Five tags span chapters
+(`Media` spans three), which is why a band is not a sub-chapter and why the mapping is keyed by
+tag rather than derived from a chapter number.
+
+**The BRIEF's first cut did not survive re-derivation.** It summed to 533 only because it assigned
+`Devolution` and `Europe` to two bands each — a table that double-assigns a tag partitions
+nothing. The shipped cut sums to 530 exactly and is now the one in the BRIEF, with the draft's
+error recorded rather than tidied away.
+
+**`Science` was found by the test on its first run.** The tag is carried only by two retired facts
+(f105 Newton, f148 Darwin), so it contributes nothing to any count — and it would have been
+missed entirely by a check that looked only at `ACTIVE`. A tag that exists only on retirements is
+exactly the one nobody thinks to map when the sweep reuses it, so `bands.test.ts` asserts the
+table and the deck share one vocabulary in **both** directions: no tag without a band, and no band
+entry for a tag no fact carries.
+
+**Every row now shows three numbers, not one.** A chapter half mastered and a chapter half
+attempted-and-failing used to draw the same bar. Mastered and mistakes are painted over the
+untouched track, so the three shares sum to the whole bar with no rounding gap at the join, and
+the same partition feeds both cuts through one tally function — two functions that happen to
+agree is what made the home screen incoherent in the first place (D-032).
+
+**Colour is not the only carrier, and that needed measuring rather than asserting.** Green against
+red is **1.43:1**, the worst pair on the screen and a straight WCAG 1.4.11 failure. A
+surface-coloured rule now separates the segments (5.19:1 dark, 3.27:1 light) and also carries the
+mastered/untouched edge, which measured 2.92:1 in light; the mistakes segment is hatched as well
+as coloured; and each row's accessible name spells out all three figures as words. The cut
+toggle's unselected label was `--c-text-muted` on `--c-fill` — **3.12:1, which is L-034 exactly**
+— and was moved to `--c-text-soft` before it shipped rather than added to the pile.
+
+**Measured at 402×874, and the one miss is recorded rather than restated.** The BRIEF wanted
+twelve rows to fit. They fit only by taking each below `--target-min`, which trades an
+accessibility rule for a navigation one — so the rows keep their 44px and **8 of 12 are fully
+visible, with the last four behind a scroll inside a frame that still does not scroll**. Five
+chapter rows are unchanged at 85px with no slack, which is what keeps D-033's black band closed.
+
+**Both new test groups were run against broken code before being trusted** — a band queue that
+ignored its band, and a row that used the deck as its denominator. Eight assertions failed; all
+eight are the ones that matter. 281 → 309 tests.
+
+**Two bands sit within two facts of the 55 ceiling**, so the C6 sweep will hit that test rather
+than silently overfilling a band. The intended response is to split a band, not to raise the
+number.
+
 ## 2026-08-10 (later) — the roadmap gets its answers, and a near-miss on two facts
 
 Ten questions answered, so the roadmap stops being conditional. **50 facts a day, up from 30**

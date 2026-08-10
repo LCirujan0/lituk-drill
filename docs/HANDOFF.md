@@ -9,8 +9,9 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **281 passing across 12 files** — adds 4 option-content ratchets and 6 over the chronology (`timeline`) |
+| Tests | **309 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
+| Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 36 answers referred, 3 retired, 33 still to read |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
@@ -96,11 +97,15 @@ one-line reason.
 
 | | Item | Size | Status |
 |---|---|---|---|
-| **C4** | **~12 bands you can drill on their own.** The deck already carries 87 tags, none over 50 facts — but 87 is a picker, not a study aid, so they group into about a dozen bands of 30–55. A first cut summing to 533 exactly is in the BRIEF. | Days | Ready to build |
-| **C5** | **The progress bar says which kind.** Each row shows % mastered / % mistakes / % new instead of one number. The partition already exists and is already asserted (R-12), so this is rendering. Ships with C4. | A day | Ready to build |
+| **C4** | **12 bands you can drill on their own**, over the 87 tags. Both cuts stay drillable and both carry progress; a band draws from more than one chapter, so neither nests inside the other. | Days | **Built 10 Aug** |
+| **C5** | **The progress bar says which kind.** Every chapter row and every band row shows mastered / mistakes / untouched as a segmented bar, with all three figures in the accessible name. | A day | **Built 10 Aug** |
 | **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | Needs one decision |
 | **C6** | **Full extraction sweep of the handbook** — every name, date and location. **D-035 accepted**, amending the non-goal. Blocked on one real question: 533 facts at 30/day already exceeds the appetite, so doubling the deck can make readiness *worse* while making coverage better. | Weeks | Blocked on volume |
 | **C8** | **An AI layer.** **D-034 is `proposed`, and no code may be written against it.** Crosses the LLM non-goal, R-8 (no third party) and R3. "A useful AI layer" is four features with four risk profiles — (a) explain-on-demand is cheap and safe, (d) choosing what to drill replaces a simulation-verified scheduler with one that cannot be verified. | Unknown | Blocked on shape |
+
+**C4 and C5 shipped together on 10 August**, which is what the roadmap ordering intended — the
+band cut in the BRIEF was re-derived against the live 530 first, because the draft double-assigned
+`Devolution` and `Europe` and so summed to 533 without partitioning anything.
 
 **C2, the explanation rewrite, is still the largest unstarted item from this session** and sits
 ahead of all of these: it needs the full distractor census, which chapters 1, 2, 4 and 5 complete.

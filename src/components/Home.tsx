@@ -30,10 +30,18 @@
  * has to hit. Every target here is at least `--target-min`.
  */
 
+import { useState } from 'react';
+
+import { BAND_IDS, BAND_NAMES, type BandId } from '@/domain/deck/bands';
 import { CHAPTER_SHORT, type Chapter } from '@/domain/deck/types';
 import type { SyncPhase } from '@/adapters/sync';
-import type { SectionCounts } from '@/domain/drill/sections';
+import type { GroupCounts, SectionCounts } from '@/domain/drill/sections';
 import styles from './Home.module.css';
+
+const EMPTY_GROUP: GroupCounts = { total: 0, mastered: 0, mistakes: 0, fresh: 0 };
+
+/** Which cut of the deck the list is showing. Both are drillable; neither replaces the other. */
+type Cut = 'chapters' | 'bands';
 
 export type OpenableSection = 'due' | 'new' | 'mistakes' | 'random' | 'mastered';
 
@@ -47,6 +55,7 @@ interface Props {
   readonly onSync: () => void;
   readonly onOpen: (section: OpenableSection) => void;
   readonly onChapter: (chapter: Chapter) => void;
+  readonly onBand: (band: BandId) => void;
 }
 
 /**
@@ -66,8 +75,18 @@ const clockTime = (at: number): string =>
   new Date(at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
 export function Home({
-  counts, streak, persistent, syncPhase, syncedAt, onSync, onOpen, onChapter,
+  counts, streak, persistent, syncPhase, syncedAt, onSync, onOpen, onChapter, onBand,
 }: Props) {
+  /**
+   * Chapters or bands, and the choice is not persisted.
+   *
+   * Both cuts are drillable and both carry progress (C4), but seventeen rows do not fit a phone
+   * and shrinking them below `--target-min` would trade an accessibility rule for a navigation
+   * one. A toggle keeps every row a full touch target. It resets to chapters on reload because it
+   * is a view state, not a preference — and a preference here would be a third thing to sync.
+   */
+  const [cut, setCut] = useState<Cut>('chapters');
+
   const masteredPct = counts.totalFacts
     ? Math.round((counts.mastered / counts.totalFacts) * 100)
     : 0;
@@ -123,32 +142,100 @@ export function Home({
         <Tile icon="⤨" name="Random" onClick={() => onOpen('random')} />
       </div>
 
-      <div className={styles.chapters}>
-        {([1, 2, 3, 4, 5] as Chapter[]).map((chapter) => {
-          const entry = counts.byChapter.get(chapter) ?? { total: 0, mastered: 0 };
-          const pct = entry.total ? Math.round((entry.mastered / entry.total) * 100) : 0;
-          return (
-            <button
-              key={chapter}
-              type="button"
-              className={styles.chapter}
-              onClick={() => onChapter(chapter)}
-              aria-label={`${CHAPTER_SHORT[chapter]} — ${entry.mastered} of ${entry.total} mastered`}
-            >
-              <span className={styles.chapterName}>{CHAPTER_SHORT[chapter]}</span>
-              <span className={styles.bar} aria-hidden="true">
-                <span className={styles.barFill} style={{ width: `${pct}%` }} />
-              </span>
-              {/* The bar alone reads as empty at 3%, which is where every chapter starts. The
-                  number says what the bar cannot at that width. */}
-              <span className={styles.chapterCount} aria-hidden="true">
-                {entry.mastered}<span className={styles.chapterOf}>/{entry.total}</span>
-              </span>
-            </button>
-          );
-        })}
+      {/* Two cuts of one deck, each drillable and each with its own progress (C4). Not a
+          hierarchy: a band draws from more than one chapter, so neither nests inside the other. */}
+      <div className={styles.cuts} role="tablist" aria-label="Group the deck by">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={cut === 'chapters'}
+          className={cut === 'chapters' ? styles.cutOn : styles.cut}
+          onClick={() => setCut('chapters')}
+        >
+          Chapters
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={cut === 'bands'}
+          className={cut === 'bands' ? styles.cutOn : styles.cut}
+          onClick={() => setCut('bands')}
+        >
+          Bands
+        </button>
+      </div>
+
+      <div className={styles.rows}>
+        {cut === 'chapters'
+          ? ([1, 2, 3, 4, 5] as Chapter[]).map((chapter) => (
+              <GroupRow
+                key={chapter}
+                name={CHAPTER_SHORT[chapter]}
+                counts={counts.byChapter.get(chapter) ?? EMPTY_GROUP}
+                onClick={() => onChapter(chapter)}
+              />
+            ))
+          : BAND_IDS.map((band) => (
+              <GroupRow
+                key={band}
+                name={BAND_NAMES[band]}
+                counts={counts.byBand.get(band) ?? EMPTY_GROUP}
+                onClick={() => onBand(band)}
+              />
+            ))}
       </div>
     </>
+  );
+}
+
+/**
+ * One drillable group: its name, its three-way split, and its mastered count.
+ *
+ * ## Three segments, because one number was three states pretending to be one
+ *
+ * A chapter half mastered and a chapter half attempted-and-failing drew the same bar. The
+ * segments are mastered, then mistakes, and the untouched remainder is the track showing through
+ * — two painted widths rather than three, so the three shares sum to exactly 100% of the bar with
+ * no rounding gap at the join. They are the same partition every other number on this screen
+ * comes from (R-12). Nothing here counts a phrasing.
+ *
+ * ## Colour is not the only carrier
+ *
+ * WCAG 1.4.1, and the two open contrast findings (L-004, L-034) make it more than a formality.
+ * The accessible name spells out all three figures as words, the mastered count is printed beside
+ * the bar, and the mistakes segment is hatched as well as coloured — so the row still reads
+ * correctly in greyscale and to a screen reader.
+ */
+function GroupRow({
+  name, counts, onClick,
+}: {
+  name: string;
+  counts: GroupCounts;
+  onClick: () => void;
+}) {
+  const pct = (n: number) => (counts.total ? (n / counts.total) * 100 : 0);
+
+  return (
+    <button
+      type="button"
+      className={styles.row}
+      onClick={onClick}
+      aria-label={
+        `${name} — ${counts.total} facts: ` +
+        `${counts.mastered} mastered, ${counts.mistakes} mistakes, ${counts.fresh} not yet tried`
+      }
+    >
+      <span className={styles.rowName}>{name}</span>
+      <span className={styles.bar} aria-hidden="true">
+        <span className={styles.segMastered} style={{ width: `${pct(counts.mastered)}%` }} />
+        <span className={styles.segMistakes} style={{ width: `${pct(counts.mistakes)}%` }} />
+      </span>
+      {/* The bar alone reads as empty at 3%, which is where every group starts, so the number
+          carries the early weeks and the bar carries the shape. */}
+      <span className={styles.rowCount} aria-hidden="true">
+        {counts.mastered}<span className={styles.rowOf}>/{counts.total}</span>
+      </span>
+    </button>
   );
 }
 

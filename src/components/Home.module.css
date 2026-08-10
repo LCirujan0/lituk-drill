@@ -164,16 +164,62 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- chapters ---------------------------------------------------------- */
-.chapters {
+/* ---- chapters and bands ------------------------------------------------ */
+
+/* Two cuts of one deck, chosen here rather than shown together: five chapter rows plus twelve
+   band rows is seventeen, and seventeen rows at a full touch target do not fit 402x874. */
+.cuts {
+  display: flex;
+  flex: none;
+  gap: var(--space-1);
+  margin-block-end: var(--space-2);
+  padding: var(--space-1);
+  background: var(--c-fill);
+  border-radius: var(--radius-md);
+}
+
+.cut,
+.cutOn {
+  flex: 1;
+  min-height: var(--target-min);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+
+  /* `--c-text-muted` on `--c-fill` measures 3.12:1 in light mode, which is L-034 exactly.
+     `--c-text-soft` is 6.90:1 light and 6.57:1 dark, so the unselected label does not add a
+     new instance of an open finding. */
+  color: var(--c-text-soft);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.cutOn {
+  color: var(--c-text);
+  background: var(--c-surface);
+  border-color: var(--c-border);
+}
+
+/* Twelve band rows exceed the space five chapter rows sit in, so this scrolls internally. The
+   frame itself still never scrolls (§F) — this is a list inside it, and the tab bar below it
+   stays pinned. Rows keep their full height rather than shrinking to fit. */
+.rows {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   gap: var(--space-2);
   min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-.chapter {
+/* Grows to fill when the rows fit, holds at the touch target when they do not. Five chapter
+   rows share the space the way they always have; twelve band rows stop at `--target-min` and
+   the list scrolls, rather than shrinking below a thumb's width. `min-height` is what makes
+   that a floor — without it flex-shrink would quietly take the rows under the target. */
+.row {
   display: flex;
   flex: 1 1 var(--target-min);
   align-items: center;
@@ -189,15 +235,22 @@
   cursor: pointer;
 }
 
-.chapterName {
+/* Band names are longer than the one-word chapter names and must not push the bar around, so
+   they clamp to one line and the column width is fixed for both cuts. */
+.rowName {
   flex: none;
-  width: 7.5rem;
-  font-size: var(--text-base);
+  width: 8.5rem;
+  overflow: hidden;
+  font-size: var(--text-sm);
   font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
+/* The track is the untouched remainder. Mastered and mistakes are painted over it left to
+   right, so the three shares of the partition sum to the whole bar with no gap at the join. */
 .bar {
-  display: block;
+  display: flex;
   flex: 1;
   height: var(--bar-height);
   background: var(--c-fill);
@@ -205,10 +258,42 @@
   overflow: hidden;
 }
 
-/* Mastered over total, for the chapter. A 3% bar is indistinguishable from an empty one, and
-   3% is where every chapter starts — so the number carries the early weeks and the bar carries
-   the shape. Fixed width and tabular figures so five rows line up. */
-.chapterCount {
+.segMastered {
+  display: block;
+  height: 100%;
+
+  /* Mastered against the untouched track measures 2.92:1 in light mode — under the 3:1 WCAG
+     1.4.11 wants between adjacent meaningful graphics. The same surface-coloured rule that
+     separates mastered from mistakes carries this edge too: 3.27:1 light, 5.19:1 dark. */
+  border-inline-end: 2px solid var(--c-surface);
+  background: var(--c-proven);
+}
+
+/* Hatched as well as coloured. Colour must not be the only thing separating this from the
+   mastered segment (WCAG 1.4.1), and two open contrast findings (L-004, L-034) make that more
+   than a formality — the row still reads correctly in greyscale. */
+.segMistakes {
+  display: block;
+  height: 100%;
+
+  /* Green against red measures 1.43:1, which fails WCAG 1.4.11 (3:1 between adjacent
+     meaningful graphics) and is the single worst pair on this screen for a red-green reader.
+     A surface-coloured rule between them is 5.19:1 against mastered and 3.62:1 against
+     mistakes, so the boundary is carried by the divider rather than by the hue. */
+  border-inline-start: 2px solid var(--c-surface);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--c-danger) 0,
+    var(--c-danger) 2px,
+    var(--c-surface) 2px,
+    var(--c-surface) 4px
+  );
+}
+
+/* Mastered over total, for the group. A 3% bar is indistinguishable from an empty one, and 3% is
+   where every group starts — so the number carries the early weeks and the bar carries the
+   shape. Fixed width and tabular figures so the rows line up. */
+.rowCount {
   flex: none;
   width: 3.75rem;
   color: var(--c-text-soft);
@@ -218,13 +303,7 @@
   text-align: end;
 }
 
-.chapterOf {
+.rowOf {
   color: var(--c-text-muted);
   font-weight: 400;
-}
-
-.barFill {
-  display: block;
-  height: 100%;
-  background: var(--c-proven);
 }

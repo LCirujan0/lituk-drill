@@ -119,12 +119,44 @@ describe('the partition — New + Mastered + Mistakes is the whole deck', () => 
     expect(progress.started).toBe(TOTAL_FACTS - counts.newFacts);
   });
 
-  it.each(SEEDS)('partitions every chapter as well as the whole deck (seed %i)', (seed) => {
+  /**
+   * Both cuts, and the same assertions on each.
+   *
+   * Chapters and bands are two independent partitions of one deck (C4), and each row now shows
+   * the three-way split rather than one number (C5). So R-12 has to hold **per row**, not just
+   * deck-wide: a row whose three figures do not sum to its own total is a row that is right in
+   * aggregate and wrong where it is read.
+   *
+   * `it.each` over the two cuts rather than one test naming chapters and a copy naming bands —
+   * the copy is what would get updated on one side only.
+   */
+  const CUTS = [
+    ['chapter', (c: ReturnType<typeof sectionCounts>) => [...c.byChapter.values()]],
+    ['band', (c: ReturnType<typeof sectionCounts>) => [...c.byBand.values()]],
+  ] as const;
+
+  it.each(
+    SEEDS.flatMap((seed) => CUTS.map(([name, rows]) => [name, seed, rows] as const)),
+  )('partitions every %s as well as the whole deck (seed %i)', (_name, seed, rows) => {
     const counts = sectionCounts(context(generateLog(seed)));
-    const totals = [...counts.byChapter.values()];
-    expect(totals.reduce((n, c) => n + c.total, 0)).toBe(counts.totalFacts);
-    expect(totals.reduce((n, c) => n + c.mastered, 0)).toBe(counts.mastered);
-    for (const chapter of totals) expect(chapter.mastered).toBeLessThanOrEqual(chapter.total);
+    const groups = rows(counts);
+
+    // Every fact is in exactly one group of this cut, and every group's split adds up.
+    expect(groups.reduce((n, c) => n + c.total, 0)).toBe(counts.totalFacts);
+    expect(groups.reduce((n, c) => n + c.mastered, 0)).toBe(counts.mastered);
+    expect(groups.reduce((n, c) => n + c.mistakes, 0)).toBe(counts.mistakes);
+    expect(groups.reduce((n, c) => n + c.fresh, 0)).toBe(counts.newFacts);
+
+    for (const g of groups) {
+      expect(g.mastered + g.mistakes + g.fresh).toBe(g.total);
+      // The bar renders these as percentages of the row's own total, so this is the assertion
+      // that the three segments cannot overflow or leave a gap.
+      expect(g.total).toBeGreaterThan(0);
+    }
+
+    // Not vacuous: the generated log must actually put some rows in more than one state.
+    expect(groups.some((g) => g.mastered > 0)).toBe(true);
+    expect(groups.some((g) => g.mistakes > 0)).toBe(true);
   });
 
   it.each(SEEDS)('never puts a fact in both Mastered and Mistakes (seed %i)', (seed) => {
