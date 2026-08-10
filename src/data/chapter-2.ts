@@ -29,7 +29,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "The United Kingdom of Great Britain and Northern Ireland",
-        distractors: ["The Commonwealth of Great Britain and Ireland", "The Union of Great Britain and the Irish Republic", "The British Isles of England, Scotland and Wales"],
+        distractors: ["The Commonwealth of Great Britain and Ireland", "The Union of Great Britain and the Irish Republic", "The United Kingdom of Great Britain and Ireland"],
       },
     },
     {
@@ -67,7 +67,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "England, Scotland, Wales and Northern Ireland",
-        distractors: ["Great Britain, Ireland and the Channel Islands", "England, Scotland, Wales and Ireland", "England, Wales, Ireland and the Isle of Man"],
+        distractors: ["England, Scotland, Wales and the Channel Islands", "England, Scotland, Wales and Ireland", "England, Wales, Ireland and the Isle of Man"],
       },
     },
     {
@@ -286,7 +286,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "No",
-        distractors: ["Yes, since 1973", "Yes", "Only the Isle of Man is"],
+        distractors: ["Only the Channel Islands are", "Yes", "Only the Isle of Man is"],
       },
     },
     {
@@ -295,7 +295,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "They are not part of the UK",
-        distractors: ["They are part of the UK", "They are part of England", "They joined the UK in 1973"],
+        distractors: ["They are part of the UK", "They are governed directly from Westminster", "They joined the UK in 1973"],
       },
     },
     {
@@ -380,7 +380,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "They are linked to the UK but not part of it",
-        distractors: ["They are independent Commonwealth states", "They form part of the UK itself", "They are run by the Channel Islands"],
+        distractors: ["They are independent Commonwealth states", "They form part of the UK itself", "They are Crown dependencies with their own governments"],
       },
     },
     ],
@@ -599,7 +599,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "three",
-        distractors: ["two", "four", "five"],
+        distractors: ["four", "five", "six"],
       },
     },
     {
@@ -646,7 +646,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A red upright cross on a white ground",
-        distractors: ["A red diagonal cross on a white ground", "A white upright cross on a blue ground", "A gold harp on a green ground"],
+        distractors: ["A red diagonal cross on a white ground", "A white upright cross on a blue ground", "A white diagonal cross on a blue ground"],
       },
     },
     ],
@@ -684,7 +684,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "A white diagonal cross on blue",
-        distractors: ["A blue diagonal cross on white", "A red dragon on green and white", "A gold lion on a red field"],
+        distractors: ["A blue diagonal cross on white", "A red dragon on green and white", "A white upright cross on blue"],
       },
     },
     ],
@@ -722,7 +722,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "a red diagonal cross on a white ground",
-        distractors: ["a green diagonal cross on a white ground", "a red upright cross on a white ground", "a white diagonal cross on a red ground"],
+        distractors: ["a green diagonal cross on a white ground", "a red upright cross on a white ground", "a red diagonal cross on a blue ground"],
       },
     },
     ],
@@ -1074,7 +1074,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "30 November",
-        distractors: ["23 April", "17 March", "1 March"],
+        distractors: ["23 April", "11 November", "1 March"],
       },
     },
     {
@@ -1083,7 +1083,7 @@ export const CHAPTER_2: readonly Fact[] = [
       answers: {
         kind: 'fixed',
         correct: "30 November",
-        distractors: ["31 October", "25 January", "24 June"],
+        distractors: ["31 October", "25 January", "31 December"],
       },
     },
     ],

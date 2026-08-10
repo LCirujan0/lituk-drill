@@ -2,6 +2,38 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-10 — the other four chapters, and one instruction worth 0.5 of a percentage point
+
+313 facts, 32 agents, every proposal adversarially refuted. **194 upheld, 104 rejected, 131
+applied** through the same five-gate guard — which earned its place: it caught two replacements
+that were **accidentally true** (one tried to introduce "Spitting Image" as a wrong answer to a
+fact that marks it right) and one naming a year the handbook does not contain.
+
+  identical option sets   63 -> 28
+  repeated distractors   575 -> 505
+  longest option       29.9% -> 28.0%   past its 0.30 target, ceiling now 0.285
+  on-screen numeric    52.5% -> 52.4%   IMPROVED, where wave one worsened it
+
+**That last line is the finding.** Wave one pushed the numeric tell the wrong way; wave two pulled
+it back. The deck did not change character between them — the prompt did. Wave two was told two
+things wave one was not: do not bracket the true value when writing numeric distractors, and keep
+one shared template across all four options or the form loses its generation rule. Wave one did
+both by reflex, which is precisely how L-002 came to exist in the first place. An agent writing
+"plausible wrong numbers" will put some above and some below the answer unless told not to, and
+that single habit is the 91.4% middle-value rate this project was founded on.
+
+**40 answers now sit with the owner** under D-031, up from 12. Three are the same class as the
+four retired this morning: f215 (a ceremony deadline), f216 (the local authority) and f219 (a
+certificate of citizenship) all key answers that appear nowhere in the 232KB of handbook — and
+f216 and f219 carry no `source` field at all, unlike every neighbour.
+
+**31 question-level defects are deferred**, not dropped. Breadth credit is keyed by form position,
+so rewording a stem in place silently transfers credit earned on a sentence that no longer exists.
+Each needs an appended replacement or an `mcqOnly` flag, which is its own pass.
+
+**Still open: the 12 self-contradicting forms.** Not one was fixed by either wave — the audit
+proposed changes elsewhere. They remain the highest-value content defect in the deck.
+
 ## 2026-08-10 — five new asks go on the roadmap, and two of them need a decision first
 
 The owner asked for five things at the end of the session. None were built; all are specced.

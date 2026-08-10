@@ -105,7 +105,11 @@ export const DECK_BASELINE: DeckBaseline = {
   // Tightened 0.53 -> 0.527 on 10 Aug 2026, when the measurement moved from DECK to ACTIVE.
   // That is not a content improvement: the retired forms were simply worse than average and
   // were flattering the figure. Re-derived, not loosened, and the direction is the honest one.
-  effectiveNumericMiddleRankRate: 0.527,
+  // 0.527 -> 0.526. The second audit wave IMPROVED this to 0.524, where the first worsened it —
+  // the difference is one instruction. Wave two was told not to bracket the true value when
+  // writing numeric distractors, and to keep one shared template across all four options. Wave
+  // one was not, and did both by reflex, which is how L-002 was created in the first place.
+  effectiveNumericMiddleRankRate: 0.526,
   // Was 1 — L-012, the £3,000 small-claims form whose answer could never be the largest
   // option. It is 0 today over both DECK and ACTIVE. At zero this stops being a ratchet and
   // becomes an assertion: any form that cannot place its answer at all four ranks now fails.
@@ -126,7 +130,9 @@ export const DECK_BASELINE: DeckBaseline = {
   // it has therefore REACHED ITS TARGET, so the ceiling comes down in the same commit or the
   // ratchet is decoration. This is L-003 closed. Chance is 0.25 and the remaining four points
   // are the honest cost of writing a precise answer next to three shorter wrong ones.
-  longestOptionCorrectRate: 0.3,
+  // 0.30 -> 0.285 after chapters 1, 2, 4 and 5: the deck reached 0.280, comfortably past the
+  // 0.30 target, so the ceiling comes down again rather than sitting slack. Chance is 0.25.
+  longestOptionCorrectRate: 0.285,
   // Was 12, then 1. Eleven resolved against the handbook on 4 August 2026 — eight confirmed
   // correct, three corrected (see divergences.ts). The last, f213, was the KoLL age exemption:
   // a Home Office rule that does not appear in the handbook at all, so this source could never
@@ -158,10 +164,10 @@ export const DECK_BASELINE: DeckBaseline = {
   // 90 -> 63 in the chapter-3 audit. Every one closed was a second phrasing that presented the
   // identical four options, so the breadth gate was counting it as a proven phrasing while a
   // reader who recognised the option set never had to read the stem.
-  identicalOptionSetsWithinFact: 63,
+  identicalOptionSetsWithinFact: 28,
   // 614 repeated distractor strings across 288 facts. The largest number here and the smallest
   // defect — nothing is wrong, the pool of lures a reader ever meets is just smaller than it looks.
-  repeatedDistractorsWithinFact: 575,
+  repeatedDistractorsWithinFact: 505,
 };
 
 /** Where each ceiling is headed. Not asserted — a target that fails the build is just a ceiling. */
@@ -174,7 +180,9 @@ export const DECK_TARGETS: Partial<DeckBaseline> = {
   // so this one has no target. `effectiveNumericMiddleRankRate` is the one to drive down.
   effectiveNumericMiddleRankRate: 0.52,
   restrictedRankForms: 0,
-  longestOptionCorrectRate: 0.3,
+  // 0.30 -> 0.285 after chapters 1, 2, 4 and 5: the deck reached 0.280, comfortably past the
+  // 0.30 target, so the ceiling comes down again rather than sitting slack. Chance is 0.25.
+  longestOptionCorrectRate: 0.285,
   unresolvedVerifyFlags: 0,
   explanationYearsOffSource: 0,
   selfContradictingForms: 0,

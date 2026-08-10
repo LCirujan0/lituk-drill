@@ -11,16 +11,16 @@ restates one. A hand-copied live number drifts within a session.
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
 | Tests | **281 passing across 12 files** — adds 4 option-content ratchets and 6 over the chronology (`timeline`) |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
-| Deck | **533 drilled · 1,597 forms**. 559 ids in use; 26 retired, ids kept (R-4). Chapter 3 audited (220 facts, 87 distractors rewritten); chapters 1, 2, 4, 5 not yet |
+| Deck | **533 drilled · 1,597 forms**. 559 ids in use; 26 retired, ids kept (R-4). **All five chapters audited** — 533 facts, 218 distractors rewritten, 40 answers referred to the owner |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-037 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 13 open · 14 fixed-unverified · 5 verified-fixed |
-| Open Critical | 0. **Two open High — L-033** (option content, chapters 1/2/4/5 unaudited) and **L-036** (the numeric metric, needs independent re-derivation) |
+| Open Critical | 0. **Two open High — L-033** (12 self-contradicting forms remain) and **L-036** (the numeric metric, needs independent re-derivation) |
 | Ratchet source | **`ACTIVE`, not `DECK`** — quality measurements exclude retired facts (L-032). Id-space contracts stay on `DECK` |
-| On-screen numeric tell | **52.5%** over 382 forms (was 91.4%; chance 50%) · ceiling 0.527. **Calendar-date sets are now excluded — they ranked the day of the month (L-036)** |
-| Longest-option tell | **29.9% — target reached**, ceiling now 0.30 (was a slack 0.39). L-003 closed |
+| On-screen numeric tell | **52.4%** over 381 forms (was 91.4%; chance 50%) · ceiling 0.526. **Calendar-date sets excluded — they ranked the day of the month (L-036)** |
+| Longest-option tell | **28.0%** — past its 0.30 target, ceiling now 0.285 (was a slack 0.39). L-003 closed |
 | Amber facts | **0** — f213 and f006 both retired, 10 Aug 2026 |
 | CI | Green — 2 required checks |
 | Deployed | https://lituk-drill.vercel.app |
@@ -65,8 +65,11 @@ which pins the invariant a browser measurement established but cannot re-measure
    moves under him during the content programme — appending a form makes
    `proven < ok.length` true again, so mastered facts drop back under the 30-day cap. Harmless
    six weeks out, damaging one week out. **This is the last window in which this work is safe.**
-2. **Finish the option audit — chapters 1, 2, 4 and 5** (313 facts, 16 batches). Chapter 3 is
-   done and is what L-033's remaining scope now means.
+2. **40 answers the audit believes are wrong**, waiting on the owner under D-031 — including
+   f215, f216 and f219, whose answers (a ceremony deadline, the local authority, a certificate)
+   appear nowhere in the handbook. Same class as the four retired on 10 August.
+   **31 question-level defects deferred**: rewording a stem in place falsifies breadth credit, so
+   each needs an appended replacement or an `mcqOnly` flag.
 3. **Independently re-derive L-036.** The numeric-tell measurement was excluding nothing and
    ranking days of the month; it now excludes calendar-date sets. That change was made while
    the ratchet was failing and is what turned the build green, so it wants a check by someone
