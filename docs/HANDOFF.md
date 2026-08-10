@@ -12,7 +12,7 @@ restates one. A hand-copied live number drifts within a session.
 | Tests | **312 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
-| Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 36 answers referred, 3 retired, 33 still to read |
+| Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
@@ -69,9 +69,14 @@ which pins the invariant a browser measurement established but cannot re-measure
    moves under him during the content programme — appending a form makes
    `proven < ok.length` true again, so mastered facts drop back under the 30-day cap. Harmless
    six weeks out, damaging one week out. **This is the last window in which this work is safe.**
-2. **40 answers the audit believes are wrong**, waiting on the owner under D-031 — including
-   f215, f216 and f219, whose answers (a ceremony deadline, the local authority, a certificate)
-   appear nowhere in the handbook. Same class as the four retired on 10 August.
+2. **24 answers waiting on the owner**, under D-031, written up as a review sheet he can
+   actually finish: **`docs/REFERRED-ANSWERS.md`**. Each row carries the fact, its answer, and
+   the grep evidence against the PDF, with the three already-retired ones marked as such and
+   `f391` marked **DO NOT RETIRE** — it is an enumerated D-031 delta he confirmed against his own
+   edition, and the crude word-presence pass rated it "strong retire" (L-037). **The count in
+   this line used to read 40, then 33; the file holds 28 and neither figure is reproducible from
+   it.** Nothing has been changed: a referral is not a finding, and the evidence is a grep
+   against the proxy text, not against the book that is the authority.
    **The question-level defects, reconciled 11 Aug.** `.work/apply-deferred.json` holds **15
    entries, not the 31 this line used to claim** — 31 is not reproducible from the file and was
    probably a count of affected forms. Of the 15:

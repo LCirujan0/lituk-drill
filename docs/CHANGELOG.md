@@ -2,6 +2,26 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-11 (evening) — the referred answers become a list he can finish
+
+**24 answers, written up as `docs/REFERRED-ANSWERS.md`.** They were sitting in a `.work` JSON file
+that is gitignored, which meant the one item genuinely blocked on the owner was the one item he
+could not see.
+
+**Nothing was changed, and the sheet says why in its first paragraph.** A referral is not a
+finding. The audit agents were never told the D-031 delta list exists (L-037), so a crude
+word-presence pass rated `f391` **strong retire** — a fact the owner personally confirmed against
+his 2026 edition, where the extracted PDF is known-wrong. It is marked **DO NOT RETIRE** in the
+table. The evidence column is a grep against the proxy, not against the book that is the
+authority, so "0 hits" is strong evidence and not proof.
+
+**Three of the 28 were already retired** on 10 August and are marked as such — a review list that
+still asks about retired facts is a list that does not get finished, which is L-027's lesson.
+
+**The counts in HANDOFF were wrong and are corrected rather than carried.** That line has read 40
+and then 33; the file holds 28, of which 24 are live, and neither earlier figure is reproducible
+from it.
+
 ## 2026-08-11 (evening) — L-036 upheld, and the same defect found under a second name
 
 **L-036 re-derived independently and upheld.** The row asks for this in unusually strong terms:
