@@ -43,8 +43,21 @@ export { MASTERY_WINDOW, type FactStanding, type Standing } from './standing';
 
 export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
 
-/** Facts served in a day through Due today. The daily obligation, and its ceiling. */
-export const DAILY_TARGET = 30;
+/**
+ * Facts served in a day through Due today. The daily obligation, and its ceiling.
+ *
+ * **30 → 50 on 10 August 2026, and it is a scheduling decision rather than a preference.**
+ * The deck is 533 facts and D-035 opens it to about 700. At 30 a day a 700-fact deck takes 24
+ * days just to *show* every fact once, before any review — and the breadth gate needs a second
+ * phrasing proven before an interval can grow past six days. So a larger deck at an unchanged
+ * daily rate makes readiness worse while making coverage better, which is the trade D-035 left
+ * open and this closes.
+ *
+ * The 60-day simulation was run at 40/day and peaked at 187 reviews on day 9. At 50 the peak
+ * will be higher; that is the cost, and it is paid in the two weeks after a push rather than
+ * spread. Re-run the simulation before treating any of its published numbers as current.
+ */
+export const DAILY_TARGET = 50;
 
 /**
  * Cards guaranteed from each bucket in a day, where that bucket has anything to give.

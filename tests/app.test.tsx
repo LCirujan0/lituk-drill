@@ -322,7 +322,12 @@ describe('explanations', () => {
 
     const { fact } = currentOptions();
     await user.click(screen.getByRole('button', { name: currentOptions().correct }));
-    expect(screen.getByText(fact.explanation!.lead.slice(0, 40), { exact: false })).toBeTruthy();
+    // The WHOLE lead, exactly, as one element. A 40-character prefix used to be enough and is
+    // not: the standard requires line 1 to state the answer as a complete sentence, so a lead
+    // routinely opens with the answer's own words and collides with the option button and the
+    // bolded answer. Matching the full sentence is both unambiguous and a stronger assertion —
+    // it proves the panel rendered, not merely that the phrase appears somewhere.
+    expect(screen.getByText(fact.explanation!.lead)).toBeTruthy();
   });
 });
 

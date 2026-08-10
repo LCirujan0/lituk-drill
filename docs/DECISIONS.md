@@ -1107,7 +1107,10 @@ put throughout.
 
 ## D-034 — An AI layer is admitted to the roadmap, and nothing about its shape is decided yet
 
-**Date:** 10 August 2026 · **Status:** **proposed — no code may be written against this entry**
+**Date:** 10 August 2026 · **Status:** **accepted for (a) only, 10 August 2026.** (b), (c) and (d)
+remain refused. The owner picked after reading the four options: *"Think just a). And maybe the
+ability to test me in free form vs just test drilling, but let's not do that."* — so free-form
+testing is named and rejected, not merely unbuilt.
 
 **Context.** The owner asked for "a useful AI learning layer" and offered an API key. That is a
 scope change and it collides with three things written as absolutes, so it gets an entry before it
@@ -1138,6 +1141,23 @@ picking:
   makes it the option most likely to teach something the exam will mark wrong.
 - **(d) Choose what to drill next.** Replaces a scheduler that is verified by simulation with one
   that cannot be. R4 exists because an interval that quietly clamps has no symptom.
+
+### Resolution — 10 August 2026
+
+**Only (a), explain-on-demand.** A button on a card just answered that asks a model why the chosen
+option is wrong, given the handbook passage as context. It writes nothing to the deck, nothing to
+the schedule and nothing to the readiness model; if the key is absent the button is not there.
+
+**The DPIA screening still has to be re-run before it ships**, because its conclusion rests on
+nothing leaving the device. The likely outcome is unchanged — a single fact id and an option
+string, no identifier, purely personal activity — but "likely unchanged" is a prediction, not a
+screening, and the BRIEF's data inventory needs the third party added either way.
+
+**One design constraint that is not obvious.** The model must be given the handbook passage and
+told the handbook wins, because the exam marks against the book and not against the world. The
+Council of Europe has 46 members; the handbook says 47; the deck says 47. An explainer that
+"corrects" that is worse than no explainer, and it is the single most likely way this feature
+fails.
 
 **Consequences.**
 - *Positive.* (a) is genuinely useful and could ship behind a key without touching the deck, the
@@ -1170,10 +1190,62 @@ ratchets (L-033) apply to every new option.
 
 **Consequences.**
 - *Positive.* Closes the class of failure where the exam asks something the deck never mentioned.
-- *Negative, and unresolved.* **Deck size is now a scheduling problem.** 533 facts at 30 new a day
+### Resolution — 10 August 2026
+
+**Ceiling: about 700 facts. Daily target: 50, raised from 30 in the same breath.** The owner's
+reasoning was quality-first rather than volume-first — *"in order to keep a high standard of
+questions (not dumb ones or something that repeats)"* — so 700 is a cap on the sweep, not a
+target to reach. About 170 facts of headroom from today's 530.
+
+50/day is what makes 700 answerable at all: at 30 a day a 700-fact deck needs 24 days just to show
+every fact once. `DAILY_TARGET` moved on 10 August. **The 60-day simulation was run at 40/day and
+its published numbers — peak 187 reviews on day 9 — are now stale in the wrong direction.** Re-run
+it before quoting any of them.
+
+- *Negative, and now bounded rather than unresolved.* **Deck size is a scheduling problem.** 533 facts at 30 new a day
   already exceeds what six weeks has room for. Doubling the deck without raising daily volume means
   every fact is seen half as often, and the breadth gate needs two proven phrasings before an
   interval can grow. More facts can therefore make readiness *worse* while making coverage better.
   That trade is not decided here and must be settled before the sweep runs at scale.
 - *Negative.* Mechanical extraction of every proper noun produces cards for "Wednesday" and for
   every county named in passing. Examinability is a judgement, and it is what makes this expensive.
+
+
+---
+
+## D-036 — Mocks: twenty fixed tests, plus custom ones, with every result kept
+
+**Date:** 10 August 2026 · **Status:** accepted · **Extends:** D-017
+
+**Context.** D-017 specified mocks as drawn from *unseen* forms, so a mock could not measure memory
+of a form already drilled twenty times. The owner asked instead for **20 fixed tests plus the
+ability to create a custom one**, with every result recorded and percentage-correct tracked over
+time.
+
+**Decision.** Both, and the difference between them is the point.
+
+- **Twenty fixed tests**, stable and numbered. Their value is comparability: the same 24 questions
+  in March and in September is a measurement of you, not of the draw. Retakeable deliberately.
+- **Custom tests**, generated on demand, drawn from unseen forms per D-017 — which keeps one
+  uncontaminated instrument for the readiness model to calibrate against.
+- **Every attempt recorded**: which test, when, score, and which forms were served. Percentage
+  correct over time is the headline.
+
+**The tension this creates, stated rather than smoothed over.** A retaken fixed test is
+contaminated by definition — the second sitting measures memory of those 24 questions. So:
+**fixed-test scores may be shown and trended, and may never calibrate the readiness model.** Only
+custom tests drawn from unseen forms may do that, and D-017's spent-form ledger applies to them
+alone.
+
+**R-7 still binds, and the owner confirmed the reading.** While L-002 and L-003 are
+`fixed-unverified` rather than `verified-fixed`, a mock score may be displayed **as a score**
+— "18 of 24", a trend line — and must never be presented as readiness or as a probability of
+passing. Those are different claims and only one of them is currently supportable.
+
+**Consequences.**
+- *Positive.* A trend over repeated fixed tests is the most legible progress signal the app can
+  offer, and it can go down.
+- *Negative.* Two kinds of test with two different meanings is a thing to explain on screen, and
+  an app that explains itself badly here would let a contaminated score read as readiness.
+- *Deliberate.* 20 × 24 = 480 forms committed in advance, out of 1,588. They are spent for
+  calibration purposes for ever.
