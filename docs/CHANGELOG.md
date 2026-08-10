@@ -2,6 +2,54 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-10 — four questions the handbook cannot answer, and a ratchet that measured the wrong deck
+
+**Four facts retired, on the owner's instruction, without further adjudication.** Each had been
+sitting as an open question addressed to him, and each had the same answer available: the source
+this deck is checked against cannot settle it, so it is not examinable.
+
+- **f213** — the KoLL age exemption. A Home Office rule, absent from the handbook entirely
+  (L-016). It was the last amber fact and the only unresolved verify flag in the deck.
+- **f006** — Stonehenge's age. The handbook lists it among monuments built by the first farmers
+  and then calls the neighbouring examples "other Stone Age sites", while the fact answered
+  Bronze Age (L-028). The book never assigns it an age outright, so neither answer was safe.
+- **f015** — Hadrian's Wall, "AD 122". No year in the handbook, and all three phrasings turned
+  on the date (L-023, L-031).
+- **f194** — Baird's television, "1924". The book says "the 1920s"; 1924 was embedded in the
+  canonical stem itself (L-031) — the exact defect the vocabulary check was written for, hiding
+  in the question where a check that only reads explanations could never see it.
+
+Deck **537 → 533 facts**, 1,609 → 1,597 forms, 22 → 26 retired ids. Retired, not deleted: ids are
+the handle the review-event log points at (R-4).
+
+*Honest cost, recorded rather than glossed:* retiring f194 leaves **Baird with no card of his
+own**. He now appears only as a distractor in f196 and f199. That is a coverage regression against
+S10 and it is logged as one, to be closed by a phrasing that does not turn on a year.
+
+**Then the ratchets turned out to be measuring a deck nobody drills.** `analyseDeck` was being
+passed `DECK` — all 559 ids, retired included — by both the report and the tests. A retired fact
+is never served, and facts get retired for being *bad*, so the retired set was flattering every
+figure it entered. Re-pointed at `ACTIVE`: longest-option tell **0.3124 → 0.3092**, on-screen
+numeric tell **0.5277 → 0.5249**. Small, and in the direction that says the old numbers were
+wrong. The id-space contracts — contiguity, uniqueness, orphaned explanations — stay on `DECK`,
+because those are properties of the id space and not of the study material.
+
+**And one ratchet had no ratchet.** `longestOptionCorrectRate` sat at a ceiling of **0.39** while
+the deck measured **0.312** — eight points of slack, enough for two hundred forms to regress
+without ever failing a build. Tightened to **0.315**. Found by reading the report against the
+baseline, which is not a check; the lesson is that a ratchet needs its own gap monitored, or it
+silently stops being one. Also tightened: `effectiveNumericMiddleRankRate` 0.53 → 0.527,
+`restrictedRankForms` 1 → **0** (L-012's £3,000 form can now reach every rank, so this becomes an
+assertion), and `unresolvedVerifyFlags` 1 → **0**, which clears launch-gate item 2.
+
+**A probe run while scoping found the defect class the next piece of work exists for.** The deck
+has statistical checks over option *shape* and none whatever over option *content*. Two
+measurements, neither previously taken: **12 forms offer as a wrong answer something another form
+of the same fact marks correct** (f454 has Gertrude Jekyll both ways; f511 treats "12 noon" as
+wrong), and **618 distractor strings repeat across forms of one fact**, so the same wrong answers
+come round again and again — R2's memorisable surface sitting inside the mechanism built to
+prevent it. Logged as L-033.
+
 ## 2026-08-05 — the card loses its chrome, and the black band turns out to be 360px (D-033)
 
 **I had been measuring the wrong screen.** Every layout claim in this repo says "fits 393×852";

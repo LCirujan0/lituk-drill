@@ -290,8 +290,16 @@ export function structuralFaults(deck: Deck): string[] {
 /**
  * Everything, for a report or a failing-test message.
  *
- * Measures the whole deck. A report that quietly excluded some of it would be describing a
- * deck nobody is drilling.
+ * **Pass `ACTIVE`, not `DECK`.** The comment here used to say the opposite — that excluding
+ * any of the deck would describe a deck nobody is drilling — and it was written before facts
+ * started being retired. It is now exactly backwards: a retired fact is never served, so
+ * measuring one reports on material no reader meets, and because facts get retired for being
+ * bad the retired set skews every rate in the flattering direction. Measured 10 Aug 2026 over
+ * 26 retired facts: longest-option 0.3124 -> 0.3092, on-screen numeric 0.5277 -> 0.5249.
+ *
+ * The id-space contracts — contiguity, uniqueness, orphaned explanations — are the exception
+ * and still run over `DECK`, because those are properties of the id space rather than of the
+ * study material.
  */
 export function analyseDeck(deck: Deck) {
   return {

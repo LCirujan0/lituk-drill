@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { DECK } from '@/domain/deck';
+import { ACTIVE, DECK } from '@/domain/deck';
 import { fixedOptions } from '@/domain/deck/types';
 import {
   achievableRanks,
@@ -175,7 +175,7 @@ describe('presentation', () => {
 });
 
 describe('deck-wide effect — the ratchet', () => {
-  const effective = effectiveNumericMiddleRankRate(DECK);
+  const effective = effectiveNumericMiddleRankRate(ACTIVE);
 
   it('reports what it did', () => {
     console.log(
@@ -191,7 +191,7 @@ describe('deck-wide effect — the ratchet', () => {
   });
 
   it('leaves almost no form unable to reach every rank', () => {
-    const restricted = formsWithRestrictedRanks(DECK);
+    const restricted = formsWithRestrictedRanks(ACTIVE);
     expect(restricted.length, `restricted: ${restricted.join(', ')}`).toBeLessThanOrEqual(
       DECK_BASELINE.restrictedRankForms,
     );

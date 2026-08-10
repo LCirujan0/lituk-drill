@@ -90,8 +90,15 @@ export const DECK_BASELINE: DeckBaseline = {
   // remaining 2.7 points are entirely the 56 as-written forms, whose own middle rate is
   // about 68% — lower than the deck's, because differently-worded options were never
   // bracketing a value in the first place. Closing the rest means rewriting those by hand.
-  effectiveNumericMiddleRankRate: 0.53,
-  restrictedRankForms: 1,
+  //
+  // Tightened 0.53 -> 0.527 on 10 Aug 2026, when the measurement moved from DECK to ACTIVE.
+  // That is not a content improvement: the retired forms were simply worse than average and
+  // were flattering the figure. Re-derived, not loosened, and the direction is the honest one.
+  effectiveNumericMiddleRankRate: 0.527,
+  // Was 1 — L-012, the £3,000 small-claims form whose answer could never be the largest
+  // option. It is 0 today over both DECK and ACTIVE. At zero this stops being a ratchet and
+  // becomes an assertion: any form that cannot place its answer at all four ranks now fails.
+  restrictedRankForms: 0,
   // Re-derived 4 Aug 2026 when the metric changed definition, NOT loosened to pass a build.
   // It now counts only forms presented as written; the 15 all-numeric forms that carry a
   // generation rule are excluded, because their stored text never reaches a screen. That
@@ -100,11 +107,17 @@ export const DECK_BASELINE: DeckBaseline = {
   // Tightened 0.408 -> 0.390 after the D-024 additions: their option sets were deliberately
   // length-balanced (one distractor per form extended so the answer is never uniquely
   // longest), which pulled the deck-wide figure down from 40.7% to 38.8%.
-  longestOptionCorrectRate: 0.39,
-  // Was 12. Eleven resolved against the handbook on 4 August 2026 — eight confirmed correct,
-  // three corrected (see divergences.ts). Only f213 remains: the KoLL age exemption is a Home
-  // Office rule and does not appear in the handbook, so this source cannot settle it.
-  unresolvedVerifyFlags: 1,
+  // Tightened 0.39 -> 0.315 on 10 Aug 2026. The ceiling had been left eight points above the
+  // actual figure (0.312), which is a ratchet that cannot catch anything: two hundred forms
+  // could have regressed without failing a build. Found by reading the report against the
+  // baseline rather than by any check — the ratchet had no ratchet.
+  longestOptionCorrectRate: 0.315,
+  // Was 12, then 1. Eleven resolved against the handbook on 4 August 2026 — eight confirmed
+  // correct, three corrected (see divergences.ts). The last, f213, was the KoLL age exemption:
+  // a Home Office rule that does not appear in the handbook at all, so this source could never
+  // settle it either way. Retired on 10 August 2026 rather than left amber indefinitely, which
+  // takes this to zero and clears launch-gate item 2.
+  unresolvedVerifyFlags: 0,
   // ZERO. Was 8, and the drop is real rather than definitional in all but one respect.
   //
   // Four of the eight went when the facts that carried them were retired — the handbook could

@@ -6,13 +6,13 @@
  * cheap. Read-only.
  */
 
-import { DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
+import { ACTIVE, DECK, TOTAL_FACTS, TOTAL_FORMS } from '@/domain/deck';
 import { analyseDeck } from '@/domain/deck/analysis';
 import { DECK_BASELINE, DECK_TARGETS } from '@/domain/deck/baseline';
 import { CHAPTER_NAMES, type Chapter } from '@/domain/deck/types';
 import { EXPLANATIONS } from '@/data/explanations';
 
-const a = analyseDeck(DECK);
+const a = analyseDeck(ACTIVE);
 const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
 const row = (label: string, value: string, note = '') =>
   console.log(`  ${label.padEnd(34)}${value.padStart(12)}  ${note}`);
