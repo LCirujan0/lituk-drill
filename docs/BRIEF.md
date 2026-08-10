@@ -379,25 +379,33 @@ independently.
 **Solution sketch.** Keep the 87 tags as the data. Add a **band** above them — about a dozen
 groups of roughly 30–55 facts, each a drillable section with its own counts. Chapters stay as the
 handbook's own structure (they are how the source is organised and how sourcing is cited); bands
-become the thing you drill. A first cut, summing to 533 exactly:
+become a second way in. The mapping is one table from tag to band (`src/domain/deck/bands.ts`).
+
+**Built 10 August 2026. The cut below is the one that shipped**, re-derived against the live 530
+rather than the 533 the first draft assumed. That draft is superseded and the reason is worth
+keeping: it assigned **Devolution** and **Europe** to two bands each, so its columns summed to 533
+only because two tags were counted twice. A band table that double-assigns a tag does not
+partition anything, and the partition is the whole property C4 rests on.
 
 | Band | Facts | Built from |
 |---|---|---|
-| Values and the UK | 51 | ch.1 entire, plus saints, flags, capitals, languages |
+| Values and the UK | 48 | chapters 1 and 2 entire — values, freedoms, citizenship, saints, flags, capitals, languages, the UK's own definition |
 | Early Britain, to 1485 | 53 | Prehistory, Romans, Anglo-Saxons, Vikings, Norman Conquest, Middle Ages |
-| Tudors and Stuarts, 1485–1714 | 47 | Tudors, Reformation, Civil War, Restoration, Glorious Revolution, Stuarts, Union |
-| Empire and industry, 1714–1901 | 54 | Empire, Industrial Revolution, Victorians, Inventors, Napoleonic Wars, Jacobites, Enlightenment, Slavery |
-| War and aftermath, 1914–1945 | 30 | WWI, Interwar, WWII, Suffrage |
-| Modern Britain, 1945– | 36 | Post-war, Welfare State, Modern Britain, Immigration, Ireland, Northern Ireland, Education, Politics, Europe, Devolution |
+| Tudors and Stuarts | 47 | Tudors, Reformation, Civil War, Restoration, Glorious Revolution, Stuarts, Union |
+| Empire and industry | 54 | Empire, Industrial Revolution, Victorians, Inventors, Napoleonic Wars, Jacobites, Enlightenment, Slavery, Science |
+| War and aftermath | 30 | WWI, Interwar, WWII, Suffrage |
+| Modern Britain, 1945– | 34 | Post-war, Welfare State, Modern Britain, Immigration, Ireland, Northern Ireland, Politics, Education |
 | Sport and leisure | 37 | Sport, Leisure, Pubs, National parks |
-| Arts and culture | 51 | Music, Cinema, Literature, Comedy, Theatre, Art, Architecture, Design, Media |
-| Everyday life | 53 | Religion, Festivals, Traditions, Currency, The UK today, Landmarks, Demographics, Food |
-| Government and elections | 50 | Elections, Parliament, Government, Monarchy, Devolution, Local government, Constitution, Civil service |
+| Arts and culture | 49 | Music, Cinema, Literature, Comedy, Theatre, Art, Design, Media |
+| Everyday life | 48 | Religion, Festivals, Traditions, Currency, Landmarks, Architecture, Food |
+| Government and elections | 51 | Elections, Parliament, Government, Monarchy, Devolution, Local government, Constitution, Civil service |
 | The law and your rights | 41 | Courts, Law, Rights, Police, Driving, Tax |
-| Community and the wider world | 30 | Community, Environment, International, Europe |
+| Britain today and the wider world | 38 | The UK today, Demographics, Community, Environment, International, Europe |
 
-Twelve bands, 30–54 facts, mean 44. The mapping is one table from tag to band, checked by a test
-that every tag has exactly one band and the bands partition the deck.
+Twelve bands, 30–54 facts, mean 44, summing to 530 exactly. `Science` appears in the table and
+contributes nothing: it is carried only by two retired facts (f105 Newton, f148 Darwin), and it is
+mapped because a tag that exists only on retirements is the one nobody thinks to map when the
+sweep reuses it. That was found by the test, not by reading.
 
 **Rabbit holes.** Re-tagging the deck to make prettier bands. The tags came from the handbook's own
 structure; re-cutting them is content work wearing a UI costume. Also: making bands a *third*
@@ -413,6 +421,15 @@ New + Mastered + Mistakes must partition each band exactly. No fact belongs to t
 the deck, asserted as a test so the property cannot rot as facts are added. **No band exceeds 55
 facts** — also a test, because C6 is about to add facts and bands drift silently. Measured on the
 real screen at 402×874, where twelve rows have to fit the way eleven eras now do.
+
+**Met, except the last clause, which is recorded as missed rather than restated.** `bands.test.ts`
+asserts the partition, the ceiling, and that the table and the deck use the same tag vocabulary in
+both directions; the tag check caught `Science` on its first run. Measured at 402×874: the list
+area is 458px, so **8 of the 12 band rows are fully visible and the last four need a scroll**.
+Twelve rows fit only by taking each below `--target-min`, which trades an accessibility rule for a
+navigation one, so the rows keep their 44px and the list scrolls inside a frame that still does
+not. Five chapter rows are unchanged at 85px with no slack. Two bands sit within two facts of the
+ceiling, so C6 will have to split a band — which is the test doing its job.
 
 ### C5 — the progress bar says which kind of progress · *requested 10 Aug 2026 · within R-12*
 
@@ -433,6 +450,21 @@ which — see L-004 and L-034, both open contrast findings.
 
 **Acceptance criteria + verification.** The three percentages sum to 100 for every chapter and
 every tag, asserted over generated logs; contrast measured, not eyeballed.
+
+**Met, 10 August 2026.** `counts.test.ts` runs the same partition assertions over both cuts from
+one `it.each`, per row and in aggregate, over six generated logs — a copy per cut is what would
+have been updated on one side only. `app.test.tsx` reads the three figures back off each row's
+accessible name and asserts each row partitions itself and that the rows partition the deck.
+Both were run against deliberately broken code first (a band queue ignoring its band; a row using
+the deck as its denominator) and watched to fail.
+
+**Contrast, measured in the browser in both schemes.** Green on red is **1.43:1** — the worst pair
+on the screen and a straight failure of WCAG 1.4.11 — so the segments are separated by a
+surface-coloured rule (5.19:1 dark, 3.27:1 light) rather than by hue, the mistakes segment is
+hatched as well as coloured, and the accessible name spells out all three figures as words. The
+same rule carries the mastered/untouched edge, which measured 2.92:1 in light. The cut toggle's
+unselected label was `--c-text-muted` on `--c-fill` — 3.12:1, which is L-034 exactly — and was
+changed to `--c-text-soft` before it shipped rather than added to the pile.
 
 ### C6 — a full extraction sweep of the handbook · *requested 10 Aug 2026 · needs D-035*
 

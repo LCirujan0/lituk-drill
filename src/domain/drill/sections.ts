@@ -23,7 +23,8 @@
  * deck, which `standing.ts` guarantees by construction.
  */
 
-import type { Deck, Fact } from '../deck/types';
+import { bandOf, type BandId } from '../deck/bands';
+import type { Chapter, Deck, Fact } from '../deck/types';
 import type { ReviewEvent } from '../scheduler/events';
 import { shuffle, type Rng } from '../scheduler/rng';
 import type { FactState } from '../scheduler/types';
@@ -41,7 +42,7 @@ import {
 /** Re-exported so callers reach one definition of the window, wherever they came in. */
 export { MASTERY_WINDOW, type FactStanding, type Standing } from './standing';
 
-export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
+export type SectionId = 'due' | 'new' | 'mistakes' | 'chapter' | 'band' | 'random' | 'mastered';
 
 /**
  * Facts served in a day through Due today. The daily obligation, and its ceiling.
@@ -296,6 +297,33 @@ export function chapterQueue(ctx: SectionContext, chapter: number, limit = 40): 
 }
 
 // ===========================================================================
+// By band
+// ===========================================================================
+
+/**
+ * A band drill, rotated — the same machinery as a chapter drill over a different cut.
+ *
+ * Bands and chapters are two independent partitions of the same deck (`deck/bands.ts`), not a
+ * hierarchy, so this is deliberately a sibling of `chapterQueue` rather than a special case of
+ * it. A fact belongs to exactly one of each, so drilling a band and drilling its facts' chapters
+ * are different sessions that happen to overlap.
+ */
+export function bandQueue(ctx: SectionContext, band: BandId, limit = 40): DrillItem[] {
+  const counts = countsFor(ctx);
+  const facts = ctx.deck.filter((f) => bandOf(f) === band);
+  const order = rotate(
+    facts.map((f) => f.id),
+    counts,
+    ctx.rng,
+  );
+
+  return order.slice(0, limit).map((factId) => ({
+    factId,
+    formIndex: leastSeenForm(factById(ctx.deck, factId), counts, ctx.rng),
+  }));
+}
+
+// ===========================================================================
 // Random
 // ===========================================================================
 
@@ -371,8 +399,31 @@ export function masteredQueue(ctx: SectionContext, limit = 40): DrillItem[] {
  * partition, and it is not a coverage figure: it is cards left in today's thirty, each of them a
  * distinct fact, and it falls to zero every evening rather than describing the deck.
  */
+/**
+ * One drillable group's three-way split — a chapter row, or a band row.
+ *
+ * **`mastered + mistakes + fresh === total`, for every group** (C5, R-12). That is the same
+ * partition the whole screen rests on, restricted to a subset of the deck, and restriction cannot
+ * break it: each fact carries exactly one standing and lands in exactly one group. It is asserted
+ * per chapter and per band in `counts.test.ts` anyway, because "cannot break" is a claim about
+ * today's code.
+ *
+ * A row used to show only `mastered / total`, so a chapter half mastered and a chapter half
+ * attempted-and-failing drew the same bar.
+ */
+export interface GroupCounts {
+  /** Facts in this group. The denominator for this row, and only for this row. */
+  readonly total: number;
+  /** Facts with no wrong answer in their last three attempts. */
+  readonly mastered: number;
+  /** Facts with a wrong answer inside their last three attempts. */
+  readonly mistakes: number;
+  /** Facts never answered. */
+  readonly fresh: number;
+}
+
 export interface SectionCounts {
-  /** Cards left in today's 30. Each is a distinct fact; a fact appears at most once a day. */
+  /** Cards left in today's 50. Each is a distinct fact; a fact appears at most once a day. */
   readonly due: number;
   /** Facts never answered. */
   readonly newFacts: number;
@@ -382,19 +433,50 @@ export interface SectionCounts {
   readonly mastered: number;
   /** Facts drilled, i.e. `ACTIVE.length`. The denominator on every screen. */
   readonly totalFacts: number;
-  readonly byChapter: ReadonlyMap<number, { total: number; mastered: number }>;
+  /** The handbook's own cut. Partitions the deck. */
+  readonly byChapter: ReadonlyMap<Chapter, GroupCounts>;
+  /** The topic cut, about a dozen bands. Also partitions the deck, independently. */
+  readonly byBand: ReadonlyMap<BandId, GroupCounts>;
+}
+
+/**
+ * Tally one standing into one group. Written once and used for both cuts, so a chapter row and a
+ * band row cannot come to mean different things — which is exactly how the home screen's four
+ * numbers came to disagree in the first place (D-032).
+ */
+type MutableCounts = { -readonly [K in keyof GroupCounts]: GroupCounts[K] };
+
+function tally<K>(
+  groups: Map<K, MutableCounts>,
+  key: K | null,
+  standing: 'mastered' | 'mistakes' | 'fresh',
+): void {
+  if (key === null) return;
+  const entry = groups.get(key) ?? { total: 0, mastered: 0, mistakes: 0, fresh: 0 };
+  entry.total++;
+  entry[standing]++;
+  groups.set(key, entry);
 }
 
 export function sectionCounts(ctx: SectionContext): SectionCounts {
   const { fresh, mastered, mistakes } = partition(factIds(ctx), ctx.events);
   const isMastered = new Set(mastered);
+  const isMistake = new Set(mistakes);
 
-  const byChapter = new Map<number, { total: number; mastered: number }>();
+  const byChapter = new Map<Chapter, MutableCounts>();
+  const byBand = new Map<BandId, MutableCounts>();
+
   for (const fact of ctx.deck) {
-    const entry = byChapter.get(fact.chapter) ?? { total: 0, mastered: 0 };
-    entry.total++;
-    if (isMastered.has(fact.id)) entry.mastered++;
-    byChapter.set(fact.chapter, entry);
+    const standing = isMastered.has(fact.id)
+      ? 'mastered'
+      : isMistake.has(fact.id)
+        ? 'mistakes'
+        : 'fresh';
+    tally(byChapter, fact.chapter, standing);
+    // Null only if a tag is missing from `TAG_BAND`, which `bands.test.ts` forbids. Skipping
+    // rather than inventing a band keeps the band rows honest if that test is ever loosened:
+    // a missing tag then shows as facts absent from every band, not as a wrong denominator.
+    tally(byBand, bandOf(fact), standing);
   }
 
   return {
@@ -404,5 +486,6 @@ export function sectionCounts(ctx: SectionContext): SectionCounts {
     mastered: mastered.length,
     totalFacts: ctx.deck.length,
     byChapter,
+    byBand,
   };
 }

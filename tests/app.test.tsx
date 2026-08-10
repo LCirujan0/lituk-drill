@@ -18,6 +18,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '@/app/page';
 import { ACTIVE, DECK } from '@/domain/deck';
 import { CHAPTER_NAMES } from '@/domain/deck/types';
+import { BAND_IDS, bandOf } from '@/domain/deck/bands';
 import { reloadFromStorage } from '@/adapters/store';
 import { EVENTS_KEY } from '@/adapters/local-store';
 import type { ReviewEvent } from '@/domain/scheduler/events';
@@ -858,5 +859,81 @@ describe('persistence', () => {
     const shown = (n: number) => n.toLocaleString('en-GB');
     expect(screen.queryByText(shown(ACTIVE.length))).toBeNull();
     expect(screen.getByText(shown(ACTIVE.length - 1))).toBeTruthy();
+  });
+});
+
+describe('chapters and bands — both drillable, both showing progress (C4/C5)', () => {
+  /**
+   * The owner's requirement, 10 August 2026: *"ideally chapters can be expanded into multiple
+   * bands, but I can still practise either chapters or bands and measure progress for each."*
+   *
+   * So the assertions here are that neither cut replaces the other. Chapters still drill; bands
+   * drill too; both carry their own three-way split; and the split shown for a band is the band's
+   * own denominator rather than the deck's — which is the failure a shared component invites.
+   */
+  const rowNamed = (name: RegExp) => screen.getByRole('button', { name });
+
+  it('opens a band drill, and serves a fact from that band', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+
+    await user.click(screen.getByRole('tab', { name: 'Bands' }));
+    await user.click(rowNamed(/^Early Britain, to 1485 — /));
+
+    const heading = await screen.findByRole('heading', { level: 1 });
+    // The card served must belong to the band, not merely to the deck. Matched on the question
+    // text because the card carries no id — which is also what makes this a real check.
+    const inBand = new Set(
+      ACTIVE.filter((f) => bandOf(f) === 'early').flatMap((f) => f.forms.map((q) => q.question)),
+    );
+    expect(inBand.has(heading.textContent ?? '')).toBe(true);
+  });
+
+  it('still opens a chapter drill after the band cut has been shown', async () => {
+    // The toggle is view state, and a cut left on Bands must not strand the chapters.
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+
+    await user.click(screen.getByRole('tab', { name: 'Bands' }));
+    await user.click(screen.getByRole('tab', { name: 'Chapters' }));
+    await user.click(rowNamed(/^Values — /));
+
+    const heading = await screen.findByRole('heading', { level: 1 });
+    const inChapter = new Set(
+      ACTIVE.filter((f) => f.chapter === 1).flatMap((f) => f.forms.map((q) => q.question)),
+    );
+    expect(inChapter.has(heading.textContent ?? '')).toBe(true);
+  });
+
+  it('gives every row its own three figures, summing to that row alone', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByRole('button', { name: /Due today/ });
+
+    // The accessible name carries all three figures as words, so colour is not the only carrier
+    // of which segment is which (WCAG 1.4.1, and L-004/L-034 are both open).
+    const read = (label: string) => {
+      const m = label.match(/— (\d+) facts: (\d+) mastered, (\d+) mistakes, (\d+) not yet tried$/);
+      expect(m, `row label does not carry its three figures: ${label}`).toBeTruthy();
+      return m!.slice(1).map(Number);
+    };
+
+    for (const cut of ['Chapters', 'Bands'] as const) {
+      await user.click(screen.getByRole('tab', { name: cut }));
+      const rows = screen.getAllByRole('button', { name: / — \d+ facts: / });
+      expect(rows.length).toBe(cut === 'Chapters' ? 5 : BAND_IDS.length);
+
+      let total = 0;
+      for (const row of rows) {
+        const [n, mastered, mistakes, fresh] = read(row.getAttribute('aria-label') ?? '');
+        expect(mastered + mistakes + fresh, 'the row does not partition itself').toBe(n);
+        // The denominator is the row's own, never the deck's — the bug a shared row invites.
+        expect(n).toBeLessThan(ACTIVE.length);
+        total += n;
+      }
+      expect(total, `${cut} do not partition the deck`).toBe(ACTIVE.length);
+    }
   });
 });

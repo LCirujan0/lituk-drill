@@ -14,13 +14,13 @@
 
 import { useCallback, useState } from 'react';
 
-import { useDrill, type SectionKey } from './_lib/use-drill';
+import { useDrill, type DrillScope, type SectionKey } from './_lib/use-drill';
 import { Home } from '@/components/Home';
 import { Drill, type CardAnswer, type DrillMode } from '@/components/Drill';
 import { Progress } from '@/components/Progress';
 import { TabBar, type Tab } from '@/components/TabBar';
 import { Timeline } from '@/components/Timeline';
-import type { Chapter } from '@/domain/deck/types';
+import type { BandId } from '@/domain/deck/bands';
 import type { Grade } from '@/domain/scheduler/types';
 import type { DrillItem } from '@/domain/drill/sections';
 
@@ -34,7 +34,7 @@ import type { DrillItem } from '@/domain/drill/sections';
  */
 type View =
   | { kind: 'tab'; tab: Tab }
-  | { kind: 'drill'; section: SectionKey; chapter?: Chapter };
+  | { kind: 'drill'; section: SectionKey; scope?: DrillScope };
 
 /** A card as it was served: which phrasing, which option order, and what was done with it. */
 interface Served {
@@ -48,6 +48,7 @@ const EMPTY_MESSAGE: Record<SectionKey, string> = {
   new: 'Every fact in the deck has been answered at least once.',
   mistakes: 'Nothing outstanding.',
   chapter: 'Nothing left in this chapter right now.',
+  band: 'Nothing left in this band right now.',
   random: 'Nothing to draw from, which should be impossible.',
   mastered: 'Nothing here yet. A fact arrives once you have answered it, and stays until you miss it.',
 };
@@ -118,7 +119,7 @@ export default function App() {
       // The card being left is only kept once it has been answered — which it always has
       // been, since Next is the only way here and it appears only after an answer.
       if (current && answer) setPast((p) => [...p, { item: current, nonce: cardNonce, answer }]);
-      setCurrent(drill.nextItem(v.section, v.chapter));
+      setCurrent(drill.nextItem(v.section, v.scope));
       setCardNonce((n) => n + 1);
       setAnswer(null);
       setCursor(null);
@@ -127,10 +128,10 @@ export default function App() {
   );
 
   const openDrill = useCallback(
-    (section: SectionKey, chapter?: Chapter) => {
-      const next: View = { kind: 'drill', section, chapter };
+    (section: SectionKey, scope?: DrillScope) => {
+      const next: View = { kind: 'drill', section, scope };
       setView(next);
-      setCurrent(drill.nextItem(section, chapter));
+      setCurrent(drill.nextItem(section, scope));
       setCardNonce((n) => n + 1);
       setAnswer(null);
       setPast([]);
@@ -208,7 +209,8 @@ export default function App() {
           syncedAt={drill.syncedAt}
           onSync={() => void drill.syncNow()}
           onOpen={(section) => openDrill(section)}
-          onChapter={(chapter) => openDrill('chapter', chapter)}
+          onChapter={(chapter) => openDrill('chapter', { kind: 'chapter', chapter })}
+          onBand={(band: BandId) => openDrill('band', { kind: 'band', band })}
         />
       )}
 

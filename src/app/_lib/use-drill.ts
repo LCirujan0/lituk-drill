@@ -25,7 +25,9 @@ import { ACTIVE, TOTAL_FACTS } from '@/domain/deck';
 import { replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
 import { DEFAULT_CONFIG, type Grade, type ReviewMode } from '@/domain/scheduler/types';
+import { type BandId } from '@/domain/deck/bands';
 import {
+  bandQueue,
   chapterQueue,
   dueQueue,
   mistakeStandings,
@@ -50,7 +52,16 @@ import {
   sync,
 } from '@/adapters/store';
 
-export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'random' | 'mastered';
+export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'band' | 'random' | 'mastered';
+
+/**
+ * What a drill was opened on, where the section needs one.
+ *
+ * A chapter drill carries a chapter and a band drill carries a band; the other five carry
+ * nothing. One optional parameter rather than two, so a caller cannot pass both and leave the
+ * queue to decide which it meant.
+ */
+export type DrillScope = { kind: 'chapter'; chapter: number } | { kind: 'band'; band: BandId };
 
 const FORM_COUNTS = new Map(ACTIVE.map((f) => [f.id, f.forms.length]));
 
@@ -103,7 +114,7 @@ export function useDrill() {
   const recent = useMemo(() => events.slice(-3).map((e) => e.factId), [events]);
 
   const nextItem = useCallback(
-    (section: SectionKey, chapter?: number): DrillItem | null => {
+    (section: SectionKey, scope?: DrillScope): DrillItem | null => {
       let queue: DrillItem[] = [];
 
       if (section === 'due') {
@@ -116,8 +127,10 @@ export function useDrill() {
         queue = mistakesQueue(ctx, 60);
       } else if (section === 'mastered') {
         queue = masteredQueue(ctx, 60);
+      } else if (section === 'band') {
+        queue = scope?.kind === 'band' ? bandQueue(ctx, scope.band, 60) : [];
       } else {
-        queue = chapterQueue(ctx, chapter ?? 1, 60);
+        queue = chapterQueue(ctx, scope?.kind === 'chapter' ? scope.chapter : 1, 60);
       }
 
       if (queue.length === 0) return null;
