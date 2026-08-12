@@ -259,6 +259,50 @@
   font-size: var(--text-sm);
 }
 
+/* ---- "why is that wrong?" (C8(a), D-034) ------------------------------
+   The TEXT sits below the options; the BUTTON lives in the action bar (`.whyAsk`, further
+   down, beside `.lucky`). Measured at 402×874: below the options the button cost 48px on a
+   card whose scrolling body was already exactly full, which pushed the control itself below
+   the fold. Reading is a scroll; acting is not (D-033).
+
+   Styled quieter than everything around it on purpose. Generated text must never read as
+   authoritative next to sourced text, and the `.whySource` line above it is not decoration:
+   nothing generated is served without saying where it came from and what outranks it. */
+.why {
+  margin: var(--space-3) 0 0;
+  padding-block-start: var(--space-3);
+  border-block-start: 1px dashed var(--c-rule);
+}
+
+.whyStatus {
+  margin: 0;
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+}
+
+/* Always rendered with the text it labels, never separately.
+
+   `--c-text-soft`, not `--c-text-muted`. This line paints on `--c-page` — `.why` is inside
+   `.options`, which is a sibling of `.card` and sets no background of its own — where muted
+   measures **3.41:1** at 11px against AA's 4.5:1 for body text. That is L-034's failure
+   exactly, and the precedent in this repo is to substitute soft (6.90:1) before shipping
+   rather than add to the pile; the cut toggle did it, the C3 chronology elements did it.
+   It matters more here than anywhere: this is the line that stops generated text being read
+   as the answer, so it is the last line in the feature that may be hard to read. */
+.whySource {
+  margin: 0 0 var(--space-2);
+  color: var(--c-text-soft);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+.whyText {
+  margin: 0;
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
 /* ---- the action bar --------------------------------------------------- */
 
 /* Everything you can do with a card, on one row, pinned to the bottom. `margin-block-start:
@@ -441,6 +485,23 @@
   color: var(--c-caution-text);
   background: var(--c-surface);
   border: 1px solid color-mix(in srgb, var(--c-grade-hard) 45%, transparent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+/* Shares the slot with `.lucky` and never appears beside it — that one is a right answer,
+   this one a wrong answer. Same box so the row's height is identical either way; quieter
+   colours because asking a model is not a grading action. */
+.whyAsk {
+  flex: none;
+  min-height: var(--target-min);
+  padding-inline: var(--space-3);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--c-text-soft);
+  background: var(--c-surface);
+  border: 1px solid var(--c-rule);
   border-radius: var(--radius-md);
   cursor: pointer;
 }

@@ -15,6 +15,7 @@
 import { useCallback, useState } from 'react';
 
 import { useDrill, type DrillScope, type SectionKey } from './_lib/use-drill';
+import { useExplainAvailable } from './_lib/use-explain';
 import { Home } from '@/components/Home';
 import { Drill, type CardAnswer, type DrillMode } from '@/components/Drill';
 import { Progress } from '@/components/Progress';
@@ -57,6 +58,9 @@ export default function App() {
   const drill = useDrill();
   const [view, setView] = useState<View>({ kind: 'tab', tab: 'drill' });
   const [mode, setMode] = useState<DrillMode>('quiz');
+  // Asked once, on mount. False until the server says otherwise, so the button is absent
+  // offline and absent with no key rather than present and broken (D-034, condition 5).
+  const explainAvailable = useExplainAvailable();
 
   /**
    * The card currently being answered, held deliberately.
@@ -239,6 +243,7 @@ export default function App() {
           canPrevious={canPrevious}
           canForward={canForward}
           position={total > 1 ? { index, total } : null}
+          explainAvailable={explainAvailable}
         />
       )}
 
