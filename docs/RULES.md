@@ -59,8 +59,16 @@ conditions the re-run screening in the BRIEF names. It sends one card and the ha
 sends no review history and no identifier; nothing it returns is stored into the deck, the schedule
 or the readiness model; and the app works with no network and no key. Any other third party, or any
 of those conditions failing, is still forbidden and needs its own entry. The disclosure this leaves
-— that the account holder is studying the citizenship test — is L-040, and only the owner can
-accept it.*
+— that the account holder is studying the citizenship test — is L-040; the owner accepted it on
+12 August 2026 and still owes the `risk-accepted` row itself.*
+
+***Live since 12 Aug 2026, and conditions 1, 2, 3 and 5 are now machine checks rather than
+prose.*** `explain.test.ts` renders every field of the outbound prompt as a sentinel and asserts
+the residue is the template byte for byte, over all 1,588 forms — no id, no history and no new
+field can enter without failing it. `explain-ui.test.tsx` asserts the button is absent with no
+key, that the body is exactly three fields, and that the text is discarded when the card is left.
+**Condition 4 — provider retention and training off — has no machine check and cannot have one:
+it is a console setting the owner checks.**
 
 ### R-9 · Raw colours and sizes appear only in `tokens.css`
 Components reference semantic tokens. A token system without its check is decoration.

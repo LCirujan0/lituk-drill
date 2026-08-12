@@ -80,6 +80,12 @@ interface Props {
   readonly canForward: boolean;
   /** 1-based position in this session's cards, or null when there is only one. */
   readonly position: { readonly index: number; readonly total: number } | null;
+  /**
+   * Whether the server has a model key (C8(a), D-034). False means the button is **absent**,
+   * not disabled — screening condition 5 is that the app works with no network and no key,
+   * and a greyed-out control is a promise the app cannot keep.
+   */
+  readonly explainAvailable: boolean;
 }
 
 /** Pick the phrasing to show. `formIndex: -1` means the section left the choice to us. */
@@ -103,6 +109,7 @@ function resolveForm(item: DrillItem, mode: DrillMode, seed: number): number {
 export function Drill({
   item, mode, onGrade, onAnswer, onNext, onExit, stateFor,
   nonce, emptyMessage, restore, readOnly, onPrevious, onForward, canPrevious, canForward, position,
+  explainAvailable,
 }: Props) {
   // Reset on a new card is handled by the caller giving this component a `key` tied to the
   // card's identity, so React discards this state rather than an effect clearing it. A new
@@ -119,6 +126,20 @@ export function Drill({
   /** Set once "Got lucky" has been pressed, so it cannot be pressed twice. */
   const [downgraded, setDowngraded] = useState(prior?.downgraded ?? false);
   const [graded, setGraded] = useState<Grade | null>(prior?.mode === 'recall' ? prior.grade : null);
+
+  /**
+   * The explanation, if one has been asked for (C8(a)).
+   *
+   * Component state, and that is the storage decision rather than an implementation detail:
+   * screening condition 3 is that nothing generated is stored into the deck, the schedule or
+   * the readiness model. Leaving the card remounts this component and the text is gone. It is
+   * deliberately NOT part of `CardAnswer`, so stepping back to a card does not restore it —
+   * `CardAnswer` is what the caller keeps, and keeping generated text there would make it
+   * durable for the session and put it one refactor away from the event log.
+   */
+  const [explain, setExplain] = useState<
+    { status: 'idle' } | { status: 'loading' } | { status: 'done'; text: string } | { status: 'failed' }
+  >({ status: 'idle' });
 
   const fact = item ? factById(item.factId) : undefined;
   const formIndex = useMemo(
@@ -157,6 +178,38 @@ export function Drill({
     },
     [item, fact, formIndex, mode, readOnly, onGrade, onAnswer],
   );
+
+  /**
+   * Ask why the chosen option is wrong.
+   *
+   * Three fields go up — the fact, the phrasing, and the option text. Everything else the
+   * model sees is resolved on the server from the deck, so the browser cannot widen what is
+   * sent to a third party, and no review history or identifier can be added from here.
+   */
+  const askWhy = useCallback(async () => {
+    if (!fact || !presented || chosen === null) return;
+    setExplain({ status: 'loading' });
+    try {
+      const response = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          factId: fact.id,
+          formIndex,
+          chosen: presented.options[chosen],
+        }),
+      });
+      const body: { text?: unknown } = response.ok ? await response.json() : {};
+      if (typeof body.text === 'string' && body.text.trim()) {
+        setExplain({ status: 'done', text: body.text.trim() });
+      } else {
+        setExplain({ status: 'failed' });
+      }
+    } catch {
+      // Offline is the ordinary case here, not an exception. The card is unaffected.
+      setExplain({ status: 'failed' });
+    }
+  }, [fact, presented, chosen, formIndex]);
 
   if (!item || !fact || !presented) {
     return (
@@ -299,6 +352,37 @@ export function Drill({
               been recorded as a miss, so removing it would leave the reader guessing whether
               "Got lucky" did anything. */}
           {downgraded && <p className={styles.downgraded}>Recorded as a miss.</p>}
+
+          {/*
+            What the explainer said (C8(a), D-034). The BUTTON is not here — it is in the
+            action bar, sharing the slot with "Got lucky"; see the note there. Only the text
+            lives in the scrolling body, which is the D-033 split: reading is a scroll, acting
+            never is.
+
+            Nothing generated is served as an answer without a source, so `.whySource` is
+            rendered with the text and never separately. Both are gone the moment the card is
+            left — this is component state, not part of `CardAnswer`.
+          */}
+          {explain.status !== 'idle' && (
+            <div className={styles.why}>
+              {explain.status === 'loading' && (
+                <p className={styles.whyStatus} role="status">Asking…</p>
+              )}
+              {explain.status === 'failed' && (
+                <p className={styles.whyStatus} role="status">
+                  Could not reach the explainer. The answer above is unaffected.
+                </p>
+              )}
+              {explain.status === 'done' && (
+                <>
+                  <p className={styles.whySource}>
+                    Written by a model from the handbook and the answer above. The answer above wins.
+                  </p>
+                  <p className={styles.whyText}>{explain.text}</p>
+                </>
+              )}
+            </div>
+          )}
         </div>
       ) : !revealed ? (
         <button type="button" className={styles.reveal} onClick={() => setRevealed(true)}>
@@ -380,6 +464,29 @@ export function Drill({
             }}
           >
             Got lucky
+          </button>
+        )}
+
+        {/*
+          "Why?" — C8(a), D-034. In the action bar, in the same slot as "Got lucky", and the
+          two are mutually exclusive by construction: that one renders on a right answer, this
+          one on a wrong answer. So the row never grows.
+
+          It is here rather than under the options because measurement said so. Below the
+          options it cost 48px of a card whose body was already exactly full at 402×874 — the
+          first answered card went from fitting with no scroll at all to overflowing, and the
+          button itself landed below the fold, behind the action bar. An action you have to
+          scroll to find is the thing D-033 pinned this bar to prevent.
+
+          Absent, not disabled, when the server has no key (screening condition 5), and absent
+          on a re-read card, where the model would be explaining a choice from a session that
+          has already moved on.
+        */}
+        {explainAvailable && !readOnly && mode === 'quiz'
+          && chosen !== null && chosen !== presented.correctIndex
+          && explain.status === 'idle' && (
+          <button type="button" className={styles.whyAsk} onClick={askWhy}>
+            Why?
           </button>
         )}
 

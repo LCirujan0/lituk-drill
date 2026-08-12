@@ -1249,3 +1249,52 @@ passing. Those are different claims and only one of them is currently supportabl
   an app that explains itself badly here would let a contaminated score read as readiness.
 - *Deliberate.* 20 × 24 = 480 forms committed in advance, out of 1,588. They are spent for
   calibration purposes for ever.
+
+---
+
+## D-037 — The handbook passages are injected at deploy, never committed
+
+**Date:** 12 August 2026 · **Status:** accepted · **Implements** D-034's grounding requirement ·
+**Narrows** D-031's "the PDF is the working reference"
+
+**Context.** D-034 settled that the explainer must be given the handbook passage and told the
+handbook wins. It did not settle *where that text lives at runtime*, and by the time C8(a) was
+built that was the last thing blocking it. The handbook is in `.work/`, gitignored, Crown
+copyright, and a server route needs it while running.
+
+Licensing was put to the owner and he settled it: he owns the PDF and this is personal use, so the
+text may be used as grounding. **That settles using it and does not settle publishing it.** This
+repository is public (D-005). Committing `handbook.txt` would not be personal use — it would be
+redistribution of Crown-copyright material to the world, which is a different act with a different
+answer, and the distinction was put back to him rather than glossed.
+
+Three options were offered: a private companion repo, injection at deploy, or committing it here
+with the licensing consequence stated. He chose injection.
+
+**Decision.** `.work/handbook.txt` stays gitignored and uncommitted. The passages the route needs
+are supplied as the environment variable **`HANDBOOK_PASSAGES`**, a JSON object keyed by fact id,
+read server-side only by `src/adapters/handbook.ts`.
+
+**Absent is a supported state.** With no variable set, every lookup returns nothing and the
+explainer grounds on **the deck's own answer and explanation panel** — our text, which says the
+same thing, because the deck records 47 Council of Europe members precisely because the book does
+(D-023). So a deploy that forgets the variable degrades to a *thinner* explainer, never to an
+ungrounded one.
+
+**Consequences.**
+- *Positive.* No Crown-copyright text in a public repository, and the question does not have to be
+  re-litigated every time someone reads the tree. The route has one server-only import, matching
+  the fence already around `db.ts`. The fallback is not a fallback in substance: "the handbook
+  wins" is carried by the deck's own answer being handed over as authoritative, which is asserted
+  over all 1,588 forms rather than assumed.
+- *Negative.* **The grounding can silently go missing.** An environment variable is exactly the
+  kind of thing that is present on Production and absent on Preview — the same class of mistake
+  `DATABASE_URL` already made in this project — and nothing in the interface will say so, because
+  the degraded explainer looks fine. The only symptom is thinner answers.
+- *Negative.* The passages are now a second copy of handbook text, maintained by hand, with no
+  mechanical link to `.work/handbook.txt` and no check that any given passage is the right one for
+  its fact. That is the same drift D-021 refused to accept in the deck, accepted here because the
+  alternative is publishing the book.
+- *Negative.* Populating the variable is manual and is not done. C8(a) ships grounded on the deck
+  alone until it is, which is the supported state above but is not the intended end state.
+

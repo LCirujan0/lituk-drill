@@ -2,6 +2,58 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-12 — C8(a): a button that asks why the option you picked is wrong
+
+**Built, and the interesting part is what it refuses to do.** D-034 accepted explain-on-demand and
+named its own most likely failure: the exam marks against the handbook, the handbook says the
+Council of Europe has 47 members, it has 46, and *"an explainer that corrects that is worse than no
+explainer"*. So the deck's own answer is handed to the model as **the** authority, in the system
+prompt and again beside the answer, and `"which you must treat as true"` is asserted on all 1,588
+prompts — not reviewed, asserted.
+
+**Two decisions the owner made and one he did not have to.** He accepted **L-040**, the inference
+disclosure, and chose **injection at deploy** for the grounding text (**D-037**): `.work/handbook.txt`
+stays uncommitted, passages arrive as `HANDBOOK_PASSAGES`. The one he did not have to make was
+whether "personal use" covers committing Crown-copyright text to a *public* repository — it does
+not, and that was put back to him rather than glossed. **L-040 stays `open`**: he accepted it in
+chat, and `risk-accepted` is still his to write with his own rationale and an expiry.
+
+**Four of the five screening conditions became machine checks.** The strongest is structural rather
+than a banned-word list: render every field of the prompt as a sentinel, strip the sentinels, and
+require the residue to equal the template **byte for byte**. No id, no history and no new field can
+enter without failing it. The first version *was* a banned-word list, and it flagged three facts on
+the word "interval" — *"the maximum interval allowed between UK general elections"*. All three hits
+were legitimate, which makes the vocabulary the wrong check, and ratcheting it to three would have
+hidden the fourth. Condition 4, provider retention off, is a console setting and has no check; that
+is written down rather than papered over.
+
+**Verified against broken code, five times.** Dropping the authority clause, smuggling a fact id in,
+adding a `Missed 3 times` line, rendering the button with no key, and persisting the text across
+cards — each was introduced deliberately and watched to fail.
+
+**Measurement caught a regression that reading would not have.** The button first shipped below the
+options. At 402×874 it cost **48px** on a card whose scrolling body was already exactly full — 725px
+of content in 725px of space — so the first answered card went from fitting with no scroll at all to
+overflowing, and the button itself landed at y=809–853 *behind* an action bar pinned at 817. An
+action you have to scroll to find is what D-033 pinned that bar to prevent. It moved into the action
+bar, sharing the slot with "Got lucky" — the two are mutually exclusive by construction, so the row
+never grows. Re-measured: body back to 725/725, no overflow; the busiest row (‹, 2/2, Why?, Next ›)
+fits at exactly 370px with every target ≥44px; no horizontal scroll. The tripwire is a test that the
+button's parent is the action bar, which fails against the old placement.
+
+**Then 49 independent agents were pointed at it, and 2 of 44 findings survived.** Both were real and
+both were mine. `.whySource` — the provenance line, the one thing standing between generated text
+and being read as the answer — used `--c-text-muted`, which measures **3.41:1** on `--c-page` in
+light mode against AA's 4.5:1. That is L-034's class, and this project's own precedent is to
+substitute `--c-text-soft` before shipping rather than grow the pile. Now **7.53:1**, re-derived
+independently and re-measured in a browser. The second: `vi.stubGlobal` was never undone, so the
+"no key" assertions passed only because they were declared first — reproducible with
+`--sequence.shuffle.suites --sequence.seed=3`, and fixed with the `afterEach` `app.test.tsx` already
+uses. **L-034 was widened with what the review measured**: the class has at least four live
+instances, not one, and there is still no contrast assertion anywhere in the suite.
+
+**`npm run verify` green at 333 tests across 15 files**, up from 312 across 13.
+
 ## 2026-08-11 (night) — the simulation reads the daily target instead of restating it
 
 **The 60-day run was hard-coded at 40 new facts a day.** `DAILY_TARGET` moved 30 → 50 on 10 August

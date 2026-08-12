@@ -574,7 +574,20 @@ log; no unseen form is spent twice; the 24 are drawn across chapters in the exam
 or the sample is stated to be uniform — whichever, written down rather than emergent. A fixed test
 is byte-identical on every sitting, asserted as a test.
 
-### C8 — an AI layer · *requested 10 Aug 2026 · **BLOCKED: needs D-034 before any code***
+### C8 — an AI layer · *requested 10 Aug 2026 · **(a) BUILT 12 Aug 2026; (b), (c), (d) refused***
+
+> **Resolved.** D-034 accepted **(a) explain-on-demand only** and named (b), (c) and (d) as refused.
+> The re-run screening below governs it; D-037 settles where the grounding text lives. The price
+> list that follows is kept as written, because it is why the feature has the shape it has — the
+> three lines it crosses were each answered rather than waived:
+> **(1)** the non-goal is LLM-generated *questions*; nothing generated enters the deck.
+> **(2)** R-8 is narrowed by D-034 to permit exactly one third party, under five conditions.
+> **(3)** R3 is met by grounding on the deck's own answer and asserting *"which you must treat as
+> true"* on all 1,588 prompts — the model is never the source.
+> **Acceptance criteria, all met and verified:** the button is absent with no key (asserted); the
+> outbound prompt carries no id, no history and no field beyond the seven declared (asserted
+> structurally); nothing generated is stored (asserted); nothing generated is shown without its
+> source line (asserted); `npm run verify` green at 333.
 
 **Stated plainly because this project's rules require it:** this crosses three lines that are
 currently written as absolutes.

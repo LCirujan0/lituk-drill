@@ -3,21 +3,21 @@
 **The Status block below owns every volatile number in this project.** No other document
 restates one. A hand-copied live number drifts within a session.
 
-## Status — 10 August 2026
+## Status — 12 August 2026
 
 | | |
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **312 passing across 13 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
+| Tests | **333 passing across 15 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
-| Next decision id | D-034 (D-026 never issued, D-029 never written — L-022) |
+| Next decision id | D-038 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-041 (L-019 and L-020 never written — L-022) |
-| Open ledger rows | 15 open · 16 fixed-unverified · 6 verified-fixed (L-038, L-039, L-040 are new) |
+| Open ledger rows | 15 open · 16 fixed-unverified · 6 verified-fixed. **L-040 is accepted by the owner but still `open`** — `risk-accepted` is his to write, with his rationale and an expiry |
 | Open Critical | 0. **Two open High — L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
 | Recall prompts | **7 of 37 still need options on screen**, held deliberately: flipping them would leave two facts with no recall form and require raising a ceiling to pass. The **exact set** is asserted, not a count |
 | Self-contradiction | **0 undeclared, 0 stale — asserted, not ratcheted.** The 11 legitimate hits are declared with reasons in `deck/contradictions.ts`; anything else fails the build |
@@ -27,6 +27,7 @@ restates one. A hand-copied live number drifts within a session.
 | Amber facts | **0** — f213 and f006 both retired, 10 Aug 2026 |
 | CI | Green — 2 required checks |
 | Deployed | https://lituk-drill.vercel.app |
+| AI layer | **C8(a) explain-on-demand is built** (D-034, D-037). Server route only; the button is **absent** with no key. Grounding is the deck's own answer plus `HANDBOOK_PASSAGES`, an env var that is **not yet populated** — absent is supported and degrades to deck-only grounding |
 | Daily target | **50 facts/day**, raised from 30 on 10 Aug so a ~700-fact deck (D-035) can still be seen. The 60-day simulation now reads `DAILY_TARGET` and was re-run at 50 on 11 Aug — peak 242 on day 10, queue drains daily |
 | Appetite expires | ~18 September 2026 · exam 25 September |
 
@@ -42,7 +43,11 @@ restates one. A hand-copied live number drifts within a session.
   rotation, and the stats the home and progress screens show.
 - `src/adapters` — `local-store` (localStorage, degrades rather than throws), `db` (Neon,
   server-only), `sync` (pull/push/union), `store` (the one subscribable snapshot; **owns
-  the two sync guarantees in D-030**).
+  the two sync guarantees in D-030**), `handbook` (**server-only**, D-037).
+- `src/domain/explain` + `src/app/api/explain` — C8(a). The prompt is built as pure text in the
+  domain layer so *"the handbook wins"* is a unit assertion rather than a paragraph; the route
+  resolves the card server-side from three client fields, so the browser cannot widen what
+  reaches the provider.
 - `tests` — structural + statistical deck ratchet, scheduler invariants, the 60-day
   simulation, the merge algebra, the store's sync wiring, and 28 component tests.
 - Design tokens (two tiers) with stylelint enforcement, live in CI from day one.
@@ -66,7 +71,8 @@ passing, so the number is read from the constant now and moves with it.
 
 ## What does not exist yet
 
-No readiness model (S4) and no mocks (D-017). **No docs-consistency test** — deferred, not
+No readiness model (S4) and no mocks (D-017) — **C7 is next**. No populated `HANDBOOK_PASSAGES`,
+so the explainer currently grounds on the deck alone (supported, D-037, but not the end state). **No docs-consistency test** — deferred, not
 skipped, and L-022 is what its absence costs. No end-to-end tests against a real browser:
 component tests run in jsdom, so anything depending on real layout, touch targets or Safari
 behaviour is unverified. `tests/layout.test.ts` is not that — it asserts over CSS *source*,
@@ -155,7 +161,7 @@ one-line reason.
 | **C5** | **The progress bar says which kind.** Every chapter row and every band row shows mastered / mistakes / untouched as a segmented bar, with all three figures in the accessible name. | A day | **Built 10 Aug** |
 | **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | Needs one decision |
 | **C6** | **Full extraction sweep of the handbook** — every name, date and location. **D-035 accepted**, amending the non-goal. Blocked on one real question: 533 facts at 30/day already exceeds the appetite, so doubling the deck can make readiness *worse* while making coverage better. | Weeks | Blocked on volume |
-| **C8** | **An AI layer, (a) only — explain why the option you picked is wrong.** D-034 accepted (a) and named (b), (c) and (d) as refused. **The DPIA re-run is done (11 Aug) and R-8 is narrowed to match, so code is unblocked.** Two things are not: **L-040**, the inference disclosure, which only the owner can accept; and **the grounding text**. D-034 says the model must be given the handbook passage and told the handbook wins — but the handbook lives in `.work/`, gitignored, Crown copyright, and a server route needs it at runtime. Shipping it is a licensing decision, not an implementation detail. The alternative that needs no new permission: ground the model on **the deck's own answer and explanation panel**, which is our text, and tell it that answer is authoritative. That keeps "the handbook wins" in substance — the Council of Europe has 46 members, the book says 47, the deck says 47, and the model must not "correct" it. | ~2 days | **Unblocked, pending L-040 and the grounding choice** |
+| **C8** | **An AI layer, (a) only — explain why the option you picked is wrong.** **Built 12 Aug.** D-034 accepted (a) and refused (b), (c) and (d). Both blockers are resolved: the owner accepted **L-040** (the inference disclosure) in the session of 12 Aug, and the grounding question is settled by **D-037** — `.work/handbook.txt` is never committed, passages arrive as the `HANDBOOK_PASSAGES` env var, and with it unset the explainer grounds on the deck's own answer and explanation panel, which says the same thing. The Council of Europe has 46 members, the book says 47, the deck says 47, and *"which you must treat as true"* is asserted on all 1,588 prompts. | ~2 days | **Built.** Env var not yet populated; L-040 still `open` pending the owner's own row |
 
 **C4 and C5 shipped together on 10 August**, which is what the roadmap ordering intended — the
 band cut in the BRIEF was re-derived against the live 530 first, because the draft double-assigned
