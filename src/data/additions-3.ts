@@ -273,7 +273,7 @@ export const ADDITIONS_3: readonly Fact[] = [
         answers: { kind: 'fixed', correct: 'The Human Rights Act 1998', distractors: ['The Equality Act 2010', 'The Bill of Rights 1689', 'The Habeas Corpus Act 1679'] } },
       { question: 'In which year was the Human Rights Act passed?', mcqOnly: false,
         answers: { kind: 'fixed', correct: '1998', distractors: ['1988', '2008', '2010'] } },
-      { question: 'Which of these does the Human Rights Act cover, rather than the Equality Act?', mcqOnly: true,
+      { question: 'Which of these is covered by the Human Rights Act rather than by UK laws on equal opportunities?', mcqOnly: true,
         answers: { kind: 'fixed', correct: 'The prohibition of torture', distractors: ['Discrimination because of disability', 'Discrimination because of pregnancy', 'Discrimination because of marital status'] } },
     ],
   },

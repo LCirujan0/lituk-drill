@@ -2,6 +2,55 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-13 (later) — six off-source stems reworded; one came back, and a bigger one fell out
+
+**Six of D-038's seven landed.** Every reword was proposed against the handbook and then put to
+two independent reviewers instructed to refute it — one on sourcing, one on mechanics. Three
+passed clean; **three were changed by the refutation**; one was withdrawn. The refutations earned
+their keep:
+
+- **`f284`** — the proposal also wanted to delete the explanation's `note`. Refused as outside the
+  grant, and dropped. The note now corrects a stem that no longer errs, which is odd and is the
+  owner's to remove, not mine.
+- **`f554[2]`** — the first wording broke **category parity**: three distractors named
+  discriminations while the answer was a principle, so all three were eliminable by shape alone
+  without knowing either statute. The replacement keeps all four in one category. Worth noting
+  where it lands — `ok[2]` is the slot D-038 already concedes keeps unearnable credit, and it feeds
+  the R-6 breadth gate, so a free-to-guess form there is worse than elsewhere.
+- **`f405`** — the proposal justified editing the canonical on a render path that **does not exist
+  in the code** (the "The fact:" line is guarded by the answer differing from the form's, so it
+  never fires for two of the three forms). And D-038's row says "all three *forms*"; the canonical
+  is a fourth string it does not name. Only the three forms were edited.
+
+**`f206[2]` was withdrawn, on measurement rather than taste.** Exactly one of its four options is a
+fundamental principle, so with options on screen it is unambiguous, and it is `mcqOnly`, so it is
+never served as free recall. Every variant produced ran **174–196 characters against a deck maximum
+of 137 and a median of 63** — the longest stem in the deck by 27–43%. The proposal's own note said
+it was "shorter than several existing forms", which the distribution flatly contradicts. Trading an
+unambiguous stem for the deck's longest is not obviously a gain, so it goes back to the owner.
+
+**The regression guard found more than the edits did.** The guard pins the exact set of surviving
+"Equality Act" occurrences. It was written expecting **one** — a distractor on `f554[0]` — and
+returned **six**. Among them: **`f390`, an entire fact whose answer is "The Equality Act 2010"**,
+three forms, drilled daily, with **no `source`**, and a phrase the handbook contains **0 times**
+under four patterns. Its own explanation panel already said so: *"The handbook does not name the
+Equality Act."* Shipped knowingly off-source with the admission filed under the answer.
+**L-041, High, and not mine to fix** — retiring a fact or changing its answer is nothing D-038
+authorises. A count would have found nothing here; the exact set found it on the first run.
+
+**D-038 corrected, not quietly.** Its Consequences said "bounded to one form each" while its own
+table says "all three forms" for `f405`. The table is right; the real cost is nine forms across
+seven facts, not seven. The size of that cost is the entire reason the entry exists, so the line is
+corrected in place with a dated note and the grant is unchanged.
+
+**Still open and each needs the owner:** `f206[2]`; `f405`'s canonical, which still reads "issued
+abroad" and is false for an EU licence; `f222[1]` and `f507[1]`, excluded from D-038 from the start;
+and L-041.
+
+**`npm run verify` green at 376 tests across 18 files.** Deck measurements unmoved or slightly
+better — structural faults 0, undeclared contradictions 0, identical option sets 28 → 27, repeated
+distractors 505 → 499.
+
 ## 2026-08-13 — C7: twenty fixed mock tests, and the near-miss that would have broken R-5
 
 **The twenty are pinned data, and that is the design rather than an optimisation.** D-036 wants

@@ -1148,12 +1148,12 @@ export const CHAPTER_4: readonly Fact[] = [
     tag: "Sport",
     chapter: 4,
     verify: false,
-    question: "Which British athlete became the first person to win the Tour de France, in 2012?",
+    question: "Which athlete became the first Briton to win the Tour de France, in 2012?",
     answer: "Sir Bradley Wiggins",
     source: "Handbook 3rd ed., ch.4 “Sport”",
     forms: [
     {
-      question: "Which British athlete became the first person to win the Tour de France, in 2012?",
+      question: "Which athlete became the first Briton to win the Tour de France, in 2012?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -1627,7 +1627,7 @@ export const CHAPTER_4: readonly Fact[] = [
       },
     },
     {
-      question: "The Enigma Variations were written by which English composer?",
+      question: "Land of Hope and Glory was written by which English composer?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -2213,11 +2213,11 @@ export const CHAPTER_4: readonly Fact[] = [
     chapter: 4,
     verify: false,
     source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
-    question: "Who wrote Oliver Twist and A Christmas Carol?",
+    question: "Who wrote Oliver Twist?",
     answer: "Charles Dickens",
     forms: [
     {
-      question: "Who wrote Oliver Twist and A Christmas Carol?",
+      question: "Who wrote Oliver Twist?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -2365,11 +2365,11 @@ export const CHAPTER_4: readonly Fact[] = [
     chapter: 4,
     verify: false,
     source: 'Handbook 3rd ed., ch.4 — corroborated against the handbook text',
-    question: "Which British director, famous for Psycho, moved to Hollywood in 1940?",
+    question: "Which British director left for Hollywood and remained an important film director until his death in 1980?",
     answer: "Sir Alfred Hitchcock",
     forms: [
     {
-      question: "Which British director, famous for Psycho, moved to Hollywood in 1940?",
+      question: "Which British director left for Hollywood and remained an important film director until his death in 1980?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -2378,7 +2378,7 @@ export const CHAPTER_4: readonly Fact[] = [
       },
     },
     {
-      question: "Which British director made Psycho and The Birds?",
+      question: "Which British director made The 39 Steps?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',

@@ -2814,7 +2814,7 @@ export const CHAPTER_5: readonly Fact[] = [
     answer: "12 months",
     forms: [
     {
-      question: "For how long can a visitor drive in the UK on a licence issued abroad?",
+      question: "For how long can a visitor drive in the UK on a licence issued in a country outside the EU, Iceland, Liechtenstein and Norway?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -2823,7 +2823,7 @@ export const CHAPTER_5: readonly Fact[] = [
       },
     },
     {
-      question: "A visitor to the UK may drive on a licence from their own country for how long?",
+      question: "A visitor to the UK whose licence is from a country outside the EU, Iceland, Liechtenstein and Norway may drive on it for how long?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',
@@ -2832,7 +2832,7 @@ export const CHAPTER_5: readonly Fact[] = [
       },
     },
     {
-      question: "How long can someone use a licence from abroad before they need a UK one?",
+      question: "How long can someone use a licence from a country outside the EU, Iceland, Liechtenstein and Norway before they need a UK one?",
       mcqOnly: false,
       answers: {
         kind: 'fixed',

@@ -9,16 +9,16 @@ restates one. A hand-copied live number drifts within a session.
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **367 passing across 17 files** — adds `mock` (the pinned file against a rebuild, disjointness as an exact set, apportionment, attempt derivation) and `mock-ui` (R-5 through the real UI), on top of `explain` and `explain-ui` |
+| Tests | **376 passing across 18 files** — adds `mock` + `mock-ui` (the pinned tests against a rebuild, disjointness as an exact set, R-5 through the real UI), `explain` + `explain-ui` (the screening conditions), and `off-source-stems` (the terms D-038 removed, and L-041's six survivals pinned in both directions) |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
-| Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
+| Deck | **530 drilled · 1,588 forms**. **Six of D-038's seven stems reworded 13 Aug**; `f206[2]` referred back. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
 | Next decision id | D-039 (D-026 never issued, D-029 never written — L-022) |
-| Next ledger id | L-041 (L-019 and L-020 never written — L-022) |
+| Next ledger id | L-042 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 15 open · 16 fixed-unverified · 6 verified-fixed. **L-040 is accepted by the owner but still `open`** — `risk-accepted` is his to write, with his rationale and an expiry |
-| Open Critical | 0. **Two open High — L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
+| Open Critical | 0. **Three open High: L-041** (`f390`'s answer is the Equality Act, which the handbook names 0 times — new, 13 Aug), **L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
 | Recall prompts | **7 of 37 still need options on screen**, held deliberately: flipping them would leave two facts with no recall form and require raising a ceiling to pass. The **exact set** is asserted, not a count |
 | Self-contradiction | **0 undeclared, 0 stale — asserted, not ratcheted.** The 11 legitimate hits are declared with reasons in `deck/contradictions.ts`; anything else fails the build |
 | Ratchet source | **`ACTIVE`, not `DECK`** — quality measurements exclude retired facts (L-032). Id-space contracts stay on `DECK` |
@@ -132,9 +132,24 @@ which pins the invariant a browser measurement established but cannot re-measure
    `retired` — so appending leaves the false stem in service beside its correction, and the reader
    meets both. That structural gap is the reason this is a decision rather than a task.
 
-   **Decided 13 Aug: reword in place, for seven — D-038 is written and names the exact set**
-   (`f284`, `f316`, `f312`, `f296`, `f554`, `f405`, `f206[2]`). `f222[1]` and `f507[1]` are
-   deliberately excluded and stay open. **The entry exists; the edits do not yet.** An off-source
+   **Done 13 Aug for six of the seven, under D-038.** Reworded: `f284` (first *person* →
+   the book's *first Briton*), `f316` (Psycho and the 1940 date out; The 39 Steps in), `f312`
+   (A Christmas Carol out), `f296` (Enigma Variations → Land of Hope and Glory), `f554[2]`
+   (the Equality Act out, keeping category parity across the four options), `f405` (all three
+   **forms** gain the EU/Iceland/Liechtenstein/Norway qualifier).
+   **Three things are deliberately NOT done and each needs the owner:**
+   (a) **`f206[2]` was referred back, not reworded.** Measured rather than assumed: exactly one
+   of its four options is a fundamental principle, so with options on screen it is unambiguous,
+   and it is `mcqOnly` so never served as recall. Every reworded variant an adversarial pass
+   produced ran 174–196 characters against a deck maximum of **137** and a median of **63** —
+   the longest stem in the deck by 27–43%. Leaving it may well be right; that is his to price.
+   (b) **`f405`'s canonical question still says "issued abroad"**, which is false for an EU
+   licence. D-038's f405 row says "all three *forms*", so the canonical is a fourth string it
+   does not name. One line from him extends it. *(D-038's Consequences also say "bounded to one
+   form each" while its own table says "all three forms" for f405 — the table is right and the
+   line is wrong.)*
+   (c) **L-041**, found while writing the regression guard for this work.
+   `f222[1]` and `f507[1]` remain excluded and open. An off-source
    stem is R3, the risk this project ranks highest, and it is permanent; the falsified breadth
    credit is bounded, affects one form each, and cannot make a fact *look* worse than it is.
 3. ~~**Independently re-derive L-036.**~~ **Done 11 August and upheld** — re-derived from the
