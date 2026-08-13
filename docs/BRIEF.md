@@ -359,7 +359,10 @@ generation produces accidentally-correct options.
 **No-gos.** **No fact answer changes.** Where an answer looks wrong it goes to the owner as a
 decision under D-031 and does not land. **No form is reworded in place** — breadth credit is keyed
 by form *position* (`ok[formIndex]`), so editing form N keeps credit earned on a sentence that no
-longer exists. Replacements are appended. No form is deleted or reordered: that is a migration.
+longer exists. Replacements are appended. ***Amended by D-038, 13 Aug 2026, for an exact set of
+seven off-source stems and no others*** — `f284`, `f316`, `f312`, `f296`, `f554`, `f405`, `f206[2]`.
+The reasoning above is exactly why that needed a decision rather than a commit, and it still applies
+to every other form in the deck; an eighth needs its own entry. No form is deleted or reordered: that is a migration.
 No year, name or figure enters the deck that the handbook does not contain.
 
 **Acceptance criteria + verification.**
@@ -573,6 +576,25 @@ may, and D-017's spent-form ledger applies to those alone.
 log; no unseen form is spent twice; the 24 are drawn across chapters in the exam's own proportions
 or the sample is stated to be uniform — whichever, written down rather than emergent. A fixed test
 is byte-identical on every sitting, asserted as a test.
+
+**The two open questions, answered 13 August 2026.**
+
+1. **Composition: chapter-proportional, not uniform** (the owner's choice). Each fixed test's 24
+   questions are drawn in proportion to each chapter's share of the deck, so a sitting resembles the
+   exam's own spread and the twenty tests are comparable *to each other* as well as over time.
+   *The cost, stated because it decides the implementation:* proportions computed at generation time
+   drift as C6 grows the deck, so **the twenty tests must be pinned data, never recomputed at
+   runtime** — a test that re-derives its own questions is not byte-identical on every sitting, which
+   is the one property the fixed tests exist to have.
+2. **Sequencing: the twenty fixed tests first, custom tests second.** Not the owner's call and not
+   presented as one — the fixed tests need a deterministic draw and a byte-identity assertion, while
+   custom tests need D-017's spent-form ledger built underneath them. Fixed-first gets the trend line
+   working and defers the harder half. Say so if the order should be reversed.
+
+**Not decided here, and it constrains the screen:** R-7 binds while L-002 and L-003 are
+`fixed-unverified`, so a score is shown **as a score** — "18 of 24", a trend line — and never as
+readiness or as a probability of passing. And R-5 binds the writes: a mock attempt is recorded on the
+existing event log so it syncs for free, and **can never push a fact further out.**
 
 ### C8 — an AI layer · *requested 10 Aug 2026 · **(a) BUILT 12 Aug 2026; (b), (c), (d) refused***
 
