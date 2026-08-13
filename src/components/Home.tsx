@@ -56,6 +56,7 @@ interface Props {
   readonly onOpen: (section: OpenableSection) => void;
   readonly onChapter: (chapter: Chapter) => void;
   readonly onBand: (band: BandId) => void;
+  readonly onMocks: () => void;
 }
 
 /**
@@ -75,7 +76,7 @@ const clockTime = (at: number): string =>
   new Date(at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
 export function Home({
-  counts, streak, persistent, syncPhase, syncedAt, onSync, onOpen, onChapter, onBand,
+  counts, streak, persistent, syncPhase, syncedAt, onSync, onOpen, onChapter, onBand, onMocks,
 }: Props) {
   /**
    * Chapters or bands, and the choice is not persisted.
@@ -140,6 +141,10 @@ export function Home({
             it is retested with a different phrasing every time it comes round. */}
         <Tile icon="✓" name="Mastered" count={counts.mastered} onClick={() => onOpen('mastered')} />
         <Tile icon="⤨" name="Random" onClick={() => onOpen('random')} />
+        {/* Mock tests sit with the sections rather than in the tab bar: they are a thing you
+            go and do, like a drill, not a place you live. A fourth tab would also cost the
+            bottom row width on a 402px screen for something used weekly, not daily. */}
+        <Tile icon="▣" name="Mocks" onClick={onMocks} />
       </div>
 
       {/* Two cuts of one deck, each drillable and each with its own progress (C4). Not a

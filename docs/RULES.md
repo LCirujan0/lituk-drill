@@ -31,6 +31,16 @@ Failures always write; successes write only when scheduled. Practice may pull a 
 leave it alone, never delay it.
 **Enforced by:** `scheduler.test.ts` — exhaustively over every mode, grade, form and state.
 
+*The scheduler has always held this. **The way to break it is to mislabel the mode**, and C7 walked
+straight into that: `modeFor` returns `scheduled` for first contact with a phrasing (right for a
+drill, D-003), and the twenty fixed tests draw from the whole deck — so a mock question the reader
+had never met would have been recorded as `scheduled` and advanced the schedule. The same
+mislabelling drops the answer out of its own attempt, because `mockAttempts` reads `mode === 'mock'`,
+so a 24-question test would quietly score out of 23. One line, two silent failures.
+**Also enforced by:** `mock-ui.test.tsx` — every answer of a sitting is `mock`, and no fact's due
+date or interval rises, asserted through the real UI. Moving the mock branch below the first-contact
+check fails five of its seven tests.*
+
 ### R-6 · An interval never exceeds its breadth cap
 Not "usually", not "before fuzz". `interval <= cap` holds after every review.
 **Enforced by:** `scheduler.test.ts` at fuzz extremes, and per-review in the 60-day simulation.

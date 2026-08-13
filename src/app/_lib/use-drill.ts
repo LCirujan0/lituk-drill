@@ -26,6 +26,8 @@ import { replay, type ReviewEvent } from '@/domain/scheduler/events';
 import { mulberry32 } from '@/domain/scheduler/rng';
 import { DEFAULT_CONFIG, type Grade, type ReviewMode } from '@/domain/scheduler/types';
 import { type BandId } from '@/domain/deck/bands';
+import { FIXED_TESTS } from '@/data/mock-tests';
+import { historyByTest } from '@/domain/mock/attempts';
 import {
   bandQueue,
   chapterQueue,
@@ -52,7 +54,7 @@ import {
   sync,
 } from '@/adapters/store';
 
-export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'band' | 'random' | 'mastered';
+export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'band' | 'random' | 'mastered' | 'mock';
 
 /**
  * What a drill was opened on, where the section needs one.
@@ -61,7 +63,10 @@ export type SectionKey = 'due' | 'new' | 'mistakes' | 'chapter' | 'band' | 'rand
  * nothing. One optional parameter rather than two, so a caller cannot pass both and leave the
  * queue to decide which it meant.
  */
-export type DrillScope = { kind: 'chapter'; chapter: number } | { kind: 'band'; band: BandId };
+export type DrillScope =
+  | { kind: 'chapter'; chapter: number }
+  | { kind: 'band'; band: BandId }
+  | { kind: 'mock'; testId: number };
 
 const FORM_COUNTS = new Map(ACTIVE.map((f) => [f.id, f.forms.length]));
 
@@ -78,6 +83,18 @@ const FORM_COUNTS = new Map(ACTIVE.map((f) => [f.id, f.forms.length]));
  * advancing an interval.
  */
 export function modeFor(section: SectionKey, seenBefore: boolean): ReviewMode {
+  // A mock is a mock whatever else is true of the form, and this branch must come FIRST.
+  //
+  // Not a tidiness point — falling through to the first-contact rule below would break two
+  // things at once, silently. R-5 says a mock can never push a fact further out, and it is
+  // enforced on the event's MODE: an answer recorded as `scheduled` advances the schedule, so
+  // a mock question the reader had never met would quietly graduate the fact on a test. And
+  // the score would be wrong too, because `mockAttempts` reads `mode === 'mock'` — a
+  // mislabelled answer drops out of its own attempt, which then scores out of 23.
+  //
+  // The fixed tests draw from the whole deck (D-036), not from unseen forms, so "first contact
+  // during a mock" is an ordinary occurrence rather than an edge case.
+  if (section === 'mock') return 'mock';
   if (!seenBefore) return 'scheduled';
   return section === 'due' || section === 'new' ? 'scheduled' : 'practice';
 }
@@ -127,6 +144,8 @@ export function useDrill() {
         queue = mistakesQueue(ctx, 60);
       } else if (section === 'mastered') {
         queue = masteredQueue(ctx, 60);
+      } else if (section === 'mock') {
+        queue = scope?.kind === 'mock' ? mockRemaining(scope.testId, events) : [];
       } else if (section === 'band') {
         queue = scope?.kind === 'band' ? bandQueue(ctx, scope.band, 60) : [];
       } else {
@@ -134,9 +153,13 @@ export function useDrill() {
       }
 
       if (queue.length === 0) return null;
+      // A mock is served in the test's own order, always. The recency skip below exists so a
+      // self-directed drill does not hand back the same fact twice running; applied here it
+      // would reorder a fixed test, which is the one thing these twenty must never do.
+      if (section === 'mock') return queue[0];
       return queue.find((i) => !recent.includes(i.factId)) ?? queue[0];
     },
-    [ctx, recent],
+    [ctx, recent, events],
   );
 
   const grade = useCallback(
@@ -183,4 +206,30 @@ export function useDrill() {
     syncedAt,
     syncNow: sync,
   };
+}
+
+/**
+ * What is left of a sitting of fixed test `testId`, in the test's own order.
+ *
+ * Derived from the log rather than held in state, like everything else here — so a sitting
+ * survives a reload, resumes on the other device after a sync, and cannot fall out of step
+ * with the score that is computed from the same events.
+ *
+ * **An incomplete attempt resumes; a complete one starts again.** Re-sitting is deliberate
+ * (D-036: their value is comparability, the same 24 questions now and in September), so
+ * reopening a finished test offers all 24 rather than nothing.
+ */
+export function mockRemaining(testId: number, events: readonly ReviewEvent[]): DrillItem[] {
+  const test = FIXED_TESTS.find((t) => t.id === testId);
+  if (!test) return [];
+
+  const latest = historyByTest(events, FIXED_TESTS).get(testId)?.latest ?? null;
+  const answered =
+    latest && !latest.complete
+      ? new Set(latest.questions.map((q) => `${q.factId}:${q.formIndex}`))
+      : new Set<string>();
+
+  return test.questions
+    .filter((q) => !answered.has(`${q.factId}:${q.formIndex}`))
+    .map((q) => ({ factId: q.factId, formIndex: q.formIndex }));
 }

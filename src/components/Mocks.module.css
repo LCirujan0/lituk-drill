@@ -1,0 +1,173 @@
+/* The mock-test list and its trend (C7, D-036).
+   Every colour and size is a semantic token — R-9, enforced by stylelint. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  padding: 0 var(--space-4) var(--space-4);
+  overflow-y: auto;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-1);
+}
+
+.back {
+  flex: none;
+  width: var(--target-min);
+  height: var(--target-min);
+  margin-inline-start: calc(var(--space-3) * -1);
+  border: 0;
+  background: transparent;
+  color: var(--c-text-soft);
+  font-size: var(--text-lg);
+  cursor: pointer;
+}
+
+.title {
+  margin: 0;
+  color: var(--c-text);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+/* The R-7 caveat. Not small print: it is the difference between a score and a claim. */
+.note {
+  margin: 0;
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px dashed var(--c-rule);
+  border-radius: var(--radius-md);
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+}
+
+/* ---- the trend ---------------------------------------------------------
+   Bars, not a joined line: consecutive sittings are of DIFFERENT tests, and joining them
+   would draw a continuity the data does not have. */
+.trend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chart {
+  height: 96px;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--c-surface);
+}
+
+/*
+  The bars and the pass line MUST share one coordinate box, and this element is it.
+
+  They did not, first time round: the chart carried the padding, the bars were a percentage
+  of the padded content box (88px) and the line was a percentage of the padding box (96px)
+  with a `* 0.88` fudge to compensate. Measured at 402×874 the two disagreed by about 6.5px —
+  enough that a bar scoring exactly 18 stood clear above the 18 line. A chart that draws a
+  pass as a fail is worse than no chart. The padding moved out here, so both are simply
+  percentages of the same height and they agree by construction.
+*/
+.plot {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+  height: 100%;
+}
+
+/* The exam's pass mark, drawn as a reference line. A mark, never a verdict — R-7. */
+.passLine {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: var(--pass);
+  border-block-start: 1px dashed var(--c-text-muted);
+}
+
+.chartBar {
+  position: relative;
+  flex: 1 1 0;
+  min-width: var(--space-2);
+  height: var(--h);
+  border-radius: var(--radius-sm);
+  background: var(--c-text-muted);
+}
+
+.chartBarPass {
+  background: var(--c-accent);
+}
+
+.legend {
+  margin: 0;
+  color: var(--c-text-soft);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+/* ---- the twenty --------------------------------------------------------- */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--c-rule);
+  border-radius: var(--radius-md);
+  background: var(--c-surface);
+  color: var(--c-text);
+  font: inherit;
+  font-size: var(--text-base);
+  text-align: start;
+  cursor: pointer;
+}
+
+.rowName {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+
+.rowState {
+  flex: none;
+  color: var(--c-text-soft);
+  font-size: var(--text-sm);
+}
+
+.rowTimes {
+  flex: none;
+  color: var(--c-text-soft);
+  font-size: var(--text-xs);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: calc(var(--space-1) * -1);
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
