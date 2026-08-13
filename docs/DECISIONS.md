@@ -1342,8 +1342,13 @@ entry. They are not quietly folded in.
 - *Positive.* An off-source stem is R3, the risk this project ranks highest, and it is permanent —
   spaced repetition drills it to permanence by design. This closes seven of them for the price of a
   bounded, one-directional accounting error.
+- *Correction, 13 August 2026, before any edit landed.* The Consequences below said "bounded to
+  one form each" while the table above says "all three forms" for `f405`. **The table is right and
+  that line was wrong** — f405 costs three slots, not one, so the total is nine forms across the
+  seven facts rather than seven. Corrected here rather than quietly, because the size of the cost
+  is the whole reason this entry exists. The grant is unchanged.
 - *Negative, permanent, and the reason this needed a decision.* `ok[formIndex]` is keyed by
-  position, so each of these seven facts keeps breadth credit earned on a sentence that no longer
+  position, so each of these facts keeps breadth credit earned on a sentence that no longer
   exists, and **never re-earns it, because it is never lost.** The breadth gate (R-6) will therefore
   lift an interval cap on evidence that has been falsified. It is bounded to one form each, it is
   silent, and it cannot make a fact look *worse* than it is — which is the only reason it is the
@@ -1358,3 +1363,30 @@ entry. They are not quietly folded in.
   migration with an index remap, not an edit. Still the right answer eventually, and still not this
   week's work.
 
+
+### Outcome — 13 August 2026
+
+**Six of the seven landed; one came back.** Each reworded stem was proposed against the handbook
+and then put to two independent adversarial reviewers instructed to refute it — one on sourcing,
+one on mechanics. Three passed clean, three were changed by the refutation, one was withdrawn.
+
+| | |
+|---|---|
+| `f284` | *first person* → the book's **first Briton**. The reviewer also refused the proposal's third edit — deleting the explanation's `note` — as outside this grant. It was dropped; the note now corrects a stem that no longer errs, which is odd and is the owner's to remove |
+| `f316` | Psycho (0 hits) and the 1940 date out; the book's own *"until his death in 1980"* and *The 39 Steps* in |
+| `f312` | *A Christmas Carol* (0 hits) out |
+| `f296` | *Enigma Variations* (0 hits) → *Land of Hope and Glory*, which the book names |
+| `f554[2]` | the Equality Act out. **The first wording was rejected by the mechanics reviewer** for breaking category parity — three distractors named discriminations while the answer was a principle, making them eliminable by shape alone. Its replacement keeps all four in one category |
+| `f405` | the qualifier added to **all three forms**. The canonical is NOT edited: this entry's row says "forms", and a fourth string it does not name is exactly the growth the exact-set discipline exists to stop. The canonical still reads *"issued abroad"*, which is false for an EU licence, and needs one line from the owner |
+
+**`f206[2]` was withdrawn, on measurement.** Exactly one of its four options is a fundamental
+principle, so with options on screen it is unambiguous, and it is `mcqOnly`, so it is never served
+as free recall. Every variant the adversarial pass produced ran **174–196 characters against a deck
+maximum of 137 and a median of 63** — the longest stem in the deck by 27–43%, on a phone-first card.
+The proposal's own note claimed it was "shorter than several existing forms", which the distribution
+contradicts. Trading an unambiguous stem for the deck's longest is not obviously a gain, so it goes
+back to the owner rather than being decided by the fixer.
+
+**A finding fell out of the regression guard, not the edits.** Asserting the exact set of surviving
+"Equality Act" occurrences — expecting one — returned six, including an entire fact whose *answer*
+the handbook never mentions. **L-041.** A count would have found nothing.
