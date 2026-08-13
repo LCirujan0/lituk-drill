@@ -1298,3 +1298,63 @@ ungrounded one.
 - *Negative.* Populating the variable is manual and is not done. C8(a) ships grounded on the deck
   alone until it is, which is the supported state above but is not the intended end state.
 
+
+---
+
+## D-038 — Seven off-source stems are reworded in place · **amends the BRIEF's C1 no-go**
+
+**Date:** 13 August 2026 · **Status:** accepted
+**Amends:** BRIEF §C1 *No-gos*, verbatim — *"**No form is reworded in place** — breadth credit is
+keyed by form position (`ok[formIndex]`), so editing form N keeps credit earned on a sentence that
+no longer exists. Replacements are appended."*
+
+**Written before the first edit, which is the point of it.** The no-go it amends is not a
+preference; it is a statement about what the scheduler will silently believe afterwards.
+
+**Context.** The chapter audits left nine stems that assert something the handbook does not
+contain, or ask a distinction the exam cannot ask. Every route to fixing them crosses a rule, which
+is why nothing was applied and the question went to the owner.
+
+**There were exactly two legitimate routes and appending was not a third.** The deck has no way to
+retire a *form* — only facts carry `retired` — so appending a corrected phrasing beside a false one
+leaves the false one in service, and the reader meets both. That structural gap is why this is a
+decision rather than a task.
+
+**Decision.** **Reword in place**, for seven of the nine. The **exact set**, named rather than
+counted, because a count is what lets an eighth slip in later:
+
+| | The defect |
+|---|---|
+| `f284` | says Wiggins was the first *person* to win the Tour de France; the book and the deck's own explanation both say first *Briton* |
+| `f316` | a 1940 move to Hollywood and *Psycho* — neither is in the book |
+| `f312` | *A Christmas Carol*, 0 hits in the handbook |
+| `f296` | *Enigma Variations*, 0 hits in the handbook |
+| `f554` | asks Human Rights Act *versus* Equality Act; the book never names the Equality Act |
+| `f405` | all three forms omit the EU/Iceland/Liechtenstein/Norway qualifier |
+| `f206[2]` | still asks a five-answer question, `mcqOnly` or not |
+
+**The two deliberately excluded, and they stay open.** `f222[1]` duplicates f223's stem *and* its
+four options, and `f507[1]` is ambiguous with or without options (16-year-olds may drink with a
+meal). Neither is off-source; both are defects of a different kind, and neither is fixed by this
+entry. They are not quietly folded in.
+
+**Consequences.**
+- *Positive.* An off-source stem is R3, the risk this project ranks highest, and it is permanent —
+  spaced repetition drills it to permanence by design. This closes seven of them for the price of a
+  bounded, one-directional accounting error.
+- *Negative, permanent, and the reason this needed a decision.* `ok[formIndex]` is keyed by
+  position, so each of these seven facts keeps breadth credit earned on a sentence that no longer
+  exists, and **never re-earns it, because it is never lost.** The breadth gate (R-6) will therefore
+  lift an interval cap on evidence that has been falsified. It is bounded to one form each, it is
+  silent, and it cannot make a fact look *worse* than it is — which is the only reason it is the
+  better trade.
+- *Negative.* It sets a precedent that the C1 no-go is amendable, and the no-go was written because
+  in-place editing is invisible in exactly the way that matters. The defence is that this entry
+  names an exact set of seven rather than a policy: a tenth stem needs its own entry.
+- *Not chosen: retiring the facts.* The f194/f015 precedent from 10 August. It over-corrects here —
+  Wiggins, Elgar, Dickens and Hitchcock are all genuine handbook material and the deck would simply
+  lose them.
+- *Not chosen: form-level retirement.* The structural fix, and the largest: `retired` on a form is a
+  migration with an index remap, not an edit. Still the right answer eventually, and still not this
+  week's work.
+

@@ -15,7 +15,7 @@ restates one. A hand-copied live number drifts within a session.
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
 | Deck sourcing | **Every drilled fact carries a `source`.** 346 corroborated mechanically — 6 of those since retired, because the pass matched on topic rather than on the answer (L-031) — 37 confirmed by the owner, 22 retired |
 | Migration frontier | `review_events` — created lazily by `migrate()`, live on production, verified |
-| Next decision id | D-038 (D-026 never issued, D-029 never written — L-022) |
+| Next decision id | D-039 (D-026 never issued, D-029 never written — L-022) |
 | Next ledger id | L-041 (L-019 and L-020 never written — L-022) |
 | Open ledger rows | 15 open · 16 fixed-unverified · 6 verified-fixed. **L-040 is accepted by the owner but still `open`** — `risk-accepted` is his to write, with his rationale and an expiry |
 | Open Critical | 0. **Two open High — L-038** (7 recall prompts still need options on screen; 30 of 37 fixed) and **L-036** (the numeric metric, needs independent re-derivation). L-033 is `fixed-unverified`: 11 of its 12 hits were correct design, 1 was real |
@@ -127,7 +127,9 @@ which pins the invariant a browser measurement established but cannot re-measure
    `retired` — so appending leaves the false stem in service beside its correction, and the reader
    meets both. That structural gap is the reason this is a decision rather than a task.
 
-   **Recommendation: reword in place**, for the seven where the stem is off-source. An off-source
+   **Decided 13 Aug: reword in place, for seven — D-038 is written and names the exact set**
+   (`f284`, `f316`, `f312`, `f296`, `f554`, `f405`, `f206[2]`). `f222[1]` and `f507[1]` are
+   deliberately excluded and stay open. **The entry exists; the edits do not yet.** An off-source
    stem is R3, the risk this project ranks highest, and it is permanent; the falsified breadth
    credit is bounded, affects one form each, and cannot make a fact *look* worse than it is.
 3. ~~**Independently re-derive L-036.**~~ **Done 11 August and upheld** — re-derived from the
@@ -159,7 +161,7 @@ one-line reason.
 |---|---|---|---|
 | **C4** | **12 bands you can drill on their own**, over the 87 tags. Both cuts stay drillable and both carry progress; a band draws from more than one chapter, so neither nests inside the other. | Days | **Built 10 Aug** |
 | **C5** | **The progress bar says which kind.** Every chapter row and every band row shows mastered / mistakes / untouched as a segmented bar, with all three figures in the accessible name. | A day | **Built 10 Aug** |
-| **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | Needs one decision |
+| **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | **Both decisions taken 13 Aug** — chapter-proportional, pinned as data; fixed tests first, custom second. Next to build |
 | **C6** | **Full extraction sweep of the handbook** — every name, date and location. **D-035 accepted**, amending the non-goal. Blocked on one real question: 533 facts at 30/day already exceeds the appetite, so doubling the deck can make readiness *worse* while making coverage better. | Weeks | Blocked on volume |
 | **C8** | **An AI layer, (a) only — explain why the option you picked is wrong.** **Built 12 Aug.** D-034 accepted (a) and refused (b), (c) and (d). Both blockers are resolved: the owner accepted **L-040** (the inference disclosure) in the session of 12 Aug, and the grounding question is settled by **D-037** — `.work/handbook.txt` is never committed, passages arrive as the `HANDBOOK_PASSAGES` env var, and with it unset the explainer grounds on the deck's own answer and explanation panel, which says the same thing. The Council of Europe has 46 members, the book says 47, the deck says 47, and *"which you must treat as true"* is asserted on all 1,588 prompts. | ~2 days | **Built.** Env var not yet populated; L-040 still `open` pending the owner's own row |
 
