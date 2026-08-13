@@ -18,6 +18,7 @@ import { useDrill, type DrillScope, type SectionKey } from './_lib/use-drill';
 import { useExplainAvailable } from './_lib/use-explain';
 import { Home } from '@/components/Home';
 import { Drill, type CardAnswer, type DrillMode } from '@/components/Drill';
+import { Mocks } from '@/components/Mocks';
 import { Progress } from '@/components/Progress';
 import { TabBar, type Tab } from '@/components/TabBar';
 import { Timeline } from '@/components/Timeline';
@@ -35,6 +36,7 @@ import type { DrillItem } from '@/domain/drill/sections';
  */
 type View =
   | { kind: 'tab'; tab: Tab }
+  | { kind: 'mocks' }
   | { kind: 'drill'; section: SectionKey; scope?: DrillScope };
 
 /** A card as it was served: which phrasing, which option order, and what was done with it. */
@@ -52,6 +54,8 @@ const EMPTY_MESSAGE: Record<SectionKey, string> = {
   band: 'Nothing left in this band right now.',
   random: 'Nothing to draw from, which should be impossible.',
   mastered: 'Nothing here yet. A fact arrives once you have answered it, and stays until you miss it.',
+  // Reached only at the end of a sitting: the twenty-fourth answer empties the queue.
+  mock: 'That is all twenty-four. Your score is on the mock tests screen.',
 };
 
 export default function App() {
@@ -144,9 +148,16 @@ export default function App() {
     [drill],
   );
 
-  /** Leave the drill and go back to the tab it was opened from. */
+  /**
+   * Leave the drill and go back to where it was opened from.
+   *
+   * A mock returns to the mock list rather than to the home screen — that is where its score
+   * is, and it is the only place a half-finished sitting can be resumed from. Leaving mid-mock
+   * is not an abandonment: the attempt stays in the log as incomplete and picks up where it
+   * stopped, because the queue is derived from the log rather than held here.
+   */
   const home = useCallback(() => {
-    setView({ kind: 'tab', tab: 'drill' });
+    setView((v) => (v.kind === 'drill' && v.section === 'mock' ? { kind: 'mocks' } : { kind: 'tab', tab: 'drill' }));
     setCurrent(null);
     setAnswer(null);
     setPast([]);
@@ -215,6 +226,7 @@ export default function App() {
           onOpen={(section) => openDrill(section)}
           onChapter={(chapter) => openDrill('chapter', { kind: 'chapter', chapter })}
           onBand={(band: BandId) => openDrill('band', { kind: 'band', band })}
+          onMocks={() => setView({ kind: 'mocks' })}
         />
       )}
 
@@ -265,6 +277,14 @@ export default function App() {
             home();
           }}
           onExit={home}
+        />
+      )}
+
+      {view.kind === 'mocks' && (
+        <Mocks
+          events={drill.events}
+          onSit={(testId) => openDrill('mock', { kind: 'mock', testId })}
+          onExit={() => setView({ kind: 'tab', tab: 'drill' })}
         />
       )}
 

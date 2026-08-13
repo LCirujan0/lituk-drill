@@ -3,13 +3,13 @@
 **The Status block below owns every volatile number in this project.** No other document
 restates one. A hand-copied live number drifts within a session.
 
-## Status — 12 August 2026
+## Status — 13 August 2026
 
 | | |
 |---|---|
 | Phase | **Content quality programme**: option-and-form audit, then the explanation rewrite, with the timeline restructure in parallel |
 | Repo | [LCirujan0/lituk-drill](https://github.com/LCirujan0/lituk-drill) — public, `main` protected. **One version, at the root** (D-025) |
-| Tests | **333 passing across 15 files** — adds `bands` (the band partition, the tag vocabulary in both directions, the 55 ceiling), both cuts through `counts`, and 3 in `app` over the split rows |
+| Tests | **367 passing across 17 files** — adds `mock` (the pinned file against a rebuild, disjointness as an exact set, apportionment, attempt derivation) and `mock-ui` (R-5 through the real UI), on top of `explain` and `explain-ui` |
 | **Target screen** | **iPhone 16 Pro — 402×874**, safe-area-inset-bottom ≈34px. Older notes saying "fits 393×852" were measured against a device nobody uses (D-033) |
 | Deck cuts | **5 chapters and 12 bands, each drillable and each showing its own three-way split.** Both partition the 530 independently (C4/C5). Bands run 30–54 facts, ceiling 55 — two are within two facts of it, so C6 must split a band |
 | Deck | **530 drilled · 1,588 forms**. 559 ids in use; 29 retired, ids kept (R-4). **All five chapters audited** — 218 distractors rewritten; 3 answers retired, **24 still with the owner** in `docs/REFERRED-ANSWERS.md` |
@@ -27,6 +27,7 @@ restates one. A hand-copied live number drifts within a session.
 | Amber facts | **0** — f213 and f006 both retired, 10 Aug 2026 |
 | CI | Green — 2 required checks |
 | Deployed | https://lituk-drill.vercel.app |
+| Mocks | **C7 fixed tests built.** Twenty numbered tests of 24, chapter-proportional (Values 1 · The UK 1 · History 10 · Society 6 · Government 6), **pinned as data** in `src/data/mock-tests.ts` and asserted byte-identical. 480 forms committed for ever and all disjoint — which is what lets an attempt be identified from the log with no schema change. **Custom tests (D-017) are not built** |
 | AI layer | **C8(a) explain-on-demand is built** (D-034, D-037). Server route only; the button is **absent** with no key. Grounding is the deck's own answer plus `HANDBOOK_PASSAGES`, an env var that is **not yet populated** — absent is supported and degrades to deck-only grounding |
 | Daily target | **50 facts/day**, raised from 30 on 10 Aug so a ~700-fact deck (D-035) can still be seen. The 60-day simulation now reads `DAILY_TARGET` and was re-run at 50 on 11 Aug — peak 242 on day 10, queue drains daily |
 | Appetite expires | ~18 September 2026 · exam 25 September |
@@ -44,6 +45,9 @@ restates one. A hand-copied live number drifts within a session.
 - `src/adapters` — `local-store` (localStorage, degrades rather than throws), `db` (Neon,
   server-only), `sync` (pull/push/union), `store` (the one subscribable snapshot; **owns
   the two sync guarantees in D-030**), `handbook` (**server-only**, D-037).
+- `src/domain/mock` — C7. `build.ts` generates the twenty (run once, output committed);
+  `attempts.ts` derives every sitting from the review log by matching served forms, so mock
+  history syncs on the existing merge with nothing added to the schema.
 - `src/domain/explain` + `src/app/api/explain` — C8(a). The prompt is built as pure text in the
   domain layer so *"the handbook wins"* is a unit assertion rather than a paragraph; the route
   resolves the card server-side from three client fields, so the browser cannot widen what
@@ -71,7 +75,8 @@ passing, so the number is read from the constant now and moves with it.
 
 ## What does not exist yet
 
-No readiness model (S4) and no mocks (D-017) — **C7 is next**. No populated `HANDBOOK_PASSAGES`,
+No readiness model (S4). **Custom mocks (D-017) are not built** — only the twenty fixed tests are;
+custom tests need the spent-form ledger, and the 480 fixed forms must be excluded from their pool. No populated `HANDBOOK_PASSAGES`,
 so the explainer currently grounds on the deck alone (supported, D-037, but not the end state). **No docs-consistency test** — deferred, not
 skipped, and L-022 is what its absence costs. No end-to-end tests against a real browser:
 component tests run in jsdom, so anything depending on real layout, touch targets or Safari
@@ -161,7 +166,7 @@ one-line reason.
 |---|---|---|---|
 | **C4** | **12 bands you can drill on their own**, over the 87 tags. Both cuts stay drillable and both carry progress; a band draws from more than one chapter, so neither nests inside the other. | Days | **Built 10 Aug** |
 | **C5** | **The progress bar says which kind.** Every chapter row and every band row shows mastered / mistakes / untouched as a segmented bar, with all three figures in the accessible name. | A day | **Built 10 Aug** |
-| **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | **Both decisions taken 13 Aug** — chapter-proportional, pinned as data; fixed tests first, custom second. Next to build |
+| **C7** | **Mock tests and their history.** Mostly already decided by **D-017** — 24 questions from unseen forms, spent forms recorded, score stored beside the model's prediction. The ask for *20 fixed pre-built tests* conflicts with "unseen", and **R-7 forbids showing a mock score as readiness** while L-002/L-003 are only `fixed-unverified`. | ~1 week | **Fixed tests built 13 Aug** — chapter-proportional, pinned, byte-identity asserted. Custom tests still to do |
 | **C6** | **Full extraction sweep of the handbook** — every name, date and location. **D-035 accepted**, amending the non-goal. Blocked on one real question: 533 facts at 30/day already exceeds the appetite, so doubling the deck can make readiness *worse* while making coverage better. | Weeks | Blocked on volume |
 | **C8** | **An AI layer, (a) only — explain why the option you picked is wrong.** **Built 12 Aug.** D-034 accepted (a) and refused (b), (c) and (d). Both blockers are resolved: the owner accepted **L-040** (the inference disclosure) in the session of 12 Aug, and the grounding question is settled by **D-037** — `.work/handbook.txt` is never committed, passages arrive as the `HANDBOOK_PASSAGES` env var, and with it unset the explainer grounds on the deck's own answer and explanation panel, which says the same thing. The Council of Europe has 46 members, the book says 47, the deck says 47, and *"which you must treat as true"* is asserted on all 1,588 prompts. | ~2 days | **Built.** Env var not yet populated; L-040 still `open` pending the owner's own row |
 

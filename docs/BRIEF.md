@@ -544,7 +544,15 @@ owner's framing was quality-first — *"in order to keep a high standard of ques
 or something that repeats)"* — so 700 is a cap on the sweep, not a target. About 170 facts of
 headroom from 530. Every candidate competes for those slots against the ones already there.
 
-### C7 — mock tests, and their history · *requested 10 Aug 2026 · D-017 already decides most of it*
+### C7 — mock tests, and their history · *requested 10 Aug 2026 · **fixed tests BUILT 13 Aug 2026***
+
+> **Half done, and the half is named.** The twenty fixed tests are built, pinned and asserted.
+> **Custom tests (D-017) are not** — they need the spent-form ledger, and the 480 fixed forms have
+> to be excluded from their pool or the one uncontaminated instrument is contaminated on its first
+> draw. Acceptance criteria met for the fixed half: history persists on the existing event log and
+> syncs with no schema change; the 24 are chapter-proportional, written down rather than emergent;
+> a fixed test is byte-identical on every sitting, asserted against a rebuild from the recorded
+> seed. "No unseen form is spent twice" belongs to the custom half and is still open.
 
 **Problem.** No way to sit a full test, and no record of having done so.
 

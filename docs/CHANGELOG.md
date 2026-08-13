@@ -2,6 +2,62 @@
 
 An entry for every working day that has commits.
 
+## 2026-08-13 — C7: twenty fixed mock tests, and the near-miss that would have broken R-5
+
+**The twenty are pinned data, and that is the design rather than an optimisation.** D-036 wants
+them fixed so the same 24 questions in August and September measure *you* rather than the draw. A
+test that derives its own questions at runtime is not the same test twice — C6 is about to add up
+to 170 facts and the composition is chapter-proportional — so a recomputed test silently stops
+being a measurement with nothing on screen to say so. `src/data/mock-tests.ts` is generated once and
+asserted **byte for byte** against a rebuild from the recorded seed.
+
+**Composition, the owner's choice: chapter-proportional by largest remainder** — Values 1, The UK 1,
+History 10, Society 6, Government 6. Largest remainder rather than rounding each share, because
+independent rounding sums to **23** on this deck, and a "24-question" test that is 23 long is a
+different exam wearing the same name. The contrast is kept as an assertion rather than a comment.
+
+**No schema change, and the reason is a property rather than a shortcut.** D-036 asks that every
+attempt record which test, when, score, and which forms. The obvious route adds a `testId` column
+and a migration. It is unnecessary: the twenty are **disjoint**, so any served form identifies its
+test uniquely, and an attempt is recoverable from the log exactly as it already exists. Mock history
+therefore syncs on the merge algebra already proven in D-030, with nothing new for two devices to
+disagree about. The cost is stated where it bites — the pinned file is now load-bearing for
+*history*, not just comparability, so regenerating it re-labels every attempt already sat.
+
+**The near-miss, and it is the reason this entry exists.** `modeFor` returns `scheduled` for first
+contact with a phrasing — right for a drill (D-003), and wrong for a mock. The fixed tests draw from
+the whole deck rather than from unseen forms, so a mock routinely serves a form never met, and that
+answer would have been recorded as `scheduled`: **R-5 broken** (a mock advancing the schedule) and
+**the score wrong** (the answer dropping out of its own attempt, scoring 24 questions out of 23).
+One mislabelled mode, two silent failures, neither with a symptom. The branch now comes first, R-5
+records the hazard where it can actually be broken, and moving it back fails five of the seven UI
+tests.
+
+**An abandoned sitting stays in the history, marked incomplete.** Discarding it would let a bad
+start be erased by walking away, which is the one thing a self-administered mock must not permit.
+Attempt boundaries are a repeated form or a full 24 — never a clock gap, because the clock is the
+client's and two devices disagree.
+
+**R-7 on screen.** A score is shown as a score — "18 of 24", a trend — never as readiness or a
+probability. The screen's own disclaimer says so. The first version of the test banned the word
+*readiness* outright and failed on that disclaimer; the **exact set** of occurrences is declared
+instead, the `deck/contradictions.ts` pattern.
+
+**Two defects found by measuring rather than reading.** The trend's pass line was positioned against
+the chart's padding box while the bars were percentages of the content box — about **6.5px** apart at
+402×874, enough that a bar scoring exactly 18 stood clear above the 18 line. A chart that draws a
+pass as a fail is worse than no chart; both now share one coordinate box and an 18 bar meets the line
+exactly, re-measured. And the first version of the UI test helper picked wrong answers from
+`answers.distractors`, which is not what is on screen for numeric forms — they regenerate their
+options at presentation time (D-014, D-021).
+
+**One test was vacuous and was caught by breaking the code.** "Identical however the log arrives"
+compared `[testId, answered, correct, complete]`, every one of which is order-insensitive, and it
+passed with the sort removed. It now compares whole attempts including timestamps and question
+order, over a log with two sittings of one test.
+
+**`npm run verify` green at 367 tests across 17 files**, up from 333 across 15.
+
 ## 2026-08-12 — C8(a): a button that asks why the option you picked is wrong
 
 **Built, and the interesting part is what it refuses to do.** D-034 accepted explain-on-demand and
